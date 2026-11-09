@@ -1,19 +1,11 @@
-# CircuitCare AI 화면 연결
+# 기존 앱에 진단 화면 연결
 
-이 저장소에는 진단 엔진과 화면 모듈이 분리되어 있습니다.
+이 패키지에는 진단 엔진 및 선택형 증상 패널이 있습니다. 기존 CircuitCare 앱에서는 측정 기반 진단을 그대로 유지하면서 같은 `전체 진단` 패널에 증상 진단을 추가합니다.
 
-- 진단 규칙/상태/저장/LLM 보조: `src/circuitcare/symptom_diagnosis/`
-- 로컬 Ollama 클라이언트: `src/circuitcare/local_llm.py`
-- Streamlit 화면 모듈: `src/circuitcare/dashboard/views/symptom_diagnosis_panel.py`
+1. `src/circuitcare/dashboard/views/symptom_diagnosis_panel.py`를 호스트 앱의 동일한 경로에 복사합니다.
+2. `inspection_panel.py`에 패널을 import하고 기존 `render_diagnosis_panel(...)` 호출 뒤에 `render_symptom_diagnosis_panel(st, project, components=components, preview=preview)`를 추가합니다.
+3. 보드/사진/부품/측정 입력이 바뀌면 증상 패널의 입력 fingerprint가 달라져 이전 결과와 부품 강조가 초기화됩니다.
 
-기존 CircuitCare-AI 앱에 연결할 때는 이 화면 파일을 같은 경로에 두고
-`inspection_panel.py`에서 아래 두 작업을 합니다.
+최소 추가 예시는 `inspection_panel.patch`에 있습니다. 기존 진단이나 측정 패널을 제거하지 않습니다.
 
-1. `render_symptom_diagnosis_panel`을 import합니다.
-2. 전체 진단 영역에서 `render_symptom_diagnosis_panel(st, project, components=components, preview=preview)`를 호출합니다.
-
-최소 변경 예시는 `inspection_panel.patch`에 있습니다. 기존의 측정 패널 등은 유지하고,
-기존 단일 진단 패널 호출을 새 증상 기반 진단 패널 호출로 교체합니다.
-
-UI 실행에는 프로젝트의 Streamlit 의존성이 필요합니다. Ollama가 연결되지 않아도
-규칙 기반 진단은 실행되며, 로컬 LLM 보조는 사용 가능한 로컬 모델이 있을 때만 켤 수 있습니다.
+IC 각인의 접두사 해석, 배치 기반 기능 블록은 미확정 힌트입니다. 기본 데이터시트 카탈로그는 비어 있으므로 공식 제조사 데이터시트로 확인한 정보만 카탈로그에 넣어야 합니다.

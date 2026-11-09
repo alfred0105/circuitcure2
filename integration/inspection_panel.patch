@@ -1,30 +1,18 @@
 --- a/src/circuitcare/dashboard/views/inspection_panel.py
 +++ b/src/circuitcare/dashboard/views/inspection_panel.py
-@@ -7,5 +7,5 @@
+@@ -7,6 +7,7 @@
  from circuitcare.frontend.component_overlay_models import ComponentOverlayViewModel, display_identity_status
  from circuitcare.frontend.measurement_state import get_measurements
  from circuitcare.frontend.models import ProjectContext
--from circuitcare.dashboard.views.diagnosis_panel import render_diagnosis_panel
+ from circuitcare.dashboard.views.diagnosis_panel import render_diagnosis_panel
  from circuitcare.dashboard.views.measurement_panel import render_measurement_panel
 +from circuitcare.dashboard.views.symptom_diagnosis_panel import render_symptom_diagnosis_panel
  
-@@ -37,6 +37,8 @@
-         if project.symptom_description:
-             st.caption(project.symptom_description)
-         st.divider()
-+        render_symptom_diagnosis_panel(st, project, components=components, preview=preview)
-+        st.divider()
-         if preview:
-             st.markdown("**부품** · 인식 결과 없음")
- 
-@@ -82,10 +84,4 @@
-             st, project, selected_component=selected_component, preview=preview,
+@@ -84,8 +85,9 @@
+         render_diagnosis_panel(
+             st, project, measurements=measurements,
+             analysis_context_id=getattr(selection, "analysis_context_id", None),
              component_map_version=map_version,
          )
--        selection = st.session_state.get("circuitcare_v2_selection")
--        render_diagnosis_panel(
--            st, project, measurements=measurements,
--            analysis_context_id=getattr(selection, "analysis_context_id", None),
--            component_map_version=map_version,
--        )
--        st.markdown("**다음 점검** · 분석 데이터 없음")
+         st.markdown("**다음 점검** · 분석 데이터 없음")
++        render_symptom_diagnosis_panel(st, project, components=components, preview=preview)

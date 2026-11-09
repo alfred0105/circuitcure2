@@ -6,8 +6,12 @@ from typing import Any
 import time
 from pathlib import Path
 from uuid import uuid4
+import hashlib
+import json
 
 from circuitcare.frontend.models import ProjectContext
+from circuitcare.frontend.measurement_state import get_measurements
+from circuitcare.frontend.measurement_models import measurement_set_sha256
 from circuitcare.local_llm import LocalLLMError, OllamaClient
 from circuitcare.symptom_diagnosis import diagnose, load_knowledge
 from circuitcare.symptom_diagnosis.llm_assist import explain_candidates, suggest_unregistered_causes
@@ -18,6 +22,41 @@ from circuitcare.symptom_diagnosis.symptom_parser import parse_user_report
 
 def _project_key(project: ProjectContext) -> str:
     return f"cc_symptom_diagnosis_{project.project_id}"
+
+
+def _diagnosis_fingerprint(
+    project: ProjectContext, components: tuple[Any, ...], symptoms: list[str],
+    symptom_text: str, observations: dict[str, Any], answers: dict[str, Any],
+    measurements: list[Any], silkscreen_labels: list[dict[str, Any]], state: Any,
+) -> str:
+    component_rows = [{
+        "id": getattr(row, "component_id", None),
+        "type": getattr(row, "component_type", None),
+        "bbox": getattr(row, "bbox_xyxy", None),
+        "marking": getattr(row, "ocr_marking", None),
+        "part_number": getattr(row, "possible_part_number", None),
+        "info": getattr(row, "component_info", None),
+    } for row in components]
+    photo_rows = [{
+        "id": getattr(row, "photo_id", getattr(row, "image_id", None)),
+        "filename": getattr(row, "filename", None),
+        "dimensions": getattr(row, "image_dimensions", None),
+        "side": getattr(row, "side", None),
+    } for row in project.image_records]
+    payload = {
+        "project_id": project.project_id, "board_id": project.board_id,
+        "symptom_category": project.symptom_category,
+        "symptom_description": project.symptom_description,
+        "symptom_text": symptom_text, "symptoms": sorted(symptoms),
+        "observations": observations, "answers": answers,
+        "components": component_rows, "photos": photo_rows,
+        "silkscreen_labels": silkscreen_labels,
+        "component_map_version": state.get("circuitcare_v4_selection_map_key"),
+        "measurement_set": measurement_set_sha256(
+            measurements, project_id=project.project_id, board_id=project.board_id or ""),
+    }
+    canonical = json.dumps(payload, ensure_ascii=False, sort_keys=True, default=str, allow_nan=False)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 def _persist_diagnosis(project: ProjectContext, state: dict[str, Any], result: dict[str, Any],
@@ -35,6 +74,7 @@ def _persist_diagnosis(project: ProjectContext, state: dict[str, Any], result: d
     ObservationStore(db_path).save(
         diagnosis_id=diagnosis_id, project_id=project.project_id, board_id=project.board_id,
         status=result.get("status", "UNKNOWN"), result=result, observations=normalized_observations,
+        input_fingerprint=state.get("input_fingerprint"),
     )
 
 
@@ -85,6 +125,25 @@ def render_symptom_diagnosis_panel(
             observations["POWER_OFF_CONFIRMED"] = True
         else:
             observations.pop("POWER_OFF_CONFIRMED", None)
+    measurements = get_measurements(
+        st.session_state, project_id=project.project_id, board_id=project.board_id or "",
+    )
+    silkscreen_labels = st.session_state.get("circuitcare_v4_silkscreen_labels", [])
+    if not isinstance(silkscreen_labels, list):
+        silkscreen_labels = []
+    fingerprint = _diagnosis_fingerprint(
+        project, components, selected_codes, symptom_text, observations,
+        state.get("answers", {}), measurements, silkscreen_labels, st.session_state,
+    )
+    if state.get("input_fingerprint") != fingerprint:
+        state["result"] = None
+        state["answers"] = {}
+        state["input_fingerprint"] = fingerprint
+        state["diagnosis_id"] = str(uuid4())
+        candidates_by_project = dict(st.session_state.get("circuitcare_v4_diagnosis_candidates_by_project", {}))
+        candidates_by_project.pop(project.project_id, None)
+        st.session_state["circuitcare_v4_diagnosis_candidates_by_project"] = candidates_by_project
+        st.session_state[key] = state
     llm_enabled = False
     selected_model = None
     model_cache = state.get("ollama_models")
@@ -136,6 +195,8 @@ def render_symptom_diagnosis_panel(
             symptoms=list(dict.fromkeys([*selected_codes, *parsed_symptoms])),
             symptom_text=symptom_text,
             observations=combined_observations, components=component_rows,
+            measurements=[row.to_dict() for row in measurements],
+            silkscreen_labels=silkscreen_labels,
             connectivity_status="none",
         )
         result["llm_parser"] = parsed
@@ -169,11 +230,16 @@ def render_symptom_diagnosis_panel(
             candidates_by_project.pop(project.project_id, None)
         st.session_state["circuitcare_v4_diagnosis_candidates_by_project"] = candidates_by_project
         state["result"] = result
+        state["input_fingerprint"] = fingerprint
         st.session_state[key] = state
     result = state.get("result")
     if not result:
         st.info("증상을 입력하고 **고장 원인 후보 추론**을 눌러 시작하세요.")
         return
+    if result.get("evidence_conflicts"):
+        st.warning("서로 다른 입력이 있어 해당 사실은 확정하지 않았습니다. 증상/측정값을 확인해 주세요.")
+        for conflict in result["evidence_conflicts"]:
+            st.caption(f"충돌 · {conflict['code']} · {conflict['values']} · {conflict['resolution']}")
     if result["status"] == "NEEDS_SYMPTOMS":
         st.info(result["message"])
         return
@@ -223,7 +289,18 @@ def render_symptom_diagnosis_panel(
         with st.expander("부품 기능 역할 추정", expanded=False):
             for block in result["functional_blocks"]:
                 st.caption(f"{block['component_id']} · {block['component_type']} → "
-                           f"{', '.join(block['candidate_blocks'])} · 부품 종류 기반 추정")
+                           f"{', '.join(block['candidate_blocks']) or '역할 미분류'} · 배치/OCR 기반 미확정 추정")
+                identity = block.get("ic_identity")
+                if identity:
+                    st.caption(f"IC 각인 {identity.get('marking') or '없음'} · "
+                               f"{', '.join(identity.get('role_candidates', [])) or '기능 미분류'} · "
+                               f"{identity.get('status')} · 데이터시트 검증 전")
+    if result.get("measurement_evidence"):
+        with st.expander("진단에 연결된 측정 기록", expanded=False):
+            for row in result["measurement_evidence"]:
+                st.caption(f"{row['component_id']} · {row['measurement_type']} {row['value']} {row['unit']} · "
+                           f"{row['verification_status']}")
+            st.caption("측정 원값은 진단에 전달했습니다. 부품별 정상 범위가 등록되지 않은 값은 순위 점수에 넣지 않습니다.")
     questions = [item for item in result.get("next_tests", []) if item.get("type") == "question"]
     if questions:
         st.markdown("**다음 확인 질문**")
@@ -237,6 +314,11 @@ def render_symptom_diagnosis_panel(
                 answers.update(outcome.get("observations", {}))
         if st.button("답변 반영하고 다시 추론", key=f"{key}_apply_answers", disabled=preview):
             state["answers"] = answers
+            state["input_fingerprint"] = _diagnosis_fingerprint(
+                project, components, selected_codes, symptom_text,
+                observations, answers, measurements,
+                silkscreen_labels, st.session_state,
+            )
             combined_observations = list(state.get("parsed_observations", []))
             combined_observations.extend({"code": fact, "value": value, "status": "observed", "source": "user_report"}
                                          for fact, value in state.get("manual_observations", {}).items())
@@ -247,7 +329,8 @@ def render_symptom_diagnosis_panel(
                 observations=combined_observations,
                 components=[{"component_id": item.component_id, "component_type": item.component_type,
                              "bbox_xyxy": list(item.bbox_xyxy), "ocr_marking": item.ocr_marking}
-                            for item in components], connectivity_status="none",
+                            for item in components], measurements=[row.to_dict() for row in measurements],
+                silkscreen_labels=silkscreen_labels, connectivity_status="none",
             )
             if llm_enabled and selected_model and state["result"].get("hypotheses"):
                 try:

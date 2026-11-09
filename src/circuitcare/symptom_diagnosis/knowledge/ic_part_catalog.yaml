@@ -1,0 +1,6 @@
+parts: {}
+verification_policy:
+  exact_marking_required: true
+  required_fields: [manufacturer, package, pin_count, datasheet_url, verification_source]
+  accepted_verification_source: manufacturer_datasheet
+  note: "빈 카탈로그는 의도된 초기 상태입니다. OCR 접두사만으로 IC 모델·핀수·제조사를 확정하지 않습니다."

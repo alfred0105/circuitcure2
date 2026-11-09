@@ -13,7 +13,8 @@ class ObservationStore:
         self.path = path
 
     def save(self, *, diagnosis_id: str, project_id: str, board_id: str | None,
-             status: str, result: dict[str, Any], observations: list[dict[str, Any]]) -> None:
+             status: str, result: dict[str, Any], observations: list[dict[str, Any]],
+             input_fingerprint: str | None = None) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with sqlite3.connect(self.path, timeout=10) as connection:
             connection.execute("PRAGMA journal_mode=WAL")
@@ -31,6 +32,14 @@ class ObservationStore:
                     PRIMARY KEY (diagnosis_id, observation_id),
                     FOREIGN KEY (diagnosis_id) REFERENCES diagnosis_sessions(diagnosis_id) ON DELETE CASCADE
                 );
+                CREATE TABLE IF NOT EXISTS diagnosis_history (
+                    history_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    diagnosis_id TEXT NOT NULL, project_id TEXT NOT NULL, board_id TEXT,
+                    input_fingerprint TEXT, status TEXT NOT NULL,
+                    recorded_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    result_json TEXT NOT NULL, observations_json TEXT NOT NULL,
+                    FOREIGN KEY (diagnosis_id) REFERENCES diagnosis_sessions(diagnosis_id) ON DELETE CASCADE
+                );
             """)
             connection.execute("PRAGMA foreign_keys=ON")
             connection.execute("""
@@ -40,11 +49,18 @@ class ObservationStore:
                 status=excluded.status, updated_at=CURRENT_TIMESTAMP, result_json=excluded.result_json
             """, (diagnosis_id, project_id, board_id, status,
                   json.dumps(result, ensure_ascii=False, allow_nan=False)))
-            connection.execute("DELETE FROM diagnosis_observations WHERE diagnosis_id=?", (diagnosis_id,))
+            connection.execute("""
+                INSERT INTO diagnosis_history(
+                    diagnosis_id, project_id, board_id, input_fingerprint, status,
+                    result_json, observations_json
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (diagnosis_id, project_id, board_id, input_fingerprint, status,
+                  json.dumps(result, ensure_ascii=False, allow_nan=False),
+                  json.dumps(observations, ensure_ascii=False, allow_nan=False)))
             for index, row in enumerate(observations):
                 observation_id = str(row.get("id") or f"{row.get('code', 'unknown')}:{index}")
                 connection.execute("""
-                    INSERT INTO diagnosis_observations(
+                    INSERT OR IGNORE INTO diagnosis_observations(
                         observation_id, diagnosis_id, code, value_json, status, source,
                         component_id, confidence, conditions_json, evidence_quote
                     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -70,3 +86,14 @@ class ObservationStore:
                 (diagnosis_id,),
             ).fetchall()
         return {"session": dict(session), "observations": [dict(row) for row in observations]}
+
+    def history(self, diagnosis_id: str) -> list[dict[str, Any]]:
+        if not self.path.exists():
+            return []
+        with sqlite3.connect(self.path, timeout=5) as connection:
+            connection.row_factory = sqlite3.Row
+            rows = connection.execute(
+                "SELECT * FROM diagnosis_history WHERE diagnosis_id=? ORDER BY history_id",
+                (diagnosis_id,),
+            ).fetchall()
+        return [dict(row) for row in rows]

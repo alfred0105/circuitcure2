@@ -11,10 +11,11 @@ from uuid import uuid4
 
 COMPONENT_LABELS = (
     "battery", "switch", "buzzer", "capacitor", "clock", "connector", "diode",
-    "display", "fuse", "heatsink", "ic", "inductor", "led", "potentiometer",
-    "relay", "resistor", "transformer", "transistor",
+    "display", "emi_filter", "ferrite_bead", "fuse", "heatsink", "ic", "inductor",
+    "jumper", "led", "ldr", "mov", "oscillator", "potentiometer", "relay", "resistor",
+    "speaker", "thermistor", "transformer", "transistor", "voltage_regulator",
 )
-LABEL_ALIASES = {"integrated_circuit": "ic", "IC": "ic", "LED": "led", "MOV": "unknown"}
+LABEL_ALIASES = {"integrated_circuit": "ic", "IC": "ic", "LED": "led", "MOV": "mov", "LDR": "ldr"}
 
 
 class EvidenceStatus(StrEnum):
@@ -77,6 +78,7 @@ class ComponentRecord:
     electrical_role: str = "unknown"
     detection_confidence: float | None = None
     coordinate_frame: str = "image_pixel"
+    ic_identity: dict[str, Any] = field(default_factory=dict)
 
     @property
     def normalized_label(self) -> str:
@@ -90,14 +92,21 @@ class ComponentRecord:
     def from_mapping(cls, row: dict[str, Any]) -> "ComponentRecord":
         raw_box = row.get("bbox", row.get("bbox_xyxy"))
         bbox = tuple(float(value) for value in raw_box) if isinstance(raw_box, (list, tuple)) and len(raw_box) == 4 else None
+        label = str(row.get("label", row.get("component_type", "unknown")))
+        marking = row.get("marking", row.get("ocr_marking"))
+        ic_identity = row.get("ic_identity") or {}
+        if not ic_identity and label.casefold() in {"ic", "integrated_circuit"} and marking:
+            from circuitcare.symptom_diagnosis.ic_identity import resolve_ic_identity
+            ic_identity = resolve_ic_identity(str(marking))
         return cls(component_id=str(row.get("component_id", "unknown")),
-                   label=str(row.get("label", row.get("component_type", "unknown"))),
+                   label=label,
                    bbox=bbox, pins=tuple(row.get("pins", ())),
-                   marking=row.get("marking", row.get("ocr_marking")),
+                   marking=marking,
                    confirmed_part_number=row.get("confirmed_part_number"),
                    electrical_role=str(row.get("electrical_role", "unknown")),
                    detection_confidence=row.get("detection_confidence"),
-                   coordinate_frame=str(row.get("coordinate_frame", "image_pixel")))
+                   coordinate_frame=str(row.get("coordinate_frame", "image_pixel")),
+                   ic_identity=dict(ic_identity))
 
 
 @dataclass(frozen=True)
