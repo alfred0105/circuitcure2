@@ -1,0 +1,107 @@
+{
+  "status": "success",
+  "question": "C1을 왜 먼저 점검해야 해?",
+  "model": "gemma4:12b",
+  "model_info": {
+    "name": "gemma4:12b",
+    "size": 7714091504,
+    "digest": "c7597fc90b86aff6965317f37dd5465402284e26382d9b4bf2dfe3ef1491f4b6",
+    "details": {
+      "parent_model": "",
+      "format": "safetensors",
+      "family": "",
+      "families": null,
+      "parameter_size": "",
+      "quantization_level": "",
+      "runner": "mlx"
+    }
+  },
+  "json_mode": false,
+  "response": {
+    "answer": "C1을 가장 먼저 점검해야 하는 이유는 해당 부품의 위험 수준이 'EXCEEDED'로 분류되었기 때문입니다 [E009, E084]. 분석 결과, U1_OUTPUT_8V 시나리오에서 C1의 전압 스트레스(8.0V)가 설정된 정격(6.3V)을 초과한 것으로 나타났으며, 이에 따라 우선순위 지수가 98.93으로 매우 높게 책정되었습니다 [E010, E011, E012, E013]. 단, 이는 시뮬레이션 기반의 스트레스 분석 결과이며 실제 손상 여부는 확인되지 않았습니다.",
+    "facts": [
+      {
+        "text": "C1의 위험 수준은 'EXCEEDED'로 분류되었습니다.",
+        "evidence_ids": [
+          "E009",
+          "E084"
+        ]
+      },
+      {
+        "text": "U1_OUTPUT_8V 시나리오에서 C1의 전압 스트레스는 8.0V이며, 설정된 정격은 6.3V입니다.",
+        "evidence_ids": [
+          "E011",
+          "E012"
+        ]
+      },
+      {
+        "text": "C1의 점검 우선순위 지수는 98.93입니다.",
+        "evidence_ids": [
+          "E010",
+          "E085"
+        ]
+      }
+    ],
+    "assumptions": [
+      {
+        "text": "C1의 정격(6.3V)은 데모 가정값이며 제조사 확인이 되지 않았습니다.",
+        "evidence_ids": [
+          "E012"
+        ]
+      }
+    ],
+    "recommendations": [
+      {
+        "text": "전원을 차단하고 고립시킨 상태에서 C1의 실제 제조사 정격을 확인하고 점검하십시오.",
+        "evidence_ids": [
+          "E009",
+          "E010",
+          "E011",
+          "E012",
+          "E013",
+          "E014",
+          "E015",
+          "E016",
+          "E017",
+          "E018",
+          "E019",
+          "E020",
+          "E021",
+          "E022",
+          "E023",
+          "E084",
+          "E085",
+          "E104",
+          "E105"
+        ]
+      }
+    ],
+    "unknowns": [
+      {
+        "text": "C1은 전압 외에 전류나 전력 스트레스 데이터가 부족합니다.",
+        "evidence_ids": [
+          "E084"
+        ]
+      },
+      {
+        "text": "어떤 부품도 실제 손상으로 확인되지 않았습니다.",
+        "evidence_ids": [
+          "E106"
+        ]
+      }
+    ]
+  },
+  "rejected_response": null,
+  "validation_error": null,
+  "validation": {
+    "evidence_ids_checked": true,
+    "numeric_claims_checked": true
+  },
+  "inference": {
+    "done": true,
+    "done_reason": "stop",
+    "total_duration_ns": 60303459917,
+    "eval_count": 657
+  },
+  "fallback_used": false
+}

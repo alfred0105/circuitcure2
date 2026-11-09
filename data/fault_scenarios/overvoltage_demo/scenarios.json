@@ -1,0 +1,34 @@
+{
+  "baseline_file": "baseline.cir",
+  "scenarios": [
+    {
+      "changes": [
+        {
+          "after": "VREG VOUT 0 DC 8",
+          "before": "VREG VOUT 0 DC 5",
+          "component_ref": "U1",
+          "description": "Change the ideal regulator output source setpoint",
+          "spice_element": "VREG"
+        }
+      ],
+      "netlist_file": "fault_u1_regulator_output_rise.cir",
+      "risk_assessment": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "scenario": {
+        "assumptions": [
+          "The regulator is an ideal DC output source whose setpoint is raised.",
+          "This abstracts the output symptom and does not model an internal regulator failure mechanism."
+        ],
+        "component_ref": "U1",
+        "description": "Apply regulator output rise to U1",
+        "fault_type": "regulator_output_rise",
+        "parameters": {
+          "output_voltage": "8"
+        },
+        "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE"
+      },
+      "simulation_report": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/impact_report.json",
+      "simulation_status": "success"
+    }
+  ],
+  "simulation_status": "success"
+}

@@ -1,0 +1,233 @@
+{
+  "dataset_id": "circuitcare-phase17-reused-development-v1",
+  "cases": [
+    {
+      "case_id": "p17d_0001",
+      "llm_case_id": "case_0001",
+      "topology_group": "phase15_regulator_demo",
+      "split": "development_synthetic",
+      "circuit": {
+        "netlist": "tests/fixtures/fault_demo_netlist.xml",
+        "spice": "data/circuits/fault_demo.cir",
+        "mapping": "data/circuits/fault_demo_mapping.json",
+        "probes": "data/circuits/fault_demo_probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_0001",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "100uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "capacitor"
+          },
+          {
+            "ref": "J1",
+            "value": "12V Input",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "Q1",
+            "value": "NMOS switch",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "switch"
+          },
+          {
+            "ref": "R1",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "LOAD",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "RLOAD",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "LOAD"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "U1",
+            "value": "Regulator",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "regulator_output"
+          }
+        ],
+        "observations": [
+          {
+            "node": "VOUT",
+            "value": 8.0,
+            "unit": "V",
+            "uncertainty": 0.2,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Circuit output measurements differ from expected behavior."
+      }
+    },
+    {
+      "case_id": "p17d_0002",
+      "llm_case_id": "case_0002",
+      "topology_group": "phase15_divider_demo",
+      "split": "development_synthetic",
+      "circuit": {
+        "netlist": "tests/fixtures/divider_netlist.xml",
+        "spice": "data/circuits/divider.cir",
+        "mapping": "data/circuits/divider_mapping.json",
+        "probes": "data/circuits/divider_probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_0002",
+        "components": [
+          {
+            "ref": "J1",
+            "value": "5V input",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "VIN",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R2",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "VOUT",
+            "value": 0.454545455,
+            "unit": "V",
+            "uncertainty": 0.02,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Circuit output measurements differ from expected behavior."
+      }
+    },
+    {
+      "case_id": "p17d_0003",
+      "llm_case_id": "case_0003",
+      "topology_group": "phase15_rc_demo",
+      "split": "development_synthetic",
+      "circuit": {
+        "netlist": "tests/fixtures/rc_netlist.xml",
+        "spice": "data/circuits/rc_charge.cir",
+        "mapping": "data/circuits/rc_charge_mapping.json",
+        "probes": "data/circuits/rc_charge_probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_0003",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "100uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VC"
+            ],
+            "mapping_available": true,
+            "model_type": "capacitor"
+          },
+          {
+            "ref": "J1",
+            "value": "5V pulse input",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "RBLEED",
+            "value": "100k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VC"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "RCHARGE",
+            "value": "10k",
+            "library_id": "",
+            "nets": [
+              "VC",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "VC",
+            "value": 0.0248751681,
+            "unit": "V",
+            "uncertainty": 0.01,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Circuit output measurements differ from expected behavior."
+      }
+    }
+  ]
+}

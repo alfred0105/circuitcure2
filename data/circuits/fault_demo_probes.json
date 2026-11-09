@@ -1,0 +1,14 @@
+{
+  "voltage_nodes": [
+    "VOUT",
+    "LOAD",
+    "SWITCH_OUT"
+  ],
+  "components": [
+    "R1",
+    "RLOAD",
+    "C1",
+    "U1",
+    "Q1"
+  ]
+}

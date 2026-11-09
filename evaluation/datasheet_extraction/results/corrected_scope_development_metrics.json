@@ -1,0 +1,1762 @@
+{
+  "evaluation_status": "DEVELOPMENT_PILOT",
+  "status": "PARTIALLY_EVALUATED",
+  "dataset_id": "datasheet-extraction-development-pilot-v1",
+  "dataset_version": "1.0.0",
+  "split": "development_pilot_after_feedback",
+  "independent_holdout": false,
+  "ground_truth_complete": false,
+  "run_metadata": {
+    "git_commit_sha": "e83538bee387678e17c8d8b0f0c23fc2f6bd2ca8",
+    "timestamp_utc": "2026-11-03T06:04:01.771530+00:00",
+    "python": "3.12.14",
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "llm": {
+      "name": "gemma4:12b",
+      "size": 7714091504,
+      "digest": "c7597fc90b86aff6965317f37dd5465402284e26382d9b4bf2dfe3ef1491f4b6",
+      "details": {
+        "parent_model": "",
+        "format": "safetensors",
+        "family": "",
+        "families": null,
+        "parameter_size": "",
+        "quantization_level": "",
+        "runner": "mlx"
+      }
+    },
+    "model_requested": "gemma4:12b",
+    "prompt_version": "datasheet-rating-v1",
+    "documents_dir": "circuitcare15_eval",
+    "llm_enabled": true,
+    "ngspice": "NOT_USED"
+  },
+  "document_count": 4,
+  "evaluated_document_count": 4,
+  "manufacturer_count": 3,
+  "component_families": {
+    "capacitor": 1,
+    "diode": 1,
+    "regulator_ic": 1,
+    "resistor": 1
+  },
+  "ground_truth_rating_count": 4,
+  "candidate_counts": {
+    "rule_only": 48,
+    "rule_plus_llm": 51,
+    "scored_in_target_scope_rule_only": 4,
+    "scored_in_target_scope_rule_plus_llm": 5
+  },
+  "llm_processing_seconds": {
+    "total": 32.945716626,
+    "mean_per_document": 10.981905542,
+    "evaluated_document_count": 3,
+    "status": "MEASURED"
+  },
+  "rule_only": {
+    "status": "PARTIALLY_EVALUATED",
+    "evaluation_scope": "TARGET_RATING_ONLY",
+    "target_rating_evaluation": {
+      "status": "MEASURED_DEVELOPMENT_PILOT",
+      "target_count": 4,
+      "complete_target_scope_count": 4,
+      "candidate_count_in_scope": 4,
+      "correct_target_count": 4,
+      "false_positive_count": 0,
+      "false_negative_count": 0,
+      "precision": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "recall": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "f1": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "value_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "unit_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "rating_kind_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 3,
+        "reason": null
+      },
+      "condition_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 2,
+        "reason": null
+      },
+      "evidence_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "table_context_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 3,
+        "reason": null
+      },
+      "per_target": [
+        {
+          "document_id": "VISHAY_MCT0603",
+          "rating_key": "max_power_w",
+          "target_scope": {
+            "scope_type": "target_rating",
+            "complete_target_scope": true,
+            "complete_document_inventory": false,
+            "component_variant": "MCT 0603",
+            "row_label": "Rated dissipation, P70",
+            "column_header": "STANDARD",
+            "allow_blank_column": true
+          },
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "candidate_count_in_scope": 1,
+          "true_positive_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "target_precision": 1.0,
+          "target_recall": 1.0,
+          "scope_class_counts": {
+            "WRONG_COMPONENT_VARIANT": 5,
+            "SUPPORTED_CORRECT": 1,
+            "OUT_OF_SCOPE": 1,
+            "UNVERIFIED": 4
+          }
+        },
+        {
+          "document_id": "KEMET_C0603C104K4RACTU",
+          "rating_key": "max_abs_voltage_v",
+          "target_scope": {
+            "scope_type": "target_rating",
+            "complete_target_scope": true,
+            "complete_document_inventory": false,
+            "row_label": "Voltage DC",
+            "source_anchor": "Voltage DC"
+          },
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "candidate_count_in_scope": 1,
+          "true_positive_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "target_precision": 1.0,
+          "target_recall": 1.0,
+          "scope_class_counts": {
+            "SUPPORTED_CORRECT": 1
+          }
+        },
+        {
+          "document_id": "VISHAY_1N4148",
+          "rating_key": "max_current_a",
+          "target_scope": {
+            "scope_type": "target_rating",
+            "complete_target_scope": true,
+            "complete_document_inventory": false,
+            "row_label": "Forward continuous current",
+            "source_anchor": "Forward continuous current"
+          },
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "candidate_count_in_scope": 1,
+          "true_positive_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "target_precision": 1.0,
+          "target_recall": 1.0,
+          "scope_class_counts": {
+            "OUT_OF_SCOPE": 2,
+            "SUPPORTED_CORRECT": 1
+          }
+        },
+        {
+          "document_id": "TI_LM7805_FAMILY",
+          "rating_key": "max_current_a",
+          "target_scope": {
+            "scope_type": "target_rating",
+            "complete_target_scope": true,
+            "complete_document_inventory": false,
+            "source_anchor": "Output Current up to 1.5 A"
+          },
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "candidate_count_in_scope": 1,
+          "true_positive_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "target_precision": 1.0,
+          "target_recall": 1.0,
+          "scope_class_counts": {
+            "SUPPORTED_CORRECT": 1,
+            "SOURCE_AMBIGUOUS": 16
+          }
+        }
+      ]
+    },
+    "full_document_evaluation": {
+      "status": "NOT_EVALUATED",
+      "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+      "precision": {
+        "value": null,
+        "status": "NOT_EVALUATED",
+        "denominator": 0,
+        "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+      },
+      "recall": {
+        "value": null,
+        "status": "NOT_EVALUATED",
+        "denominator": 0,
+        "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+      },
+      "f1": {
+        "value": null,
+        "status": "NOT_EVALUATED",
+        "denominator": 0,
+        "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+      }
+    },
+    "candidate_count_all_scopes": 48,
+    "scored_candidate_count": 4,
+    "excluded_candidate_count": 44,
+    "source_verification_rejection_rate": {
+      "value": 0.3333333333333333,
+      "status": "MEASURED_AUTOMATED_CHECK",
+      "denominator": 48,
+      "reason": null
+    },
+    "source_verification_rejection_count": 16,
+    "unverified_candidate_count": 20,
+    "out_of_scope_candidate_count": 19,
+    "wrong_component_variant_count": 5,
+    "candidate_error_class_counts": {
+      "WRONG_COMPONENT_VARIANT": 5,
+      "SUPPORTED_CORRECT": 4,
+      "OUT_OF_SCOPE": 19,
+      "UNVERIFIED": 4,
+      "SOURCE_AMBIGUOUS": 16
+    },
+    "unsupported_claim_rate": {
+      "value": null,
+      "status": "NOT_EVALUATED",
+      "denominator": 0,
+      "reason": "No candidate-level human adjudication records are included."
+    },
+    "hallucination_rate": {
+      "value": null,
+      "status": "NOT_EVALUATED",
+      "denominator": 0,
+      "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+    },
+    "latency_seconds": null
+  },
+  "rule_plus_llm": {
+    "status": "PARTIALLY_EVALUATED",
+    "evaluation_scope": "TARGET_RATING_ONLY",
+    "target_rating_evaluation": {
+      "status": "MEASURED_DEVELOPMENT_PILOT",
+      "target_count": 4,
+      "complete_target_scope_count": 4,
+      "candidate_count_in_scope": 5,
+      "correct_target_count": 4,
+      "false_positive_count": 1,
+      "false_negative_count": 0,
+      "precision": {
+        "value": 0.8,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 5,
+        "reason": null
+      },
+      "recall": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "f1": {
+        "value": 0.888888888888889,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "value_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "unit_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "rating_kind_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 3,
+        "reason": null
+      },
+      "condition_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 2,
+        "reason": null
+      },
+      "evidence_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 4,
+        "reason": null
+      },
+      "table_context_accuracy": {
+        "value": 1.0,
+        "status": "MEASURED_DEVELOPMENT_PILOT",
+        "denominator": 3,
+        "reason": null
+      },
+      "per_target": [
+        {
+          "document_id": "VISHAY_MCT0603",
+          "rating_key": "max_power_w",
+          "target_scope": {
+            "scope_type": "target_rating",
+            "complete_target_scope": true,
+            "complete_document_inventory": false,
+            "component_variant": "MCT 0603",
+            "row_label": "Rated dissipation, P70",
+            "column_header": "STANDARD",
+            "allow_blank_column": true
+          },
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "candidate_count_in_scope": 1,
+          "true_positive_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "target_precision": 1.0,
+          "target_recall": 1.0,
+          "scope_class_counts": {
+            "WRONG_COMPONENT_VARIANT": 5,
+            "SUPPORTED_CORRECT": 1,
+            "OUT_OF_SCOPE": 1,
+            "UNVERIFIED": 4
+          }
+        },
+        {
+          "document_id": "KEMET_C0603C104K4RACTU",
+          "rating_key": "max_abs_voltage_v",
+          "target_scope": {
+            "scope_type": "target_rating",
+            "complete_target_scope": true,
+            "complete_document_inventory": false,
+            "row_label": "Voltage DC",
+            "source_anchor": "Voltage DC"
+          },
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "candidate_count_in_scope": 1,
+          "true_positive_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "target_precision": 1.0,
+          "target_recall": 1.0,
+          "scope_class_counts": {
+            "SUPPORTED_CORRECT": 1
+          }
+        },
+        {
+          "document_id": "VISHAY_1N4148",
+          "rating_key": "max_current_a",
+          "target_scope": {
+            "scope_type": "target_rating",
+            "complete_target_scope": true,
+            "complete_document_inventory": false,
+            "row_label": "Forward continuous current",
+            "source_anchor": "Forward continuous current"
+          },
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "candidate_count_in_scope": 1,
+          "true_positive_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "target_precision": 1.0,
+          "target_recall": 1.0,
+          "scope_class_counts": {
+            "OUT_OF_SCOPE": 2,
+            "SUPPORTED_CORRECT": 1
+          }
+        },
+        {
+          "document_id": "TI_LM7805_FAMILY",
+          "rating_key": "max_current_a",
+          "target_scope": {
+            "scope_type": "target_rating",
+            "complete_target_scope": true,
+            "complete_document_inventory": false,
+            "source_anchor": "Output Current up to 1.5 A"
+          },
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "candidate_count_in_scope": 2,
+          "true_positive_count": 1,
+          "false_positive_count": 1,
+          "false_negative_count": 0,
+          "target_precision": 0.5,
+          "target_recall": 1.0,
+          "scope_class_counts": {
+            "SUPPORTED_CORRECT": 2,
+            "SOURCE_AMBIGUOUS": 16,
+            "OUT_OF_SCOPE": 2
+          }
+        }
+      ]
+    },
+    "full_document_evaluation": {
+      "status": "NOT_EVALUATED",
+      "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+      "precision": {
+        "value": null,
+        "status": "NOT_EVALUATED",
+        "denominator": 0,
+        "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+      },
+      "recall": {
+        "value": null,
+        "status": "NOT_EVALUATED",
+        "denominator": 0,
+        "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+      },
+      "f1": {
+        "value": null,
+        "status": "NOT_EVALUATED",
+        "denominator": 0,
+        "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+      }
+    },
+    "candidate_count_all_scopes": 51,
+    "scored_candidate_count": 5,
+    "excluded_candidate_count": 46,
+    "source_verification_rejection_rate": {
+      "value": 0.3137254901960784,
+      "status": "MEASURED_AUTOMATED_CHECK",
+      "denominator": 51,
+      "reason": null
+    },
+    "source_verification_rejection_count": 16,
+    "unverified_candidate_count": 20,
+    "out_of_scope_candidate_count": 21,
+    "wrong_component_variant_count": 5,
+    "candidate_error_class_counts": {
+      "WRONG_COMPONENT_VARIANT": 5,
+      "SUPPORTED_CORRECT": 5,
+      "OUT_OF_SCOPE": 21,
+      "UNVERIFIED": 4,
+      "SOURCE_AMBIGUOUS": 16
+    },
+    "unsupported_claim_rate": {
+      "value": null,
+      "status": "NOT_EVALUATED",
+      "denominator": 0,
+      "reason": "No candidate-level human adjudication records are included."
+    },
+    "hallucination_rate": {
+      "value": null,
+      "status": "NOT_EVALUATED",
+      "denominator": 0,
+      "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+    },
+    "latency_seconds": null
+  },
+  "documents": [
+    {
+      "document_id": "VISHAY_MCT0603",
+      "status": "EVALUATED",
+      "source_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "manifest_sha256_match": true,
+      "page_count": 10,
+      "table_count": 35,
+      "ground_truth_count": 1,
+      "rule_candidate_count": 24,
+      "llm_latency_seconds": 7.685901375,
+      "llm_candidate_count": 2,
+      "llm_status": "SUCCESS",
+      "llm_error": null,
+      "rule_only": {
+        "status": "PARTIALLY_EVALUATED",
+        "evaluation_scope": "TARGET_RATING_ONLY",
+        "target_rating_evaluation": {
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "target_count": 1,
+          "complete_target_scope_count": 1,
+          "candidate_count_in_scope": 1,
+          "correct_target_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "precision": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "recall": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "f1": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "value_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "unit_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "rating_kind_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "condition_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "evidence_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "table_context_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "per_target": [
+            {
+              "document_id": "VISHAY_MCT0603",
+              "rating_key": "max_power_w",
+              "target_scope": {
+                "scope_type": "target_rating",
+                "complete_target_scope": true,
+                "complete_document_inventory": false,
+                "component_variant": "MCT 0603",
+                "row_label": "Rated dissipation, P70",
+                "column_header": "STANDARD",
+                "allow_blank_column": true
+              },
+              "status": "MEASURED_DEVELOPMENT_PILOT",
+              "candidate_count_in_scope": 1,
+              "true_positive_count": 1,
+              "false_positive_count": 0,
+              "false_negative_count": 0,
+              "target_precision": 1.0,
+              "target_recall": 1.0,
+              "scope_class_counts": {
+                "WRONG_COMPONENT_VARIANT": 5,
+                "SUPPORTED_CORRECT": 1,
+                "OUT_OF_SCOPE": 1,
+                "UNVERIFIED": 4
+              }
+            }
+          ]
+        },
+        "full_document_evaluation": {
+          "status": "NOT_EVALUATED",
+          "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+          "precision": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "recall": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "f1": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          }
+        },
+        "candidate_count_all_scopes": 24,
+        "scored_candidate_count": 1,
+        "excluded_candidate_count": 23,
+        "source_verification_rejection_rate": {
+          "value": 0.0,
+          "status": "MEASURED_AUTOMATED_CHECK",
+          "denominator": 24,
+          "reason": null
+        },
+        "source_verification_rejection_count": 0,
+        "unverified_candidate_count": 4,
+        "out_of_scope_candidate_count": 14,
+        "wrong_component_variant_count": 5,
+        "candidate_error_class_counts": {
+          "WRONG_COMPONENT_VARIANT": 5,
+          "SUPPORTED_CORRECT": 1,
+          "OUT_OF_SCOPE": 14,
+          "UNVERIFIED": 4
+        },
+        "unsupported_claim_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "No candidate-level human adjudication records are included."
+        },
+        "hallucination_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+        },
+        "latency_seconds": 0.014001958013977855
+      },
+      "rule_plus_llm": {
+        "status": "PARTIALLY_EVALUATED",
+        "evaluation_scope": "TARGET_RATING_ONLY",
+        "target_rating_evaluation": {
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "target_count": 1,
+          "complete_target_scope_count": 1,
+          "candidate_count_in_scope": 1,
+          "correct_target_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "precision": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "recall": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "f1": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "value_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "unit_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "rating_kind_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "condition_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "evidence_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "table_context_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "per_target": [
+            {
+              "document_id": "VISHAY_MCT0603",
+              "rating_key": "max_power_w",
+              "target_scope": {
+                "scope_type": "target_rating",
+                "complete_target_scope": true,
+                "complete_document_inventory": false,
+                "component_variant": "MCT 0603",
+                "row_label": "Rated dissipation, P70",
+                "column_header": "STANDARD",
+                "allow_blank_column": true
+              },
+              "status": "MEASURED_DEVELOPMENT_PILOT",
+              "candidate_count_in_scope": 1,
+              "true_positive_count": 1,
+              "false_positive_count": 0,
+              "false_negative_count": 0,
+              "target_precision": 1.0,
+              "target_recall": 1.0,
+              "scope_class_counts": {
+                "WRONG_COMPONENT_VARIANT": 5,
+                "SUPPORTED_CORRECT": 1,
+                "OUT_OF_SCOPE": 1,
+                "UNVERIFIED": 4
+              }
+            }
+          ]
+        },
+        "full_document_evaluation": {
+          "status": "NOT_EVALUATED",
+          "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+          "precision": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "recall": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "f1": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          }
+        },
+        "candidate_count_all_scopes": 24,
+        "scored_candidate_count": 1,
+        "excluded_candidate_count": 23,
+        "source_verification_rejection_rate": {
+          "value": 0.0,
+          "status": "MEASURED_AUTOMATED_CHECK",
+          "denominator": 24,
+          "reason": null
+        },
+        "source_verification_rejection_count": 0,
+        "unverified_candidate_count": 4,
+        "out_of_scope_candidate_count": 14,
+        "wrong_component_variant_count": 5,
+        "candidate_error_class_counts": {
+          "WRONG_COMPONENT_VARIANT": 5,
+          "SUPPORTED_CORRECT": 1,
+          "OUT_OF_SCOPE": 14,
+          "UNVERIFIED": 4
+        },
+        "unsupported_claim_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "No candidate-level human adjudication records are included."
+        },
+        "hallucination_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+        },
+        "latency_seconds": 7.699903333013978
+      },
+      "llm_model": {
+        "name": "gemma4:12b",
+        "size": 7714091504,
+        "digest": "c7597fc90b86aff6965317f37dd5465402284e26382d9b4bf2dfe3ef1491f4b6",
+        "details": {
+          "parent_model": "",
+          "format": "safetensors",
+          "family": "",
+          "families": null,
+          "parameter_size": "",
+          "quantization_level": "",
+          "runner": "mlx"
+        }
+      }
+    },
+    {
+      "document_id": "KEMET_C0603C104K4RACTU",
+      "status": "EVALUATED",
+      "source_sha256": "c9946863f1e61509bec6b20088279e7d5da0e17840fddbd94904881e530f2368",
+      "manifest_sha256_match": true,
+      "page_count": 4,
+      "table_count": 4,
+      "ground_truth_count": 1,
+      "rule_candidate_count": 1,
+      "llm_latency_seconds": 4.991333334,
+      "llm_candidate_count": 1,
+      "llm_status": "SUCCESS",
+      "llm_error": null,
+      "rule_only": {
+        "status": "PARTIALLY_EVALUATED",
+        "evaluation_scope": "TARGET_RATING_ONLY",
+        "target_rating_evaluation": {
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "target_count": 1,
+          "complete_target_scope_count": 1,
+          "candidate_count_in_scope": 1,
+          "correct_target_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "precision": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "recall": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "f1": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "value_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "unit_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "rating_kind_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "condition_accuracy": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "No matched target predictions with this property."
+          },
+          "evidence_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "table_context_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "per_target": [
+            {
+              "document_id": "KEMET_C0603C104K4RACTU",
+              "rating_key": "max_abs_voltage_v",
+              "target_scope": {
+                "scope_type": "target_rating",
+                "complete_target_scope": true,
+                "complete_document_inventory": false,
+                "row_label": "Voltage DC",
+                "source_anchor": "Voltage DC"
+              },
+              "status": "MEASURED_DEVELOPMENT_PILOT",
+              "candidate_count_in_scope": 1,
+              "true_positive_count": 1,
+              "false_positive_count": 0,
+              "false_negative_count": 0,
+              "target_precision": 1.0,
+              "target_recall": 1.0,
+              "scope_class_counts": {
+                "SUPPORTED_CORRECT": 1
+              }
+            }
+          ]
+        },
+        "full_document_evaluation": {
+          "status": "NOT_EVALUATED",
+          "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+          "precision": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "recall": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "f1": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          }
+        },
+        "candidate_count_all_scopes": 1,
+        "scored_candidate_count": 1,
+        "excluded_candidate_count": 0,
+        "source_verification_rejection_rate": {
+          "value": 0.0,
+          "status": "MEASURED_AUTOMATED_CHECK",
+          "denominator": 1,
+          "reason": null
+        },
+        "source_verification_rejection_count": 0,
+        "unverified_candidate_count": 0,
+        "out_of_scope_candidate_count": 0,
+        "wrong_component_variant_count": 0,
+        "candidate_error_class_counts": {
+          "SUPPORTED_CORRECT": 1
+        },
+        "unsupported_claim_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "No candidate-level human adjudication records are included."
+        },
+        "hallucination_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+        },
+        "latency_seconds": 0.001907833997393027
+      },
+      "rule_plus_llm": {
+        "status": "PARTIALLY_EVALUATED",
+        "evaluation_scope": "TARGET_RATING_ONLY",
+        "target_rating_evaluation": {
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "target_count": 1,
+          "complete_target_scope_count": 1,
+          "candidate_count_in_scope": 1,
+          "correct_target_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "precision": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "recall": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "f1": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "value_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "unit_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "rating_kind_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "condition_accuracy": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "No matched target predictions with this property."
+          },
+          "evidence_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "table_context_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "per_target": [
+            {
+              "document_id": "KEMET_C0603C104K4RACTU",
+              "rating_key": "max_abs_voltage_v",
+              "target_scope": {
+                "scope_type": "target_rating",
+                "complete_target_scope": true,
+                "complete_document_inventory": false,
+                "row_label": "Voltage DC",
+                "source_anchor": "Voltage DC"
+              },
+              "status": "MEASURED_DEVELOPMENT_PILOT",
+              "candidate_count_in_scope": 1,
+              "true_positive_count": 1,
+              "false_positive_count": 0,
+              "false_negative_count": 0,
+              "target_precision": 1.0,
+              "target_recall": 1.0,
+              "scope_class_counts": {
+                "SUPPORTED_CORRECT": 1
+              }
+            }
+          ]
+        },
+        "full_document_evaluation": {
+          "status": "NOT_EVALUATED",
+          "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+          "precision": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "recall": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "f1": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          }
+        },
+        "candidate_count_all_scopes": 1,
+        "scored_candidate_count": 1,
+        "excluded_candidate_count": 0,
+        "source_verification_rejection_rate": {
+          "value": 0.0,
+          "status": "MEASURED_AUTOMATED_CHECK",
+          "denominator": 1,
+          "reason": null
+        },
+        "source_verification_rejection_count": 0,
+        "unverified_candidate_count": 0,
+        "out_of_scope_candidate_count": 0,
+        "wrong_component_variant_count": 0,
+        "candidate_error_class_counts": {
+          "SUPPORTED_CORRECT": 1
+        },
+        "unsupported_claim_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "No candidate-level human adjudication records are included."
+        },
+        "hallucination_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+        },
+        "latency_seconds": 4.993241167997393
+      },
+      "llm_model": {
+        "name": "gemma4:12b",
+        "size": 7714091504,
+        "digest": "c7597fc90b86aff6965317f37dd5465402284e26382d9b4bf2dfe3ef1491f4b6",
+        "details": {
+          "parent_model": "",
+          "format": "safetensors",
+          "family": "",
+          "families": null,
+          "parameter_size": "",
+          "quantization_level": "",
+          "runner": "mlx"
+        }
+      }
+    },
+    {
+      "document_id": "VISHAY_1N4148",
+      "status": "EVALUATED",
+      "source_sha256": "aefe85400a427ed886a4e1c88205ceabb9f9b38044b29c6acee4bb00146a44b7",
+      "manifest_sha256_match": true,
+      "page_count": 4,
+      "table_count": 12,
+      "ground_truth_count": 1,
+      "rule_candidate_count": 6,
+      "llm_latency_seconds": null,
+      "llm_candidate_count": 0,
+      "llm_status": "FAILED",
+      "llm_error": "Ollama returned invalid JSON content: Expecting value: line 1 column 1 (char 0); response starts '```json\\n{\"ratings\":[{\"rating_key\":\"max_abs_voltage_v\",\"rating_type\":\"voltage_rating\",\"rating_kind\":\"peak\",\"raw_value\":\"100\",\"normalized_value\":100.0,\"normalized_unit\":\"V\",\"pdf_page_index\":0,\"source_text\":\"Repetitive peak reverse voltage\\\\n\\\\n'",
+      "rule_only": {
+        "status": "PARTIALLY_EVALUATED",
+        "evaluation_scope": "TARGET_RATING_ONLY",
+        "target_rating_evaluation": {
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "target_count": 1,
+          "complete_target_scope_count": 1,
+          "candidate_count_in_scope": 1,
+          "correct_target_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "precision": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "recall": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "f1": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "value_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "unit_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "rating_kind_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "condition_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "evidence_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "table_context_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "per_target": [
+            {
+              "document_id": "VISHAY_1N4148",
+              "rating_key": "max_current_a",
+              "target_scope": {
+                "scope_type": "target_rating",
+                "complete_target_scope": true,
+                "complete_document_inventory": false,
+                "row_label": "Forward continuous current",
+                "source_anchor": "Forward continuous current"
+              },
+              "status": "MEASURED_DEVELOPMENT_PILOT",
+              "candidate_count_in_scope": 1,
+              "true_positive_count": 1,
+              "false_positive_count": 0,
+              "false_negative_count": 0,
+              "target_precision": 1.0,
+              "target_recall": 1.0,
+              "scope_class_counts": {
+                "OUT_OF_SCOPE": 2,
+                "SUPPORTED_CORRECT": 1
+              }
+            }
+          ]
+        },
+        "full_document_evaluation": {
+          "status": "NOT_EVALUATED",
+          "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+          "precision": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "recall": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "f1": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          }
+        },
+        "candidate_count_all_scopes": 6,
+        "scored_candidate_count": 1,
+        "excluded_candidate_count": 5,
+        "source_verification_rejection_rate": {
+          "value": 0.0,
+          "status": "MEASURED_AUTOMATED_CHECK",
+          "denominator": 6,
+          "reason": null
+        },
+        "source_verification_rejection_count": 0,
+        "unverified_candidate_count": 0,
+        "out_of_scope_candidate_count": 5,
+        "wrong_component_variant_count": 0,
+        "candidate_error_class_counts": {
+          "OUT_OF_SCOPE": 5,
+          "SUPPORTED_CORRECT": 1
+        },
+        "unsupported_claim_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "No candidate-level human adjudication records are included."
+        },
+        "hallucination_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+        },
+        "latency_seconds": 0.003708957985509187
+      },
+      "rule_plus_llm": {
+        "status": "PARTIALLY_EVALUATED",
+        "evaluation_scope": "TARGET_RATING_ONLY",
+        "target_rating_evaluation": {
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "target_count": 1,
+          "complete_target_scope_count": 1,
+          "candidate_count_in_scope": 1,
+          "correct_target_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "precision": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "recall": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "f1": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "value_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "unit_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "rating_kind_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "condition_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "evidence_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "table_context_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "per_target": [
+            {
+              "document_id": "VISHAY_1N4148",
+              "rating_key": "max_current_a",
+              "target_scope": {
+                "scope_type": "target_rating",
+                "complete_target_scope": true,
+                "complete_document_inventory": false,
+                "row_label": "Forward continuous current",
+                "source_anchor": "Forward continuous current"
+              },
+              "status": "MEASURED_DEVELOPMENT_PILOT",
+              "candidate_count_in_scope": 1,
+              "true_positive_count": 1,
+              "false_positive_count": 0,
+              "false_negative_count": 0,
+              "target_precision": 1.0,
+              "target_recall": 1.0,
+              "scope_class_counts": {
+                "OUT_OF_SCOPE": 2,
+                "SUPPORTED_CORRECT": 1
+              }
+            }
+          ]
+        },
+        "full_document_evaluation": {
+          "status": "NOT_EVALUATED",
+          "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+          "precision": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "recall": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "f1": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          }
+        },
+        "candidate_count_all_scopes": 6,
+        "scored_candidate_count": 1,
+        "excluded_candidate_count": 5,
+        "source_verification_rejection_rate": {
+          "value": 0.0,
+          "status": "MEASURED_AUTOMATED_CHECK",
+          "denominator": 6,
+          "reason": null
+        },
+        "source_verification_rejection_count": 0,
+        "unverified_candidate_count": 0,
+        "out_of_scope_candidate_count": 5,
+        "wrong_component_variant_count": 0,
+        "candidate_error_class_counts": {
+          "OUT_OF_SCOPE": 5,
+          "SUPPORTED_CORRECT": 1
+        },
+        "unsupported_claim_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "No candidate-level human adjudication records are included."
+        },
+        "hallucination_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+        },
+        "latency_seconds": 0.003708957985509187
+      },
+      "llm_model": null
+    },
+    {
+      "document_id": "TI_LM7805_FAMILY",
+      "status": "EVALUATED",
+      "source_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "manifest_sha256_match": true,
+      "page_count": 38,
+      "table_count": 54,
+      "ground_truth_count": 1,
+      "rule_candidate_count": 17,
+      "llm_latency_seconds": 20.268481917,
+      "llm_candidate_count": 3,
+      "llm_status": "SUCCESS",
+      "llm_error": null,
+      "rule_only": {
+        "status": "PARTIALLY_EVALUATED",
+        "evaluation_scope": "TARGET_RATING_ONLY",
+        "target_rating_evaluation": {
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "target_count": 1,
+          "complete_target_scope_count": 1,
+          "candidate_count_in_scope": 1,
+          "correct_target_count": 1,
+          "false_positive_count": 0,
+          "false_negative_count": 0,
+          "precision": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "recall": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "f1": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "value_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "unit_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "rating_kind_accuracy": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "No matched target predictions with this property."
+          },
+          "condition_accuracy": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "No matched target predictions with this property."
+          },
+          "evidence_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "table_context_accuracy": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "No matched target predictions with this property."
+          },
+          "per_target": [
+            {
+              "document_id": "TI_LM7805_FAMILY",
+              "rating_key": "max_current_a",
+              "target_scope": {
+                "scope_type": "target_rating",
+                "complete_target_scope": true,
+                "complete_document_inventory": false,
+                "source_anchor": "Output Current up to 1.5 A"
+              },
+              "status": "MEASURED_DEVELOPMENT_PILOT",
+              "candidate_count_in_scope": 1,
+              "true_positive_count": 1,
+              "false_positive_count": 0,
+              "false_negative_count": 0,
+              "target_precision": 1.0,
+              "target_recall": 1.0,
+              "scope_class_counts": {
+                "SUPPORTED_CORRECT": 1,
+                "SOURCE_AMBIGUOUS": 16
+              }
+            }
+          ]
+        },
+        "full_document_evaluation": {
+          "status": "NOT_EVALUATED",
+          "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+          "precision": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "recall": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "f1": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          }
+        },
+        "candidate_count_all_scopes": 17,
+        "scored_candidate_count": 1,
+        "excluded_candidate_count": 16,
+        "source_verification_rejection_rate": {
+          "value": 0.9411764705882353,
+          "status": "MEASURED_AUTOMATED_CHECK",
+          "denominator": 17,
+          "reason": null
+        },
+        "source_verification_rejection_count": 16,
+        "unverified_candidate_count": 16,
+        "out_of_scope_candidate_count": 0,
+        "wrong_component_variant_count": 0,
+        "candidate_error_class_counts": {
+          "SUPPORTED_CORRECT": 1,
+          "SOURCE_AMBIGUOUS": 16
+        },
+        "unsupported_claim_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "No candidate-level human adjudication records are included."
+        },
+        "hallucination_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+        },
+        "latency_seconds": 0.023237249988596886
+      },
+      "rule_plus_llm": {
+        "status": "PARTIALLY_EVALUATED",
+        "evaluation_scope": "TARGET_RATING_ONLY",
+        "target_rating_evaluation": {
+          "status": "MEASURED_DEVELOPMENT_PILOT",
+          "target_count": 1,
+          "complete_target_scope_count": 1,
+          "candidate_count_in_scope": 2,
+          "correct_target_count": 1,
+          "false_positive_count": 1,
+          "false_negative_count": 0,
+          "precision": {
+            "value": 0.5,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 2,
+            "reason": null
+          },
+          "recall": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "f1": {
+            "value": 0.6666666666666666,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "value_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "unit_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "rating_kind_accuracy": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "No matched target predictions with this property."
+          },
+          "condition_accuracy": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "No matched target predictions with this property."
+          },
+          "evidence_accuracy": {
+            "value": 1.0,
+            "status": "MEASURED_DEVELOPMENT_PILOT",
+            "denominator": 1,
+            "reason": null
+          },
+          "table_context_accuracy": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "No matched target predictions with this property."
+          },
+          "per_target": [
+            {
+              "document_id": "TI_LM7805_FAMILY",
+              "rating_key": "max_current_a",
+              "target_scope": {
+                "scope_type": "target_rating",
+                "complete_target_scope": true,
+                "complete_document_inventory": false,
+                "source_anchor": "Output Current up to 1.5 A"
+              },
+              "status": "MEASURED_DEVELOPMENT_PILOT",
+              "candidate_count_in_scope": 2,
+              "true_positive_count": 1,
+              "false_positive_count": 1,
+              "false_negative_count": 0,
+              "target_precision": 0.5,
+              "target_recall": 1.0,
+              "scope_class_counts": {
+                "SUPPORTED_CORRECT": 2,
+                "SOURCE_AMBIGUOUS": 16,
+                "OUT_OF_SCOPE": 2
+              }
+            }
+          ]
+        },
+        "full_document_evaluation": {
+          "status": "NOT_EVALUATED",
+          "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified.",
+          "precision": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "recall": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          },
+          "f1": {
+            "value": null,
+            "status": "NOT_EVALUATED",
+            "denominator": 0,
+            "reason": "Ground truth labels only selected target ratings; the complete document inventory is not verified."
+          }
+        },
+        "candidate_count_all_scopes": 20,
+        "scored_candidate_count": 2,
+        "excluded_candidate_count": 18,
+        "source_verification_rejection_rate": {
+          "value": 0.8,
+          "status": "MEASURED_AUTOMATED_CHECK",
+          "denominator": 20,
+          "reason": null
+        },
+        "source_verification_rejection_count": 16,
+        "unverified_candidate_count": 16,
+        "out_of_scope_candidate_count": 2,
+        "wrong_component_variant_count": 0,
+        "candidate_error_class_counts": {
+          "SUPPORTED_CORRECT": 2,
+          "SOURCE_AMBIGUOUS": 16,
+          "OUT_OF_SCOPE": 2
+        },
+        "unsupported_claim_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "No candidate-level human adjudication records are included."
+        },
+        "hallucination_rate": {
+          "value": null,
+          "status": "NOT_EVALUATED",
+          "denominator": 0,
+          "reason": "Hallucination requires candidate-level human confirmation; source-check failure alone is insufficient."
+        },
+        "latency_seconds": 20.291719166988596
+      },
+      "llm_model": {
+        "name": "gemma4:12b",
+        "size": 7714091504,
+        "digest": "c7597fc90b86aff6965317f37dd5465402284e26382d9b4bf2dfe3ef1491f4b6",
+        "details": {
+          "parent_model": "",
+          "format": "safetensors",
+          "family": "",
+          "families": null,
+          "parameter_size": "",
+          "quantization_level": "",
+          "runner": "mlx"
+        }
+      }
+    }
+  ],
+  "excluded_documents": [
+    {
+      "component_family": "capacitor alternate manufacturer",
+      "manufacturer": "TDK",
+      "mpn": "C1608X7R1C105K080AC",
+      "source_url": "https://product.tdk.com/system/files/dam/doc/product/capacitor/ceramic/mlcc/charasheet/c1608x7r1c105k080ac.pdf",
+      "status": "ACCESS_DENIED_HTTP_403",
+      "reason": "Attempted direct official PDF retrieval during Phase 15; retained the lead but excluded it from the scored set."
+    }
+  ],
+  "integrity_audit": {
+    "status": "PASSED_TARGET_SCOPE_LABELS",
+    "full_document_inventory_complete": false,
+    "full_document_precision_evaluated": false,
+    "unsupported_claim_and_hallucination_require_human_adjudication": true
+  },
+  "limitations": [
+    "Target-rating metrics cover only a manually defined row/variant/cell, not all ratings in each PDF.",
+    "No candidate-level independent human error adjudications are present; hallucination and unsupported-claim rates are NOT_EVALUATED.",
+    "Small pilot, one document per scored family.",
+    "PDFs are not stored in Git; local runs require exact SHA-matching files.",
+    "The Phase 14 YAGEO RC0805FR-071KL development smoke document is excluded.",
+    "No result generalizes to unseen manufacturers, merged tables, or scan-only documents."
+  ]
+}

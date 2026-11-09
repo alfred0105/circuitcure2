@@ -1,0 +1,9 @@
+{
+  "requested": 4957,
+  "extracted": 4948,
+  "failed": 9,
+  "k": 96,
+  "radius_mm": 250.0,
+  "mean_candidate_recall": 0.81041960967074,
+  "kicad_cli": "C:\\Users\\ace06\\AppData\\Local\\Programs\\KiCad\\10.0\\bin\\kicad-cli.exe"
+}

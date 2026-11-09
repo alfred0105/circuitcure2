@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "graph_records": 4948,
+    "train_projects": 3919,
+    "validation_projects": 514,
+    "test_projects": 513,
+    "split_counts": {
+      "train": 3920,
+      "validation": 515,
+      "test": 513
+    },
+    "seed": 42,
+    "training_graphs_sampled_for_both_models": 200,
+    "candidate_mean_recall_test": 0.8065484913870787,
+    "training_method": "graph mini-batches of 8; 15 epochs"
+  },
+  "lightgbm": {
+    "candidate_edges": 3258373,
+    "positive_edges": 182509,
+    "positive_rate": 0.05601231043836909,
+    "pr_auc": 0.27054227915328966,
+    "roc_auc": 0.7885499045571698,
+    "f1_at_0_5": 0.2213383847128817,
+    "precision_at_0_5": 0.13143729660533338,
+    "recall_at_0_5": 0.7004038157022393
+  },
+  "gnn_aclp_inspired": {
+    "candidate_edges": 3258373,
+    "positive_edges": 182509,
+    "positive_rate": 0.05601231043836909,
+    "pr_auc": 0.1935783178869284,
+    "roc_auc": 0.7709538702259886,
+    "f1_at_0_5": 0.23536042908197627,
+    "precision_at_0_5": 0.1475616474948662,
+    "recall_at_0_5": 0.5811329852226466,
+    "training_graphs": 200,
+    "epochs": 15
+  },
+  "methodology": "Same nested training sample and full test candidates as the 200-schematic learning-curve run. LightGBM uses endpoint/edge features with per-graph negative sampling capped by ratio and maximum; GNN uses all candidate edges in graph mini-batches. GNN-ACLP-inspired, not a reproduction of the paper.",
+  "model_artifacts": {
+    "gnn": "models/phase22_connectivity/learning_curve/200/gnn_aclp_inspired.pt",
+    "lightgbm": "models/phase22_connectivity/learning_curve/200/lightgbm.txt"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "baseline_file": "baseline.cir",
+  "scenarios": [
+    {
+      "changes": [
+        {
+          "after": "RCHARGE VIN VC 100k",
+          "before": "RCHARGE VIN VC 10k",
+          "component_ref": "RCHARGE",
+          "description": "Set resistor to the explicitly requested drift value",
+          "spice_element": "RCHARGE"
+        }
+      ],
+      "netlist_file": "fault_rcharge_resistance_drift.cir",
+      "risk_assessment": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/risk_assessment.json",
+      "scenario": {
+        "assumptions": [
+          "The resistor is modeled as an ideal linear element at the specified value."
+        ],
+        "component_ref": "RCHARGE",
+        "description": "Apply resistance drift to RCHARGE",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "100k"
+        },
+        "scenario_id": "FAULT_RCHARGE_RESISTANCE_DRIFT"
+      },
+      "simulation_report": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/impact_report.json",
+      "simulation_status": "success"
+    }
+  ],
+  "simulation_status": "success"
+}

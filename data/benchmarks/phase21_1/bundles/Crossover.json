@@ -1,0 +1,78 @@
+{
+  "board_id": "Crossover",
+  "board_revision": "NOT_AVAILABLE",
+  "calibration": {
+    "coordinate_frames": [
+      "IMAGE_RAW",
+      "IMAGE_RECTIFIED",
+      "BOARD_CANONICAL",
+      "KICAD_DESIGN",
+      "LAYER_LOCAL"
+    ],
+    "correspondence_points": [],
+    "status": "REGISTRATION_UNVERIFIED",
+    "transform": null,
+    "validation_results": null
+  },
+  "dataset_source": "https://github.com/KamMalinski/PRISM",
+  "design": {
+    "kicad_pcb": {
+      "path": "Dataset/Crossover/Crossover/Crossover.kicad_pcb",
+      "sha256": "e834e3c3d2d164186be47cda2ff9767b4bd0b6fad17de711bd8dce2b3d517586",
+      "status": "AVAILABLE"
+    },
+    "kicad_schematic": {
+      "path": "Dataset/Crossover/Crossover/Crossover.kicad_sch",
+      "sha256": "f2a1df27cb227bb52d1c835fd6dfa108ce6219be6041208a25503618045c8544",
+      "status": "AVAILABLE"
+    },
+    "netlist": {
+      "path": null,
+      "sha256": null,
+      "status": "NOT_AVAILABLE"
+    },
+    "position_csv": {
+      "path": null,
+      "sha256": null,
+      "status": "NOT_AVAILABLE"
+    }
+  },
+  "images": {
+    "BOTTOM": {
+      "path": "Dataset/Crossover/BOTTOM.png",
+      "sha256": "29fbde397f322920c1865215591faab8fb9d2cbf446e4bb8a99a62cf206ad34c",
+      "status": "AVAILABLE"
+    },
+    "TOP": {
+      "path": "Dataset/Crossover/TOP.png",
+      "sha256": "70fea77e1152ca1bfb5e58e88c1ce33d8bf7bcfc49e52851db8418c80d700e83",
+      "status": "AVAILABLE"
+    }
+  },
+  "license_metadata": {
+    "dataset_specific_license": "NOT_STATED",
+    "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md",
+    "redistribution_status": "REVIEW_REQUIRED",
+    "repository_license": "AGPL-3.0",
+    "repository_license_file": "LICENSE.txt"
+  },
+  "references": {
+    "components": {
+      "path": null,
+      "sha256": null,
+      "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE"
+    },
+    "geometry": {
+      "path": null,
+      "sha256": null,
+      "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE"
+    },
+    "netlist": {
+      "path": null,
+      "sha256": null,
+      "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE"
+    }
+  },
+  "schema_version": "pcb-dataset-bundle-v1",
+  "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f"
+}

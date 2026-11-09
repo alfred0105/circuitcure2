@@ -1,0 +1,4 @@
+{
+  "voltage_nodes": ["VOUT"],
+  "components": ["R1", "R2"]
+}

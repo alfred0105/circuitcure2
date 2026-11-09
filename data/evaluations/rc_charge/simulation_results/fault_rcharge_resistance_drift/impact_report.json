@@ -1,0 +1,49 @@
+{
+  "fault_component": "RCHARGE",
+  "fault_type": "resistance_drift",
+  "scenario_id": "FAULT_RCHARGE_RESISTANCE_DRIFT",
+  "analysis_stage": "fault_impact_simulated",
+  "simulation_status": "success",
+  "simulation_engine": "ngspice",
+  "simulation_run_status": {
+    "baseline": "success",
+    "fault": "success"
+  },
+  "connected_candidates": [
+    {
+      "component_ref": "C1",
+      "shared_nets": [
+        "VC"
+      ],
+      "probe_status": "voltage_only",
+      "electrical_change_observed": true,
+      "stress_record": "component_stress.json"
+    },
+    {
+      "component_ref": "J1",
+      "shared_nets": [
+        "VIN"
+      ],
+      "probe_status": "not_probed",
+      "electrical_change_observed": null,
+      "stress_record": null
+    },
+    {
+      "component_ref": "RBLEED",
+      "shared_nets": [
+        "VC"
+      ],
+      "probe_status": "simulated",
+      "electrical_change_observed": true,
+      "stress_record": "component_stress.json"
+    }
+  ],
+  "measured_voltage_nodes": [
+    "VC"
+  ],
+  "comparison_json": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/comparison.json",
+  "comparison_csv": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/comparison.csv",
+  "component_stress_json": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/component_stress.json",
+  "component_stress_csv": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/component_stress.csv",
+  "damage_assessment": "not_performed"
+}

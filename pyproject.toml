@@ -3,17 +3,43 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "circuitcare-symptom-diagnosis"
+name = "circuitcare-ai"
 version = "0.1.0"
-description = "Connection-optional PCB symptom diagnosis module"
+description = "Local-first circuit fault influence and repair prioritization prototype"
+readme = "README.md"
 requires-python = ">=3.11"
-dependencies = ["PyYAML>=6,<7"]
+license = {text = "Proprietary - no license granted"}
+authors = [{name = "CircuitCare AI contributors"}]
+dependencies = []
 
 [project.optional-dependencies]
+dev = ["pytest>=7.4"]
 ui = ["streamlit>=1.40,<2"]
+pcb-recognition = ["numpy>=1.26,<3", "opencv-python-headless>=4.10,<5", "Pillow>=10", "torch>=2.3", "torchvision>=0.18", "ultralytics>=8.3"]
+poster = ["matplotlib>=3.8"]
+vision = ["numpy>=1.26,<3", "opencv-python-headless>=4.10,<5", "Pillow>=10"]
+vision-ai = ["onnxruntime>=1.18,<2"]
+vision-ocr = ["rapidocr>=3.10,<4", "onnxruntime>=1.18,<2"]
+datasheet = ["pypdf>=5,<7", "pdfplumber>=0.11,<1"]
+connectivity = ["numpy>=1.26,<3", "scipy>=1.13,<2", "networkx>=3.3,<4", "torch>=2.3", "lightgbm>=4.4,<5", "scikit-learn>=1.5,<2"]
+
+[project.scripts]
+circuitcare = "circuitcare.cli:main"
+circuitcare-diagnose = "circuitcare.diagnosis_cli:main"
+circuitcare-advise = "circuitcare.repair_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-circuitcare = ["symptom_diagnosis/knowledge/*.yaml"]
+circuitcare = ["schematic/assets/*.html", "schematic/assets/*.css", "schematic/assets/*.js",
+              "dashboard/components/assets/*.html", "dashboard/components/assets/*.css",
+              "dashboard/components/assets/*.js"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: requires external native or optional runtime dependencies",
+    "stress: bounded synthetic stress and soak coverage",
+    "crash_injection: intentionally terminates an isolated child process",
+]

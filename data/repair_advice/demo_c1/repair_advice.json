@@ -1,0 +1,174 @@
+{
+  "failed_component": "U1",
+  "fault_type": "regulator_output_rise",
+  "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+  "user_question": "C1을 왜 먼저 점검해야 해?",
+  "assessment_type": "deterministic_evidence_based_repair_advice",
+  "inspection_priority": [
+    {
+      "component_ref": "C1",
+      "priority_rank": 1,
+      "priority_score": 98.93,
+      "risk_level": "EXCEEDED",
+      "any_hypothesis_exceeded": true,
+      "scenario_risk_levels": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 1.0,
+          "risk_level": "EXCEEDED"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 2.862518580549353e-20,
+          "risk_level": "NEAR_LIMIT"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 5.148200222412013e-131,
+          "risk_level": "WITHIN_LIMIT"
+        }
+      ]
+    },
+    {
+      "component_ref": "RLOAD",
+      "priority_rank": 2,
+      "priority_score": 33.71,
+      "risk_level": "WITHIN_LIMIT",
+      "any_hypothesis_exceeded": false,
+      "scenario_risk_levels": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 1.0,
+          "risk_level": "WITHIN_LIMIT"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 2.862518580549353e-20,
+          "risk_level": "WITHIN_LIMIT"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 5.148200222412013e-131,
+          "risk_level": "WITHIN_LIMIT"
+        }
+      ]
+    },
+    {
+      "component_ref": "R1",
+      "priority_rank": 3,
+      "priority_score": 32.85,
+      "risk_level": "WITHIN_LIMIT",
+      "any_hypothesis_exceeded": false,
+      "scenario_risk_levels": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 1.0,
+          "risk_level": "WITHIN_LIMIT"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 2.862518580549353e-20,
+          "risk_level": "WITHIN_LIMIT"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 5.148200222412013e-131,
+          "risk_level": "WITHIN_LIMIT"
+        }
+      ]
+    },
+    {
+      "component_ref": "J1",
+      "priority_rank": 4,
+      "priority_score": 0.0,
+      "risk_level": "UNKNOWN",
+      "any_hypothesis_exceeded": false,
+      "scenario_risk_levels": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 1.0,
+          "risk_level": "UNKNOWN"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 2.862518580549353e-20,
+          "risk_level": "UNKNOWN"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 5.148200222412013e-131,
+          "risk_level": "UNKNOWN"
+        }
+      ]
+    }
+  ],
+  "recommended_checks": [
+    {
+      "action": "Review the scenario-specific stress evidence for C1, verify its actual manufacturer rating, and inspect it while de-energized after isolation and stored-energy checks.",
+      "component_ref": "C1",
+      "action_type": "rating_verification_and_unpowered_inspection",
+      "basis": "At least one configured fault hypothesis has simulated stress above its configured rating; scenario likelihood and actual damage are not confirmed.",
+      "evidence_ids": [
+        "E009",
+        "E010",
+        "E011",
+        "E012",
+        "E013",
+        "E014",
+        "E015",
+        "E016",
+        "E017",
+        "E018",
+        "E019",
+        "E020",
+        "E021",
+        "E022",
+        "E023",
+        "E084",
+        "E085",
+        "E104",
+        "E105"
+      ]
+    },
+    {
+      "action": "Identify J1 and obtain its actual ratings before drawing a safety conclusion.",
+      "component_ref": "J1",
+      "action_type": "identify_and_verify_rating",
+      "basis": "The current data are insufficient to classify this component as within limits.",
+      "evidence_ids": [
+        "E078",
+        "E079",
+        "E080",
+        "E081",
+        "E082",
+        "E083",
+        "E090",
+        "E091"
+      ]
+    }
+  ],
+  "initial_safety_checks": [
+    "Disconnect and isolate all power sources before inspection.",
+    "Allow stored energy to discharge and verify the de-energized state using appropriately rated procedures and equipment.",
+    "Do not probe a damaged energized circuit based solely on this software recommendation; seek a qualified person if safe isolation or measurement conditions are uncertain."
+  ],
+  "post_repair_checks": [
+    "Verify replacement part number, rating, polarity, pinout, and circuit compatibility against the design and manufacturer documentation.",
+    "With power isolated, check assembly, solder bridges, and relevant continuity before re-energizing.",
+    "Any controlled re-energization and functional measurements require an appropriately qualified person and suitable current-limited lab procedure."
+  ],
+  "unconfirmed": [
+    "The top posterior is conditional on only the configured scenarios and measurement model; it is not certainty about the real circuit.",
+    "Q1 is excluded from physical ranking: The KiCad Q1 pins (VIN and GND) do not correspond to the SPICE S1 power terminals (VIN and SWITCH_OUT); this example cannot establish the switch's physical stress mapping.",
+    "J1 has insufficient ratings or measurements and is not confirmed safe.",
+    "C1 has unsupported or incomplete stress metrics (voltage_only).",
+    "Q1 has unsupported or incomplete stress metrics (measured_voltage_only).",
+    "No component damage has been confirmed by these simulated and configured data."
+  ],
+  "damage_confirmed": false,
+  "damage_probability": null,
+  "priority_score_interpretation": "Inspection order only; not a damage probability.",
+  "llm_status": "success",
+  "llm_explanation_file": "data/repair_advice/demo_c1/llm_explanation.json",
+  "evidence_file": "data/repair_advice/demo_c1/evidence.json"
+}

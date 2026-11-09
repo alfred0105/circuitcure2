@@ -1,0 +1,4582 @@
+{
+  "schema": "phase21.1.1-registration-attempt-v1",
+  "dataset_source": "https://github.com/KamMalinski/PRISM",
+  "prism_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+  "circuitcare_commit": "1877b58880f0f725157bb0fa16c782b35fe077d7",
+  "circuitcare_worktree_dirty": true,
+  "calibration_mode": "AUTO_REGISTRATION",
+  "experiment_track": "DESIGN_ASSISTED_REGISTRATION",
+  "thresholds": {
+    "ransac_threshold_px": 2.0,
+    "acceptance_threshold_px": null
+  },
+  "automatic_matching_configuration": {
+    "image_anchor_detector": "dark connected components, circularity >= 0.35, gray < 28",
+    "design_anchor_types": [
+      "through-hole pads",
+      "vias"
+    ],
+    "scale_search_px_per_mm": [
+      1.0,
+      80.0
+    ],
+    "pair_distance_scale_tolerance": 0.015,
+    "scale_histogram_bins": 720,
+    "ransac_model": "AFFINE",
+    "ransac_threshold_px": 2.0,
+    "match_tolerance_px": "max(3.5, 0.006 * min(image_width_px, image_height_px))",
+    "bottom_mirror": "searched as a negative-determinant similarity candidate; never forced",
+    "track": "DESIGN_ASSISTED_REGISTRATION"
+  },
+  "samples_requested": 12,
+  "sample_results": [
+    {
+      "sample_id": "Simple",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "d51f43bfcde8a444d37bde04e312f56ee042f3aaf9f7ebb6a0e12fcb2aa99acd",
+      "input_hashes": {
+        "Dataset/Simple/TOP.png": "013d34f12ab97eda2d28308e67adf1736b595fed1df0c13299e2cd2e50d375b1",
+        "Dataset/Simple/BOTTOM.png": "ba3754c260c113c718fa400213e6f824abdef44daae9645562c5a65a3d2ec52e",
+        "Dataset/Simple/Simple/Simple.kicad_pcb": "3ee13ce2e3125ca3b32d7e755aeaf3cbbc22f6c54205892a478fb79192815ec9",
+        "Dataset/Simple/Simple/Simple.kicad_sch": "0f79c86ec7c9598ec00ff65c32583b191300037131e36f897abbfb5c917dff3c"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 4,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "AVAILABLE",
+          "count": 1,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Simple",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Simple/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "013d34f12ab97eda2d28308e67adf1736b595fed1df0c13299e2cd2e50d375b1"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Simple/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "ba3754c260c113c718fa400213e6f824abdef44daae9645562c5a65a3d2ec52e"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Simple/Simple/Simple.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "3ee13ce2e3125ca3b32d7e755aeaf3cbbc22f6c54205892a478fb79192815ec9"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Simple/Simple/Simple.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "0f79c86ec7c9598ec00ff65c32583b191300037131e36f897abbfb5c917dff3c"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_FAILED",
+          "verification_status": "REGISTRATION_FAILED",
+          "reason": "NO_GEOMETRICALLY_CONSISTENT_ANCHOR_MATCHES",
+          "board_side": "TOP",
+          "image_size_px": [
+            2364,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 4,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": 0.0,
+          "transform": null,
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "REGISTRATION_FAILED",
+          "mean_error_px": null,
+          "rmse_error_px": null,
+          "max_error_px": null,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 0,
+          "candidate_transform_count": 0,
+          "design_anchor_count": 4,
+          "image_anchor_count": 3,
+          "spatial_coverage": 0.0,
+          "transform_stability_px": null,
+          "orientation": null,
+          "matching_reason": "NO_GEOMETRICALLY_CONSISTENT_ANCHOR_MATCHES",
+          "matches": [],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Simple_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Simple_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Simple_TOP_registration.png",
+          "runtime_seconds": 0.08621695899637416
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_FAILED",
+          "verification_status": "REGISTRATION_FAILED",
+          "reason": "DEGENERATE_OR_INVALID_MATCH_GEOMETRY: Degenerate source point geometry: points are nearly collinear",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            2364,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 2,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 3,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": 0.0,
+          "transform": null,
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "REGISTRATION_FAILED",
+          "mean_error_px": null,
+          "rmse_error_px": null,
+          "max_error_px": null,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 3,
+          "candidate_transform_count": 2,
+          "design_anchor_count": 4,
+          "image_anchor_count": 3,
+          "spatial_coverage": 0.0,
+          "transform_stability_px": null,
+          "orientation": null,
+          "matching_reason": "DEGENERATE_OR_INVALID_MATCH_GEOMETRY: Degenerate source point geometry: points are nearly collinear",
+          "matches": [],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Simple_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Simple_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Simple_BOTTOM_registration.png",
+          "runtime_seconds": 0.07055674999719486
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 0,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Divider",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "1040daf9433efa69b9b4b96e6920009caab70b8b9f11440d8505815f96644cc9",
+      "input_hashes": {
+        "Dataset/Divider/TOP.png": "342b6c4cf741bbac1255fa029f97e895f5102a74eb6e8c2a987b12a526d88e0f",
+        "Dataset/Divider/BOTTOM.png": "e331fc926a65661bcd83e88ecf032626b2a92bd87b667dcbd45781cf823b89d4",
+        "Dataset/Divider/Divider/Divider.kicad_pcb": "276eb28ad2e71bacbe570fe3f79aea1aa5320afe2073942431a2717215a3fe9c",
+        "Dataset/Divider/Divider/Divider.kicad_sch": "5855fc703295d7efe739ba4f73053cf9efe0fdd34393454e4be81e3542ab7ac0"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 8,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 10,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Divider",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Divider/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "342b6c4cf741bbac1255fa029f97e895f5102a74eb6e8c2a987b12a526d88e0f"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Divider/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "e331fc926a65661bcd83e88ecf032626b2a92bd87b667dcbd45781cf823b89d4"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Divider/Divider/Divider.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "276eb28ad2e71bacbe570fe3f79aea1aa5320afe2073942431a2717215a3fe9c"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Divider/Divider/Divider.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "5855fc703295d7efe739ba4f73053cf9efe0fdd34393454e4be81e3542ab7ac0"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_FAILED",
+          "verification_status": "REGISTRATION_FAILED",
+          "reason": "UNSTABLE_MATCH_GEOMETRY: LOW_MATCH_SUPPORT, AMBIGUOUS_TRANSFORM_HYPOTHESES",
+          "board_side": "TOP",
+          "image_size_px": [
+            746,
+            233
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 0,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 3,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": 2.2329935177367588e-05,
+          "p95_error_px": 3.0911184842466524e-05,
+          "inlier_count": 3,
+          "inlier_ratio": 1.0,
+          "transform": null,
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "REGISTRATION_FAILED",
+          "mean_error_px": 1.8926942547994794e-05,
+          "rmse_error_px": 2.251422503108402e-05,
+          "max_error_px": 3.186465702747752e-05,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [
+            "LOW_MATCH_SUPPORT",
+            "AMBIGUOUS_TRANSFORM_HYPOTHESES"
+          ],
+          "candidate_match_count": 3,
+          "candidate_transform_count": 38,
+          "design_anchor_count": 8,
+          "image_anchor_count": 6,
+          "spatial_coverage": 0.12218284532604416,
+          "transform_stability_px": 596.6963784419024,
+          "orientation": "ROTATION_SCALE",
+          "matching_reason": "UNSTABLE_MATCH_GEOMETRY: LOW_MATCH_SUPPORT, AMBIGUOUS_TRANSFORM_HYPOTHESES",
+          "matches": [
+            {
+              "design_anchor_id": "pad:J2:1:2",
+              "image_anchor_id": "prism-Divider-top:TOP:dark-round:0004",
+              "residual_px": 2.5862354391392728e-06,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:2:5",
+              "image_anchor_id": "prism-Divider-top:TOP:dark-round:0005",
+              "residual_px": 2.2329935177367588e-05,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J2:2:3",
+              "image_anchor_id": "prism-Divider-top:TOP:dark-round:0000",
+              "residual_px": 3.186465702747752e-05,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Divider_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Divider_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Divider_TOP_registration.png",
+          "runtime_seconds": 0.02169708296423778
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_FAILED",
+          "verification_status": "REGISTRATION_FAILED",
+          "reason": "UNSTABLE_MATCH_GEOMETRY: LOW_MATCH_SUPPORT",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            803,
+            239
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 0,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 5,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": 3.216835186402313e-06,
+          "p95_error_px": 1.0989183905208803e-05,
+          "inlier_count": 3,
+          "inlier_ratio": 0.6,
+          "transform": null,
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "REGISTRATION_FAILED",
+          "mean_error_px": 5.023204518159398e-06,
+          "rmse_error_px": 7.0907540700991795e-06,
+          "max_error_px": 1.1852778207298414e-05,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [
+            "LOW_MATCH_SUPPORT"
+          ],
+          "candidate_match_count": 5,
+          "candidate_transform_count": 45,
+          "design_anchor_count": 8,
+          "image_anchor_count": 6,
+          "spatial_coverage": 0.20274494698755854,
+          "transform_stability_px": null,
+          "orientation": "MIRROR",
+          "matching_reason": "UNSTABLE_MATCH_GEOMETRY: LOW_MATCH_SUPPORT",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R1:2:5",
+              "image_anchor_id": "prism-Divider-bottom:BOTTOM:dark-round:0004",
+              "residual_px": 1.6077746776921858e-13,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J2:1:2",
+              "image_anchor_id": "prism-Divider-bottom:BOTTOM:dark-round:0005",
+              "residual_px": 3.216835186402313e-06,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:4",
+              "image_anchor_id": "prism-Divider-bottom:BOTTOM:dark-round:0003",
+              "residual_px": 1.1852778207298414e-05,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Divider_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Divider_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Divider_BOTTOM_registration.png",
+          "runtime_seconds": 0.019672334019560367
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 2,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Crossover",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "3c865a79697a19031d41e4898d8892f42b1e10d68b69e236965e2deec2046532",
+      "input_hashes": {
+        "Dataset/Crossover/TOP.png": "70fea77e1152ca1bfb5e58e88c1ce33d8bf7bcfc49e52851db8418c80d700e83",
+        "Dataset/Crossover/BOTTOM.png": "29fbde397f322920c1865215591faab8fb9d2cbf446e4bb8a99a62cf206ad34c",
+        "Dataset/Crossover/Crossover/Crossover.kicad_pcb": "e834e3c3d2d164186be47cda2ff9767b4bd0b6fad17de711bd8dce2b3d517586",
+        "Dataset/Crossover/Crossover/Crossover.kicad_sch": "f2a1df27cb227bb52d1c835fd6dfa108ce6219be6041208a25503618045c8544"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 12,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 23,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Crossover",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Crossover/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "70fea77e1152ca1bfb5e58e88c1ce33d8bf7bcfc49e52851db8418c80d700e83"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Crossover/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "29fbde397f322920c1865215591faab8fb9d2cbf446e4bb8a99a62cf206ad34c"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Crossover/Crossover/Crossover.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "e834e3c3d2d164186be47cda2ff9767b4bd0b6fad17de711bd8dce2b3d517586"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Crossover/Crossover/Crossover.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "f2a1df27cb227bb52d1c835fd6dfa108ce6219be6041208a25503618045c8544"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "TOP",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 0,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 9,
+          "validation_point_count": 0,
+          "fit_error_px": 0.5507268940007825,
+          "median_error_px": 0.5465560986393496,
+          "p95_error_px": 0.6929118670770344,
+          "inlier_count": 6,
+          "inlier_ratio": 0.6666666666666666,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                8.541283943660465,
+                -0.07359766637666208,
+                -273.3489332713413
+              ],
+              [
+                0.04064453825098509,
+                8.420770809762743,
+                -375.8613757325724
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "AFFINE",
+            "board_side": "TOP",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:0:7",
+              "auto:3:2",
+              "auto:9:1",
+              "auto:2:3",
+              "auto:8:0",
+              "auto:1:6",
+              "auto:7:5",
+              "auto:4:8",
+              "auto:11:4"
+            ],
+            "fit_error_px": 0.5507268940007825,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 6,
+            "inlier_ratio": 0.6666666666666666,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.5334914449038567,
+          "rmse_error_px": 0.5507268940007825,
+          "max_error_px": 0.7177499005398528,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 9,
+          "candidate_transform_count": 52,
+          "design_anchor_count": 12,
+          "image_anchor_count": 9,
+          "spatial_coverage": 0.7488798679031443,
+          "transform_stability_px": null,
+          "orientation": "ROTATION_SCALE",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:C1:1:0",
+              "image_anchor_id": "prism-Crossover-top:TOP:dark-round:0007",
+              "residual_px": 0.7177499005398528,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C2:2:3",
+              "image_anchor_id": "prism-Crossover-top:TOP:dark-round:0002",
+              "residual_px": 0.2720598957758975,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C2:1:2",
+              "image_anchor_id": "prism-Crossover-top:TOP:dark-round:0003",
+              "residual_px": 0.49962890914011077,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:2:1",
+              "image_anchor_id": "prism-Crossover-top:TOP:dark-round:0006",
+              "residual_px": 0.5228160330724517,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:2:7",
+              "image_anchor_id": "prism-Crossover-top:TOP:dark-round:0005",
+              "residual_px": 0.6183977666885795,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:2:11",
+              "image_anchor_id": "prism-Crossover-top:TOP:dark-round:0004",
+              "residual_px": 0.5702961642062475,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Crossover_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Crossover_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Crossover_TOP_registration.png",
+          "runtime_seconds": 0.04703941696789116
+        },
+        "BOTTOM": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 10,
+          "validation_point_count": 0,
+          "fit_error_px": 1.068024096513388,
+          "median_error_px": 0.7590198946897615,
+          "p95_error_px": 1.5004817714048961,
+          "inlier_count": 8,
+          "inlier_ratio": 0.8,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                -8.53337760674497,
+                0.01698157670274266,
+                1343.2294165572396
+              ],
+              [
+                -0.040741880962767804,
+                8.456996964757545,
+                -371.589135861758
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "MIRROR",
+            "board_side": "BOTTOM",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:3:2",
+              "auto:7:5",
+              "auto:0:9",
+              "auto:2:3",
+              "auto:1:8",
+              "auto:8:0",
+              "auto:11:4",
+              "auto:4:12",
+              "auto:9:1",
+              "auto:6:6"
+            ],
+            "fit_error_px": 1.068024096513388,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 8,
+            "inlier_ratio": 0.8,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.8311865237710061,
+          "rmse_error_px": 0.9410314659820483,
+          "max_error_px": 1.5903701673834438,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 10,
+          "candidate_transform_count": 81,
+          "design_anchor_count": 12,
+          "image_anchor_count": 13,
+          "spatial_coverage": 0.7488798679031443,
+          "transform_stability_px": 0.7398012873602986,
+          "orientation": "MIRROR",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:C2:2:3",
+              "image_anchor_id": "prism-Crossover-bottom:BOTTOM:dark-round:0002",
+              "residual_px": 0.2738255233827084,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:2:7",
+              "image_anchor_id": "prism-Crossover-bottom:BOTTOM:dark-round:0005",
+              "residual_px": 0.4495523674280578,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:1:0",
+              "image_anchor_id": "prism-Crossover-bottom:BOTTOM:dark-round:0009",
+              "residual_px": 0.4105250922045002,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C2:1:2",
+              "image_anchor_id": "prism-Crossover-bottom:BOTTOM:dark-round:0003",
+              "residual_px": 0.6446081245641372,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:2:1",
+              "image_anchor_id": "prism-Crossover-bottom:BOTTOM:dark-round:0008",
+              "residual_px": 1.0736330715165074,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:8",
+              "image_anchor_id": "prism-Crossover-bottom:BOTTOM:dark-round:0000",
+              "residual_px": 1.333546178873308,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:2:11",
+              "image_anchor_id": "prism-Crossover-bottom:BOTTOM:dark-round:0004",
+              "residual_px": 0.8734316648153859,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:4",
+              "image_anchor_id": "prism-Crossover-bottom:BOTTOM:dark-round:0012",
+              "residual_px": 1.5903701673834438,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Crossover_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Crossover_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Crossover_BOTTOM_registration.png",
+          "runtime_seconds": 0.05808391602477059
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 6,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Groundplane",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "b38b36b45f864ac707c89a179ed1448aeb36325213c3413a9c19c88009576aa1",
+      "input_hashes": {
+        "Dataset/Groundplane/TOP.png": "ce9704900a917fb91a9b93b33421a4cb0f4e85034245fb5a13e4c6959cd88e15",
+        "Dataset/Groundplane/BOTTOM.png": "d56b15c108dbb706b4b045599e533466b02d5d57ce699a0f8cdfa46ba41ece64",
+        "Dataset/Groundplane/Groundplane/Groundplane.kicad_pcb": "3eae355344645c545e866b53594181d71334e6260ce5b676c34801682b1c7df7",
+        "Dataset/Groundplane/Groundplane/Groundplane.kicad_sch": "e79937651c9014b64588c25386c894ba8a3df4efc378f9460dfce56e1af9efe6"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 8,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 7,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Groundplane",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Groundplane/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "ce9704900a917fb91a9b93b33421a4cb0f4e85034245fb5a13e4c6959cd88e15"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Groundplane/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "d56b15c108dbb706b4b045599e533466b02d5d57ce699a0f8cdfa46ba41ece64"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Groundplane/Groundplane/Groundplane.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "3eae355344645c545e866b53594181d71334e6260ce5b676c34801682b1c7df7"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Groundplane/Groundplane/Groundplane.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "e79937651c9014b64588c25386c894ba8a3df4efc378f9460dfce56e1af9efe6"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "TOP",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 7,
+          "validation_point_count": 0,
+          "fit_error_px": 0.38160176605135926,
+          "median_error_px": 0.2906904200186369,
+          "p95_error_px": 1.1723086379365166,
+          "inlier_count": 7,
+          "inlier_ratio": 1.0,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                9.945044024382076,
+                0.049287181710396276,
+                -406.44192940033065
+              ],
+              [
+                -0.06428506960720742,
+                9.976175972437645,
+                -443.28087866301166
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "AFFINE",
+            "board_side": "TOP",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:6:7",
+              "auto:5:0",
+              "auto:1:5",
+              "auto:0:4",
+              "auto:2:3",
+              "auto:4:1",
+              "auto:3:2"
+            ],
+            "fit_error_px": 0.38160176605135926,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 6,
+            "inlier_ratio": 0.8571428571428571,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.43982845741913923,
+          "rmse_error_px": 0.617987830386257,
+          "max_error_px": 1.341507831664614,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 7,
+          "candidate_transform_count": 189,
+          "design_anchor_count": 10,
+          "image_anchor_count": 8,
+          "spatial_coverage": 0.21735536773142244,
+          "transform_stability_px": 2.763528070513625,
+          "orientation": "ROTATION_SCALE",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R1:1:6",
+              "image_anchor_id": "prism-Groundplane-top:TOP:dark-round:0007",
+              "residual_px": 0.027776126370314444,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D3:2:5",
+              "image_anchor_id": "prism-Groundplane-top:TOP:dark-round:0000",
+              "residual_px": 0.05766622426117672,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:2:1",
+              "image_anchor_id": "prism-Groundplane-top:TOP:dark-round:0005",
+              "residual_px": 0.22014255087145854,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:0",
+              "image_anchor_id": "prism-Groundplane-top:TOP:dark-round:0004",
+              "residual_px": 0.2906904200186369,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:1:2",
+              "image_anchor_id": "prism-Groundplane-top:TOP:dark-round:0003",
+              "residual_px": 0.7775105192376237,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D3:1:4",
+              "image_anchor_id": "prism-Groundplane-top:TOP:dark-round:0001",
+              "residual_px": 0.36350552951015014,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:2:3",
+              "image_anchor_id": "prism-Groundplane-top:TOP:dark-round:0002",
+              "residual_px": 1.341507831664614,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Groundplane_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Groundplane_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Groundplane_TOP_registration.png",
+          "runtime_seconds": 0.05337449995568022
+        },
+        "BOTTOM": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            1416,
+            660
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 8,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 7,
+          "validation_point_count": 0,
+          "fit_error_px": 0.5941341650459573,
+          "median_error_px": 0.6736793657517799,
+          "p95_error_px": 1.0885271908748815,
+          "inlier_count": 7,
+          "inlier_ratio": 1.0,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                -11.857919178370254,
+                -0.11980240191938175,
+                1835.420717340484
+              ],
+              [
+                -0.2521737344390516,
+                11.393440324874629,
+                -486.2749426743078
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "MIRROR",
+            "board_side": "BOTTOM",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:6:6",
+              "auto:5:0",
+              "auto:2:2",
+              "auto:0:4",
+              "auto:1:5",
+              "auto:4:1",
+              "auto:3:3"
+            ],
+            "fit_error_px": 0.5941341650459573,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 6,
+            "inlier_ratio": 0.8571428571428571,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.6507277492194239,
+          "rmse_error_px": 0.718815178790786,
+          "max_error_px": 1.2242934257648643,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 7,
+          "candidate_transform_count": 178,
+          "design_anchor_count": 10,
+          "image_anchor_count": 8,
+          "spatial_coverage": 0.21735536773142244,
+          "transform_stability_px": null,
+          "orientation": "MIRROR",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R1:1:6",
+              "image_anchor_id": "prism-Groundplane-bottom:BOTTOM:dark-round:0006",
+              "residual_px": 0.21729041151495265,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D3:2:5",
+              "image_anchor_id": "prism-Groundplane-bottom:BOTTOM:dark-round:0000",
+              "residual_px": 0.5684428373372582,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:1:2",
+              "image_anchor_id": "prism-Groundplane-bottom:BOTTOM:dark-round:0002",
+              "residual_px": 0.6736793657517799,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:0",
+              "image_anchor_id": "prism-Groundplane-bottom:BOTTOM:dark-round:0004",
+              "residual_px": 1.2242934257648643,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:2:1",
+              "image_anchor_id": "prism-Groundplane-bottom:BOTTOM:dark-round:0005",
+              "residual_px": 0.3335020504873146,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D3:1:4",
+              "image_anchor_id": "prism-Groundplane-bottom:BOTTOM:dark-round:0001",
+              "residual_px": 0.7661468442148752,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:2:3",
+              "image_anchor_id": "prism-Groundplane-bottom:BOTTOM:dark-round:0003",
+              "residual_px": 0.7717393094649223,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Groundplane_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Groundplane_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Groundplane_BOTTOM_registration.png",
+          "runtime_seconds": 0.057027375034522265
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 7,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Meander",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "73984363bdfe5e53d7a750ffa4ac964469769ec2550eb6d5bc244f3b4b9aa595",
+      "input_hashes": {
+        "Dataset/Meander/TOP.png": "d7af48a3d04e6e02e757ed63a03d69b86e021325abf7d4cf2acfd95bd905f9f2",
+        "Dataset/Meander/BOTTOM.png": "c2258cd8d8b09db7e2d1b3869a741d4d7293681439a928e4038e829e50a14f0d",
+        "Dataset/Meander/Meander/Meander.kicad_pcb": "025e6434bfd970658e1eab6aaec5394728611e5093dc94423ee3fd543395f420",
+        "Dataset/Meander/Meander/Meander.kicad_sch": "03495cdcd7c0fc49d3ca497f7623b032685ce4cafe716c50caa6d72581cb4d4a"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 6,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 155,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Meander",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Meander/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "d7af48a3d04e6e02e757ed63a03d69b86e021325abf7d4cf2acfd95bd905f9f2"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Meander/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "c2258cd8d8b09db7e2d1b3869a741d4d7293681439a928e4038e829e50a14f0d"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Meander/Meander/Meander.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "025e6434bfd970658e1eab6aaec5394728611e5093dc94423ee3fd543395f420"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Meander/Meander/Meander.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "03495cdcd7c0fc49d3ca497f7623b032685ce4cafe716c50caa6d72581cb4d4a"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_FAILED",
+          "verification_status": "REGISTRATION_FAILED",
+          "reason": "UNSTABLE_MATCH_GEOMETRY: AMBIGUOUS_TRANSFORM_HYPOTHESES",
+          "board_side": "TOP",
+          "image_size_px": [
+            963,
+            884
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 4,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": 0.20935180973040468,
+          "p95_error_px": 0.20937016647464593,
+          "inlier_count": 4,
+          "inlier_ratio": 1.0,
+          "transform": null,
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "REGISTRATION_FAILED",
+          "mean_error_px": 0.2093520635023623,
+          "rmse_error_px": 0.20935206402620143,
+          "max_error_px": 0.20937230139538515,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [
+            "AMBIGUOUS_TRANSFORM_HYPOTHESES"
+          ],
+          "candidate_match_count": 4,
+          "candidate_transform_count": 12,
+          "design_anchor_count": 6,
+          "image_anchor_count": 4,
+          "spatial_coverage": 0.1841242937758568,
+          "transform_stability_px": 449.9873572115291,
+          "orientation": "ROTATION_SCALE",
+          "matching_reason": "UNSTABLE_MATCH_GEOMETRY: AMBIGUOUS_TRANSFORM_HYPOTHESES",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R1:1:0",
+              "image_anchor_id": "prism-Meander-top:TOP:dark-round:0002",
+              "residual_px": 0.20933233315325467,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:2:1",
+              "image_anchor_id": "prism-Meander-top:TOP:dark-round:0003",
+              "residual_px": 0.2093455508703523,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:2:3",
+              "image_anchor_id": "prism-Meander-top:TOP:dark-round:0001",
+              "residual_px": 0.20935806859045702,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:1:2",
+              "image_anchor_id": "prism-Meander-top:TOP:dark-round:0000",
+              "residual_px": 0.20937230139538515,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Meander_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Meander_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Meander_TOP_registration.png",
+          "runtime_seconds": 0.03987408400280401
+        },
+        "BOTTOM": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            963,
+            884
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 5,
+          "validation_point_count": 0,
+          "fit_error_px": 0.4000185550356338,
+          "median_error_px": 0.31167081996650414,
+          "p95_error_px": 0.6420244835339824,
+          "inlier_count": 5,
+          "inlier_ratio": 1.0,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                -8.45632488574947,
+                0.038446271341948626,
+                1145.9147947327083
+              ],
+              [
+                0.027340595214616695,
+                8.521134363028105,
+                -57.90421097240849
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "MIRROR",
+            "board_side": "BOTTOM",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:1:0",
+              "auto:4:4",
+              "auto:0:1",
+              "auto:2:3",
+              "auto:3:2"
+            ],
+            "fit_error_px": 0.4000185550356338,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 5,
+            "inlier_ratio": 1.0,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.3494053093462127,
+          "rmse_error_px": 0.4000185550356338,
+          "max_error_px": 0.7213588497987996,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 5,
+          "candidate_transform_count": 31,
+          "design_anchor_count": 6,
+          "image_anchor_count": 5,
+          "spatial_coverage": 0.5000000313751659,
+          "transform_stability_px": null,
+          "orientation": "MIRROR",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R1:2:1",
+              "image_anchor_id": "prism-Meander-bottom:BOTTOM:dark-round:0000",
+              "residual_px": 0.16844244427000452,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R3:1:4",
+              "image_anchor_id": "prism-Meander-bottom:BOTTOM:dark-round:0004",
+              "residual_px": 0.22086741422104098,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:0",
+              "image_anchor_id": "prism-Meander-bottom:BOTTOM:dark-round:0001",
+              "residual_px": 0.31167081996650414,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:1:2",
+              "image_anchor_id": "prism-Meander-bottom:BOTTOM:dark-round:0003",
+              "residual_px": 0.3246870184747142,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:2:3",
+              "image_anchor_id": "prism-Meander-bottom:BOTTOM:dark-round:0002",
+              "residual_px": 0.7213588497987996,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Meander_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Meander_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Meander_BOTTOM_registration.png",
+          "runtime_seconds": 0.03769958298653364
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 4,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Cascade",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "c13bcb877ac58282c8f9f95ab0c6fa740f86dacf42a63ac13fa01ae222dc5606",
+      "input_hashes": {
+        "Dataset/Cascade/TOP.png": "f4d02de6faf080276d4a5396e2e49ae84d8c78bb12d4d5faaa1974efe7506fcf",
+        "Dataset/Cascade/BOTTOM.png": "9e58c20c7a1695d260ad614b3d8cbe17145bb8467a4e553ff3609ff0624172e0",
+        "Dataset/Cascade/Cascade/Cascade.kicad_pcb": "9b10259dc8b5d9de9e231997c419d456e069bd5ee5f46fd5a016a561f5724cec",
+        "Dataset/Cascade/Cascade/Cascade.kicad_sch": "ff96dcbff6519b59fe69ce74524d7c8dd475375b12abf104721ba35b1abe6a8e"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 46,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 70,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Cascade",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Cascade/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "f4d02de6faf080276d4a5396e2e49ae84d8c78bb12d4d5faaa1974efe7506fcf"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Cascade/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "9e58c20c7a1695d260ad614b3d8cbe17145bb8467a4e553ff3609ff0624172e0"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Cascade/Cascade/Cascade.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "9b10259dc8b5d9de9e231997c419d456e069bd5ee5f46fd5a016a561f5724cec"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Cascade/Cascade/Cascade.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "ff96dcbff6519b59fe69ce74524d7c8dd475375b12abf104721ba35b1abe6a8e"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "TOP",
+          "image_size_px": [
+            765,
+            884
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 14,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 27,
+          "validation_point_count": 0,
+          "fit_error_px": 0.923642289545847,
+          "median_error_px": 0.8532866846041007,
+          "p95_error_px": 1.4000128341580949,
+          "inlier_count": 26,
+          "inlier_ratio": 0.9629629629629629,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                9.71824504831645,
+                0.023339013621790937,
+                -104.4323433609108
+              ],
+              [
+                -0.014657588691344342,
+                9.726151051553604,
+                -121.25417174023487
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "AFFINE",
+            "board_side": "TOP",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:15:29",
+              "auto:33:13",
+              "auto:18:4",
+              "auto:44:34",
+              "auto:41:24",
+              "auto:14:28",
+              "auto:35:17",
+              "auto:4:12",
+              "auto:28:0",
+              "auto:43:27",
+              "auto:30:5",
+              "auto:5:11",
+              "auto:39:22",
+              "auto:2:8",
+              "auto:3:7",
+              "auto:37:19",
+              "auto:31:6",
+              "auto:17:32",
+              "auto:16:31",
+              "auto:42:30",
+              "auto:13:26",
+              "auto:12:25",
+              "auto:45:33",
+              "auto:29:1",
+              "auto:6:16",
+              "auto:0:2",
+              "auto:1:3"
+            ],
+            "fit_error_px": 0.923642289545847,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 25,
+            "inlier_ratio": 0.9259259259259259,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.8450606397386606,
+          "rmse_error_px": 0.9647216722709836,
+          "max_error_px": 1.6941099588707447,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 27,
+          "candidate_transform_count": 33181,
+          "design_anchor_count": 46,
+          "image_anchor_count": 35,
+          "spatial_coverage": 0.5304736072166313,
+          "transform_stability_px": 0.7650641554353175,
+          "orientation": "ROTATION_SCALE",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:D8:2:15",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0029",
+              "residual_px": 0.2611534375885547,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R3:2:33",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0013",
+              "residual_px": 0.4750745859912935,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:1:18",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0004",
+              "residual_px": 0.7999004926950405,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R9:1:44",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0034",
+              "residual_px": 0.38758629228700986,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R7:2:41",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0024",
+              "residual_px": 0.32847666633933564,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D8:1:14",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0028",
+              "residual_px": 0.2599318950899467,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R4:2:35",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0017",
+              "residual_px": 0.8019577810451368,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D3:1:4",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0012",
+              "residual_px": 1.0047925279685341,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:28",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0000",
+              "residual_px": 0.24846244655179053,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R8:2:43",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0027",
+              "residual_px": 0.7429295935233726,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:1:30",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0005",
+              "residual_px": 1.2771074488331313,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D3:2:5",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0011",
+              "residual_px": 1.2066776703912432,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R6:2:39",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0022",
+              "residual_px": 0.5949801726075727,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:1:2",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0008",
+              "residual_px": 0.17385626729374276,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:2:3",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0007",
+              "residual_px": 0.14037507703714375,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R5:2:37",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0019",
+              "residual_px": 0.9046155881630645,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:2:31",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0006",
+              "residual_px": 0.36319119197145333,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D9:2:17",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0032",
+              "residual_px": 1.256833139140497,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D9:1:16",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0031",
+              "residual_px": 1.2349541788656977,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R8:1:42",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0030",
+              "residual_px": 1.3153140094295994,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D7:2:13",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0026",
+              "residual_px": 1.4045480543761906,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D7:1:12",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0025",
+              "residual_px": 1.3864071735038075,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R9:2:45",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0033",
+              "residual_px": 1.6941099588707447,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:2:29",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0001",
+              "residual_px": 1.0593609360778422,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:0",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0002",
+              "residual_px": 1.3117928962037646,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:2:1",
+              "image_anchor_id": "prism-Cascade-top:TOP:dark-round:0003",
+              "residual_px": 1.337187151359665,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Cascade_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Cascade_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Cascade_TOP_registration.png",
+          "runtime_seconds": 8.511540916981176
+        },
+        "BOTTOM": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            765,
+            884
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 8,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 27,
+          "validation_point_count": 0,
+          "fit_error_px": 1.0549179293769626,
+          "median_error_px": 1.0201966100855866,
+          "p95_error_px": 1.6127415811185646,
+          "inlier_count": 20,
+          "inlier_ratio": 0.7407407407407407,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                -9.720686056914978,
+                0.017998419154304952,
+                867.498196304361
+              ],
+              [
+                -0.016792302733352832,
+                9.722114806394321,
+                -121.06612735849765
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "MIRROR",
+            "board_side": "BOTTOM",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:37:18",
+              "auto:14:26",
+              "auto:3:7",
+              "auto:2:8",
+              "auto:39:20",
+              "auto:17:32",
+              "auto:15:27",
+              "auto:16:31",
+              "auto:30:5",
+              "auto:28:0",
+              "auto:35:17",
+              "auto:4:13",
+              "auto:41:22",
+              "auto:5:11",
+              "auto:0:2",
+              "auto:12:23",
+              "auto:1:3",
+              "auto:43:25",
+              "auto:33:12",
+              "auto:13:24",
+              "auto:18:4",
+              "auto:6:16",
+              "auto:45:30",
+              "auto:31:6",
+              "auto:44:33",
+              "auto:29:1",
+              "auto:42:28"
+            ],
+            "fit_error_px": 1.0549179293769626,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 20,
+            "inlier_ratio": 0.7407407407407407,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.9351950028672315,
+          "rmse_error_px": 1.0549179293769626,
+          "max_error_px": 1.729788310238593,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 27,
+          "candidate_transform_count": 29820,
+          "design_anchor_count": 46,
+          "image_anchor_count": 35,
+          "spatial_coverage": 0.5304736072166313,
+          "transform_stability_px": 0.7707580870821626,
+          "orientation": "MIRROR",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:D8:1:14",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0026",
+              "residual_px": 0.13085372895007918,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:2:3",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0007",
+              "residual_px": 0.1632992445219321,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:1:2",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0008",
+              "residual_px": 0.27747783427267114,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D9:2:17",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0032",
+              "residual_px": 1.0555719180747356,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D8:2:15",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0027",
+              "residual_px": 0.36779604654603176,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D9:1:16",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0031",
+              "residual_px": 1.197093429309005,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:1:30",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0005",
+              "residual_px": 1.2273864458529693,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:28",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0000",
+              "residual_px": 0.4571532553001806,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R4:2:35",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0017",
+              "residual_px": 1.6065812269543525,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D3:1:4",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0013",
+              "residual_px": 0.9429034268611447,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D3:2:5",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0011",
+              "residual_px": 1.1780558263396526,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:0",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0002",
+              "residual_px": 1.2728489619976324,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D7:1:12",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0023",
+              "residual_px": 0.9848213020964376,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:2:1",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0003",
+              "residual_px": 1.3170774551182043,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R3:2:33",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0012",
+              "residual_px": 0.6991156845157481,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D7:2:13",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0024",
+              "residual_px": 1.6064091881875202,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:1:18",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0004",
+              "residual_px": 0.8230426208471024,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:2:31",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0006",
+              "residual_px": 0.3707896182895226,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R9:1:44",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0033",
+              "residual_px": 1.729788310238593,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:2:29",
+              "image_anchor_id": "prism-Cascade-bottom:BOTTOM:dark-round:0001",
+              "residual_px": 1.2958345330711103,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Cascade_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Cascade_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Cascade_BOTTOM_registration.png",
+          "runtime_seconds": 8.329008666973095
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 20,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Connector",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "e0dd300af20e5cb8d45b00f0b7702b72e033cab312ba9a2bd0747d0302e6dcd4",
+      "input_hashes": {
+        "Dataset/Connector/TOP.png": "0afa14d3c7c2cea70ffdf8fd01e16879f1b49e4f97202cbd044649436ef23838",
+        "Dataset/Connector/BOTTOM.png": "7f6dac753131a7dec1e79b9c054d63e52f2bde0fccd975e00c1a732c92a79fd4",
+        "Dataset/Connector/Connector/Connector.kicad_pcb": "77c2fe6d245feed6ac8ad33efffa4d125f77a8abb11a553cb0fa267152813643",
+        "Dataset/Connector/Connector/Connector.kicad_sch": "adb1d171972fca3652fec860cede3c903082ef6048e284ddaddd940616507c4c"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 13,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 23,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "AVAILABLE",
+          "count": 1,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Connector",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Connector/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "0afa14d3c7c2cea70ffdf8fd01e16879f1b49e4f97202cbd044649436ef23838"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Connector/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "7f6dac753131a7dec1e79b9c054d63e52f2bde0fccd975e00c1a732c92a79fd4"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Connector/Connector/Connector.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "77c2fe6d245feed6ac8ad33efffa4d125f77a8abb11a553cb0fa267152813643"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Connector/Connector/Connector.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "adb1d171972fca3652fec860cede3c903082ef6048e284ddaddd940616507c4c"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "TOP",
+          "image_size_px": [
+            618,
+            583
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 2,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 7,
+          "validation_point_count": 0,
+          "fit_error_px": 0.719991656737159,
+          "median_error_px": 0.6614276273028277,
+          "p95_error_px": 0.917686684034691,
+          "inlier_count": 6,
+          "inlier_ratio": 0.8571428571428571,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                8.09162664459285,
+                0.022547677923154562,
+                -394.11727704596314
+              ],
+              [
+                0.008851468600995678,
+                8.13517238656124,
+                -131.00493119797204
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "AFFINE",
+            "board_side": "TOP",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:12:3",
+              "auto:2:0",
+              "auto:3:1",
+              "auto:6:4",
+              "auto:9:6",
+              "auto:0:8",
+              "auto:4:11"
+            ],
+            "fit_error_px": 0.719991656737159,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 6,
+            "inlier_ratio": 0.8571428571428571,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.7069032613671467,
+          "rmse_error_px": 0.719991656737159,
+          "max_error_px": 0.961842729877048,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 7,
+          "candidate_transform_count": 65,
+          "design_anchor_count": 13,
+          "image_anchor_count": 12,
+          "spatial_coverage": 0.5073726518450389,
+          "transform_stability_px": null,
+          "orientation": "ROTATION_SCALE",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R2:2:12",
+              "image_anchor_id": "prism-Connector-top:TOP:dark-round:0003",
+              "residual_px": 0.7217541530989471,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:2",
+              "image_anchor_id": "prism-Connector-top:TOP:dark-round:0000",
+              "residual_px": 0.5768904525709568,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:2:3",
+              "image_anchor_id": "prism-Connector-top:TOP:dark-round:0001",
+              "residual_px": 0.6011011015067081,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:Q1:1:6",
+              "image_anchor_id": "prism-Connector-top:TOP:dark-round:0004",
+              "residual_px": 0.961842729877048,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:1:0",
+              "image_anchor_id": "prism-Connector-top:TOP:dark-round:0008",
+              "residual_px": 0.78521854650762,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:1:4",
+              "image_anchor_id": "prism-Connector-top:TOP:dark-round:0011",
+              "residual_px": 0.5946125846415995,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Connector_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Connector_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Connector_TOP_registration.png",
+          "runtime_seconds": 0.05686033301753923
+        },
+        "BOTTOM": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            618,
+            583
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 2,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 7,
+          "validation_point_count": 0,
+          "fit_error_px": 0.6934054588815782,
+          "median_error_px": 0.2849708433177587,
+          "p95_error_px": 1.189330045935443,
+          "inlier_count": 6,
+          "inlier_ratio": 0.8571428571428571,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                -7.294695873467364,
+                1.2719282133154999,
+                875.5038503983432
+              ],
+              [
+                1.2728981712760399,
+                7.2803933696269985,
+                -196.5594328067422
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "MIRROR",
+            "board_side": "BOTTOM",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:12:4",
+              "auto:9:5",
+              "auto:2:1",
+              "auto:3:0",
+              "auto:4:10",
+              "auto:0:6",
+              "auto:11:3"
+            ],
+            "fit_error_px": 0.6934054588815782,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 6,
+            "inlier_ratio": 0.8571428571428571,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.5420640548129813,
+          "rmse_error_px": 0.6934054588815782,
+          "max_error_px": 1.233093327497378,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 7,
+          "candidate_transform_count": 77,
+          "design_anchor_count": 13,
+          "image_anchor_count": 12,
+          "spatial_coverage": 0.4377450404535249,
+          "transform_stability_px": null,
+          "orientation": "MIRROR",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R2:2:12",
+              "image_anchor_id": "prism-Connector-bottom:BOTTOM:dark-round:0004",
+              "residual_px": 0.24439262131907533,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:9",
+              "image_anchor_id": "prism-Connector-bottom:BOTTOM:dark-round:0005",
+              "residual_px": 0.2607883232811616,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:2",
+              "image_anchor_id": "prism-Connector-bottom:BOTTOM:dark-round:0001",
+              "residual_px": 0.3091533633543558,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:2:3",
+              "image_anchor_id": "prism-Connector-bottom:BOTTOM:dark-round:0000",
+              "residual_px": 0.14691649217627933,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:1:4",
+              "image_anchor_id": "prism-Connector-bottom:BOTTOM:dark-round:0010",
+              "residual_px": 1.0580402012496382,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:1:0",
+              "image_anchor_id": "prism-Connector-bottom:BOTTOM:dark-round:0006",
+              "residual_px": 1.233093327497378,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Connector_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Connector_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Connector_BOTTOM_registration.png",
+          "runtime_seconds": 0.05900633300188929
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 5,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Elements",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "ac1012aa36c4936e6d9a075b3b6612d3ec2cd23facd12bd4a277b8f504c9626f",
+      "input_hashes": {
+        "Dataset/Elements/TOP.png": "daba60f23f241d688e394a91cafb223010437064d932162b77c9ec0091f4d8a9",
+        "Dataset/Elements/BOTTOM.png": "38b64638ab74c4f062b985ca18ba850f42432e2a2fd6d3415efffe330fac6cfd",
+        "Dataset/Elements/Elements/Elements.kicad_pcb": "387a34e8f7436a78573f534d962d8b8c11a67739db64352493a6b709a1018996",
+        "Dataset/Elements/Elements/Elements.kicad_sch": "d84aac819255dcf5c3977b28af0e26f3a66ccf363a305db2169665ccca0348fb"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 40,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 112,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Elements",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Elements/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "daba60f23f241d688e394a91cafb223010437064d932162b77c9ec0091f4d8a9"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Elements/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "38b64638ab74c4f062b985ca18ba850f42432e2a2fd6d3415efffe330fac6cfd"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Elements/Elements/Elements.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "387a34e8f7436a78573f534d962d8b8c11a67739db64352493a6b709a1018996"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Elements/Elements/Elements.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "d84aac819255dcf5c3977b28af0e26f3a66ccf363a305db2169665ccca0348fb"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "TOP",
+          "image_size_px": [
+            2364,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 38,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 28,
+          "validation_point_count": 0,
+          "fit_error_px": 0.8731353897682399,
+          "median_error_px": 0.6878852597049698,
+          "p95_error_px": 1.6568029673004663,
+          "inlier_count": 22,
+          "inlier_ratio": 0.7857142857142857,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                6.7398950439704395,
+                0.02730465804142616,
+                452.4523341268296
+              ],
+              [
+                0.026498088493600087,
+                6.743379564093285,
+                -218.32021773599382
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "AFFINE",
+            "board_side": "TOP",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:23:7",
+              "auto:6:20",
+              "auto:39:10",
+              "auto:16:28",
+              "auto:24:3",
+              "auto:17:27",
+              "auto:38:9",
+              "auto:7:19",
+              "auto:5:0",
+              "auto:22:6",
+              "auto:36:12",
+              "auto:30:23",
+              "auto:37:11",
+              "auto:29:17",
+              "auto:34:5",
+              "auto:31:22",
+              "auto:18:15",
+              "auto:4:1",
+              "auto:28:18",
+              "auto:27:13",
+              "auto:25:4",
+              "auto:13:21",
+              "auto:32:8",
+              "auto:26:14",
+              "auto:19:16",
+              "auto:21:25",
+              "auto:20:24",
+              "auto:10:26"
+            ],
+            "fit_error_px": 0.8731353897682399,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 20,
+            "inlier_ratio": 0.7142857142857143,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.8408755051538838,
+          "rmse_error_px": 0.9999559047438555,
+          "max_error_px": 1.9950275314274486,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 28,
+          "candidate_transform_count": 9121,
+          "design_anchor_count": 42,
+          "image_anchor_count": 30,
+          "spatial_coverage": 0.6500960032646406,
+          "transform_stability_px": 0.8706865555541046,
+          "orientation": "ROTATION_SCALE",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:L2:2:23",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0007",
+              "residual_px": 0.2017587681321243,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C4:1:6",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0020",
+              "residual_px": 1.6645169939168647,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R5:2:39",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0010",
+              "residual_px": 0.8048503044496689,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L3:1:24",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0003",
+              "residual_px": 0.11837659800403832,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R5:1:38",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0009",
+              "residual_px": 0.7063657205787256,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C4:2:7",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0019",
+              "residual_px": 1.9950275314274486,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C3:2:5",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0000",
+              "residual_px": 0.6694047988312142,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L2:1:22",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0006",
+              "residual_px": 0.6673895841393258,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R4:1:36",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0012",
+              "residual_px": 1.4988264515628817,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:30",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0023",
+              "residual_px": 0.5107126196164743,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R4:2:37",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0011",
+              "residual_px": 0.22082345299654935,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L5:2:29",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0017",
+              "residual_px": 0.1901399629313769,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:2:31",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0022",
+              "residual_px": 1.503300052558235,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D5:1:18",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0015",
+              "residual_px": 1.0079056392148074,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L5:1:28",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0018",
+              "residual_px": 0.36301841817263464,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L4:2:27",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0013",
+              "residual_px": 1.0194684563167995,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L3:2:25",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0004",
+              "residual_px": 1.4174157656095752,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D2:2:13",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0021",
+              "residual_px": 0.5415580699989778,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:1:32",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0008",
+              "residual_px": 1.10587793431699,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L4:1:26",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0014",
+              "residual_px": 1.510236461588897,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L1:2:21",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0025",
+              "residual_px": 0.36755068889350156,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L1:1:20",
+              "image_anchor_id": "prism-Elements-top:TOP:dark-round:0024",
+              "residual_px": 0.4147368401283348,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Elements_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Elements_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Elements_TOP_registration.png",
+          "runtime_seconds": 3.2615536249941215
+        },
+        "BOTTOM": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            2364,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 31,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 16,
+          "validation_point_count": 0,
+          "fit_error_px": 0.706699150961109,
+          "median_error_px": 0.6786852824379525,
+          "p95_error_px": 1.2858247502929994,
+          "inlier_count": 16,
+          "inlier_ratio": 1.0,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                -5.55493954402163,
+                0.009508585321559631,
+                1779.4383349531238
+              ],
+              [
+                -0.006250732369644838,
+                5.5632151958058795,
+                -97.91919123229479
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "MIRROR",
+            "board_side": "BOTTOM",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:31:13",
+              "auto:34:5",
+              "auto:30:12",
+              "auto:18:10",
+              "auto:36:8",
+              "auto:11:14",
+              "auto:37:9",
+              "auto:4:1",
+              "auto:19:11",
+              "auto:10:15",
+              "auto:2:17",
+              "auto:5:0",
+              "auto:24:4",
+              "auto:25:3",
+              "auto:39:6",
+              "auto:38:7"
+            ],
+            "fit_error_px": 0.706699150961109,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 15,
+            "inlier_ratio": 0.9375,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.6677139433820335,
+          "rmse_error_px": 0.7584689543130058,
+          "max_error_px": 1.3088342618411788,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 16,
+          "candidate_transform_count": 2103,
+          "design_anchor_count": 42,
+          "image_anchor_count": 18,
+          "spatial_coverage": 0.5839847790111051,
+          "transform_stability_px": 2.7800477904920182,
+          "orientation": "MIRROR",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R1:2:31",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0013",
+              "residual_px": 0.3776794673104138,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R3:1:34",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0005",
+              "residual_px": 0.5186085138270528,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:30",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0012",
+              "residual_px": 1.3088342618411788,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D5:1:18",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0010",
+              "residual_px": 0.0396371195192265,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R4:1:36",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0008",
+              "residual_px": 0.5537942186389603,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:2:11",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0014",
+              "residual_px": 0.7474933417068869,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R4:2:37",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0009",
+              "residual_px": 0.609877223169018,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C3:1:4",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0001",
+              "residual_px": 0.13526329354270245,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D5:2:19",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0011",
+              "residual_px": 0.8805647686113189,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:10",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0015",
+              "residual_px": 1.278154913110273,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C2:1:2",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0017",
+              "residual_px": 0.9248335915052904,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C3:2:5",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0000",
+              "residual_px": 0.2606190887602324,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L3:1:24",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0004",
+              "residual_px": 0.4262708654436667,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L3:2:25",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0003",
+              "residual_px": 0.8508120318290683,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R5:2:39",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0006",
+              "residual_px": 0.7948826932346218,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R5:1:38",
+              "image_anchor_id": "prism-Elements-bottom:BOTTOM:dark-round:0007",
+              "residual_px": 0.976097702062625,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Elements_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Elements_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Elements_BOTTOM_registration.png",
+          "runtime_seconds": 0.7919543340103701
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 10,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Filter",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "ee326934015515b2ec3b83e43d9ee6b54b02e0f11d70fd42ee23ea711d9ab322",
+      "input_hashes": {
+        "Dataset/Filter/TOP.png": "44c49294795d77a71add3290fabb5247509908d1b78ad6b4814af8673b22e9c9",
+        "Dataset/Filter/BOTTOM.png": "b7fdcb14795b8e9adcf95db1964aa58e01d8339639f8b61ea6ca0087c5b7db57",
+        "Dataset/Filter/Filter/Filter.kicad_pcb": "16060c3d8e9dd396978b7f3fb97bd7249ec6db04474bbe5e0db9a5fbfa40dc2d",
+        "Dataset/Filter/Filter/Filter.kicad_sch": "47d6ab81ef300e5e2ef8530d4fde0fcba1d42da6b872f4d364f5a3e9c5fbc79b"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 18,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 40,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Filter",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Filter/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "44c49294795d77a71add3290fabb5247509908d1b78ad6b4814af8673b22e9c9"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Filter/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "b7fdcb14795b8e9adcf95db1964aa58e01d8339639f8b61ea6ca0087c5b7db57"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Filter/Filter/Filter.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "16060c3d8e9dd396978b7f3fb97bd7249ec6db04474bbe5e0db9a5fbfa40dc2d"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Filter/Filter/Filter.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "47d6ab81ef300e5e2ef8530d4fde0fcba1d42da6b872f4d364f5a3e9c5fbc79b"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "TOP",
+          "image_size_px": [
+            803,
+            744
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 6,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 16,
+          "validation_point_count": 0,
+          "fit_error_px": 0.3482190251934782,
+          "median_error_px": 0.32296129622067193,
+          "p95_error_px": 0.5225667283780122,
+          "inlier_count": 13,
+          "inlier_ratio": 0.8125,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                10.03646735284983,
+                0.018140010003475076,
+                -797.7052329999743
+              ],
+              [
+                0.027135249105963027,
+                10.032279390033542,
+                -321.0175662127346
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "AFFINE",
+            "board_side": "TOP",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:5:1",
+              "auto:8:7",
+              "auto:11:10",
+              "auto:9:8",
+              "auto:6:2",
+              "auto:4:0",
+              "auto:10:9",
+              "auto:2:4",
+              "auto:1:13",
+              "auto:3:5",
+              "auto:0:12",
+              "auto:14:6",
+              "auto:7:3",
+              "auto:13:14",
+              "auto:16:11",
+              "auto:12:15"
+            ],
+            "fit_error_px": 0.3482190251934782,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 13,
+            "inlier_ratio": 0.8125,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.3139937883014673,
+          "rmse_error_px": 0.3482190251934782,
+          "max_error_px": 0.5318585938382557,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 16,
+          "candidate_transform_count": 627,
+          "design_anchor_count": 18,
+          "image_anchor_count": 16,
+          "spatial_coverage": 0.7591572625829892,
+          "transform_stability_px": 0.5339234365483398,
+          "orientation": "ROTATION_SCALE",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:J1:2:5",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0001",
+              "residual_px": 0.20857033026189975,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J2:1:8",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0007",
+              "residual_px": 0.1631787905623541,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J2:4:11",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0010",
+              "residual_px": 0.10108177153597749,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J2:2:9",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0008",
+              "residual_px": 0.14544673273901884,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:3:6",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0002",
+              "residual_px": 0.16473790905836724,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:1:4",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0000",
+              "residual_px": 0.5318585938382557,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J2:3:10",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0009",
+              "residual_px": 0.32296129622067193,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C2:1:2",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0004",
+              "residual_px": 0.357011519918084,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:2:1",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0013",
+              "residual_px": 0.5163721514045166,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C2:2:3",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0005",
+              "residual_px": 0.39302331396297463,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:1:0",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0012",
+              "residual_px": 0.21399660029463763,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L2:1:14",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0006",
+              "residual_px": 0.45169090494591635,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:4:7",
+              "image_anchor_id": "prism-Filter-top:TOP:dark-round:0003",
+              "residual_px": 0.5119893331763998,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Filter_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Filter_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Filter_TOP_registration.png",
+          "runtime_seconds": 0.18824150000000373
+        },
+        "BOTTOM": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            803,
+            744
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 4,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 16,
+          "validation_point_count": 0,
+          "fit_error_px": 0.7697847368003253,
+          "median_error_px": 0.47282870524666765,
+          "p95_error_px": 1.369774470481504,
+          "inlier_count": 14,
+          "inlier_ratio": 0.875,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                -10.06484960527937,
+                0.05334429895807416,
+                1599.278670235512
+              ],
+              [
+                -0.037459039701632585,
+                10.087348806298518,
+                -316.6000590309201
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "MIRROR",
+            "board_side": "BOTTOM",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:9:9",
+              "auto:12:14",
+              "auto:4:0",
+              "auto:6:2",
+              "auto:7:3",
+              "auto:5:1",
+              "auto:8:8",
+              "auto:10:10",
+              "auto:16:13",
+              "auto:11:11",
+              "auto:1:15",
+              "auto:13:16",
+              "auto:14:7",
+              "auto:2:4",
+              "auto:3:5",
+              "auto:15:6"
+            ],
+            "fit_error_px": 0.7697847368003253,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 14,
+            "inlier_ratio": 0.875,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.6370805205770258,
+          "rmse_error_px": 0.7697847368003253,
+          "max_error_px": 1.4107407215326047,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 16,
+          "candidate_transform_count": 687,
+          "design_anchor_count": 18,
+          "image_anchor_count": 17,
+          "spatial_coverage": 0.7402395050097594,
+          "transform_stability_px": 0.8261044430106451,
+          "orientation": "MIRROR",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:J2:2:9",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0009",
+              "residual_px": 0.30608936152193006,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L1:1:12",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0014",
+              "residual_px": 0.3595989224733361,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:1:4",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0000",
+              "residual_px": 0.17436876327156206,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:3:6",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0002",
+              "residual_px": 0.19976396638673236,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:4:7",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0003",
+              "residual_px": 0.26710067900091955,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:2:5",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0001",
+              "residual_px": 0.3201733502270863,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J2:1:8",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0008",
+              "residual_px": 0.17910625935138164,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J2:3:10",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0010",
+              "residual_px": 0.7837808796812415,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:16",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0013",
+              "residual_px": 0.5860584880199993,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J2:4:11",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0011",
+              "residual_px": 1.1086792083861,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:2:1",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0015",
+              "residual_px": 0.7902512203222581,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L1:2:13",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0016",
+              "residual_px": 1.0856997479876822,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L2:1:14",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0007",
+              "residual_px": 1.4107407215326047,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C2:1:2",
+              "image_anchor_id": "prism-Filter-bottom:BOTTOM:dark-round:0004",
+              "residual_px": 1.3477157199155267,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Filter_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Filter_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Filter_BOTTOM_registration.png",
+          "runtime_seconds": 0.1931037919712253
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 11,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Floating",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "c9bf06d7ead49d16a69dd72d1dd4f2f171bade99dd424cb21c2abc1d1fa96bab",
+      "input_hashes": {
+        "Dataset/Floating/TOP.png": "d2946c90f82f8cfcae754102434f9d8d6ddfefe9c3ced981cea7c2301df1979f",
+        "Dataset/Floating/BOTTOM.png": "2c6fe2d5b253f2caabb42ba7b0aa7378e01887324fd05f617f95b86a45d11aa9",
+        "Dataset/Floating/Floating/Floating.kicad_pcb": "eb80f96557d458f39a3602fe0ef9658ed919c820eb482f07934f8a8e75b10055",
+        "Dataset/Floating/Floating/Floating.kicad_sch": "7348a7b3e887ddb83c035853d9afe899fc47415521f6907f3c5478eacc957e4c"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 8,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 7,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "AVAILABLE",
+          "count": 1,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Floating",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Floating/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "d2946c90f82f8cfcae754102434f9d8d6ddfefe9c3ced981cea7c2301df1979f"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Floating/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "2c6fe2d5b253f2caabb42ba7b0aa7378e01887324fd05f617f95b86a45d11aa9"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Floating/Floating/Floating.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "eb80f96557d458f39a3602fe0ef9658ed919c820eb482f07934f8a8e75b10055"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Floating/Floating/Floating.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "7348a7b3e887ddb83c035853d9afe899fc47415521f6907f3c5478eacc957e4c"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "TOP",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 4,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 8,
+          "validation_point_count": 0,
+          "fit_error_px": 0.6737086153897462,
+          "median_error_px": 0.6660304950180018,
+          "p95_error_px": 1.0135127444066565,
+          "inlier_count": 7,
+          "inlier_ratio": 0.875,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                12.400006041704247,
+                0.036144478371308617,
+                -475.3735524262273
+              ],
+              [
+                -0.04997150077470016,
+                12.543702587795106,
+                -590.6544281265994
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "AFFINE",
+            "board_side": "TOP",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:4:3",
+              "auto:1:8",
+              "auto:2:5",
+              "auto:6:0",
+              "auto:0:9",
+              "auto:5:1",
+              "auto:7:2",
+              "auto:9:4"
+            ],
+            "fit_error_px": 0.6737086153897462,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 7,
+            "inlier_ratio": 0.875,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.6131502913432703,
+          "rmse_error_px": 0.6737086153897462,
+          "max_error_px": 1.1070872266897518,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 8,
+          "candidate_transform_count": 55,
+          "design_anchor_count": 10,
+          "image_anchor_count": 11,
+          "spatial_coverage": 0.6769820039952318,
+          "transform_stability_px": null,
+          "orientation": "ROTATION_SCALE",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R1:1:4",
+              "image_anchor_id": "prism-Floating-top:TOP:dark-round:0003",
+              "residual_px": 0.3608629213999652,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:2:1",
+              "image_anchor_id": "prism-Floating-top:TOP:dark-round:0008",
+              "residual_px": 0.19382628741452107,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:2",
+              "image_anchor_id": "prism-Floating-top:TOP:dark-round:0005",
+              "residual_px": 0.6660304950180018,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:1:6",
+              "image_anchor_id": "prism-Floating-top:TOP:dark-round:0000",
+              "residual_px": 0.695191431133188,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:1:0",
+              "image_anchor_id": "prism-Floating-top:TOP:dark-round:0009",
+              "residual_px": 0.4738813920013626,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:2:5",
+              "image_anchor_id": "prism-Floating-top:TOP:dark-round:0001",
+              "residual_px": 1.1070872266897518,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R2:2:7",
+              "image_anchor_id": "prism-Floating-top:TOP:dark-round:0002",
+              "residual_px": 0.7951722857461014,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Floating_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Floating_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Floating_TOP_registration.png",
+          "runtime_seconds": 0.039864999998826534
+        },
+        "BOTTOM": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 9,
+          "validation_point_count": 0,
+          "fit_error_px": 0.8011066755241014,
+          "median_error_px": 0.4948947103695844,
+          "p95_error_px": 1.3373693763151158,
+          "inlier_count": 7,
+          "inlier_ratio": 0.7777777777777778,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                -12.551372626512373,
+                0.049036171591802846,
+                1549.9341025667363
+              ],
+              [
+                -0.10021120463189026,
+                12.470276890227412,
+                -582.9288102277322
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "MIRROR",
+            "board_side": "BOTTOM",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:6:0",
+              "auto:0:8",
+              "auto:5:2",
+              "auto:8:10",
+              "auto:2:5",
+              "auto:1:9",
+              "auto:7:1",
+              "auto:9:4",
+              "auto:4:3"
+            ],
+            "fit_error_px": 0.8011066755241014,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 7,
+            "inlier_ratio": 0.7777777777777778,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.6677768415524012,
+          "rmse_error_px": 0.8011066755241014,
+          "max_error_px": 1.5075670295061305,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 9,
+          "candidate_transform_count": 46,
+          "design_anchor_count": 10,
+          "image_anchor_count": 11,
+          "spatial_coverage": 0.8599935166769523,
+          "transform_stability_px": 0.9910263506834583,
+          "orientation": "MIRROR",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:R2:1:6",
+              "image_anchor_id": "prism-Floating-bottom:BOTTOM:dark-round:0000",
+              "residual_px": 0.9259990688788028,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:1:0",
+              "image_anchor_id": "prism-Floating-bottom:BOTTOM:dark-round:0008",
+              "residual_px": 0.3271180373408773,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:2:5",
+              "image_anchor_id": "prism-Floating-bottom:BOTTOM:dark-round:0002",
+              "residual_px": 0.16297971079877321,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "via:0",
+              "image_anchor_id": "prism-Floating-bottom:BOTTOM:dark-round:0010",
+              "residual_px": 0.4948947103695844,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:D1:1:2",
+              "image_anchor_id": "prism-Floating-bottom:BOTTOM:dark-round:0005",
+              "residual_px": 0.3156378151032246,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:2:1",
+              "image_anchor_id": "prism-Floating-bottom:BOTTOM:dark-round:0009",
+              "residual_px": 0.940241518869416,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "via:1",
+              "image_anchor_id": "prism-Floating-bottom:BOTTOM:dark-round:0004",
+              "residual_px": 1.5075670295061305,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Floating_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Floating_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Floating_BOTTOM_registration.png",
+          "runtime_seconds": 0.04123575001722202
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 5,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Round",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "ccde75a026b433c8fd69c72ca653969d32bdb4a5c5b1cb4b652ac32e065652bd",
+      "input_hashes": {
+        "Dataset/Round/TOP.png": "ecca49cb925b3306ef30c2d50fd46d52076ae5e17729ba6c14133430b3fccdd9",
+        "Dataset/Round/BOTTOM.png": "4264d3b59ee4d7bb0ed9f1b9439c2f5058aec2eb234b499461435f2d5fe1460b",
+        "Dataset/Round/Round/Round.kicad_pcb": "e63d97b302fefac465c0acc59483b9d5c507c94cead163cefe31bbb3995cb677",
+        "Dataset/Round/Round/Round.kicad_sch": "97b1c6043bdb474a1b34dd70f1eb8a9bdbf3daf0782b92dab3e45912f03f6991"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 8,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 6,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Round",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Round/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "ecca49cb925b3306ef30c2d50fd46d52076ae5e17729ba6c14133430b3fccdd9"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Round/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "4264d3b59ee4d7bb0ed9f1b9439c2f5058aec2eb234b499461435f2d5fe1460b"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Round/Round/Round.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "e63d97b302fefac465c0acc59483b9d5c507c94cead163cefe31bbb3995cb677"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Round/Round/Round.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "97b1c6043bdb474a1b34dd70f1eb8a9bdbf3daf0782b92dab3e45912f03f6991"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_FAILED",
+          "verification_status": "REGISTRATION_FAILED",
+          "reason": "DEGENERATE_OR_INVALID_MATCH_GEOMETRY: Degenerate source point geometry: points are nearly collinear",
+          "board_side": "TOP",
+          "image_size_px": [
+            803,
+            744
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 5,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 3,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": 0.0,
+          "transform": null,
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "REGISTRATION_FAILED",
+          "mean_error_px": null,
+          "rmse_error_px": null,
+          "max_error_px": null,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 3,
+          "candidate_transform_count": 10,
+          "design_anchor_count": 8,
+          "image_anchor_count": 9,
+          "spatial_coverage": 0.0,
+          "transform_stability_px": null,
+          "orientation": null,
+          "matching_reason": "DEGENERATE_OR_INVALID_MATCH_GEOMETRY: Degenerate source point geometry: points are nearly collinear",
+          "matches": [],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Round_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Round_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Round_TOP_registration.png",
+          "runtime_seconds": 0.03537233400857076
+        },
+        "BOTTOM": {
+          "registration_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            803,
+            744
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 6,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 5,
+          "validation_point_count": 0,
+          "fit_error_px": 0.44294832882160723,
+          "median_error_px": 0.4357732831013504,
+          "p95_error_px": 0.5324229583861497,
+          "inlier_count": 4,
+          "inlier_ratio": 0.8,
+          "transform": {
+            "source_frame": "KICAD_DESIGN",
+            "target_frame": "IMAGE_RAW",
+            "matrix": [
+              [
+                -19.881008266173446,
+                -0.03772310549676233,
+                1654.8559441999623
+              ],
+              [
+                -0.2761223251192612,
+                19.57557977059749,
+                -747.7968496922906
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transform_type": "MIRROR",
+            "board_side": "BOTTOM",
+            "source_evidence": "DESIGN_ASSISTED: PRISM expected_geometry anchors matched to image-only dark-round candidates",
+            "calibration_point_ids": [
+              "auto:0:6",
+              "auto:4:1",
+              "auto:1:5",
+              "auto:6:2",
+              "auto:2:4"
+            ],
+            "fit_error_px": 0.44294832882160723,
+            "validation_error_px": null,
+            "verification_status": "AUTO_ESTIMATED_UNVERIFIED",
+            "inlier_count": 4,
+            "inlier_ratio": 0.8,
+            "ransac_threshold_px": 2.0
+          },
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "AUTO_ESTIMATED_UNVERIFIED",
+          "mean_error_px": 0.4357808646654571,
+          "rmse_error_px": 0.44294832882160723,
+          "max_error_px": 0.5446834956868885,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [],
+          "candidate_match_count": 5,
+          "candidate_transform_count": 15,
+          "design_anchor_count": 8,
+          "image_anchor_count": 8,
+          "spatial_coverage": 0.45241608121921906,
+          "transform_stability_px": null,
+          "orientation": "MIRROR",
+          "matching_reason": "Automatic correspondences are not independent validation; rendered PRISM data only",
+          "matches": [
+            {
+              "design_anchor_id": "pad:C1:1:0",
+              "image_anchor_id": "prism-Round-bottom:BOTTOM:dark-round:0006",
+              "residual_px": 0.3268933967722392,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:L1:1:4",
+              "image_anchor_id": "prism-Round-bottom:BOTTOM:dark-round:0001",
+              "residual_px": 0.40859998585407026,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:C1:2:1",
+              "image_anchor_id": "prism-Round-bottom:BOTTOM:dark-round:0005",
+              "residual_px": 0.4629465803486305,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:R1:1:6",
+              "image_anchor_id": "prism-Round-bottom:BOTTOM:dark-round:0002",
+              "residual_px": 0.5446834956868885,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Round_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Round_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Round_BOTTOM_registration.png",
+          "runtime_seconds": 0.03440658299950883
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 0,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Transistors",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "44813e6fef5424e052e7e980ecca8b1ff911062062d106b938a756f61746d1aa",
+      "input_hashes": {
+        "Dataset/Transistors/TOP.png": "d5c481416d7b3e8ad84844b78934a39941fdff4cb377a5d7a137a447be4be92d",
+        "Dataset/Transistors/BOTTOM.png": "b7850ae513cc5543b8bed650edefcbf985c743ee8d2b5e217055115233f0578a",
+        "Dataset/Transistors/Transistors/Transistors.kicad_pcb": "7726df435a2ca2d4bc5771049da868250e86a9b8aef4fd33c824aee1a05aec2c",
+        "Dataset/Transistors/Transistors/Transistors.kicad_sch": "36b65b735fbd9a8a927660736bc3401f5b2b3e15e3b7a73f47e2d1b64b470aaf"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 14,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 32,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Transistors",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Transistors/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "d5c481416d7b3e8ad84844b78934a39941fdff4cb377a5d7a137a447be4be92d"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Transistors/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "b7850ae513cc5543b8bed650edefcbf985c743ee8d2b5e217055115233f0578a"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Transistors/Transistors/Transistors.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "7726df435a2ca2d4bc5771049da868250e86a9b8aef4fd33c824aee1a05aec2c"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Transistors/Transistors/Transistors.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "36b65b735fbd9a8a927660736bc3401f5b2b3e15e3b7a73f47e2d1b64b470aaf"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_FAILED",
+          "verification_status": "REGISTRATION_FAILED",
+          "reason": "UNSTABLE_MATCH_GEOMETRY: LOW_MATCH_SUPPORT",
+          "board_side": "TOP",
+          "image_size_px": [
+            709,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 9,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 4,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": 3.097196202609839e-05,
+          "p95_error_px": 4.72073222552504e-05,
+          "inlier_count": 3,
+          "inlier_ratio": 0.75,
+          "transform": null,
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "REGISTRATION_FAILED",
+          "mean_error_px": 3.40382536682951e-05,
+          "rmse_error_px": 3.582908772392462e-05,
+          "max_error_px": 4.901125116960063e-05,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [
+            "LOW_MATCH_SUPPORT"
+          ],
+          "candidate_match_count": 4,
+          "candidate_transform_count": 73,
+          "design_anchor_count": 14,
+          "image_anchor_count": 13,
+          "spatial_coverage": 0.3538056729622211,
+          "transform_stability_px": null,
+          "orientation": "MIRROR",
+          "matching_reason": "UNSTABLE_MATCH_GEOMETRY: LOW_MATCH_SUPPORT",
+          "matches": [
+            {
+              "design_anchor_id": "pad:Q4:1:11",
+              "image_anchor_id": "prism-Transistors-top:TOP:dark-round:0000",
+              "residual_px": 3.097196202609839e-05,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:J1:2:1",
+              "image_anchor_id": "prism-Transistors-top:TOP:dark-round:0004",
+              "residual_px": 4.901125116960063e-05,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:Q1:3:4",
+              "image_anchor_id": "prism-Transistors-top:TOP:dark-round:0007",
+              "residual_px": 2.213154780918628e-05,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Transistors_TOP.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Transistors_TOP.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Transistors_TOP_registration.png",
+          "runtime_seconds": 0.0618552080122754
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_FAILED",
+          "verification_status": "REGISTRATION_FAILED",
+          "reason": "UNSTABLE_MATCH_GEOMETRY: LOW_SPATIAL_COVERAGE, AMBIGUOUS_TRANSFORM_HYPOTHESES",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            727,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 11,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 4,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": 0.3428806922700892,
+          "p95_error_px": 0.4008655784136968,
+          "inlier_count": 4,
+          "inlier_ratio": 1.0,
+          "transform": null,
+          "design_assisted": true,
+          "image_only_status": "CANDIDATES_ONLY",
+          "design_assisted_status": "REGISTRATION_FAILED",
+          "mean_error_px": 0.3428714128300025,
+          "rmse_error_px": 0.34624753599173397,
+          "max_error_px": 0.40699911488893675,
+          "error_data_scope": "AUTO_MATCHED_INLIERS_TRAINING_ONLY_NOT_HELD_OUT",
+          "review_flags": [
+            "LOW_SPATIAL_COVERAGE",
+            "AMBIGUOUS_TRANSFORM_HYPOTHESES"
+          ],
+          "candidate_match_count": 4,
+          "candidate_transform_count": 60,
+          "design_anchor_count": 14,
+          "image_anchor_count": 14,
+          "spatial_coverage": 0.05503650687859837,
+          "transform_stability_px": 712.5165752396595,
+          "orientation": "MIRROR",
+          "matching_reason": "UNSTABLE_MATCH_GEOMETRY: LOW_SPATIAL_COVERAGE, AMBIGUOUS_TRANSFORM_HYPOTHESES",
+          "matches": [
+            {
+              "design_anchor_id": "pad:Q2:3:7",
+              "image_anchor_id": "prism-Transistors-bottom:BOTTOM:dark-round:0002",
+              "residual_px": 0.2787251518908949,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:Q2:2:6",
+              "image_anchor_id": "prism-Transistors-bottom:BOTTOM:dark-round:0000",
+              "residual_px": 0.319652512819508,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:Q3:1:8",
+              "image_anchor_id": "prism-Transistors-bottom:BOTTOM:dark-round:0005",
+              "residual_px": 0.3661088717206704,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            },
+            {
+              "design_anchor_id": "pad:Q3:2:9",
+              "image_anchor_id": "prism-Transistors-bottom:BOTTOM:dark-round:0003",
+              "residual_px": 0.40699911488893675,
+              "status": "GEOMETRICALLY_CONSISTENT"
+            }
+          ],
+          "anchor_file": "data/benchmarks/phase21_1_1/anchors/Transistors_BOTTOM.json",
+          "match_file": "data/benchmarks/phase21_1_1/matches/Transistors_BOTTOM.json",
+          "overlay_file": "data/benchmarks/phase21_1_1/overlays/Transistors_BOTTOM_registration.png",
+          "runtime_seconds": 0.07098550000227988
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "top_bottom_comparison": {
+        "shared_design_anchor_matches": 0,
+        "coordinate_consistency_status": "NOT_VERIFIED",
+        "note": "A side-by-side view and shared design anchor IDs do not independently validate TOP/BOTTOM transforms."
+      },
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    }
+  ],
+  "summary": {
+    "top_bottom_pairs": 24,
+    "verified_registrations": 0,
+    "unverified_registrations": 24,
+    "failed_registrations": 8,
+    "automatic_matches_found": 23,
+    "candidate_correspondences": 230,
+    "geometric_inliers": 191,
+    "transforms_generated": 16,
+    "auto_estimated_unverified": 16,
+    "manual_review_required": 24,
+    "registration_success_rate": 0.0,
+    "top_bottom_consistency": {
+      "status": "NOT_VERIFIED",
+      "reason": "No independently adjudicated shared TOP/BOTTOM landmarks or vias"
+    }
+  }
+}

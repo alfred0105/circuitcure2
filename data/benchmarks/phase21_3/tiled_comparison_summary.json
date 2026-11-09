@@ -1,0 +1,697 @@
+{
+  "schema_version": "circuitcare.pcb-detector-evaluation.v2",
+  "status": "SOURCE_SPLIT_MEASURED_BOARD_GENERALIZATION_UNVERIFIED",
+  "dataset": {
+    "source": "wangshnegqi/pcb-component-detection-dataset-yolo",
+    "source_url": "https://github.com/wangshnegqi/pcb-component-detection-dataset-yolo",
+    "source_commit": "0d7ae7310fa607389779b6132285336ad73e96e1",
+    "split": "val",
+    "split_method": "SOURCE_PROVIDED_IMAGE_SPLIT",
+    "board_level_group_ids": "NOT_PROVIDED_BY_SOURCE",
+    "board_split_leakage": "NOT_EVALUATED",
+    "annotation_status": "SOURCE_PROVIDED_UNADJUDICATED",
+    "license": "CC BY 4.0 (source-declared)",
+    "image_count": 13,
+    "labeled_object_count": 196,
+    "class_mapping": [
+      {
+        "class_id": 0,
+        "class_name": "resistor",
+        "mapping": "IDENTITY"
+      },
+      {
+        "class_id": 1,
+        "class_name": "capacitor",
+        "mapping": "IDENTITY"
+      },
+      {
+        "class_id": 2,
+        "class_name": "diode",
+        "mapping": "IDENTITY"
+      },
+      {
+        "class_id": 3,
+        "class_name": "led",
+        "mapping": "IDENTITY"
+      },
+      {
+        "class_id": 4,
+        "class_name": "integrated_circuit",
+        "mapping": "IDENTITY"
+      },
+      {
+        "class_id": 5,
+        "class_name": "connector",
+        "mapping": "IDENTITY"
+      },
+      {
+        "class_id": 6,
+        "class_name": "switch_button",
+        "mapping": "IDENTITY"
+      },
+      {
+        "class_id": 7,
+        "class_name": "header",
+        "mapping": "IDENTITY"
+      },
+      {
+        "class_id": 8,
+        "class_name": "crystal",
+        "mapping": "IDENTITY"
+      },
+      {
+        "class_id": 9,
+        "class_name": "debug_test_point",
+        "mapping": "IDENTITY"
+      }
+    ],
+    "input_fingerprints": {
+      "IMG_20260529_163319.jpg": {
+        "image_sha256": "99d6eb15da3b2baafd235444dd02d245d70a49e636a1787c02eedee3e7250905",
+        "label_sha256": "5664a876ce6a2790b43d934687e8cf0aa2cc61401565243eb77217275318e279",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "ground_truth_count": 12,
+        "prediction_count": 307
+      },
+      "IMG_20260529_163712.jpg": {
+        "image_sha256": "8dabb5ecf6ae8c31c70b5776aa1186239ffebe0ceeadbf737d782e80cdca3a81",
+        "label_sha256": "c666efc20224121c8f5401ccb7065a4033c4da67486ab2809ac172773949b0aa",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "ground_truth_count": 4,
+        "prediction_count": 199
+      },
+      "IMG_20260529_163718.jpg": {
+        "image_sha256": "64cc8b4419df81e3adef8f17a0a9a1ff8e356a4162c227eab8da4d93d1708e74",
+        "label_sha256": "0d45b03f14f96f2f9ea26158cf085f39611749d05875ad147fbf56b7d5c72d40",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "ground_truth_count": 4,
+        "prediction_count": 108
+      },
+      "IMG_20260529_164033.jpg": {
+        "image_sha256": "da12a56d013ceded6e6f1c6033a76a0bd0a680478d54bfd4e4965c8cad069e53",
+        "label_sha256": "91789f14ad9267eed7f23e20fc84f6168702ee302543a6bb515663d3356bf23a",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "ground_truth_count": 37,
+        "prediction_count": 1000
+      },
+      "IMG_20260529_164111.jpg": {
+        "image_sha256": "dc863aca9cd785b5ee456d307797f6edcc9100382715d798b06727b79ab11426",
+        "label_sha256": "8c191994226e4c59ded05f9476dd3061654540cc1ae037d2f6ca095919d79a4e",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "ground_truth_count": 6,
+        "prediction_count": 212
+      },
+      "IMG_20260529_164115.jpg": {
+        "image_sha256": "6afe899cac1208b3f5aa4dd5b54a27932088f76bd178444fa9a7664482b79fd4",
+        "label_sha256": "8c56d559abd97b9dd7f991ac4f83db1fb7fae3472662e17ddf4d07ea037e79fa",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "ground_truth_count": 6,
+        "prediction_count": 139
+      },
+      "IMG_20260529_164129.jpg": {
+        "image_sha256": "b0c556c37082fa417545d599423743d54a58fb31b997f364dc0d95f9cf3359bb",
+        "label_sha256": "3fd02839275b78e5b652181d492e4f0a058f0d101a12682269b1330a2e55fb01",
+        "image_size_px": [
+          2248,
+          4000
+        ],
+        "ground_truth_count": 4,
+        "prediction_count": 93
+      },
+      "IMG_20260529_164142.jpg": {
+        "image_sha256": "2625ca359a28176cebe8a3540d2f791ea37b56f26a6ac9cc519b4c6e998b087a",
+        "label_sha256": "09c0a1f80e886e53488117d05d86f99e7cf952571d52b697232c64ebf103cde4",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "ground_truth_count": 4,
+        "prediction_count": 154
+      },
+      "IMG_20260529_164146.jpg": {
+        "image_sha256": "fb2c5d8477ab1a18203d88810e460499d8917c168912a584f245292429eae705",
+        "label_sha256": "407c9874b689de94453cf8a7198c7e9344b2bdf7d0617ba2a505e08bcfb7e5c0",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "ground_truth_count": 4,
+        "prediction_count": 154
+      },
+      "IMG_20260529_164428.jpg": {
+        "image_sha256": "28ae6d07b3399140d050f46e9812296fea6cd6342467b5469b0f7f72b08bdaaa",
+        "label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "ground_truth_count": 0,
+        "prediction_count": 145
+      },
+      "IMG_20260529_164501.jpg": {
+        "image_sha256": "218f25749107bd347725078b6ce9fd03a9294e96039c84a1c457af2a838ef85e",
+        "label_sha256": "f85c229cbe0d491a31eac2f4765dc8827a3aecf99ffc50899a950aaf3767282b",
+        "image_size_px": [
+          2248,
+          4000
+        ],
+        "ground_truth_count": 6,
+        "prediction_count": 96
+      },
+      "IMG_20260529_164604.jpg": {
+        "image_sha256": "cb0056eac1dd37cc46fd1f5c4b89d2fca87b963e9d110894935a9b7299e47346",
+        "label_sha256": "fbc6eb967e8b114542e1525d33955bb3b07e5ac685d8c5c3b6bd6981aa025db2",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "ground_truth_count": 59,
+        "prediction_count": 436
+      },
+      "IMG_20260529_164608.jpg": {
+        "image_sha256": "6dc24ca92c445036ef72c70728b717479d263b800d4a8e0fcefa0d5a7d90afe1",
+        "label_sha256": "9e23bfab7e5eb8778ea78b504e15e237225d40197188a646185b64808cfae611",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "ground_truth_count": 50,
+        "prediction_count": 456
+      }
+    }
+  },
+  "model": {
+    "status": "READY",
+    "path": "models/pcb_component_detector.onnx",
+    "sha256": "45a1dc54bb2eaff067edc631be30fee650deb1236e97a038610faa11aef28424",
+    "model_id": "pcb-yolov8s-2026-07-11",
+    "size_bytes": 44943271
+  },
+  "runtime": "onnxruntime-cpu",
+  "inference_mode": "tiled",
+  "inference_configuration": {
+    "model_input_size_px": 960,
+    "tile_size_px": 1536,
+    "tile_overlap_px": 320,
+    "raw_prediction_confidence_floor": 0.001,
+    "reported_confidence_threshold": 0.25,
+    "confidence_threshold_sweep": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ]
+  },
+  "first_call_model_load_and_inference_ms": 1099.5312080485746,
+  "steady_per_image_latency_ms": {
+    "mean": 1027.2256410815037,
+    "median": 1016.9502499629743,
+    "p95": 1111.6156499949284,
+    "image_count": 13
+  },
+  "peak_process_rss_bytes": 770654208,
+  "peak_memory_note": "Process peak RSS includes Python and imported libraries; it is not isolated to ONNX inference.",
+  "metrics": {
+    "images_evaluated": 13,
+    "iou_threshold": 0.5,
+    "confidence_threshold_for_precision_recall": 0.25,
+    "precision": 0.2118380062305296,
+    "recall": 0.3469387755102041,
+    "f1": 0.26305609284332687,
+    "true_positive_count": 68,
+    "false_positive_count": 253,
+    "false_negative_count": 128,
+    "map50": 0.3091000267025117,
+    "map50_95": 0.1584673991481419,
+    "map_by_iou_threshold": {
+      "0.50": 0.3091000267025117,
+      "0.55": 0.2793912357493899,
+      "0.60": 0.2657194505217852,
+      "0.65": 0.23177505879928714,
+      "0.70": 0.15717736152440032,
+      "0.75": 0.1418482523947422,
+      "0.80": 0.09955129779141637,
+      "0.85": 0.07453350140785733,
+      "0.90": 0.02557780659002883,
+      "0.95": 0.0
+    },
+    "confidence_threshold_curve": [
+      {
+        "confidence_threshold": 0.05,
+        "true_positives": 87,
+        "false_positives": 630,
+        "false_negatives": 109,
+        "precision": 0.12133891213389121,
+        "recall": 0.44387755102040816,
+        "f1": 0.19058050383351588
+      },
+      {
+        "confidence_threshold": 0.1,
+        "true_positives": 80,
+        "false_positives": 450,
+        "false_negatives": 116,
+        "precision": 0.1509433962264151,
+        "recall": 0.40816326530612246,
+        "f1": 0.22038567493112948
+      },
+      {
+        "confidence_threshold": 0.15,
+        "true_positives": 75,
+        "false_positives": 353,
+        "false_negatives": 121,
+        "precision": 0.17523364485981308,
+        "recall": 0.3826530612244898,
+        "f1": 0.2403846153846154
+      },
+      {
+        "confidence_threshold": 0.2,
+        "true_positives": 72,
+        "false_positives": 294,
+        "false_negatives": 124,
+        "precision": 0.19672131147540983,
+        "recall": 0.3673469387755102,
+        "f1": 0.25622775800711745
+      },
+      {
+        "confidence_threshold": 0.25,
+        "true_positives": 68,
+        "false_positives": 253,
+        "false_negatives": 128,
+        "precision": 0.2118380062305296,
+        "recall": 0.3469387755102041,
+        "f1": 0.26305609284332687
+      },
+      {
+        "confidence_threshold": 0.3,
+        "true_positives": 62,
+        "false_positives": 200,
+        "false_negatives": 134,
+        "precision": 0.2366412213740458,
+        "recall": 0.3163265306122449,
+        "f1": 0.27074235807860264
+      },
+      {
+        "confidence_threshold": 0.4,
+        "true_positives": 52,
+        "false_positives": 142,
+        "false_negatives": 144,
+        "precision": 0.26804123711340205,
+        "recall": 0.2653061224489796,
+        "f1": 0.26666666666666666
+      },
+      {
+        "confidence_threshold": 0.5,
+        "true_positives": 41,
+        "false_positives": 106,
+        "false_negatives": 155,
+        "precision": 0.2789115646258503,
+        "recall": 0.20918367346938777,
+        "f1": 0.239067055393586
+      },
+      {
+        "confidence_threshold": 0.6,
+        "true_positives": 34,
+        "false_positives": 71,
+        "false_negatives": 162,
+        "precision": 0.3238095238095238,
+        "recall": 0.17346938775510204,
+        "f1": 0.22591362126245848
+      }
+    ],
+    "small_object_area_px2_cutoff": 1024.0,
+    "classes": {
+      "resistor": {
+        "ground_truth_count": 52,
+        "support_status": "MEASURED",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 902,
+        "true_positive_count": 16,
+        "false_positive_count": 69,
+        "false_negative_count": 36,
+        "precision_at_confidence_threshold": 0.18823529411764706,
+        "recall_at_confidence_threshold": 0.3076923076923077,
+        "ap50": 0.13784877890411243,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "capacitor": {
+        "ground_truth_count": 59,
+        "support_status": "MEASURED",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 1762,
+        "true_positive_count": 19,
+        "false_positive_count": 135,
+        "false_negative_count": 40,
+        "precision_at_confidence_threshold": 0.12337662337662338,
+        "recall_at_confidence_threshold": 0.3220338983050847,
+        "ap50": 0.11635239081610912,
+        "small_object_ground_truth_count": 8,
+        "small_object_recall_at_confidence_threshold": 0.75
+      },
+      "diode": {
+        "ground_truth_count": 2,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 14,
+        "true_positive_count": 0,
+        "false_positive_count": 0,
+        "false_negative_count": 2,
+        "precision_at_confidence_threshold": 0.0,
+        "recall_at_confidence_threshold": 0.0,
+        "ap50": 0.7,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "led": {
+        "ground_truth_count": 15,
+        "support_status": "MEASURED",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 155,
+        "true_positive_count": 3,
+        "false_positive_count": 6,
+        "false_negative_count": 12,
+        "precision_at_confidence_threshold": 0.3333333333333333,
+        "recall_at_confidence_threshold": 0.2,
+        "ap50": 0.15301587301587302,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "integrated_circuit": {
+        "ground_truth_count": 32,
+        "support_status": "MEASURED",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 333,
+        "true_positive_count": 22,
+        "false_positive_count": 38,
+        "false_negative_count": 10,
+        "precision_at_confidence_threshold": 0.36666666666666664,
+        "recall_at_confidence_threshold": 0.6875,
+        "ap50": 0.3751465386000363,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "connector": {
+        "ground_truth_count": 9,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 49,
+        "true_positive_count": 2,
+        "false_positive_count": 1,
+        "false_negative_count": 7,
+        "precision_at_confidence_threshold": 0.6666666666666666,
+        "recall_at_confidence_threshold": 0.2222222222222222,
+        "ap50": 0.2222222222222222,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "switch_button": {
+        "ground_truth_count": 6,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 37,
+        "true_positive_count": 3,
+        "false_positive_count": 2,
+        "false_negative_count": 3,
+        "precision_at_confidence_threshold": 0.6,
+        "recall_at_confidence_threshold": 0.5,
+        "ap50": 0.3828282828282828,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "header": {
+        "ground_truth_count": 8,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 139,
+        "true_positive_count": 1,
+        "false_positive_count": 1,
+        "false_negative_count": 7,
+        "precision_at_confidence_threshold": 0.5,
+        "recall_at_confidence_threshold": 0.125,
+        "ap50": 0.26274116896013616,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "crystal": {
+        "ground_truth_count": 4,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 19,
+        "true_positive_count": 0,
+        "false_positive_count": 0,
+        "false_negative_count": 4,
+        "precision_at_confidence_threshold": 0.0,
+        "recall_at_confidence_threshold": 0.0,
+        "ap50": 0.0625,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "debug_test_point": {
+        "ground_truth_count": 9,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 89,
+        "true_positive_count": 2,
+        "false_positive_count": 1,
+        "false_negative_count": 7,
+        "precision_at_confidence_threshold": 0.6666666666666666,
+        "recall_at_confidence_threshold": 0.2222222222222222,
+        "ap50": 0.6783450116783449,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      }
+    },
+    "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+  },
+  "per_image_metrics": {
+    "IMG_20260529_163319.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.22727272727272727,
+      "recall": 0.4166666666666667,
+      "f1": 0.29411764705882354,
+      "true_positive_count": 5,
+      "false_positive_count": 17,
+      "false_negative_count": 7,
+      "map50": 0.5008838383838384,
+      "map50_95": 0.32593434343434347,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_163712.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.16666666666666666,
+      "recall": 0.25,
+      "f1": 0.2,
+      "true_positive_count": 1,
+      "false_positive_count": 5,
+      "false_negative_count": 3,
+      "map50": 0.027777777777777776,
+      "map50_95": 0.016666666666666666,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_163718.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "true_positive_count": 0,
+      "false_positive_count": 1,
+      "false_negative_count": 4,
+      "map50": 0.16666666666666666,
+      "map50_95": 0.06666666666666667,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164033.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.11801242236024845,
+      "recall": 0.5135135135135135,
+      "f1": 0.1919191919191919,
+      "true_positive_count": 19,
+      "false_positive_count": 142,
+      "false_negative_count": 18,
+      "map50": 0.13261925186984577,
+      "map50_95": 0.03789360329002154,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164111.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.3333333333333333,
+      "recall": 0.3333333333333333,
+      "f1": 0.3333333333333333,
+      "true_positive_count": 2,
+      "false_positive_count": 4,
+      "false_negative_count": 4,
+      "map50": 0.3333333333333333,
+      "map50_95": 0.2,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164115.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666,
+      "true_positive_count": 3,
+      "false_positive_count": 0,
+      "false_negative_count": 3,
+      "map50": 0.5885416666666666,
+      "map50_95": 0.4005208333333333,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164129.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "true_positive_count": 0,
+      "false_positive_count": 7,
+      "false_negative_count": 4,
+      "map50": 0.0,
+      "map50_95": 0.0,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164142.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "true_positive_count": 0,
+      "false_positive_count": 7,
+      "false_negative_count": 4,
+      "map50": 0.003787878787878788,
+      "map50_95": 0.0007575757575757576,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164146.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "true_positive_count": 0,
+      "false_positive_count": 8,
+      "false_negative_count": 4,
+      "map50": 0.008620689655172414,
+      "map50_95": 0.0008620689655172414,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164428.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "true_positive_count": 0,
+      "false_positive_count": 0,
+      "false_negative_count": 0,
+      "map50": null,
+      "map50_95": null,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164501.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 1.0,
+      "recall": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "true_positive_count": 5,
+      "false_positive_count": 0,
+      "false_negative_count": 1,
+      "map50": 1.0,
+      "map50_95": 0.6449999999999999,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164604.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.4,
+      "recall": 0.3389830508474576,
+      "f1": 0.3669724770642202,
+      "true_positive_count": 20,
+      "false_positive_count": 30,
+      "false_negative_count": 39,
+      "map50": 0.35896419083441233,
+      "map50_95": 0.22009559094992143,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    },
+    "IMG_20260529_164608.jpg": {
+      "images_evaluated": 1,
+      "iou_threshold": 0.5,
+      "confidence_threshold_for_precision_recall": 0.25,
+      "precision": 0.28888888888888886,
+      "recall": 0.26,
+      "f1": 0.2736842105263158,
+      "true_positive_count": 13,
+      "false_positive_count": 32,
+      "false_negative_count": 37,
+      "map50": 0.469998169612682,
+      "map50_95": 0.1841587258253577,
+      "small_object_area_px2_cutoff": 1024.0,
+      "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+    }
+  },
+  "limits": [
+    "Source-provided validation labels were not independently re-reviewed.",
+    "The source does not provide board IDs, so same-board leakage and board-level generalization cannot be established.",
+    "Source annotations are boxes and classes only; reviewed occlusion, small-component, and identity labels are absent."
+  ],
+  "experiment": {
+    "repository_base_commit": "5ad38e76529808902977b9e93a1f29726fd9e56f",
+    "working_tree_dirty_during_run": true,
+    "dataset_source_commit": "0d7ae7310fa607389779b6132285336ad73e96e1",
+    "full_predictions_omitted": true
+  }
+}

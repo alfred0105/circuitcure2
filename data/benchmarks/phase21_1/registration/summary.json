@@ -1,0 +1,2210 @@
+{
+  "schema": "phase21.1-registration-attempt-v1",
+  "dataset_source": "https://github.com/KamMalinski/PRISM",
+  "prism_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+  "circuitcare_commit": "c2cad0133d0fbeda32caf68fb469e0bb186f77a2",
+  "calibration_mode": "AUTO_REGISTRATION",
+  "experiment_track": "IMAGE_ONLY_CANDIDATE_DIAGNOSTICS",
+  "thresholds": {
+    "ransac_threshold_px": 2.0,
+    "acceptance_threshold_px": null
+  },
+  "samples_requested": 12,
+  "sample_results": [
+    {
+      "sample_id": "Cascade",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "c13bcb877ac58282c8f9f95ab0c6fa740f86dacf42a63ac13fa01ae222dc5606",
+      "input_hashes": {
+        "Dataset/Cascade/TOP.png": "f4d02de6faf080276d4a5396e2e49ae84d8c78bb12d4d5faaa1974efe7506fcf",
+        "Dataset/Cascade/BOTTOM.png": "9e58c20c7a1695d260ad614b3d8cbe17145bb8467a4e553ff3609ff0624172e0",
+        "Dataset/Cascade/Cascade/Cascade.kicad_pcb": "9b10259dc8b5d9de9e231997c419d456e069bd5ee5f46fd5a016a561f5724cec",
+        "Dataset/Cascade/Cascade/Cascade.kicad_sch": "ff96dcbff6519b59fe69ce74524d7c8dd475375b12abf104721ba35b1abe6a8e"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 46,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 70,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Cascade",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Cascade/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "f4d02de6faf080276d4a5396e2e49ae84d8c78bb12d4d5faaa1974efe7506fcf"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Cascade/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "9e58c20c7a1695d260ad614b3d8cbe17145bb8467a4e553ff3609ff0624172e0"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Cascade/Cascade/Cascade.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "9b10259dc8b5d9de9e231997c419d456e069bd5ee5f46fd5a016a561f5724cec"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Cascade/Cascade/Cascade.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "ff96dcbff6519b59fe69ce74524d7c8dd475375b12abf104721ba35b1abe6a8e"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            765,
+            884
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 14,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.031208416970912367
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            765,
+            884
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 8,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.0158153340453282
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Connector",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "e0dd300af20e5cb8d45b00f0b7702b72e033cab312ba9a2bd0747d0302e6dcd4",
+      "input_hashes": {
+        "Dataset/Connector/TOP.png": "0afa14d3c7c2cea70ffdf8fd01e16879f1b49e4f97202cbd044649436ef23838",
+        "Dataset/Connector/BOTTOM.png": "7f6dac753131a7dec1e79b9c054d63e52f2bde0fccd975e00c1a732c92a79fd4",
+        "Dataset/Connector/Connector/Connector.kicad_pcb": "77c2fe6d245feed6ac8ad33efffa4d125f77a8abb11a553cb0fa267152813643",
+        "Dataset/Connector/Connector/Connector.kicad_sch": "adb1d171972fca3652fec860cede3c903082ef6048e284ddaddd940616507c4c"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 13,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 23,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "AVAILABLE",
+          "count": 1,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Connector",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Connector/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "0afa14d3c7c2cea70ffdf8fd01e16879f1b49e4f97202cbd044649436ef23838"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Connector/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "7f6dac753131a7dec1e79b9c054d63e52f2bde0fccd975e00c1a732c92a79fd4"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Connector/Connector/Connector.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "77c2fe6d245feed6ac8ad33efffa4d125f77a8abb11a553cb0fa267152813643"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Connector/Connector/Connector.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "adb1d171972fca3652fec860cede3c903082ef6048e284ddaddd940616507c4c"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            618,
+            583
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 2,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.008499833988025784
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            618,
+            583
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 2,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.00932729197666049
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Crossover",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "3c865a79697a19031d41e4898d8892f42b1e10d68b69e236965e2deec2046532",
+      "input_hashes": {
+        "Dataset/Crossover/TOP.png": "70fea77e1152ca1bfb5e58e88c1ce33d8bf7bcfc49e52851db8418c80d700e83",
+        "Dataset/Crossover/BOTTOM.png": "29fbde397f322920c1865215591faab8fb9d2cbf446e4bb8a99a62cf206ad34c",
+        "Dataset/Crossover/Crossover/Crossover.kicad_pcb": "e834e3c3d2d164186be47cda2ff9767b4bd0b6fad17de711bd8dce2b3d517586",
+        "Dataset/Crossover/Crossover/Crossover.kicad_sch": "f2a1df27cb227bb52d1c835fd6dfa108ce6219be6041208a25503618045c8544"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 12,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 23,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Crossover",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Crossover/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "70fea77e1152ca1bfb5e58e88c1ce33d8bf7bcfc49e52851db8418c80d700e83"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Crossover/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "29fbde397f322920c1865215591faab8fb9d2cbf446e4bb8a99a62cf206ad34c"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Crossover/Crossover/Crossover.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "e834e3c3d2d164186be47cda2ff9767b4bd0b6fad17de711bd8dce2b3d517586"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Crossover/Crossover/Crossover.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "f2a1df27cb227bb52d1c835fd6dfa108ce6219be6041208a25503618045c8544"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 0,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.01205983298132196
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.01229891600087285
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Divider",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "1040daf9433efa69b9b4b96e6920009caab70b8b9f11440d8505815f96644cc9",
+      "input_hashes": {
+        "Dataset/Divider/TOP.png": "342b6c4cf741bbac1255fa029f97e895f5102a74eb6e8c2a987b12a526d88e0f",
+        "Dataset/Divider/BOTTOM.png": "e331fc926a65661bcd83e88ecf032626b2a92bd87b667dcbd45781cf823b89d4",
+        "Dataset/Divider/Divider/Divider.kicad_pcb": "276eb28ad2e71bacbe570fe3f79aea1aa5320afe2073942431a2717215a3fe9c",
+        "Dataset/Divider/Divider/Divider.kicad_sch": "5855fc703295d7efe739ba4f73053cf9efe0fdd34393454e4be81e3542ab7ac0"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 8,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 10,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Divider",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Divider/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "342b6c4cf741bbac1255fa029f97e895f5102a74eb6e8c2a987b12a526d88e0f"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Divider/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "e331fc926a65661bcd83e88ecf032626b2a92bd87b667dcbd45781cf823b89d4"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Divider/Divider/Divider.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "276eb28ad2e71bacbe570fe3f79aea1aa5320afe2073942431a2717215a3fe9c"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Divider/Divider/Divider.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "5855fc703295d7efe739ba4f73053cf9efe0fdd34393454e4be81e3542ab7ac0"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            746,
+            233
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 0,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.004989749984815717
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            803,
+            239
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 0,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.006146250001620501
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Elements",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "ac1012aa36c4936e6d9a075b3b6612d3ec2cd23facd12bd4a277b8f504c9626f",
+      "input_hashes": {
+        "Dataset/Elements/TOP.png": "daba60f23f241d688e394a91cafb223010437064d932162b77c9ec0091f4d8a9",
+        "Dataset/Elements/BOTTOM.png": "38b64638ab74c4f062b985ca18ba850f42432e2a2fd6d3415efffe330fac6cfd",
+        "Dataset/Elements/Elements/Elements.kicad_pcb": "387a34e8f7436a78573f534d962d8b8c11a67739db64352493a6b709a1018996",
+        "Dataset/Elements/Elements/Elements.kicad_sch": "d84aac819255dcf5c3977b28af0e26f3a66ccf363a305db2169665ccca0348fb"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 40,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 112,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Elements",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Elements/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "daba60f23f241d688e394a91cafb223010437064d932162b77c9ec0091f4d8a9"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Elements/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "38b64638ab74c4f062b985ca18ba850f42432e2a2fd6d3415efffe330fac6cfd"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Elements/Elements/Elements.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "387a34e8f7436a78573f534d962d8b8c11a67739db64352493a6b709a1018996"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Elements/Elements/Elements.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "d84aac819255dcf5c3977b28af0e26f3a66ccf363a305db2169665ccca0348fb"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            2364,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 38,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.045159291999880224
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            2364,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 31,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.041575666051357985
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Filter",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "ee326934015515b2ec3b83e43d9ee6b54b02e0f11d70fd42ee23ea711d9ab322",
+      "input_hashes": {
+        "Dataset/Filter/TOP.png": "44c49294795d77a71add3290fabb5247509908d1b78ad6b4814af8673b22e9c9",
+        "Dataset/Filter/BOTTOM.png": "b7fdcb14795b8e9adcf95db1964aa58e01d8339639f8b61ea6ca0087c5b7db57",
+        "Dataset/Filter/Filter/Filter.kicad_pcb": "16060c3d8e9dd396978b7f3fb97bd7249ec6db04474bbe5e0db9a5fbfa40dc2d",
+        "Dataset/Filter/Filter/Filter.kicad_sch": "47d6ab81ef300e5e2ef8530d4fde0fcba1d42da6b872f4d364f5a3e9c5fbc79b"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 18,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 40,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Filter",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Filter/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "44c49294795d77a71add3290fabb5247509908d1b78ad6b4814af8673b22e9c9"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Filter/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "b7fdcb14795b8e9adcf95db1964aa58e01d8339639f8b61ea6ca0087c5b7db57"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Filter/Filter/Filter.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "16060c3d8e9dd396978b7f3fb97bd7249ec6db04474bbe5e0db9a5fbfa40dc2d"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Filter/Filter/Filter.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "47d6ab81ef300e5e2ef8530d4fde0fcba1d42da6b872f4d364f5a3e9c5fbc79b"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            803,
+            744
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 6,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.01885354204569012
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            803,
+            744
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 4,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.020959417044650763
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Floating",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "c9bf06d7ead49d16a69dd72d1dd4f2f171bade99dd424cb21c2abc1d1fa96bab",
+      "input_hashes": {
+        "Dataset/Floating/TOP.png": "d2946c90f82f8cfcae754102434f9d8d6ddfefe9c3ced981cea7c2301df1979f",
+        "Dataset/Floating/BOTTOM.png": "2c6fe2d5b253f2caabb42ba7b0aa7378e01887324fd05f617f95b86a45d11aa9",
+        "Dataset/Floating/Floating/Floating.kicad_pcb": "eb80f96557d458f39a3602fe0ef9658ed919c820eb482f07934f8a8e75b10055",
+        "Dataset/Floating/Floating/Floating.kicad_sch": "7348a7b3e887ddb83c035853d9afe899fc47415521f6907f3c5478eacc957e4c"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 8,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 7,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "AVAILABLE",
+          "count": 1,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Floating",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Floating/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "d2946c90f82f8cfcae754102434f9d8d6ddfefe9c3ced981cea7c2301df1979f"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Floating/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "2c6fe2d5b253f2caabb42ba7b0aa7378e01887324fd05f617f95b86a45d11aa9"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Floating/Floating/Floating.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "eb80f96557d458f39a3602fe0ef9658ed919c820eb482f07934f8a8e75b10055"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Floating/Floating/Floating.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "7348a7b3e887ddb83c035853d9afe899fc47415521f6907f3c5478eacc957e4c"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 4,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.01246658299351111
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.013054792012553662
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Groundplane",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "b38b36b45f864ac707c89a179ed1448aeb36325213c3413a9c19c88009576aa1",
+      "input_hashes": {
+        "Dataset/Groundplane/TOP.png": "ce9704900a917fb91a9b93b33421a4cb0f4e85034245fb5a13e4c6959cd88e15",
+        "Dataset/Groundplane/BOTTOM.png": "d56b15c108dbb706b4b045599e533466b02d5d57ce699a0f8cdfa46ba41ece64",
+        "Dataset/Groundplane/Groundplane/Groundplane.kicad_pcb": "3eae355344645c545e866b53594181d71334e6260ce5b676c34801682b1c7df7",
+        "Dataset/Groundplane/Groundplane/Groundplane.kicad_sch": "e79937651c9014b64588c25386c894ba8a3df4efc378f9460dfce56e1af9efe6"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 8,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 7,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Groundplane",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Groundplane/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "ce9704900a917fb91a9b93b33421a4cb0f4e85034245fb5a13e4c6959cd88e15"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Groundplane/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "d56b15c108dbb706b4b045599e533466b02d5d57ce699a0f8cdfa46ba41ece64"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Groundplane/Groundplane/Groundplane.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "3eae355344645c545e866b53594181d71334e6260ce5b676c34801682b1c7df7"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Groundplane/Groundplane/Groundplane.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "e79937651c9014b64588c25386c894ba8a3df4efc378f9460dfce56e1af9efe6"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            1068,
+            572
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.01219037501141429
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            1416,
+            660
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 8,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.019083333027083427
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Meander",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "73984363bdfe5e53d7a750ffa4ac964469769ec2550eb6d5bc244f3b4b9aa595",
+      "input_hashes": {
+        "Dataset/Meander/TOP.png": "d7af48a3d04e6e02e757ed63a03d69b86e021325abf7d4cf2acfd95bd905f9f2",
+        "Dataset/Meander/BOTTOM.png": "c2258cd8d8b09db7e2d1b3869a741d4d7293681439a928e4038e829e50a14f0d",
+        "Dataset/Meander/Meander/Meander.kicad_pcb": "025e6434bfd970658e1eab6aaec5394728611e5093dc94423ee3fd543395f420",
+        "Dataset/Meander/Meander/Meander.kicad_sch": "03495cdcd7c0fc49d3ca497f7623b032685ce4cafe716c50caa6d72581cb4d4a"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 6,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 155,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Meander",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Meander/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "d7af48a3d04e6e02e757ed63a03d69b86e021325abf7d4cf2acfd95bd905f9f2"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Meander/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "c2258cd8d8b09db7e2d1b3869a741d4d7293681439a928e4038e829e50a14f0d"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Meander/Meander/Meander.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "025e6434bfd970658e1eab6aaec5394728611e5093dc94423ee3fd543395f420"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Meander/Meander/Meander.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "03495cdcd7c0fc49d3ca497f7623b032685ce4cafe716c50caa6d72581cb4d4a"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            963,
+            884
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.02688370895339176
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            963,
+            884
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 1,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.022047833015676588
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Round",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "ccde75a026b433c8fd69c72ca653969d32bdb4a5c5b1cb4b652ac32e065652bd",
+      "input_hashes": {
+        "Dataset/Round/TOP.png": "ecca49cb925b3306ef30c2d50fd46d52076ae5e17729ba6c14133430b3fccdd9",
+        "Dataset/Round/BOTTOM.png": "4264d3b59ee4d7bb0ed9f1b9439c2f5058aec2eb234b499461435f2d5fe1460b",
+        "Dataset/Round/Round/Round.kicad_pcb": "e63d97b302fefac465c0acc59483b9d5c507c94cead163cefe31bbb3995cb677",
+        "Dataset/Round/Round/Round.kicad_sch": "97b1c6043bdb474a1b34dd70f1eb8a9bdbf3daf0782b92dab3e45912f03f6991"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 8,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 6,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Round",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Round/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "ecca49cb925b3306ef30c2d50fd46d52076ae5e17729ba6c14133430b3fccdd9"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Round/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "4264d3b59ee4d7bb0ed9f1b9439c2f5058aec2eb234b499461435f2d5fe1460b"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Round/Round/Round.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "e63d97b302fefac465c0acc59483b9d5c507c94cead163cefe31bbb3995cb677"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Round/Round/Round.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "97b1c6043bdb474a1b34dd70f1eb8a9bdbf3daf0782b92dab3e45912f03f6991"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            803,
+            744
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 5,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.024474082980304956
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            803,
+            744
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 6,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.019820291956420988
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Simple",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "d51f43bfcde8a444d37bde04e312f56ee042f3aaf9f7ebb6a0e12fcb2aa99acd",
+      "input_hashes": {
+        "Dataset/Simple/TOP.png": "013d34f12ab97eda2d28308e67adf1736b595fed1df0c13299e2cd2e50d375b1",
+        "Dataset/Simple/BOTTOM.png": "ba3754c260c113c718fa400213e6f824abdef44daae9645562c5a65a3d2ec52e",
+        "Dataset/Simple/Simple/Simple.kicad_pcb": "3ee13ce2e3125ca3b32d7e755aeaf3cbbc22f6c54205892a478fb79192815ec9",
+        "Dataset/Simple/Simple/Simple.kicad_sch": "0f79c86ec7c9598ec00ff65c32583b191300037131e36f897abbfb5c917dff3c"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "AVAILABLE",
+          "count": 2,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 4,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "AVAILABLE",
+          "count": 1,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Simple",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Simple/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "013d34f12ab97eda2d28308e67adf1736b595fed1df0c13299e2cd2e50d375b1"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Simple/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "ba3754c260c113c718fa400213e6f824abdef44daae9645562c5a65a3d2ec52e"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Simple/Simple/Simple.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "3ee13ce2e3125ca3b32d7e755aeaf3cbbc22f6c54205892a478fb79192815ec9"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Simple/Simple/Simple.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "0f79c86ec7c9598ec00ff65c32583b191300037131e36f897abbfb5c917dff3c"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            2364,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 4,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.04144049994647503
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            2364,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 0,
+            "pad_via_candidate_count": 2,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.04028424998978153
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    },
+    {
+      "sample_id": "Transistors",
+      "board_revision": "NOT_AVAILABLE",
+      "dataset_hash": "44813e6fef5424e052e7e980ecca8b1ff911062062d106b938a756f61746d1aa",
+      "input_hashes": {
+        "Dataset/Transistors/TOP.png": "d5c481416d7b3e8ad84844b78934a39941fdff4cb377a5d7a137a447be4be92d",
+        "Dataset/Transistors/BOTTOM.png": "b7850ae513cc5543b8bed650edefcbf985c743ee8d2b5e217055115233f0578a",
+        "Dataset/Transistors/Transistors/Transistors.kicad_pcb": "7726df435a2ca2d4bc5771049da868250e86a9b8aef4fd33c824aee1a05aec2c",
+        "Dataset/Transistors/Transistors/Transistors.kicad_sch": "36b65b735fbd9a8a927660736bc3401f5b2b3e15e3b7a73f47e2d1b64b470aaf"
+      },
+      "reference_geometry": {
+        "outline": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "pads": {
+          "status": "AVAILABLE",
+          "count": 14,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "vias": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "segments": {
+          "status": "AVAILABLE",
+          "count": 32,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "zones": {
+          "status": "NOT_AVAILABLE",
+          "count": 0,
+          "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+        },
+        "visual_observability": "NOT_ASSESSED",
+        "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+      },
+      "bundle": {
+        "board_id": "Transistors",
+        "board_revision": "NOT_AVAILABLE",
+        "dataset_source": "https://github.com/KamMalinski/PRISM",
+        "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+        "license_metadata": {
+          "repository_license_file": "LICENSE.txt",
+          "repository_license": "AGPL-3.0",
+          "dataset_specific_license": "NOT_STATED",
+          "redistribution_status": "REVIEW_REQUIRED",
+          "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md"
+        },
+        "images": {
+          "TOP": {
+            "path": "Dataset/Transistors/TOP.png",
+            "status": "AVAILABLE",
+            "sha256": "d5c481416d7b3e8ad84844b78934a39941fdff4cb377a5d7a137a447be4be92d"
+          },
+          "BOTTOM": {
+            "path": "Dataset/Transistors/BOTTOM.png",
+            "status": "AVAILABLE",
+            "sha256": "b7850ae513cc5543b8bed650edefcbf985c743ee8d2b5e217055115233f0578a"
+          }
+        },
+        "design": {
+          "kicad_pcb": {
+            "path": "Dataset/Transistors/Transistors/Transistors.kicad_pcb",
+            "status": "AVAILABLE",
+            "sha256": "7726df435a2ca2d4bc5771049da868250e86a9b8aef4fd33c824aee1a05aec2c"
+          },
+          "kicad_schematic": {
+            "path": "Dataset/Transistors/Transistors/Transistors.kicad_sch",
+            "status": "AVAILABLE",
+            "sha256": "36b65b735fbd9a8a927660736bc3401f5b2b3e15e3b7a73f47e2d1b64b470aaf"
+          },
+          "netlist": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          },
+          "position_csv": {
+            "path": null,
+            "status": "NOT_AVAILABLE",
+            "sha256": null
+          }
+        },
+        "calibration": {
+          "coordinate_frames": [
+            "IMAGE_RAW",
+            "IMAGE_RECTIFIED",
+            "BOARD_CANONICAL",
+            "KICAD_DESIGN",
+            "LAYER_LOCAL"
+          ],
+          "correspondence_points": [],
+          "transform": null,
+          "validation_results": null,
+          "status": "REGISTRATION_UNVERIFIED"
+        },
+        "references": {
+          "geometry": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "components": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          },
+          "netlist": {
+            "path": null,
+            "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE",
+            "sha256": null
+          }
+        },
+        "schema_version": "pcb-dataset-bundle-v1"
+      },
+      "sides": {
+        "TOP": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "TOP",
+          "image_size_px": [
+            709,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 9,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.012869082973338664
+        },
+        "BOTTOM": {
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "verification_status": "REGISTRATION_UNVERIFIED",
+          "reason": "AUTO_CANDIDATES_NOT_MATCHED_TO_DESIGN_ANCHORS",
+          "board_side": "BOTTOM",
+          "image_size_px": [
+            727,
+            900
+          ],
+          "image_feature_diagnostics": {
+            "status": "CANDIDATES_ONLY_NOT_CORRESPONDENCES",
+            "board_candidate_count": 1,
+            "pad_via_candidate_count": 11,
+            "image_only": true,
+            "usable_calibration_correspondences": 0,
+            "note": "Candidate detections were not independently matched to design points."
+          },
+          "calibration_point_count": 0,
+          "validation_point_count": 0,
+          "fit_error_px": null,
+          "median_error_px": null,
+          "p95_error_px": null,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "transform": null,
+          "design_assisted": false,
+          "image_only_status": "NOT_VERIFIED",
+          "design_assisted_status": "NOT_VERIFIED",
+          "runtime_seconds": 0.01297579100355506
+        }
+      },
+      "attempt_scope": "AUTO_REGISTRATION",
+      "independent_physical_board_data": "NOT_AVAILABLE_PRISM_RENDERED_SYNTHETIC_CASE"
+    }
+  ],
+  "summary": {
+    "top_bottom_pairs": 24,
+    "verified_registrations": 0,
+    "unverified_registrations": 24,
+    "failed_registrations": 0,
+    "registration_success_rate": 0.0,
+    "top_bottom_consistency": {
+      "status": "NOT_VERIFIED",
+      "reason": "No independently adjudicated shared TOP/BOTTOM landmarks or vias"
+    }
+  }
+}

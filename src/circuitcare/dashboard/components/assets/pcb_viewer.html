@@ -1,0 +1,22 @@
+<div class="cc-pcb-viewer" data-pcb-viewer>
+  <div class="cc-pcb-toolbar" role="toolbar" aria-label="PCB 보기 조작">
+    <button type="button" data-action="fit">화면 맞춤</button>
+    <button type="button" data-action="zoom-in" aria-label="확대">＋</button>
+    <button type="button" data-action="zoom-out" aria-label="축소">−</button>
+    <button type="button" data-action="reset">초기화</button>
+    <button type="button" data-action="clear-selection">선택 해제</button>
+    <button type="button" data-action="draw-box">박스 그리기</button>
+    <span data-zoom-label>100%</span>
+    <span data-status-label>검출 후보 · 고장 판정 아님</span>
+  </div>
+  <div class="cc-pcb-viewport" data-viewport data-dragging="false">
+    <svg class="cc-pcb-canvas" data-canvas preserveAspectRatio="xMidYMid meet" role="img" aria-label="PCB 이미지와 검출된 부품 후보">
+      <g data-camera>
+        <image data-board-image preserveAspectRatio="none" pointer-events="none"></image>
+        <g data-component-layer></g>
+      </g>
+    </svg>
+    <div class="cc-pcb-tooltip" data-tooltip hidden></div>
+    <div class="cc-pcb-empty" data-empty hidden>이미지 좌표를 확인할 수 없습니다.</div>
+  </div>
+</div>

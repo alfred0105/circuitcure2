@@ -1,0 +1,1016 @@
+{
+  "analysis_status": {
+    "circuit_validation": "READY",
+    "fault_hypotheses": "NOT_EVALUATED",
+    "graph_analysis": "COMPLETE",
+    "risk_assessment": "COMPLETE",
+    "spice_verification": "CACHED"
+  },
+  "circuit": {
+    "component_count": 6,
+    "components": {
+      "C1": {
+        "datasheet": null,
+        "footprint": null,
+        "library_id": "",
+        "ref": "C1",
+        "value": "100uF"
+      },
+      "J1": {
+        "datasheet": null,
+        "footprint": null,
+        "library_id": "",
+        "ref": "J1",
+        "value": "12V Input"
+      },
+      "Q1": {
+        "datasheet": null,
+        "footprint": null,
+        "library_id": "",
+        "ref": "Q1",
+        "value": "NMOS switch"
+      },
+      "R1": {
+        "datasheet": null,
+        "footprint": null,
+        "library_id": "",
+        "ref": "R1",
+        "value": "1k"
+      },
+      "RLOAD": {
+        "datasheet": null,
+        "footprint": null,
+        "library_id": "",
+        "ref": "RLOAD",
+        "value": "1k"
+      },
+      "U1": {
+        "datasheet": null,
+        "footprint": null,
+        "library_id": "",
+        "ref": "U1",
+        "value": "Regulator"
+      }
+    },
+    "hash": "9f51ab1d0c3a98200e4d52830c632130c63daeba670723cffe7dcbb6ee308294",
+    "name": "Regulator + divider + switch (cached demo)",
+    "net_count": 4,
+    "netlist_path": "fault_demo_netlist.xml",
+    "nets": [
+      "GND",
+      "LOAD",
+      "VIN",
+      "VOUT"
+    ]
+  },
+  "diagnosis": {
+    "status": "NOT_EVALUATED"
+  },
+  "evidence": [
+    {
+      "artifact_sha256": "c95061ace91622efb9a6089ef5170859c3adfdedc897b112cd38ce32892d9207",
+      "circuit_hash": "9f51ab1d0c3a98200e4d52830c632130c63daeba670723cffe7dcbb6ee308294",
+      "evidence_id": "EV-SPICE",
+      "evidence_type": "SPICE_SIMULATION",
+      "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+      "source_artifact": "comparison.json",
+      "verification_status": "RECORDED"
+    },
+    {
+      "circuit_hash": "9f51ab1d0c3a98200e4d52830c632130c63daeba670723cffe7dcbb6ee308294",
+      "evidence_id": "EV-GRAPH",
+      "evidence_type": "HEURISTIC_ESTIMATE",
+      "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+      "source_artifact": "fault influence graph",
+      "verification_status": "CONNECTIVITY_ONLY"
+    },
+    {
+      "circuit_hash": "9f51ab1d0c3a98200e4d52830c632130c63daeba670723cffe7dcbb6ee308294",
+      "evidence_id": "EV-OBS",
+      "evidence_type": "SYNTHETIC_DEMO",
+      "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+      "source_artifact": null,
+      "verification_status": "SIMULATED"
+    }
+  ],
+  "fault_influence": {
+    "note": "Connectivity candidates are not damage evidence.",
+    "status": "NOT_EVALUATED"
+  },
+  "fault_or_symptom": {
+    "component_ref": "U1",
+    "fault_type": "regulator_output_rise",
+    "mode": "KNOWN_FAULT",
+    "observation_classification": "SYNTHETIC_DEMO",
+    "observations": [
+      {
+        "node": "VOUT",
+        "source": "simulated_demo",
+        "uncertainty": 0.2,
+        "unit": "V",
+        "value": 7.9
+      }
+    ],
+    "parameter": "8",
+    "symptom": null
+  },
+  "findings": [
+    {
+      "finding_id": "F-GRAPH",
+      "finding_type": "connectivity_candidate_map",
+      "source_evidence_ids": [
+        "EV-GRAPH"
+      ],
+      "status": "CONNECTIVITY_ONLY",
+      "summary": "Shared nets identify candidate paths only; they do not confirm damaging electrical propagation."
+    },
+    {
+      "finding_id": "F-SPICE",
+      "finding_type": "simulation_comparison",
+      "source_evidence_ids": [
+        "EV-SPICE"
+      ],
+      "status": "SIMULATED",
+      "summary": "SPICE comparison is a model result, not physical damage confirmation."
+    },
+    {
+      "finding_id": "F-RISK",
+      "finding_type": "rating_stress_review",
+      "source_evidence_ids": [
+        "EV-SPICE"
+      ],
+      "status": "ASSESSED_WITH_CONFIGURED_RATINGS",
+      "summary": "Risk levels compare simulated stress with configured rating records."
+    }
+  ],
+  "generated_at": "2026-11-04T00:39:59.766682+00:00",
+  "limitations": [
+    "Synthetic or simulated evidence is not a physical repair result.",
+    "A priority score or conditional posterior is not a failure probability.",
+    "Unsupported fault models and unapproved ratings remain unevaluated.",
+    "This report collects the current snapshot and does not rerun analysis."
+  ],
+  "parameter_identification": {
+    "status": "NOT_EVALUATED"
+  },
+  "recommended_inspection": {
+    "note": "Review connectivity and measured stress before selecting an inspection.",
+    "status": "NOT_EVALUATED"
+  },
+  "reproducibility": {
+    "analysis_timestamp": "2026-11-04T00:39:59.766682+00:00",
+    "circuit_hash": "9f51ab1d0c3a98200e4d52830c632130c63daeba670723cffe7dcbb6ee308294",
+    "git_sha": "357294d286b6e21af63aee0b027fdb715c63fce0",
+    "input_hashes": {
+      "base": "0ffc8040950705a24b65794156d30b84b7f569c1cf2411a72fc0b75c05ba9415",
+      "mapping": "921363fe6cc18cd5911052863bcf9e648f5b5c33f7c0230d48322b13568e9bd0",
+      "probes": "237fe9e93ba984c9a5a311f404be26bf4db42d58069d7629a897bc248da25443",
+      "ratings": "6352e4857164aff852906bcb30dd7b3c506e59b8674cf9b1be14bbd33bddf6dd"
+    },
+    "model_version": null,
+    "ngspice_version": "ngspice-47",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "prompt_version": null,
+    "python": "3.12.14",
+    "workspace_id": "b4c24d0098f45d227689e2a5"
+  },
+  "schema_version": "circuitcare-diagnosis-report-v1",
+  "secondary_damage_risk": {
+    "artifact_sha256": "cd978029d69031645988313be7f5ffaa8d6ae0b1fe336d4d094cf85f57a775b6",
+    "assessment_type": "simulated_secondary_stress",
+    "damage_confirmed": false,
+    "damage_probability": null,
+    "excluded_candidates": [
+      {
+        "component_ref": "Q1",
+        "reason": "The KiCad Q1 pins (VIN and GND) do not correspond to the SPICE S1 power terminals (VIN and SWITCH_OUT); this example cannot establish the switch's physical stress mapping.",
+        "risk_assessment": "excluded"
+      }
+    ],
+    "failed_component": "U1",
+    "fault_type": "regulator_output_rise",
+    "graph_only_connectivity_order": [
+      {
+        "component_ref": "C1",
+        "connectivity_rank": 1,
+        "evidence_level": "connectivity_only",
+        "minimum_hops": 1
+      },
+      {
+        "component_ref": "J1",
+        "connectivity_rank": 2,
+        "evidence_level": "connectivity_only",
+        "minimum_hops": 1
+      },
+      {
+        "component_ref": "R1",
+        "connectivity_rank": 3,
+        "evidence_level": "connectivity_only",
+        "minimum_hops": 1
+      },
+      {
+        "component_ref": "RLOAD",
+        "connectivity_rank": 4,
+        "evidence_level": "connectivity_only",
+        "minimum_hops": 1
+      }
+    ],
+    "limitations": [
+      "Connectivity paths are candidate evidence only; sharing GND alone does not establish stress propagation.",
+      "Only configured ratings and supported measured metrics are evaluated.",
+      "Short transient maxima are compared with configured rating types; exposure duration is retained in simulation data but no pulse derating is applied."
+    ],
+    "priority_score_meaning": "Deterministic inspection-priority index (0-100); factors are risk class, utilization, measured stress change, rating/measurement evidence, and a small connectivity-path evidence contribution. It is not damage probability.",
+    "rating_checks": [
+      {
+        "component_ref": "R1",
+        "measurement_status": "simulated",
+        "metrics": {
+          "max_abs_voltage_v": {
+            "baseline_stress": 2.5,
+            "measured_stress": 4.0,
+            "rated_limit": 200.0,
+            "rating_exceeded": false,
+            "rating_source": {
+              "note": "Illustrative limits only; resistor part number and datasheet are not specified.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 1.5,
+            "unit": "V",
+            "utilization_ratio": 0.02
+          },
+          "max_current_a": {
+            "baseline_stress": 0.0025,
+            "measured_stress": 0.004,
+            "rated_limit": 0.25,
+            "rating_exceeded": false,
+            "rating_source": {
+              "note": "Illustrative limits only; resistor part number and datasheet are not specified.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 0.0015,
+            "unit": "A",
+            "utilization_ratio": 0.016
+          },
+          "max_power_w": {
+            "baseline_stress": 0.00625,
+            "measured_stress": 0.016,
+            "rated_limit": 0.25,
+            "rating_exceeded": false,
+            "rating_source": {
+              "note": "Illustrative limits only; resistor part number and datasheet are not specified.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 0.00975,
+            "unit": "W",
+            "utilization_ratio": 0.064
+          }
+        }
+      },
+      {
+        "component_ref": "RLOAD",
+        "measurement_status": "simulated",
+        "metrics": {
+          "max_abs_voltage_v": {
+            "baseline_stress": 2.5,
+            "measured_stress": 4.0,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": {
+              "note": "Example 0.125 W resistor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "unknown",
+            "reason": "No explicit rating is configured for this metric.",
+            "status": "unknown",
+            "stress_increase": 1.5,
+            "unit": "V",
+            "utilization_ratio": null
+          },
+          "max_current_a": {
+            "baseline_stress": 0.0025,
+            "measured_stress": 0.004,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": {
+              "note": "Example 0.125 W resistor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "unknown",
+            "reason": "No explicit rating is configured for this metric.",
+            "status": "unknown",
+            "stress_increase": 0.0015,
+            "unit": "A",
+            "utilization_ratio": null
+          },
+          "max_power_w": {
+            "baseline_stress": 0.00625,
+            "measured_stress": 0.016,
+            "rated_limit": 0.125,
+            "rating_exceeded": false,
+            "rating_source": {
+              "note": "Example 0.125 W resistor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 0.00975,
+            "unit": "W",
+            "utilization_ratio": 0.128
+          }
+        }
+      },
+      {
+        "component_ref": "C1",
+        "measurement_status": "voltage_only",
+        "metrics": {
+          "max_abs_voltage_v": {
+            "baseline_stress": 5.0,
+            "measured_stress": 8.0,
+            "rated_limit": 6.3,
+            "rating_exceeded": true,
+            "rating_source": {
+              "note": "Example 6.3 V capacitor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 3.0,
+            "unit": "V",
+            "utilization_ratio": 1.2698412698412698
+          },
+          "max_current_a": {
+            "baseline_stress": null,
+            "measured_stress": null,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": {
+              "note": "Example 6.3 V capacitor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "unknown",
+            "reason": "Required simulated measurement is unavailable.",
+            "status": "unknown",
+            "stress_increase": null,
+            "unit": "A",
+            "utilization_ratio": null
+          },
+          "max_power_w": {
+            "baseline_stress": null,
+            "measured_stress": null,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": {
+              "note": "Example 6.3 V capacitor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "unknown",
+            "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+            "status": "unknown",
+            "stress_increase": null,
+            "unit": "W",
+            "utilization_ratio": null
+          }
+        }
+      },
+      {
+        "component_ref": "U1",
+        "measurement_status": "simulated",
+        "metrics": {
+          "max_abs_voltage_v": {
+            "baseline_stress": 5.0,
+            "measured_stress": 8.0,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": null,
+            "rating_type": "unknown",
+            "reason": "No explicit rating is configured for this metric.",
+            "status": "unknown",
+            "stress_increase": 3.0,
+            "unit": "V",
+            "utilization_ratio": null
+          },
+          "max_current_a": {
+            "baseline_stress": 0.0025,
+            "measured_stress": 0.00400000002,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": null,
+            "rating_type": "unknown",
+            "reason": "No explicit rating is configured for this metric.",
+            "status": "unknown",
+            "stress_increase": 0.00150000002,
+            "unit": "A",
+            "utilization_ratio": null
+          },
+          "max_power_w": {
+            "baseline_stress": 0.0,
+            "measured_stress": 0.0,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": null,
+            "rating_type": "unknown",
+            "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+            "status": "unknown",
+            "stress_increase": 0.0,
+            "unit": "W",
+            "utilization_ratio": null
+          }
+        }
+      },
+      {
+        "component_ref": "Q1",
+        "measurement_status": "measured_voltage_only",
+        "metrics": {
+          "max_abs_voltage_v": {
+            "baseline_stress": 11.999976000048,
+            "measured_stress": 11.999976000048,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": null,
+            "rating_type": "unknown",
+            "reason": "No explicit rating is configured for this metric.",
+            "status": "unknown",
+            "stress_increase": 0.0,
+            "unit": "V",
+            "utilization_ratio": null
+          },
+          "max_current_a": {
+            "baseline_stress": null,
+            "measured_stress": null,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": null,
+            "rating_type": "unknown",
+            "reason": "Required simulated measurement is unavailable.",
+            "status": "unknown",
+            "stress_increase": null,
+            "unit": "A",
+            "utilization_ratio": null
+          },
+          "max_power_w": {
+            "baseline_stress": null,
+            "measured_stress": null,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": null,
+            "rating_type": "unknown",
+            "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+            "status": "unknown",
+            "stress_increase": null,
+            "unit": "W",
+            "utilization_ratio": null
+          }
+        }
+      }
+    ],
+    "risk_assessment_json": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+    "risk_thresholds": {
+      "exceeded_utilization_ratio": 1.0,
+      "near_limit_utilization_ratio": 0.8
+    },
+    "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+    "secondary_candidates": [
+      {
+        "component_ref": "C1",
+        "connectivity_paths": [
+          {
+            "connection_type": "direct",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 1,
+            "net_types": {
+              "GND": "unknown"
+            },
+            "nets": [
+              "GND"
+            ]
+          },
+          {
+            "connection_type": "direct",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 1,
+            "net_types": {
+              "VOUT": "unknown"
+            },
+            "nets": [
+              "VOUT"
+            ]
+          },
+          {
+            "connection_type": "indirect",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 2,
+            "net_types": {
+              "GND": "unknown",
+              "VIN": "unknown"
+            },
+            "nets": [
+              "VIN",
+              "GND"
+            ]
+          }
+        ],
+        "damage_confirmed": false,
+        "damage_probability": null,
+        "dominant_metric": "voltage",
+        "evidence_level": "simulated_electrical_stress_and_configured_rating",
+        "maximum_utilization_ratio": 1.2698412698412698,
+        "metrics": {
+          "max_abs_voltage_v": {
+            "baseline_stress": 5.0,
+            "measured_stress": 8.0,
+            "rated_limit": 6.3,
+            "rating_exceeded": true,
+            "rating_source": {
+              "note": "Example 6.3 V capacitor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 3.0,
+            "unit": "V",
+            "utilization_ratio": 1.2698412698412698
+          },
+          "max_current_a": {
+            "baseline_stress": null,
+            "measured_stress": null,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": {
+              "note": "Example 6.3 V capacitor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "unknown",
+            "reason": "Required simulated measurement is unavailable.",
+            "status": "unknown",
+            "stress_increase": null,
+            "unit": "A",
+            "utilization_ratio": null
+          },
+          "max_power_w": {
+            "baseline_stress": null,
+            "measured_stress": null,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": {
+              "note": "Example 6.3 V capacitor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "unknown",
+            "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+            "status": "unknown",
+            "stress_increase": null,
+            "unit": "W",
+            "utilization_ratio": null
+          }
+        },
+        "priority_factors": {
+          "connectivity_path_evidence": 2.0,
+          "measured_rating_evidence": 5.0,
+          "risk_class_weight": 70,
+          "stress_change_contribution": 5.0,
+          "utilization_contribution": 16.93
+        },
+        "priority_rank": 1,
+        "priority_score": 98.93,
+        "rating_source_types": [
+          "demo_assumption"
+        ],
+        "reason": "Simulated voltage stress exceeded an explicitly configured rating. Only voltage was measured; unsupported current and power remain unknown.",
+        "risk_level": "EXCEEDED",
+        "shared_nets": [
+          "GND",
+          "VIN",
+          "VOUT"
+        ]
+      },
+      {
+        "component_ref": "RLOAD",
+        "connectivity_paths": [
+          {
+            "connection_type": "direct",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 1,
+            "net_types": {
+              "GND": "unknown"
+            },
+            "nets": [
+              "GND"
+            ]
+          },
+          {
+            "connection_type": "indirect",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 2,
+            "net_types": {
+              "GND": "unknown",
+              "VIN": "unknown"
+            },
+            "nets": [
+              "VIN",
+              "GND"
+            ]
+          },
+          {
+            "connection_type": "indirect",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 2,
+            "net_types": {
+              "GND": "unknown",
+              "VIN": "unknown"
+            },
+            "nets": [
+              "VIN",
+              "GND"
+            ]
+          }
+        ],
+        "damage_confirmed": false,
+        "damage_probability": null,
+        "dominant_metric": "power",
+        "evidence_level": "simulated_electrical_stress_and_configured_rating",
+        "maximum_utilization_ratio": 0.128,
+        "metrics": {
+          "max_abs_voltage_v": {
+            "baseline_stress": 2.5,
+            "measured_stress": 4.0,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": {
+              "note": "Example 0.125 W resistor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "unknown",
+            "reason": "No explicit rating is configured for this metric.",
+            "status": "unknown",
+            "stress_increase": 1.5,
+            "unit": "V",
+            "utilization_ratio": null
+          },
+          "max_current_a": {
+            "baseline_stress": 0.0025,
+            "measured_stress": 0.004,
+            "rated_limit": null,
+            "rating_exceeded": null,
+            "rating_source": {
+              "note": "Example 0.125 W resistor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "unknown",
+            "reason": "No explicit rating is configured for this metric.",
+            "status": "unknown",
+            "stress_increase": 0.0015,
+            "unit": "A",
+            "utilization_ratio": null
+          },
+          "max_power_w": {
+            "baseline_stress": 0.00625,
+            "measured_stress": 0.016,
+            "rated_limit": 0.125,
+            "rating_exceeded": false,
+            "rating_source": {
+              "note": "Example 0.125 W resistor rating for demonstration only; not verified against a manufacturer datasheet.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 0.00975,
+            "unit": "W",
+            "utilization_ratio": 0.128
+          }
+        },
+        "priority_factors": {
+          "connectivity_path_evidence": 2.0,
+          "measured_rating_evidence": 5.0,
+          "risk_class_weight": 20,
+          "stress_change_contribution": 5.0,
+          "utilization_contribution": 1.71
+        },
+        "priority_rank": 2,
+        "priority_score": 33.71,
+        "rating_source_types": [
+          "demo_assumption"
+        ],
+        "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+        "risk_level": "WITHIN_LIMIT",
+        "shared_nets": [
+          "GND",
+          "VIN"
+        ]
+      },
+      {
+        "component_ref": "R1",
+        "connectivity_paths": [
+          {
+            "connection_type": "direct",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 1,
+            "net_types": {
+              "VOUT": "unknown"
+            },
+            "nets": [
+              "VOUT"
+            ]
+          },
+          {
+            "connection_type": "indirect",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 2,
+            "net_types": {
+              "GND": "unknown",
+              "VOUT": "unknown"
+            },
+            "nets": [
+              "GND",
+              "VOUT"
+            ]
+          },
+          {
+            "connection_type": "indirect",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 2,
+            "net_types": {
+              "GND": "unknown",
+              "LOAD": "unknown"
+            },
+            "nets": [
+              "GND",
+              "LOAD"
+            ]
+          }
+        ],
+        "damage_confirmed": false,
+        "damage_probability": null,
+        "dominant_metric": "power",
+        "evidence_level": "simulated_electrical_stress_and_configured_rating",
+        "maximum_utilization_ratio": 0.064,
+        "metrics": {
+          "max_abs_voltage_v": {
+            "baseline_stress": 2.5,
+            "measured_stress": 4.0,
+            "rated_limit": 200.0,
+            "rating_exceeded": false,
+            "rating_source": {
+              "note": "Illustrative limits only; resistor part number and datasheet are not specified.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 1.5,
+            "unit": "V",
+            "utilization_ratio": 0.02
+          },
+          "max_current_a": {
+            "baseline_stress": 0.0025,
+            "measured_stress": 0.004,
+            "rated_limit": 0.25,
+            "rating_exceeded": false,
+            "rating_source": {
+              "note": "Illustrative limits only; resistor part number and datasheet are not specified.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 0.0015,
+            "unit": "A",
+            "utilization_ratio": 0.016
+          },
+          "max_power_w": {
+            "baseline_stress": 0.00625,
+            "measured_stress": 0.016,
+            "rated_limit": 0.25,
+            "rating_exceeded": false,
+            "rating_source": {
+              "note": "Illustrative limits only; resistor part number and datasheet are not specified.",
+              "type": "demo_assumption"
+            },
+            "rating_type": "continuous",
+            "reason": null,
+            "status": "evaluated",
+            "stress_increase": 0.00975,
+            "unit": "W",
+            "utilization_ratio": 0.064
+          }
+        },
+        "priority_factors": {
+          "connectivity_path_evidence": 2.0,
+          "measured_rating_evidence": 5.0,
+          "risk_class_weight": 20,
+          "stress_change_contribution": 5.0,
+          "utilization_contribution": 0.85
+        },
+        "priority_rank": 3,
+        "priority_score": 32.85,
+        "rating_source_types": [
+          "demo_assumption"
+        ],
+        "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+        "risk_level": "WITHIN_LIMIT",
+        "shared_nets": [
+          "GND",
+          "LOAD",
+          "VOUT"
+        ]
+      },
+      {
+        "component_ref": "J1",
+        "connectivity_paths": [
+          {
+            "connection_type": "direct",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 1,
+            "net_types": {
+              "GND": "unknown"
+            },
+            "nets": [
+              "GND"
+            ]
+          },
+          {
+            "connection_type": "direct",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 1,
+            "net_types": {
+              "VIN": "unknown"
+            },
+            "nets": [
+              "VIN"
+            ]
+          },
+          {
+            "connection_type": "indirect",
+            "evidence_level": "connectivity_only",
+            "ground_only_path": null,
+            "hops": 2,
+            "net_types": {
+              "GND": "unknown",
+              "VIN": "unknown"
+            },
+            "nets": [
+              "GND",
+              "VIN"
+            ]
+          }
+        ],
+        "damage_confirmed": false,
+        "damage_probability": null,
+        "dominant_metric": null,
+        "evidence_level": "connectivity_only_or_insufficient_measurement",
+        "maximum_utilization_ratio": null,
+        "metrics": {},
+        "priority_factors": {
+          "connectivity_path_evidence": 0.0,
+          "measured_rating_evidence": 0.0,
+          "risk_class_weight": 0.0,
+          "stress_change_contribution": 0.0,
+          "utilization_contribution": 0.0
+        },
+        "priority_rank": 4,
+        "priority_score": 0.0,
+        "rating_source_types": [],
+        "reason": "Connected candidate has no sufficient measured stress and explicit rating pair; safety is unknown.",
+        "risk_level": "UNKNOWN",
+        "shared_nets": [
+          "GND",
+          "VIN"
+        ]
+      }
+    ],
+    "simulation_status": "success"
+  },
+  "spice_verification": {
+    "comparison": {
+      "analysis_stage": "transient_voltage_comparison",
+      "baseline": {
+        "circuit": "data/fault_scenarios/overvoltage_demo/baseline.cir",
+        "csv": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/baseline.csv",
+        "log": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/baseline.log"
+      },
+      "damage_assessment": "not_performed",
+      "evidence_level": "simulated_electrical_change",
+      "fault": {
+        "circuit": "data/fault_scenarios/overvoltage_demo/fault_u1_regulator_output_rise.cir",
+        "csv": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/fault.csv",
+        "log": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/fault.log"
+      },
+      "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+      "simulation_success": true,
+      "time_range_s": {
+        "samples": 608,
+        "start": 0.0,
+        "stop": 0.005
+      },
+      "time_series_csv": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/comparison.csv",
+      "voltage_nodes": {
+        "LOAD": {
+          "baseline": {
+            "last": 2.5,
+            "maximum": 2.5,
+            "minimum": 2.5
+          },
+          "delta_fault_minus_baseline": {
+            "last": 1.5,
+            "maximum": 1.5,
+            "minimum": 1.5
+          },
+          "fault": {
+            "last": 4.0,
+            "maximum": 4.0,
+            "minimum": 4.0
+          }
+        },
+        "SWITCH_OUT": {
+          "baseline": {
+            "last": 11.999994,
+            "maximum": 11.999994,
+            "minimum": 2.3999952e-05
+          },
+          "delta_fault_minus_baseline": {
+            "last": 0.0,
+            "maximum": 0.0,
+            "minimum": 0.0
+          },
+          "fault": {
+            "last": 11.999994,
+            "maximum": 11.999994,
+            "minimum": 2.3999952e-05
+          }
+        },
+        "VOUT": {
+          "baseline": {
+            "last": 5.0,
+            "maximum": 5.0,
+            "minimum": 5.0
+          },
+          "delta_fault_minus_baseline": {
+            "last": 3.0,
+            "maximum": 3.0,
+            "minimum": 3.0
+          },
+          "fault": {
+            "last": 8.0,
+            "maximum": 8.0,
+            "minimum": 8.0
+          }
+        }
+      }
+    },
+    "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+    "source": "ngspice_cached_or_live",
+    "status": "CACHED"
+  },
+  "workspace": {
+    "active_fault_scenario": {
+      "component_ref": "U1",
+      "fault_type": "regulator_output_rise",
+      "parameter": "8"
+    },
+    "circuit_hash": "9f51ab1d0c3a98200e4d52830c632130c63daeba670723cffe7dcbb6ee308294",
+    "circuit_id": "Regulator + divider + switch (cached demo)",
+    "circuit_version": "4a867f14c32e2dc5",
+    "component_refs": [
+      "C1",
+      "J1",
+      "Q1",
+      "R1",
+      "RLOAD",
+      "U1"
+    ],
+    "generated_at": "2026-11-04T00:39:59.766449+00:00",
+    "input_hashes": {
+      "base": "0ffc8040950705a24b65794156d30b84b7f569c1cf2411a72fc0b75c05ba9415",
+      "mapping": "921363fe6cc18cd5911052863bcf9e648f5b5c33f7c0230d48322b13568e9bd0",
+      "probes": "237fe9e93ba984c9a5a311f404be26bf4db42d58069d7629a897bc248da25443",
+      "ratings": "6352e4857164aff852906bcb30dd7b3c506e59b8674cf9b1be14bbd33bddf6dd"
+    },
+    "netlist_path": "fault_demo_netlist.xml",
+    "validation_status": "READY",
+    "workspace_id": "b4c24d0098f45d227689e2a5"
+  }
+}

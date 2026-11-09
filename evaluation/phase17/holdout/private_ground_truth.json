@@ -1,0 +1,94 @@
+{
+  "cases": {
+    "p17h_0001": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": 2000.0
+        }
+      }
+    ],
+    "p17h_0002": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": 500.0
+        }
+      }
+    ],
+    "p17h_0003": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": 4400.0
+        }
+      }
+    ],
+    "p17h_0004": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": 1100.0
+        }
+      }
+    ],
+    "p17h_0005": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": 660.0
+        }
+      }
+    ],
+    "p17h_0006": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": 165.0
+        }
+      }
+    ],
+    "p17h_0007": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": 2000.0
+        }
+      }
+    ],
+    "p17h_0008": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": 500.0
+        }
+      }
+    ],
+    "p17h_0009": [
+      {
+        "component_ref": "U1",
+        "fault_type": "regulator_output_rise",
+        "parameters": {
+          "output_voltage": 6
+        }
+      }
+    ],
+    "p17h_0010": [
+      {
+        "component_ref": "U1",
+        "fault_type": "regulator_output_drop",
+        "parameters": {
+          "output_voltage": 4
+        }
+      }
+    ]
+  }
+}

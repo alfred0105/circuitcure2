@@ -1,0 +1,42 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: circuitcare ai phase 04 low-voltage fault injection starter
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vin                                         12
+vout                                         5
+load                                  0.454545
+switch_out                             2.4e-05
+ctrl                                         0
+vctrl#branch                                 0
+vreg#branch                       -0.000454545
+v1#branch                             -1.2e-08
+
+
+No. of Data Rows : 608
+ngspice-47 done
+
+[stdout]
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: fault.log

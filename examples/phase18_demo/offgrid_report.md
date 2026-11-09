@@ -1,0 +1,45 @@
+# CircuitCare AI 진단 보고서
+
+- 회로: Off-grid resistor demo
+- Circuit Hash: `9f51ab1d0c3a98200e4d52830c632130c63daeba670723cffe7dcbb6ee308294`
+- 생성 시각: 2026-11-04T00:39:59.803740+00:00
+- 부품 / Net: 6 / 4
+
+## 고장 및 관측
+
+- 모드: KNOWN_FAULT
+- 대상: R1 / resistance_drift
+- 관측 분류: NONE
+
+## 파라미터 후보 Grid
+
+- 상태: EXACT_FAULT_PARAMETER_NOT_IDENTIFIED
+- 해석: Candidate coverage only; presence does not mean a diagnosis system selected the parameter.
+
+## SPICE 검증
+
+- 상태: SUCCESS
+- 출처: ngspice_cached_or_live
+- Scenario ID: FAULT_R1_RESISTANCE_DRIFT
+
+## 정격 스트레스 검토
+
+- 상태: RECORDED
+- 손상 확정 여부: 아니요
+
+## 근거
+
+- EV-SPICE: SPICE_SIMULATION · RECORDED · comparison.json
+- EV-GRAPH: HEURISTIC_ESTIMATE · CONNECTIVITY_ONLY · fault influence graph
+- EV-HYP: HEURISTIC_ESTIMATE · PROPOSAL · fault_hypotheses
+
+## 한계
+
+- Synthetic or simulated evidence is not a physical repair result.
+- A priority score or conditional posterior is not a failure probability.
+- Unsupported fault models and unapproved ratings remain unevaluated.
+- This report collects the current snapshot and does not rerun analysis.
+
+## 재현 정보
+
+- Git SHA: `357294d286b6e21af63aee0b027fdb715c63fce0`

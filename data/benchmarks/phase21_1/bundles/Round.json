@@ -1,0 +1,78 @@
+{
+  "board_id": "Round",
+  "board_revision": "NOT_AVAILABLE",
+  "calibration": {
+    "coordinate_frames": [
+      "IMAGE_RAW",
+      "IMAGE_RECTIFIED",
+      "BOARD_CANONICAL",
+      "KICAD_DESIGN",
+      "LAYER_LOCAL"
+    ],
+    "correspondence_points": [],
+    "status": "REGISTRATION_UNVERIFIED",
+    "transform": null,
+    "validation_results": null
+  },
+  "dataset_source": "https://github.com/KamMalinski/PRISM",
+  "design": {
+    "kicad_pcb": {
+      "path": "Dataset/Round/Round/Round.kicad_pcb",
+      "sha256": "e63d97b302fefac465c0acc59483b9d5c507c94cead163cefe31bbb3995cb677",
+      "status": "AVAILABLE"
+    },
+    "kicad_schematic": {
+      "path": "Dataset/Round/Round/Round.kicad_sch",
+      "sha256": "97b1c6043bdb474a1b34dd70f1eb8a9bdbf3daf0782b92dab3e45912f03f6991",
+      "status": "AVAILABLE"
+    },
+    "netlist": {
+      "path": null,
+      "sha256": null,
+      "status": "NOT_AVAILABLE"
+    },
+    "position_csv": {
+      "path": null,
+      "sha256": null,
+      "status": "NOT_AVAILABLE"
+    }
+  },
+  "images": {
+    "BOTTOM": {
+      "path": "Dataset/Round/BOTTOM.png",
+      "sha256": "4264d3b59ee4d7bb0ed9f1b9439c2f5058aec2eb234b499461435f2d5fe1460b",
+      "status": "AVAILABLE"
+    },
+    "TOP": {
+      "path": "Dataset/Round/TOP.png",
+      "sha256": "ecca49cb925b3306ef30c2d50fd46d52076ae5e17729ba6c14133430b3fccdd9",
+      "status": "AVAILABLE"
+    }
+  },
+  "license_metadata": {
+    "dataset_specific_license": "NOT_STATED",
+    "evidence": "Pinned PRISM repository LICENSE.txt and Dataset/README.md",
+    "redistribution_status": "REVIEW_REQUIRED",
+    "repository_license": "AGPL-3.0",
+    "repository_license_file": "LICENSE.txt"
+  },
+  "references": {
+    "components": {
+      "path": null,
+      "sha256": null,
+      "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE"
+    },
+    "geometry": {
+      "path": null,
+      "sha256": null,
+      "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE"
+    },
+    "netlist": {
+      "path": null,
+      "sha256": null,
+      "status": "AVAILABLE_SEPARATE_EVALUATION_STAGE"
+    }
+  },
+  "schema_version": "pcb-dataset-bundle-v1",
+  "source_commit": "9189c87bbec6995b745b809db99cef6d3269401f"
+}

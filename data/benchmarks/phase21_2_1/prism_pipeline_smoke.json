@@ -1,0 +1,343 @@
+{
+  "schema_version": "circuitcare.phase21.2.1.prism-pipeline-smoke.v1",
+  "track": "PINNED_PUBLIC_DATASET_IMAGES_SINGLE_VIEW_PER_SIDE_NOT_PHYSICAL_MULTIVIEW_VALIDATION",
+  "dataset_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+  "dataset_image_count": 24,
+  "boards": 12,
+  "detector": {
+    "status": "READY",
+    "path": "models/pcb_component_detector.onnx",
+    "sha256": "45a1dc54bb2eaff067edc631be30fee650deb1236e97a038610faa11aef28424",
+    "model_id": "pcb-yolov8s-2026-07-11",
+    "size_bytes": 44943271
+  },
+  "model_accuracy": "NOT_EVALUATED_NO_INDEPENDENT_DETECTION_LABEL_SCORING_IN_THIS_RUN",
+  "real_physical_multiview_evaluation": "BLOCKED_REAL_IMAGE_DATA_UNAVAILABLE",
+  "runtime_seconds": 3.8105948329903185,
+  "results": [
+    {
+      "board_id": "Cascade",
+      "input_sha256": {
+        "TOP.png": "f4d02de6faf080276d4a5396e2e49ae84d8c78bb12d4d5faaa1974efe7506fcf",
+        "BOTTOM.png": "9e58c20c7a1695d260ad614b3d8cbe17145bb8467a4e553ff3609ff0624172e0"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 8,
+          "component_candidates": 8,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 15,
+          "component_candidates": 15,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Connector",
+      "input_sha256": {
+        "TOP.png": "0afa14d3c7c2cea70ffdf8fd01e16879f1b49e4f97202cbd044649436ef23838",
+        "BOTTOM.png": "7f6dac753131a7dec1e79b9c054d63e52f2bde0fccd975e00c1a732c92a79fd4"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 2,
+          "component_candidates": 2,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 1,
+          "component_candidates": 1,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Crossover",
+      "input_sha256": {
+        "TOP.png": "70fea77e1152ca1bfb5e58e88c1ce33d8bf7bcfc49e52851db8418c80d700e83",
+        "BOTTOM.png": "29fbde397f322920c1865215591faab8fb9d2cbf446e4bb8a99a62cf206ad34c"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 1,
+          "component_candidates": 1,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 1,
+          "component_candidates": 1,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Divider",
+      "input_sha256": {
+        "TOP.png": "342b6c4cf741bbac1255fa029f97e895f5102a74eb6e8c2a987b12a526d88e0f",
+        "BOTTOM.png": "e331fc926a65661bcd83e88ecf032626b2a92bd87b667dcbd45781cf823b89d4"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Elements",
+      "input_sha256": {
+        "TOP.png": "daba60f23f241d688e394a91cafb223010437064d932162b77c9ec0091f4d8a9",
+        "BOTTOM.png": "38b64638ab74c4f062b985ca18ba850f42432e2a2fd6d3415efffe330fac6cfd"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 4,
+          "component_candidates": 4,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Filter",
+      "input_sha256": {
+        "TOP.png": "44c49294795d77a71add3290fabb5247509908d1b78ad6b4814af8673b22e9c9",
+        "BOTTOM.png": "b7fdcb14795b8e9adcf95db1964aa58e01d8339639f8b61ea6ca0087c5b7db57"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Floating",
+      "input_sha256": {
+        "TOP.png": "d2946c90f82f8cfcae754102434f9d8d6ddfefe9c3ced981cea7c2301df1979f",
+        "BOTTOM.png": "2c6fe2d5b253f2caabb42ba7b0aa7378e01887324fd05f617f95b86a45d11aa9"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Groundplane",
+      "input_sha256": {
+        "TOP.png": "ce9704900a917fb91a9b93b33421a4cb0f4e85034245fb5a13e4c6959cd88e15",
+        "BOTTOM.png": "d56b15c108dbb706b4b045599e533466b02d5d57ce699a0f8cdfa46ba41ece64"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 1,
+          "component_candidates": 1,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Meander",
+      "input_sha256": {
+        "TOP.png": "d7af48a3d04e6e02e757ed63a03d69b86e021325abf7d4cf2acfd95bd905f9f2",
+        "BOTTOM.png": "c2258cd8d8b09db7e2d1b3869a741d4d7293681439a928e4038e829e50a14f0d"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Round",
+      "input_sha256": {
+        "TOP.png": "ecca49cb925b3306ef30c2d50fd46d52076ae5e17729ba6c14133430b3fccdd9",
+        "BOTTOM.png": "4264d3b59ee4d7bb0ed9f1b9439c2f5058aec2eb234b499461435f2d5fe1460b"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 1,
+          "component_candidates": 1,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Simple",
+      "input_sha256": {
+        "TOP.png": "013d34f12ab97eda2d28308e67adf1736b595fed1df0c13299e2cd2e50d375b1",
+        "BOTTOM.png": "ba3754c260c113c718fa400213e6f824abdef44daae9645562c5a65a3d2ec52e"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 0,
+          "component_candidates": 0,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 1,
+          "component_candidates": 1,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    },
+    {
+      "board_id": "Transistors",
+      "input_sha256": {
+        "TOP.png": "d5c481416d7b3e8ad84844b78934a39941fdff4cb377a5d7a137a447be4be92d",
+        "BOTTOM.png": "b7850ae513cc5543b8bed650edefcbf985c743ee8d2b5e217055115233f0578a"
+      },
+      "side_status": {
+        "TOP": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 1,
+          "component_candidates": 1,
+          "valid_pixel_coverage_ratio": 1.0
+        },
+        "BOTTOM": {
+          "registration_statuses": {
+            "REFERENCE": 1
+          },
+          "detection_status": "INFERENCE_COMPLETE",
+          "detection_observations": 3,
+          "component_candidates": 3,
+          "valid_pixel_coverage_ratio": 1.0
+        }
+      }
+    }
+  ]
+}

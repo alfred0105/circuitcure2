@@ -1,0 +1,46 @@
+{
+  "schema_version": "circuitcare.component-annotation.v1",
+  "dataset_id": "replace-with-stable-dataset-id",
+  "dataset_name": "replace-with-dataset-name",
+  "dataset_source": "replace-with-publisher-or-owner",
+  "dataset_source_url": "https://example.org/dataset",
+  "source_version": "replace-with-tag-or-commit",
+  "dataset_license": "replace-with-declared-license-or-REVIEW_REQUIRED",
+  "annotation_source": "manual | source-provided | model-assisted",
+  "annotation_review_status": "SOURCE_PROVIDED_UNADJUDICATED",
+  "split_name": "validation",
+  "split_method": "board-grouped | source-provided | not-established",
+  "board_grouping_policy": "Record one physical board revision per group; use BOARD_ID_UNRESOLVED when identity is unknown.",
+  "split_policy": "Assign every image from a board revision to one split before making crops, augmentations, or alternate views.",
+  "class_names": [
+    "resistor",
+    "capacitor",
+    "inductor",
+    "diode",
+    "transistor",
+    "mosfet",
+    "integrated_circuit",
+    "connector",
+    "fuse",
+    "crystal",
+    "switch_button",
+    "unknown_component"
+  ],
+  "images": [
+    {
+      "image_id": "image-001",
+      "image_path": "images/image-001.jpg",
+      "label_path": "labels/image-001.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "replace-with-64-character-sha256",
+      "label_sha256": "replace-with-64-character-sha256",
+      "image_size_px": [1920, 1080],
+      "source": "camera or source filename",
+      "label_state": "UNANNOTATED",
+      "annotations": []
+    }
+  ]
+}

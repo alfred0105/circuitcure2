@@ -1,0 +1,199 @@
+{
+  "fault_type": "resistance_drift",
+  "simulation_success": true,
+  "power_sign_convention": "Positive power is absorbed by the component; voltage-source delivery is negative.",
+  "components": [
+    {
+      "component_ref": "RCHARGE",
+      "status": "simulated",
+      "baseline": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": 4.756753038,
+          "minimum": 0.0,
+          "maximum": 4.99999749974918
+        },
+        "current_a": {
+          "first": 0.0,
+          "last": 0.0004756753038,
+          "minimum": 0.0,
+          "maximum": 0.000499999749974918
+        },
+        "power_w": {
+          "first": 0.0,
+          "last": 0.002262669946452223,
+          "minimum": 0.0,
+          "maximum": 0.0024999974997498052
+        }
+      },
+      "fault": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": 4.9751248319,
+          "minimum": 0.0,
+          "maximum": 4.999999749974841
+        },
+        "current_a": {
+          "first": 0.0,
+          "last": 4.9751248319e-05,
+          "minimum": 0.0,
+          "maximum": 4.999999749974841e-05
+        },
+        "power_w": {
+          "first": 0.0,
+          "last": 0.00024751867092988,
+          "minimum": 0.0,
+          "maximum": 0.00024999997499748476
+        }
+      },
+      "delta_fault_minus_baseline": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": 0.2183717938999994,
+          "minimum": 0.0,
+          "maximum": 0.2183717938999994
+        },
+        "current_a": {
+          "first": 0.0,
+          "last": -0.00042592405548100005,
+          "minimum": -0.0004499997524751696,
+          "maximum": 0.0
+        },
+        "power_w": {
+          "first": 0.0,
+          "last": -0.002015151275522343,
+          "minimum": -0.0022499975247523207,
+          "maximum": 0.0
+        }
+      },
+      "calculation_method": "V=V(node1)-V(node2); I=V/R; P=V²/R. R1=10k, R2=100k.",
+      "current_direction": "VIN to VC"
+    },
+    {
+      "component_ref": "C1",
+      "status": "voltage_only",
+      "baseline": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": 0.243246962,
+          "minimum": 0.0,
+          "maximum": 0.243246962
+        },
+        "current_a": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "power_w": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "fault": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": 0.0248751681,
+          "minimum": 0.0,
+          "maximum": 0.0248751681
+        },
+        "current_a": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "power_w": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "delta_fault_minus_baseline": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": -0.2183717939,
+          "minimum": -0.2183717939,
+          "maximum": 0.0
+        },
+        "current_a": null,
+        "power_w": null
+      },
+      "calculation_method": "V=V(VC)-V(0); capacitor current, ESR loss, and heating are not modeled.",
+      "unsupported_metrics": {
+        "current_a": "Capacitor current is not calculated in this phase.",
+        "power_w": "Capacitor ESR loss and heating are not modeled."
+      }
+    },
+    {
+      "component_ref": "RBLEED",
+      "status": "simulated",
+      "baseline": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": 0.243246962,
+          "minimum": 0.0,
+          "maximum": 0.243246962
+        },
+        "current_a": {
+          "first": 0.0,
+          "last": 2.43246962e-06,
+          "minimum": 0.0,
+          "maximum": 2.43246962e-06
+        },
+        "power_w": {
+          "first": 0.0,
+          "last": 5.916908452222944e-07,
+          "minimum": 0.0,
+          "maximum": 5.916908452222944e-07
+        }
+      },
+      "fault": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": 0.0248751681,
+          "minimum": 0.0,
+          "maximum": 0.0248751681
+        },
+        "current_a": {
+          "first": 0.0,
+          "last": 2.48751681e-07,
+          "minimum": 0.0,
+          "maximum": 2.48751681e-07
+        },
+        "power_w": {
+          "first": 0.0,
+          "last": 6.187739880032577e-09,
+          "minimum": 0.0,
+          "maximum": 6.187739880032577e-09
+        }
+      },
+      "delta_fault_minus_baseline": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": -0.2183717939,
+          "minimum": -0.2183717939,
+          "maximum": 0.0
+        },
+        "current_a": {
+          "first": 0.0,
+          "last": -2.183717939e-06,
+          "minimum": -2.183717939e-06,
+          "maximum": 0.0
+        },
+        "power_w": {
+          "first": 0.0,
+          "last": -5.855031053422619e-07,
+          "minimum": -5.855031053422619e-07,
+          "maximum": 0.0
+        }
+      },
+      "calculation_method": "V=V(node1)-V(node2); I=V/R; P=V²/R. R1=100k, R2=100k.",
+      "current_direction": "VC to 0"
+    }
+  ],
+  "time_series_csv": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/component_stress.csv"
+}

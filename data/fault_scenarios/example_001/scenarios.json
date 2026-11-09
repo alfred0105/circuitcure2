@@ -1,0 +1,32 @@
+{
+  "baseline_file": "baseline.cir",
+  "scenarios": [
+    {
+      "changes": [
+        {
+          "after": "R1 VOUT LOAD 10k",
+          "before": "R1 VOUT LOAD 1k",
+          "component_ref": "R1",
+          "description": "Set resistor to the explicitly requested drift value",
+          "spice_element": "R1"
+        }
+      ],
+      "netlist_file": "fault_r1_resistance_drift.cir",
+      "scenario": {
+        "assumptions": [
+          "The resistor is modeled as an ideal linear element at the specified value."
+        ],
+        "component_ref": "R1",
+        "description": "Apply resistance drift to R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "10k"
+        },
+        "scenario_id": "FAULT_R1_RESISTANCE_DRIFT"
+      },
+      "simulation_report": "data/fault_scenarios/example_001/simulation_results/fault_r1_resistance_drift/impact_report.json",
+      "simulation_status": "success"
+    }
+  ],
+  "simulation_status": "not_run"
+}

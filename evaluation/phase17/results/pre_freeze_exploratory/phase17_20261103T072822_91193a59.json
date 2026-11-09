@@ -1,0 +1,532 @@
+{
+  "status": "MEASURED_SYNTHETIC_DEVELOPMENT_REUSED",
+  "dataset_id": "circuitcare-phase17-reused-development-v1",
+  "split": "development_synthetic",
+  "independent_holdout": false,
+  "holdout_status": "INDEPENDENT_SYNTHETIC_HOLDOUT_NOT_EVALUATED",
+  "real_repair_status": "NOT_EVALUATED",
+  "supported_case_count": 3,
+  "unsupported_ground_truth_case_count": 0,
+  "topology_group_count": 3,
+  "case_count": 3,
+  "llm_enabled": false,
+  "llm_repeat_count": 0,
+  "spice_enabled": true,
+  "spice_run_budget_per_method_case": 40,
+  "methods": {
+    "Rules Only": {
+      "status": "MEASURED_SYNTHETIC_DEVELOPMENT_REUSED",
+      "runs": [
+        {
+          "levels": {
+            "status": "MEASURED",
+            "case_count": 3,
+            "supported_case_count": 3,
+            "levels": {
+              "component": {
+                "tp": 3,
+                "fp": 40,
+                "fn": 0,
+                "precision": 0.06976744186046512,
+                "recall": 1.0,
+                "f1": 0.13043478260869565
+              },
+              "fault_mode": {
+                "tp": 3,
+                "fp": 40,
+                "fn": 0,
+                "precision": 0.06976744186046512,
+                "recall": 1.0,
+                "f1": 0.13043478260869565
+              },
+              "exact_hypothesis": {
+                "tp": 3,
+                "fp": 40,
+                "fn": 0,
+                "precision": 0.06976744186046512,
+                "recall": 1.0,
+                "f1": 0.13043478260869565
+              }
+            },
+            "parameter_error": {
+              "count": 3,
+              "mean": 0.6166666666666667,
+              "median": 0.8,
+              "mae": 0.6166666666666667
+            },
+            "per_case": [
+              {
+                "case_id": "p17d_0001",
+                "status": "SCORED",
+                "candidate_count": 19,
+                "correct": {
+                  "component": 1,
+                  "fault_mode": 1,
+                  "exact_hypothesis": 1
+                },
+                "parameter_errors": [
+                  {
+                    "component_ref": "U1",
+                    "parameter": "output_voltage",
+                    "actual": 6.0,
+                    "expected": 8.0,
+                    "relative_error": 0.25
+                  }
+                ]
+              },
+              {
+                "case_id": "p17d_0002",
+                "status": "SCORED",
+                "candidate_count": 12,
+                "correct": {
+                  "component": 1,
+                  "fault_mode": 1,
+                  "exact_hypothesis": 1
+                },
+                "parameter_errors": [
+                  {
+                    "component_ref": "R1",
+                    "parameter": "fault_resistance",
+                    "actual": 2000.0,
+                    "expected": 10000.0,
+                    "relative_error": 0.8
+                  }
+                ]
+              },
+              {
+                "case_id": "p17d_0003",
+                "status": "SCORED",
+                "candidate_count": 12,
+                "correct": {
+                  "component": 1,
+                  "fault_mode": 1,
+                  "exact_hypothesis": 1
+                },
+                "parameter_errors": [
+                  {
+                    "component_ref": "RCHARGE",
+                    "parameter": "fault_resistance",
+                    "actual": 20000.0,
+                    "expected": 100000.0,
+                    "relative_error": 0.8
+                  }
+                ]
+              }
+            ]
+          },
+          "candidate_seconds": 0.0011801660293713212,
+          "candidate_count": 43,
+          "error_count": 0
+        }
+      ],
+      "run_count": 1,
+      "candidate_seconds": {
+        "status": "MEASURED",
+        "mean": 0.0011801660293713212,
+        "median": 0.0011801660293713212,
+        "standard_deviation": null,
+        "min": 0.0011801660293713212,
+        "max": 0.0011801660293713212
+      },
+      "generation_metrics": {
+        "status": "MEASURED",
+        "recall": {
+          "component": 1.0,
+          "fault_mode": 1.0,
+          "exact_hypothesis": 1.0
+        }
+      }
+    },
+    "LLM Only": {
+      "status": "MEASURED_SYNTHETIC_DEVELOPMENT_REUSED",
+      "runs": [
+        {
+          "levels": {
+            "status": "MEASURED",
+            "case_count": 3,
+            "supported_case_count": 3,
+            "levels": {
+              "component": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 3,
+                "precision": null,
+                "recall": 0.0,
+                "f1": null
+              },
+              "fault_mode": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 3,
+                "precision": null,
+                "recall": 0.0,
+                "f1": null
+              },
+              "exact_hypothesis": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 3,
+                "precision": null,
+                "recall": 0.0,
+                "f1": null
+              }
+            },
+            "parameter_error": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "mae": null
+            },
+            "per_case": [
+              {
+                "case_id": "p17d_0001",
+                "status": "SCORED",
+                "candidate_count": 0,
+                "correct": {
+                  "component": 0,
+                  "fault_mode": 0,
+                  "exact_hypothesis": 0
+                },
+                "parameter_errors": []
+              },
+              {
+                "case_id": "p17d_0002",
+                "status": "SCORED",
+                "candidate_count": 0,
+                "correct": {
+                  "component": 0,
+                  "fault_mode": 0,
+                  "exact_hypothesis": 0
+                },
+                "parameter_errors": []
+              },
+              {
+                "case_id": "p17d_0003",
+                "status": "SCORED",
+                "candidate_count": 0,
+                "correct": {
+                  "component": 0,
+                  "fault_mode": 0,
+                  "exact_hypothesis": 0
+                },
+                "parameter_errors": []
+              }
+            ]
+          },
+          "candidate_seconds": 0,
+          "candidate_count": 0,
+          "error_count": 0
+        }
+      ],
+      "run_count": 1,
+      "candidate_seconds": {
+        "status": "MEASURED",
+        "mean": 0.0,
+        "median": 0,
+        "standard_deviation": null,
+        "min": 0,
+        "max": 0
+      },
+      "generation_metrics": {
+        "status": "MEASURED",
+        "recall": {
+          "component": 0.0,
+          "fault_mode": 0.0,
+          "exact_hypothesis": 0.0
+        }
+      }
+    },
+    "Hybrid": {
+      "status": "MEASURED_SYNTHETIC_DEVELOPMENT_REUSED",
+      "runs": [
+        {
+          "levels": {
+            "status": "MEASURED",
+            "case_count": 3,
+            "supported_case_count": 3,
+            "levels": {
+              "component": {
+                "tp": 3,
+                "fp": 40,
+                "fn": 0,
+                "precision": 0.06976744186046512,
+                "recall": 1.0,
+                "f1": 0.13043478260869565
+              },
+              "fault_mode": {
+                "tp": 3,
+                "fp": 40,
+                "fn": 0,
+                "precision": 0.06976744186046512,
+                "recall": 1.0,
+                "f1": 0.13043478260869565
+              },
+              "exact_hypothesis": {
+                "tp": 3,
+                "fp": 40,
+                "fn": 0,
+                "precision": 0.06976744186046512,
+                "recall": 1.0,
+                "f1": 0.13043478260869565
+              }
+            },
+            "parameter_error": {
+              "count": 3,
+              "mean": 0.6166666666666667,
+              "median": 0.8,
+              "mae": 0.6166666666666667
+            },
+            "per_case": [
+              {
+                "case_id": "p17d_0001",
+                "status": "SCORED",
+                "candidate_count": 19,
+                "correct": {
+                  "component": 1,
+                  "fault_mode": 1,
+                  "exact_hypothesis": 1
+                },
+                "parameter_errors": [
+                  {
+                    "component_ref": "U1",
+                    "parameter": "output_voltage",
+                    "actual": 6.0,
+                    "expected": 8.0,
+                    "relative_error": 0.25
+                  }
+                ]
+              },
+              {
+                "case_id": "p17d_0002",
+                "status": "SCORED",
+                "candidate_count": 12,
+                "correct": {
+                  "component": 1,
+                  "fault_mode": 1,
+                  "exact_hypothesis": 1
+                },
+                "parameter_errors": [
+                  {
+                    "component_ref": "R1",
+                    "parameter": "fault_resistance",
+                    "actual": 2000.0,
+                    "expected": 10000.0,
+                    "relative_error": 0.8
+                  }
+                ]
+              },
+              {
+                "case_id": "p17d_0003",
+                "status": "SCORED",
+                "candidate_count": 12,
+                "correct": {
+                  "component": 1,
+                  "fault_mode": 1,
+                  "exact_hypothesis": 1
+                },
+                "parameter_errors": [
+                  {
+                    "component_ref": "RCHARGE",
+                    "parameter": "fault_resistance",
+                    "actual": 20000.0,
+                    "expected": 100000.0,
+                    "relative_error": 0.8
+                  }
+                ]
+              }
+            ]
+          },
+          "candidate_seconds": 0.0011801660293713212,
+          "candidate_count": 43,
+          "error_count": 0
+        }
+      ],
+      "run_count": 1,
+      "candidate_seconds": {
+        "status": "MEASURED",
+        "mean": 0.0011801660293713212,
+        "median": 0.0011801660293713212,
+        "standard_deviation": null,
+        "min": 0.0011801660293713212,
+        "max": 0.0011801660293713212
+      },
+      "generation_metrics": {
+        "status": "MEASURED",
+        "recall": {
+          "component": 1.0,
+          "fault_mode": 1.0,
+          "exact_hypothesis": 1.0
+        }
+      }
+    },
+    "Rules + SPICE": {
+      "status": "MEASURED_SYNTHETIC_DEVELOPMENT_REUSED",
+      "runs": [
+        {
+          "ranking": {
+            "status": "MEASURED",
+            "case_count": 3,
+            "top_k_accuracy": {
+              "1": 1.0,
+              "3": 1.0
+            },
+            "mean_reciprocal_rank": 1.0,
+            "coverage": 1.0,
+            "per_case": [
+              {
+                "case_id": "p17d_0001",
+                "status": "SCORED",
+                "ranked_count": 19,
+                "correct_rank": 1
+              },
+              {
+                "case_id": "p17d_0002",
+                "status": "SCORED",
+                "ranked_count": 12,
+                "correct_rank": 1
+              },
+              {
+                "case_id": "p17d_0003",
+                "status": "SCORED",
+                "ranked_count": 12,
+                "correct_rank": 1
+              }
+            ]
+          },
+          "seconds": 0.7673130419861991,
+          "simulation_runs": 43,
+          "simulation_successes": 43,
+          "simulation_failures": 0
+        }
+      ],
+      "run_count": 1,
+      "ranking": {
+        "top_k_accuracy": {
+          "1": 1.0,
+          "3": 1.0
+        },
+        "status": "MEASURED",
+        "mean_reciprocal_rank": 1.0
+      }
+    },
+    "Hybrid + SPICE": {
+      "status": "MEASURED_SYNTHETIC_DEVELOPMENT_REUSED",
+      "runs": [
+        {
+          "ranking": {
+            "status": "MEASURED",
+            "case_count": 3,
+            "top_k_accuracy": {
+              "1": 1.0,
+              "3": 1.0
+            },
+            "mean_reciprocal_rank": 1.0,
+            "coverage": 1.0,
+            "per_case": [
+              {
+                "case_id": "p17d_0001",
+                "status": "SCORED",
+                "ranked_count": 19,
+                "correct_rank": 1
+              },
+              {
+                "case_id": "p17d_0002",
+                "status": "SCORED",
+                "ranked_count": 12,
+                "correct_rank": 1
+              },
+              {
+                "case_id": "p17d_0003",
+                "status": "SCORED",
+                "ranked_count": 12,
+                "correct_rank": 1
+              }
+            ]
+          },
+          "seconds": 0.7466566250077449,
+          "simulation_runs": 43,
+          "simulation_successes": 43,
+          "simulation_failures": 0
+        }
+      ],
+      "run_count": 1,
+      "ranking": {
+        "top_k_accuracy": {
+          "1": 1.0,
+          "3": 1.0
+        },
+        "status": "MEASURED",
+        "mean_reciprocal_rank": 1.0
+      }
+    }
+  },
+  "input_audit": {
+    "status": "PASSED",
+    "prompt_hash_count": 3,
+    "private_ground_truth_passed_to_proposal_method": false
+  },
+  "case_runs": [
+    {
+      "case_id": "p17d_0001",
+      "repetition": 1,
+      "diagnostic_input_sha256": "3edc67f57bd4b4cbb8920079d93317467545e905d3feeeeec9b2e4009df34b88",
+      "candidate_counts": {
+        "rules": 19,
+        "llm": 0,
+        "hybrid": 19
+      },
+      "llm_error": null,
+      "llm_seconds": null,
+      "rule_generation_seconds": 0.0006052500102669001
+    },
+    {
+      "case_id": "p17d_0002",
+      "repetition": 1,
+      "diagnostic_input_sha256": "a0f62233ca58900b6cb07a39341157fcfa4cdd05a299538177c1f467bbb32117",
+      "candidate_counts": {
+        "rules": 12,
+        "llm": 0,
+        "hybrid": 12
+      },
+      "llm_error": null,
+      "llm_seconds": null,
+      "rule_generation_seconds": 0.00028062501223757863
+    },
+    {
+      "case_id": "p17d_0003",
+      "repetition": 1,
+      "diagnostic_input_sha256": "684c8d8f4939c1dae364a7f3519475a505d9575984329960b36f74283648312a",
+      "candidate_counts": {
+        "rules": 12,
+        "llm": 0,
+        "hybrid": 12
+      },
+      "llm_error": null,
+      "llm_seconds": null,
+      "rule_generation_seconds": 0.0002942910068668425
+    }
+  ],
+  "metadata": {
+    "git_sha": "16263a50b2c90f42e38e2817a7032fbbf84231f3",
+    "timestamp_utc": "2026-11-03T07:28:22.117890+00:00",
+    "python": "3.12.14",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "dataset_id": "circuitcare-phase17-reused-development-v1",
+    "dataset_hash": "423c2344a03a47371b11dfb09f3e13bc6a63bd841aefd0bd7aa6dfd9e4515fcf",
+    "ground_truth_hash": "65418c57998be1fc0a32f446d079b0c2a43545a8d30a2ebca67b9bca216842da",
+    "split": "development_synthetic",
+    "prompt_version": null,
+    "model_name": null,
+    "model_digest": null,
+    "simulator_version": "** ngspice-47 : Circuit level simulation program",
+    "seed": null
+  },
+  "limitations": [
+    "Cases and circuit topologies were previously used in Phase 15 development.",
+    "Results are synthetic simulation evidence, not real repair accuracy.",
+    "Only one observed node per case is currently evaluated.",
+    "LLM prompt candidates are restricted to the existing preflighted catalog and parameter grid."
+  ],
+  "run_id": "phase17_20261103T072822_91193a59",
+  "result_hash": "7982eba9db8aebf85fc544aa001f99ed44c1e6dd423cd669f2e968dea4ddeb4f"
+}

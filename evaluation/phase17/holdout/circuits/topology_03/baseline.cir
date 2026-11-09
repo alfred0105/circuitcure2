@@ -1,0 +1,7 @@
+V1 VIN 0 PULSE(0 5 0 1u 1u 20m 40m)
+L1 VIN N1 10m
+R1 N1 VOUT 330
+C1 VOUT 0 22u
+RLOAD VOUT 0 1k
+.tran 20u 8m
+.end

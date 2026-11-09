@@ -1,0 +1,102 @@
+{
+  "dataset_id": "fault-hypothesis-development-synthetic-v1",
+  "version": "1.0.0",
+  "split": "development_synthetic",
+  "independent_holdout": false,
+  "description": "Three known injected faults across three existing demo topologies. These are simulation-generated observations, not repair records and not an independent accuracy set.",
+  "cases": [
+    {
+      "case_id": "REGULATOR_U1_RISE_8V",
+      "split": "development_synthetic",
+      "truth_source": "synthetic_fault",
+      "circuit": {
+        "netlist": "tests/fixtures/fault_demo_netlist.xml",
+        "spice": "data/circuits/fault_demo.cir",
+        "mapping": "data/circuits/fault_demo_mapping.json",
+        "probes": "data/circuits/fault_demo_probes.json"
+      },
+      "ground_truth": [
+        {
+          "component_ref": "U1",
+          "fault_type": "regulator_output_rise",
+          "parameters": {
+            "output_voltage": "8"
+          }
+        }
+      ],
+      "observations": [
+        {
+          "node": "VOUT",
+          "value": 8.0,
+          "unit": "V",
+          "uncertainty": 0.2,
+          "source": "synthetic_fault_simulation",
+          "measurement_mode": "final_sample"
+        }
+      ],
+      "llm_case_id": "case_0001"
+    },
+    {
+      "case_id": "DIVIDER_R1_DRIFT_10K",
+      "split": "development_synthetic",
+      "truth_source": "synthetic_fault",
+      "circuit": {
+        "netlist": "tests/fixtures/divider_netlist.xml",
+        "spice": "data/circuits/divider.cir",
+        "mapping": "data/circuits/divider_mapping.json",
+        "probes": "data/circuits/divider_probes.json"
+      },
+      "ground_truth": [
+        {
+          "component_ref": "R1",
+          "fault_type": "resistance_drift",
+          "parameters": {
+            "fault_resistance": "10000"
+          }
+        }
+      ],
+      "observations": [
+        {
+          "node": "VOUT",
+          "value": 0.454545455,
+          "unit": "V",
+          "uncertainty": 0.02,
+          "source": "synthetic_fault_simulation",
+          "measurement_mode": "final_sample"
+        }
+      ],
+      "llm_case_id": "case_0002"
+    },
+    {
+      "case_id": "RC_RCHARGE_DRIFT_100K",
+      "split": "development_synthetic",
+      "truth_source": "synthetic_fault",
+      "circuit": {
+        "netlist": "tests/fixtures/rc_netlist.xml",
+        "spice": "data/circuits/rc_charge.cir",
+        "mapping": "data/circuits/rc_charge_mapping.json",
+        "probes": "data/circuits/rc_charge_probes.json"
+      },
+      "ground_truth": [
+        {
+          "component_ref": "RCHARGE",
+          "fault_type": "resistance_drift",
+          "parameters": {
+            "fault_resistance": "100000"
+          }
+        }
+      ],
+      "observations": [
+        {
+          "node": "VC",
+          "value": 0.0248751681,
+          "unit": "V",
+          "uncertainty": 0.01,
+          "source": "synthetic_fault_simulation",
+          "measurement_mode": "final_sample"
+        }
+      ],
+      "llm_case_id": "case_0003"
+    }
+  ]
+}

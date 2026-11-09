@@ -1,0 +1,29 @@
+{
+  "fingerprint": {
+    "fault_scenario": {
+      "component_ref": "R1",
+      "fault_type": "resistance_drift",
+      "parameter": "10k"
+    },
+    "fingerprint_sha256": "603b35915d379b72323fe39c96ae944b8718c196d47d40fd81054f9a8c73b196",
+    "mapping_sha256": "971ec048c419cb308412e00cca30a82ab0afe8f129e1853ec5d76385c03fd338",
+    "model_files_sha256": {},
+    "netlist_sha256": "551e77b5ca2e39fe2b39247bb2278bb02ba8f6215c692ca792d89e834833e78f",
+    "probes_sha256": "318132d88ff72bdcb5d8d42c87a351cf00045b99c60ed50f6a52e0a1daebbcc4",
+    "ratings_sha256": "035be6c4844e091ada5c0d67dcf33d1587a743c7ab388bbf988ded1a9e15b03f",
+    "simulation_settings": {
+      "analysis": "transient",
+      "engine": "ngspice",
+      "ngspice_version": "ngspice-47",
+      "runner": "circuitcare-cli"
+    },
+    "spice_deck_sha256": "748ddd6d9eae151c05e85b636fff2610a02af5490bea373dd40b16682ed4c36a"
+  },
+  "result_sha256": {
+    "comparison.csv": "97c258014f7430c359a95b99374182a286d549bcd154df878d1d9a029070c15f",
+    "comparison.json": "469fbe601bab8aaef7478c1e9f2839bb9a9d6771e7d8bbe4bfe0eb107f9ab386",
+    "component_stress.json": "fa890c2d63d6bec641051d44daca636652c8aa6c7299ede2110269969cb9cd8d",
+    "risk_assessment.json": "117957da961e653033f1d48ed192b393ae73c8b8c04cae81b1fa41b3f271e454"
+  },
+  "status": "LIVE_SUCCESS"
+}

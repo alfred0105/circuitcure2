@@ -1,0 +1,967 @@
+{
+  "dataset_id": "circuitcare-phase17-independent-synthetic-v1",
+  "cases": [
+    {
+      "case_id": "p17h_0001",
+      "llm_case_id": "case_1001",
+      "topology_group": "topology_01",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_01/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_01/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_01/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_01/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1001",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "10uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "J1",
+            "value": "5V source",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R2",
+            "value": "2k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "N1"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R3",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R4",
+            "value": "2k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "VOUT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    },
+    {
+      "case_id": "p17h_0002",
+      "llm_case_id": "case_1002",
+      "topology_group": "topology_01",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_01/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_01/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_01/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_01/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1002",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "10uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "J1",
+            "value": "5V source",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R2",
+            "value": "2k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "N1"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R3",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R4",
+            "value": "2k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "VOUT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    },
+    {
+      "case_id": "p17h_0003",
+      "llm_case_id": "case_1003",
+      "topology_group": "topology_02",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_02/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_02/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_02/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_02/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1003",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "4.7uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "N1"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "C2",
+            "value": "10uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "J1",
+            "value": "5V pulse",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "2.2k",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R2",
+            "value": "3.3k",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R3",
+            "value": "100k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "N1",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          },
+          {
+            "node": "VOUT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    },
+    {
+      "case_id": "p17h_0004",
+      "llm_case_id": "case_1004",
+      "topology_group": "topology_02",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_02/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_02/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_02/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_02/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1004",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "4.7uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "N1"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "C2",
+            "value": "10uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "J1",
+            "value": "5V pulse",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "2.2k",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R2",
+            "value": "3.3k",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R3",
+            "value": "100k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "N1",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          },
+          {
+            "node": "VOUT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    },
+    {
+      "case_id": "p17h_0005",
+      "llm_case_id": "case_1005",
+      "topology_group": "topology_03",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_03/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_03/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_03/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_03/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1005",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "22uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "J1",
+            "value": "5V pulse",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "L1",
+            "value": "10mH",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "330",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "RLOAD",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "N1",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          },
+          {
+            "node": "VOUT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    },
+    {
+      "case_id": "p17h_0006",
+      "llm_case_id": "case_1006",
+      "topology_group": "topology_03",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_03/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_03/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_03/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_03/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1006",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "22uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "J1",
+            "value": "5V pulse",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "L1",
+            "value": "10mH",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "330",
+            "library_id": "",
+            "nets": [
+              "N1",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "RLOAD",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "N1",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          },
+          {
+            "node": "VOUT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    },
+    {
+      "case_id": "p17h_0007",
+      "llm_case_id": "case_1007",
+      "topology_group": "topology_04",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_04/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_04/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_04/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_04/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1007",
+        "components": [
+          {
+            "ref": "J1",
+            "value": "5V source",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "LEFT",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R2",
+            "value": "2.2k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "LEFT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R3",
+            "value": "1.5k",
+            "library_id": "",
+            "nets": [
+              "RIGHT",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R4",
+            "value": "2.7k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "RIGHT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R5",
+            "value": "820",
+            "library_id": "",
+            "nets": [
+              "LEFT",
+              "RIGHT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "LEFT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          },
+          {
+            "node": "RIGHT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    },
+    {
+      "case_id": "p17h_0008",
+      "llm_case_id": "case_1008",
+      "topology_group": "topology_04",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_04/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_04/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_04/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_04/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1008",
+        "components": [
+          {
+            "ref": "J1",
+            "value": "5V source",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "LEFT",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R2",
+            "value": "2.2k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "LEFT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R3",
+            "value": "1.5k",
+            "library_id": "",
+            "nets": [
+              "RIGHT",
+              "VIN"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R4",
+            "value": "2.7k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "RIGHT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R5",
+            "value": "820",
+            "library_id": "",
+            "nets": [
+              "LEFT",
+              "RIGHT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          }
+        ],
+        "observations": [
+          {
+            "node": "LEFT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          },
+          {
+            "node": "RIGHT",
+            "value": 0.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    },
+    {
+      "case_id": "p17h_0009",
+      "llm_case_id": "case_1009",
+      "topology_group": "topology_05",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_05/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_05/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_05/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_05/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1009",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "100uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "J1",
+            "value": "12V source",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "470",
+            "library_id": "",
+            "nets": [
+              "LOAD",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R2",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "LOAD"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "U1",
+            "value": "5V regulator",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "regulator_output"
+          }
+        ],
+        "observations": [
+          {
+            "node": "VOUT",
+            "value": 6.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          },
+          {
+            "node": "LOAD",
+            "value": 4.08163265,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    },
+    {
+      "case_id": "p17h_0010",
+      "llm_case_id": "case_1010",
+      "topology_group": "topology_05",
+      "split": "independent_synthetic_holdout",
+      "circuit": {
+        "netlist": "evaluation/phase17/holdout/circuits/topology_05/netlist.xml",
+        "spice": "evaluation/phase17/holdout/circuits/topology_05/baseline.cir",
+        "mapping": "evaluation/phase17/holdout/circuits/topology_05/mapping.json",
+        "probes": "evaluation/phase17/holdout/circuits/topology_05/probes.json"
+      },
+      "diagnostic_input": {
+        "circuit_id": "case_1010",
+        "components": [
+          {
+            "ref": "C1",
+            "value": "100uF",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VOUT"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "J1",
+            "value": "12V source",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN"
+            ],
+            "mapping_available": false,
+            "model_type": null
+          },
+          {
+            "ref": "R1",
+            "value": "470",
+            "library_id": "",
+            "nets": [
+              "LOAD",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "R2",
+            "value": "1k",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "LOAD"
+            ],
+            "mapping_available": true,
+            "model_type": "resistor"
+          },
+          {
+            "ref": "U1",
+            "value": "5V regulator",
+            "library_id": "",
+            "nets": [
+              "GND",
+              "VIN",
+              "VOUT"
+            ],
+            "mapping_available": true,
+            "model_type": "regulator_output"
+          }
+        ],
+        "observations": [
+          {
+            "node": "VOUT",
+            "value": 4.0,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          },
+          {
+            "node": "LOAD",
+            "value": 2.72108844,
+            "unit": "V",
+            "uncertainty": 0.03,
+            "source": "synthetic_fault_simulation",
+            "measurement_mode": "final_sample"
+          }
+        ],
+        "symptoms": "Measured circuit response differs from normal behavior."
+      }
+    }
+  ]
+}

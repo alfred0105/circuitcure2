@@ -1,0 +1,20 @@
+(kicad_sch
+  (version 20250114)
+  (generator "eeschema")
+  (uuid "f46eebad-5cab-4cde-a740-f7eeb4579ebd")
+  (paper "A4")
+  (lib_symbols)
+  (symbol
+    (lib_id "Device:R")
+    (at 100 80 0)
+    (unit 1)
+    (uuid "ed693198-4ec1-4cbe-a345-ec57389d31e4")
+    (property "Reference" "R1")
+    (property "Value" "1k")
+    (instances (project "identity_minimal"
+      (path "/f46eebad-5cab-4cde-a740-f7eeb4579ebd"
+        (reference "R1") (unit 1))))
+  )
+  (sheet_instances (path "/" (page "1")))
+  (embedded_fonts no)
+)

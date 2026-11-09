@@ -1,0 +1,72 @@
+{
+  "fault_component": "U1",
+  "fault_type": "regulator_output_rise",
+  "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+  "analysis_stage": "fault_impact_simulated",
+  "simulation_status": "success",
+  "simulation_engine": "ngspice",
+  "simulation_run_status": {
+    "baseline": "success",
+    "fault": "success"
+  },
+  "connected_candidates": [
+    {
+      "component_ref": "C1",
+      "shared_nets": [
+        "GND",
+        "VOUT"
+      ],
+      "probe_status": "voltage_only",
+      "electrical_change_observed": true,
+      "stress_record": "component_stress.json"
+    },
+    {
+      "component_ref": "J1",
+      "shared_nets": [
+        "GND",
+        "VIN"
+      ],
+      "probe_status": "not_probed",
+      "electrical_change_observed": null,
+      "stress_record": null
+    },
+    {
+      "component_ref": "Q1",
+      "shared_nets": [
+        "GND",
+        "VIN"
+      ],
+      "probe_status": "measured_voltage_only",
+      "electrical_change_observed": false,
+      "stress_record": "component_stress.json"
+    },
+    {
+      "component_ref": "R1",
+      "shared_nets": [
+        "VOUT"
+      ],
+      "probe_status": "simulated",
+      "electrical_change_observed": true,
+      "stress_record": "component_stress.json"
+    },
+    {
+      "component_ref": "RLOAD",
+      "shared_nets": [
+        "GND"
+      ],
+      "probe_status": "simulated",
+      "electrical_change_observed": true,
+      "stress_record": "component_stress.json"
+    }
+  ],
+  "measured_voltage_nodes": [
+    "VOUT",
+    "LOAD",
+    "SWITCH_OUT"
+  ],
+  "comparison_json": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+  "comparison_csv": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/comparison.csv",
+  "component_stress_json": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/component_stress.json",
+  "component_stress_csv": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/component_stress.csv",
+  "damage_assessment": "not_performed"
+}

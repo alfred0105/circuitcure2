@@ -1,0 +1,6 @@
+{
+  "components": {
+    "R1": {"ratings": {"max_power_w": 0.125}, "rating_types": {"max_power_w": "continuous"}, "source": {"type": "demo_assumption", "note": "Illustrative 0.125 W resistor rating for evaluation only."}},
+    "R2": {"ratings": {"max_power_w": 0.125}, "rating_types": {"max_power_w": "continuous"}, "source": {"type": "demo_assumption", "note": "Illustrative 0.125 W resistor rating for evaluation only."}}
+  }
+}

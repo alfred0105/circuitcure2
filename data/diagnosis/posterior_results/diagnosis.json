@@ -1,0 +1,151 @@
+{
+  "assessment_mode": "posterior_updated",
+  "hypothesis_count": 3,
+  "hypotheses_source": "data/diagnosis/demo_hypotheses.json",
+  "available_measurement_nodes": [
+    "LOAD",
+    "SWITCH_OUT",
+    "VOUT"
+  ],
+  "measurements_file": "data/diagnosis/demo_measurements.json",
+  "posterior": [
+    {
+      "hypothesis_id": "U1_OUTPUT_8V",
+      "component_ref": "U1",
+      "fault_type": "regulator_output_rise",
+      "parameters": {
+        "output_voltage": 8.0
+      },
+      "prior_weight": 1.0,
+      "posterior": 1.0,
+      "simulation_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+      "risk_assessment_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json"
+    },
+    {
+      "hypothesis_id": "U1_OUTPUT_6V",
+      "component_ref": "U1",
+      "fault_type": "regulator_output_rise",
+      "parameters": {
+        "output_voltage": 6.0
+      },
+      "prior_weight": 1.0,
+      "posterior": 2.862518580549353e-20,
+      "simulation_source": "../fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+      "risk_assessment_source": "../fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json"
+    },
+    {
+      "hypothesis_id": "U1_OUTPUT_3V",
+      "component_ref": "U1",
+      "fault_type": "regulator_output_drop",
+      "parameters": {
+        "output_voltage": 3.0
+      },
+      "prior_weight": 1.0,
+      "posterior": 5.148200222412013e-131,
+      "simulation_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/comparison.json",
+      "risk_assessment_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json"
+    }
+  ],
+  "posterior_history": [
+    {
+      "measurement": {
+        "node": "VOUT",
+        "value": 7.9,
+        "unit": "V",
+        "uncertainty": 0.2,
+        "source": "simulated_demo"
+      },
+      "posterior": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "component_ref": "U1",
+          "fault_type": "regulator_output_rise",
+          "parameters": {
+            "output_voltage": 8.0
+          },
+          "prior_weight": 1.0,
+          "posterior": 1.0,
+          "simulation_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+          "risk_assessment_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "component_ref": "U1",
+          "fault_type": "regulator_output_rise",
+          "parameters": {
+            "output_voltage": 6.0
+          },
+          "prior_weight": 1.0,
+          "posterior": 2.862518580549353e-20,
+          "simulation_source": "../fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+          "risk_assessment_source": "../fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json"
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "component_ref": "U1",
+          "fault_type": "regulator_output_drop",
+          "parameters": {
+            "output_voltage": 3.0
+          },
+          "prior_weight": 1.0,
+          "posterior": 5.148200222412013e-131,
+          "simulation_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/comparison.json",
+          "risk_assessment_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json"
+        }
+      ]
+    }
+  ],
+  "used_measurements": [
+    {
+      "node": "VOUT",
+      "value": 7.9,
+      "unit": "V",
+      "uncertainty": 0.2,
+      "source": "simulated_demo",
+      "status": "used",
+      "likelihood_model": "Gaussian kernel exp(-0.5*((measurement-prediction)/sigma)^2); common normalization cancels across hypotheses",
+      "predictions": {
+        "U1_OUTPUT_8V": 8.0,
+        "U1_OUTPUT_6V": 6.0,
+        "U1_OUTPUT_3V": 3.0
+      },
+      "likelihoods": {
+        "U1_OUTPUT_8V": {
+          "log_likelihood": -0.12499999999999911,
+          "kernel_likelihood": 0.8824969025845962
+        },
+        "U1_OUTPUT_6V": {
+          "log_likelihood": -45.125000000000014,
+          "kernel_likelihood": 2.5261637809256567e-20
+        },
+        "U1_OUTPUT_3V": {
+          "log_likelihood": -300.125,
+          "kernel_likelihood": 4.543270750163927e-131
+        }
+      }
+    }
+  ],
+  "unsupported_measurements": [],
+  "model_mismatch": false,
+  "model_mismatch_rule": {
+    "best_hypothesis_max_standardized_residual": 0.4999999999999982,
+    "threshold_sigma": 4.0,
+    "interpretation": "All configured hypotheses poorly explain the used measurements; inspect model coverage or measurement assumptions."
+  },
+  "probability_interpretation": "Posterior weights are conditional on this configured hypothesis set, priors, simulated predictions, and stated Gaussian uncertainty. They are not real-world component failure probabilities.",
+  "top_hypothesis": {
+    "hypothesis_id": "U1_OUTPUT_8V",
+    "component_ref": "U1",
+    "fault_type": "regulator_output_rise",
+    "parameters": {
+      "output_voltage": 8.0
+    },
+    "prior_weight": 1.0,
+    "posterior": 1.0,
+    "simulation_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+    "risk_assessment_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json"
+  },
+  "recommendation_file": "data/diagnosis/posterior_results/measurement_recommendations.json",
+  "inspection_ranking_file": "data/diagnosis/posterior_results/inspection_ranking.json",
+  "diagnosis_file": "data/diagnosis/posterior_results/diagnosis.json"
+}

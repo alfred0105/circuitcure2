@@ -1,0 +1,8 @@
+{
+  "schema": "phase21.1-registration-validation-v1",
+  "status": "VALID",
+  "samples_checked": 12,
+  "views_checked": 24,
+  "verified_view_count": 0,
+  "issues": []
+}

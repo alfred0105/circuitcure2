@@ -1,0 +1,35 @@
+{
+  "dataset_id": "circuitcare-phase17-reused-development-v1",
+  "version": "1.0.0",
+  "split": "development_synthetic",
+  "independent_holdout": false,
+  "provenance": "Transformed from the already used Phase 15 three-case development manifest.",
+  "case_ids": [
+    "p17d_0001",
+    "p17d_0002",
+    "p17d_0003"
+  ],
+  "topology_groups": {
+    "p17d_0001": "phase15_regulator_demo",
+    "p17d_0002": "phase15_divider_demo",
+    "p17d_0003": "phase15_rc_demo"
+  },
+  "asset_hashes": {
+    "data/circuits/divider.cir": "748ddd6d9eae151c05e85b636fff2610a02af5490bea373dd40b16682ed4c36a",
+    "data/circuits/divider_mapping.json": "971ec048c419cb308412e00cca30a82ab0afe8f129e1853ec5d76385c03fd338",
+    "data/circuits/divider_probes.json": "318132d88ff72bdcb5d8d42c87a351cf00045b99c60ed50f6a52e0a1daebbcc4",
+    "data/circuits/fault_demo.cir": "0ffc8040950705a24b65794156d30b84b7f569c1cf2411a72fc0b75c05ba9415",
+    "data/circuits/fault_demo_mapping.json": "921363fe6cc18cd5911052863bcf9e648f5b5c33f7c0230d48322b13568e9bd0",
+    "data/circuits/fault_demo_probes.json": "237fe9e93ba984c9a5a311f404be26bf4db42d58069d7629a897bc248da25443",
+    "data/circuits/rc_charge.cir": "40dfb80d4f4f98620ea1a9ac3d3e0628212c22eb2a05a140b82373f25c81ece8",
+    "data/circuits/rc_charge_mapping.json": "dde96f93ef9541c0c7e2896d9aedbe15e28a48b59f2152fb9e273b20adf5b940",
+    "data/circuits/rc_charge_probes.json": "822f7bf810e52affcb5f9f950477e8d7f0056feddd1b46185f54e564a26bae76",
+    "tests/fixtures/divider_netlist.xml": "551e77b5ca2e39fe2b39247bb2278bb02ba8f6215c692ca792d89e834833e78f",
+    "tests/fixtures/fault_demo_netlist.xml": "9f51ab1d0c3a98200e4d52830c632130c63daeba670723cffe7dcbb6ee308294",
+    "tests/fixtures/rc_netlist.xml": "c4bbce7882a314a04dbab48262ad28179ea20a8f7fff781582e9d5cfdff23b4e"
+  },
+  "hashes": {
+    "public_cases": "423c2344a03a47371b11dfb09f3e13bc6a63bd841aefd0bd7aa6dfd9e4515fcf",
+    "private_ground_truth": "65418c57998be1fc0a32f446d079b0c2a43545a8d30a2ebca67b9bca216842da"
+  }
+}

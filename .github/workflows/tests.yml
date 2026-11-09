@@ -1,0 +1,144 @@
+name: Tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      run_prism_benchmark:
+        description: Run the pinned 12-board PRISM benchmark
+        type: boolean
+        default: false
+        required: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            code:
+              - 'src/**'
+              - 'tests/**'
+              - 'scripts/**'
+              - 'pyproject.toml'
+              - 'setup.cfg'
+              - '.github/workflows/**'
+  python:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -e ".[dev,ui,vision,datasheet]"
+      - run: python -m pytest -q -m "not integration and not stress and not crash_injection"
+  ngspice-integration:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y ngspice
+      - run: python -m pip install -e ".[dev,ui,vision,vision-ai,vision-ocr,datasheet]"
+      - run: python -m pytest -q -m integration
+  bounded-stress:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -e ".[dev,ui,vision,datasheet]"
+      - run: python -m pytest -q -m stress
+  native-ocr-inference:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    env:
+      CIRCUITCARE_REQUIRE_NATIVE_INFERENCE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -e ".[dev,vision,vision-ocr]"
+      - run: python -m pytest -q -m integration tests/test_native_integration.py -k ocr
+  isolated-crash-injection:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -e ".[dev,ui,vision,datasheet]"
+      - run: python -m pytest -q -m crash_injection -rs
+  prism-benchmark:
+    if: github.event_name == 'workflow_dispatch' && inputs.run_prism_benchmark
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - uses: actions/checkout@v4
+        with:
+          repository: KamMalinski/PRISM
+          ref: 9189c87bbec6995b745b809db99cef6d3269401f
+          path: data/external/prism
+          sparse-checkout: |
+            Dataset
+            evaluation
+            LICENSE.txt
+          sparse-checkout-cone-mode: true
+      - run: python -m pip install -e ".[dev,vision]"
+      - run: python scripts/benchmark_prism.py --all --baseline-only --output-dir "$RUNNER_TEMP/prism-baseline"
+      - run: python scripts/calibrate_prism.py --all --mode AUTO_REGISTRATION --artifact-dir "$RUNNER_TEMP/phase21_1_2"
+      - run: python scripts/validate_registration.py --registration "$RUNNER_TEMP/phase21_1_2/summary.json" --output "$RUNNER_TEMP/phase21_1_2/validation.json"
+      - run: python scripts/build_pcb_reference.py --all --registration "$RUNNER_TEMP/phase21_1_2/summary.json" --output-dir "$RUNNER_TEMP/phase21_1_2/projected_references"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prism-registration-summary
+          path: |
+            ${{ runner.temp }}/phase21_1_2/summary.json
+            ${{ runner.temp }}/phase21_1_2/validation.json
+            ${{ runner.temp }}/phase21_1_2/projected_references/summary.json
+          if-no-files-found: error

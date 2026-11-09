@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CircuitCare synthetic fault hypothesis case",
+  "type": "object",
+  "required": ["case_id", "llm_case_id", "split", "truth_source", "circuit", "ground_truth", "observations"],
+  "properties": {
+    "case_id": {"type": "string"},
+    "llm_case_id": {"type": "string", "pattern": "^case_[0-9]{4}$", "description": "Anonymous model-facing ID; never encodes the injected fault."},
+    "split": {"enum": ["development_synthetic", "independent_holdout"]},
+    "truth_source": {"enum": ["synthetic_fault", "confirmed_repair_record"]},
+    "circuit": {"type": "object", "required": ["netlist", "spice", "mapping", "probes"]},
+    "ground_truth": {"type": "array", "items": {"type": "object", "required": ["component_ref", "fault_type", "parameters"]}},
+    "observations": {"type": "array", "items": {"type": "object", "required": ["node", "value", "unit", "source", "measurement_mode"]}}
+  }
+}

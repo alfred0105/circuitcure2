@@ -1,0 +1,1284 @@
+{
+  "run_metadata": {
+    "git_commit_sha": "8cc38925c73158573798b1aca35c3619e94ecd03",
+    "timestamp_utc": "2026-11-03T05:29:44.428226+00:00",
+    "python": "3.12.14",
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "llm": {
+      "name": "gemma4:12b",
+      "size": 7714091504,
+      "digest": "c7597fc90b86aff6965317f37dd5465402284e26382d9b4bf2dfe3ef1491f4b6",
+      "details": {
+        "parent_model": "",
+        "format": "safetensors",
+        "family": "",
+        "families": null,
+        "parameter_size": "",
+        "quantization_level": "",
+        "runner": "mlx"
+      }
+    },
+    "model_requested": "gemma4:12b",
+    "prompt_version": "fault-hypothesis-v1",
+    "simulator": "******\n** ngspice-47 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2026, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n******\n",
+    "simulate": true,
+    "llm_enabled": true
+  },
+  "cases": {
+    "REGULATOR_U1_RISE_8V": [
+      {
+        "hypothesis_id": "H_478D780F44CE",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.017369,
+        "predicted_measurements": {
+          "VOUT": 8.0
+        },
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 8.0,
+              "residual": 0.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 0.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 0.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_569BDCD359B8",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.018441,
+        "predicted_measurements": {
+          "VOUT": 6.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 6.0,
+              "residual": 2.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 10.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 10.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_0DC34C789F83",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019964,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_19554BAD9602",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020335,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_2439A6E0AFF2",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020264,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_337FEE3360A4",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019211,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_4FC55A2648A3",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019901,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_58382C9CEE32",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.041504,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_5A7F75CED298",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.02045,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_69D0223D2EB6",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020245,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_9FCEFFC20BB5",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.018532,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_AC5701D67490",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019895,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_BF0EE6A27CEB",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019889,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_C7E7B2C79D18",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019911,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_D09F5BDAB765",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020174,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_E7C315C7FA4C",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019821,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_F84AF88A952B",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019325,
+        "predicted_measurements": {
+          "VOUT": 4.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 4.0,
+              "residual": 4.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 20.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 20.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_65B48FE63855",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.018673,
+        "predicted_measurements": {
+          "VOUT": 3.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 3.0,
+              "residual": 5.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 25.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 25.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_CC0536AA54ED",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.018768,
+        "predicted_measurements": {
+          "VOUT": 0.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 0.0,
+              "residual": 8.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 40.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 40.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      }
+    ],
+    "DIVIDER_R1_DRIFT_10K": [
+      {
+        "hypothesis_id": "H_5A7F75CED298",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019912,
+        "predicted_measurements": {
+          "VOUT": 0.454545455
+        },
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 0.454545455,
+              "residual": 0.0,
+              "uncertainty": 0.02,
+              "normalized_residual": 0.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 0.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_C580BAC3F881",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020272,
+        "predicted_measurements": {
+          "VOUT": 0.454545455
+        },
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 0.454545455,
+              "residual": 0.0,
+              "uncertainty": 0.02,
+              "normalized_residual": 0.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 0.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_ED12A3D78A6B",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020253,
+        "predicted_measurements": {
+          "VOUT": 5e-09
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 5e-09,
+              "residual": 0.45454544999999996,
+              "uncertainty": 0.02,
+              "normalized_residual": 22.727272499999998,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 22.727272499999998,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_19554BAD9602",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.021436,
+        "predicted_measurements": {
+          "VOUT": 4.99999999e-09
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 4.99999999e-09,
+              "residual": 0.45454545,
+              "uncertainty": 0.02,
+              "normalized_residual": 22.7272725,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 22.7272725,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_66A9D5B5826B",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020358,
+        "predicted_measurements": {
+          "VOUT": 1.66666667
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 1.66666667,
+              "residual": -1.2121212149999998,
+              "uncertainty": 0.02,
+              "normalized_residual": -60.60606074999999,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 60.60606074999999,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_BF0EE6A27CEB",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.022211,
+        "predicted_measurements": {
+          "VOUT": 1.66666667
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 1.66666667,
+              "residual": -1.2121212149999998,
+              "uncertainty": 0.02,
+              "normalized_residual": -60.60606074999999,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 60.60606074999999,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_0DC34C789F83",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020336,
+        "predicted_measurements": {
+          "VOUT": 3.33333333
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 3.33333333,
+              "residual": -2.878787875,
+              "uncertainty": 0.02,
+              "normalized_residual": -143.93939375,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 143.93939375,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_BAB683A59C6E",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020451,
+        "predicted_measurements": {
+          "VOUT": 3.33333333
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 3.33333333,
+              "residual": -2.878787875,
+              "uncertainty": 0.02,
+              "normalized_residual": -143.93939375,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 143.93939375,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_4FC55A2648A3",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019342,
+        "predicted_measurements": {
+          "VOUT": 4.54545455
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 4.54545455,
+              "residual": -4.090909095,
+              "uncertainty": 0.02,
+              "normalized_residual": -204.54545474999998,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 204.54545474999998,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_650C9F4E8161",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.03221,
+        "predicted_measurements": {
+          "VOUT": 4.54545455
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 4.54545455,
+              "residual": -4.090909095,
+              "uncertainty": 0.02,
+              "normalized_residual": -204.54545474999998,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 204.54545474999998,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_41B88FB1CDC0",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.023464,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 5.0,
+              "residual": -4.545454545,
+              "uncertainty": 0.02,
+              "normalized_residual": -227.27272725,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 227.27272725,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_C7E7B2C79D18",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020515,
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 5.0,
+              "residual": -4.545454545,
+              "uncertainty": 0.02,
+              "normalized_residual": -227.27272725,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 227.27272725,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      }
+    ],
+    "RC_RCHARGE_DRIFT_100K": [
+      {
+        "hypothesis_id": "H_C08A9B79EC07",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.018745,
+        "predicted_measurements": {
+          "VC": 0.0248751681
+        },
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.0248751681,
+              "residual": 0.0,
+              "uncertainty": 0.01,
+              "normalized_residual": 0.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 0.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_6731A205700C",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.018098,
+        "predicted_measurements": {
+          "VC": 2.49373553e-09
+        },
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 2.49373553e-09,
+              "residual": 0.02487516560626447,
+              "uncertainty": 0.01,
+              "normalized_residual": 2.487516560626447,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 2.487516560626447,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_0A899EB9AF94",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020574,
+        "predicted_measurements": {
+          "VC": 5.00000077e-10
+        },
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 5.00000077e-10,
+              "residual": 0.024875167599999925,
+              "uncertainty": 0.01,
+              "normalized_residual": 2.4875167599999926,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 2.4875167599999926,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_CB1EBC8130B0",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.018641,
+        "predicted_measurements": {
+          "VC": 0.123142397
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.123142397,
+              "residual": -0.0982672289,
+              "uncertainty": 0.01,
+              "normalized_residual": -9.826722890000001,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 9.826722890000001,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_9A2413915270",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.01898,
+        "predicted_measurements": {
+          "VC": 0.237904194
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.237904194,
+              "residual": -0.2130290259,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.30290259,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.30290259,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_93085C54F504",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.02004,
+        "predicted_measurements": {
+          "VC": 0.242645423
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.242645423,
+              "residual": -0.2177702549,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.77702549,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.77702549,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_68119AE72BE2",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.044115,
+        "predicted_measurements": {
+          "VC": 0.24354848
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.24354848,
+              "residual": -0.2186733119,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.867331189999998,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.867331189999998,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_194569A035C6",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.020834,
+        "predicted_measurements": {
+          "VC": 0.243790056
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.243790056,
+              "residual": -0.2189148879,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.89148879,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.89148879,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_D01129CB4D30",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019702,
+        "predicted_measurements": {
+          "VC": 0.2438505
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.2438505,
+              "residual": -0.2189753319,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.897533189999997,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.897533189999997,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_1458F6A194CE",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019146,
+        "predicted_measurements": {
+          "VC": 0.474640631
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.474640631,
+              "residual": -0.44976546289999997,
+              "uncertainty": 0.01,
+              "normalized_residual": -44.976546289999995,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 44.976546289999995,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_15ECE6DE0199",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019719,
+        "predicted_measurements": {
+          "VC": 1.96282873
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 1.96282873,
+              "residual": -1.9379535619000001,
+              "uncertainty": 0.01,
+              "normalized_residual": -193.79535619,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 193.79535619,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      },
+      {
+        "hypothesis_id": "H_DA9775951591",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_seconds": 0.019037,
+        "predicted_measurements": {
+          "VC": 5.00000077
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 5.00000077,
+              "residual": -4.975125601899999,
+              "uncertainty": 0.01,
+              "normalized_residual": -497.51256018999993,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 497.51256018999993,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_error": null
+      }
+    ]
+  },
+  "evaluation_status": "LEAKED_DEVELOPMENT_RESULT",
+  "integrity_note": "The prior prompt included an answer-bearing case ID and a 'known injected fault' symptom. Retained for audit only; not valid blinded proposal or ranking performance."
+}

@@ -1,0 +1,1628 @@
+{
+  "candidates": [
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.063 W",
+      "normalized_value": 0.063,
+      "normalized_unit": "W",
+      "source_text": "0.063 W",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P (1)\n70",
+        "variant": "MCS 0402",
+        "column_header": "",
+        "cell_text": "0.063 W",
+        "document_condition_context": null,
+        "table_index": 0,
+        "row_index": 7,
+        "column_index": 1
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.100 W",
+      "normalized_value": 0.1,
+      "normalized_unit": "W",
+      "source_text": "0.100 W",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P (1)\n70",
+        "variant": "MCT 0603",
+        "column_header": "",
+        "cell_text": "0.100 W",
+        "document_condition_context": null,
+        "table_index": 0,
+        "row_index": 7,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.125 W",
+      "normalized_value": 0.125,
+      "normalized_unit": "W",
+      "source_text": "0.125 W",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P (1)\n70",
+        "variant": "MCU 0805",
+        "column_header": "",
+        "cell_text": "0.125 W",
+        "document_condition_context": null,
+        "table_index": 0,
+        "row_index": 7,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.250 W",
+      "normalized_value": 0.25,
+      "normalized_unit": "W",
+      "source_text": "0.250 W",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P (1)\n70",
+        "variant": "MCA 1206",
+        "column_header": "",
+        "cell_text": "0.250 W",
+        "document_condition_context": null,
+        "table_index": 0,
+        "row_index": 7,
+        "column_index": 4
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "75 V",
+      "normalized_value": 75.0,
+      "normalized_unit": "V",
+      "source_text": "75 V",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "MCS 0402",
+        "column_header": "",
+        "cell_text": "75 V",
+        "document_condition_context": null,
+        "table_index": 0,
+        "row_index": 12,
+        "column_index": 1
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "100 V",
+      "normalized_value": 100.0,
+      "normalized_unit": "V",
+      "source_text": "100 V",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "MCT 0603",
+        "column_header": "",
+        "cell_text": "100 V",
+        "document_condition_context": null,
+        "table_index": 0,
+        "row_index": 12,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "150 V",
+      "normalized_value": 150.0,
+      "normalized_unit": "V",
+      "source_text": "150 V",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "MCU 0805",
+        "column_header": "",
+        "cell_text": "150 V",
+        "document_condition_context": null,
+        "table_index": 0,
+        "row_index": 8,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "200 V",
+      "normalized_value": 200.0,
+      "normalized_unit": "V",
+      "source_text": "200 V",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "MCU 0805",
+        "column_header": "",
+        "cell_text": "200 V",
+        "document_condition_context": null,
+        "table_index": 0,
+        "row_index": 12,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "300 V",
+      "normalized_value": 300.0,
+      "normalized_unit": "V",
+      "source_text": "300 V",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "MCA 1206",
+        "column_header": "",
+        "cell_text": "300 V",
+        "document_condition_context": null,
+        "table_index": 0,
+        "row_index": 12,
+        "column_index": 4
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.016 W",
+      "normalized_value": 0.016,
+      "normalized_unit": "W",
+      "source_text": "0.016 W",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P\n70",
+        "variant": "MCS 0402",
+        "column_header": "PRECISION",
+        "cell_text": "0.016 W",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 2,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.063 W",
+      "normalized_value": 0.063,
+      "normalized_unit": "W",
+      "source_text": "0.063 W",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P\n70",
+        "variant": "MCS 0402",
+        "column_header": "STANDARD",
+        "cell_text": "0.063 W",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 2,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.032 W",
+      "normalized_value": 0.032,
+      "normalized_unit": "W",
+      "source_text": "0.032 W",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P\n70",
+        "variant": "MCT 0603",
+        "column_header": "PRECISION",
+        "cell_text": "0.032 W",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 3,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.100 W",
+      "normalized_value": 0.1,
+      "normalized_unit": "W",
+      "source_text": "0.100 W",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P\n70",
+        "variant": "",
+        "column_header": "PRECISION",
+        "cell_text": "0.100 W",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 5,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.050 W",
+      "normalized_value": 0.05,
+      "normalized_unit": "W",
+      "source_text": "0.050 W",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P\n70",
+        "variant": "",
+        "column_header": "PRECISION",
+        "cell_text": "0.050 W",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 4,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.125 W",
+      "normalized_value": 0.125,
+      "normalized_unit": "W",
+      "source_text": "0.125 W",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P\n70",
+        "variant": "",
+        "column_header": "STANDARD",
+        "cell_text": "0.125 W",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 4,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_power_w",
+      "rating_type": "power_rating",
+      "rating_kind": "continuous",
+      "raw_value": "0.250 W",
+      "normalized_value": 0.25,
+      "normalized_unit": "W",
+      "source_text": "0.250 W",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 70.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Rated dissipation, P\n70",
+        "variant": "",
+        "column_header": "STANDARD",
+        "cell_text": "0.250 W",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 5,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "12.5 V",
+      "normalized_value": 12.5,
+      "normalized_unit": "V",
+      "source_text": "12.5 V",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "MCS 0402",
+        "column_header": "PRECISION",
+        "cell_text": "12.5 V",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 6,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "75 V",
+      "normalized_value": 75.0,
+      "normalized_unit": "V",
+      "source_text": "75 V",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "MCS 0402",
+        "column_header": "STANDARD",
+        "cell_text": "75 V",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 6,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "25 V",
+      "normalized_value": 25.0,
+      "normalized_unit": "V",
+      "source_text": "25 V",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "MCT 0603",
+        "column_header": "PRECISION",
+        "cell_text": "25 V",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 7,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "100 V",
+      "normalized_value": 100.0,
+      "normalized_unit": "V",
+      "source_text": "100 V",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "MCT 0603",
+        "column_header": "STANDARD",
+        "cell_text": "100 V",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 7,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "35 V",
+      "normalized_value": 35.0,
+      "normalized_unit": "V",
+      "source_text": "35 V",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "",
+        "column_header": "PRECISION",
+        "cell_text": "35 V",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 8,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "150 V",
+      "normalized_value": 150.0,
+      "normalized_unit": "V",
+      "source_text": "150 V",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "",
+        "column_header": "STANDARD",
+        "cell_text": "150 V",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 8,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "50 V",
+      "normalized_value": 50.0,
+      "normalized_unit": "V",
+      "source_text": "50 V",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "",
+        "column_header": "PRECISION",
+        "cell_text": "50 V",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 9,
+        "column_index": 2
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "200 V",
+      "normalized_value": 200.0,
+      "normalized_unit": "V",
+      "source_text": "200 V",
+      "pdf_page_index": 1,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Operating voltage, U AC /DC\nmax. RMS",
+        "variant": "",
+        "column_header": "STANDARD",
+        "cell_text": "200 V",
+        "document_condition_context": null,
+        "table_index": 1,
+        "row_index": 9,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "source_document_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_MCT0603"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "16 VDC",
+      "normalized_value": 16.0,
+      "normalized_unit": "V",
+      "source_text": "16 VDC",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": null,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Voltage DC",
+        "variant": "",
+        "column_header": "",
+        "cell_text": "16 VDC",
+        "document_condition_context": null,
+        "table_index": 2,
+        "row_index": 4,
+        "column_index": 1
+      },
+      "manufacturer": "KEMET",
+      "mpn": "C0603C104K4RACTU",
+      "source_document_sha256": "c9946863f1e61509bec6b20088279e7d5da0e17840fddbd94904881e530f2368",
+      "match_notes": [],
+      "document_id": "KEMET_C0603C104K4RACTU"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "peak",
+      "raw_value": "100 V",
+      "normalized_value": 100.0,
+      "normalized_unit": "V",
+      "source_text": "100 V",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Repetitive peak reverse voltage",
+        "variant": "",
+        "column_header": "",
+        "cell_text": "100 V",
+        "document_condition_context": "ABSOLUTE MAXIMUM RATINGS (Tamb = 25 °C, unless otherwise specified)",
+        "table_index": 2,
+        "row_index": 2,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "1N4148",
+      "source_document_sha256": "aefe85400a427ed886a4e1c88205ceabb9f9b38044b29c6acee4bb00146a44b7",
+      "match_notes": [],
+      "document_id": "VISHAY_1N4148"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "75 V",
+      "normalized_value": 75.0,
+      "normalized_unit": "V",
+      "source_text": "75 V",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Reverse voltage",
+        "variant": "",
+        "column_header": "",
+        "cell_text": "75 V",
+        "document_condition_context": "ABSOLUTE MAXIMUM RATINGS (Tamb = 25 °C, unless otherwise specified)",
+        "table_index": 2,
+        "row_index": 3,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "1N4148",
+      "source_document_sha256": "aefe85400a427ed886a4e1c88205ceabb9f9b38044b29c6acee4bb00146a44b7",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_1N4148"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "500 mA",
+      "normalized_value": 0.5,
+      "normalized_unit": "A",
+      "source_text": "500 mA",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Repetitive peak forward current",
+        "variant": "",
+        "column_header": "",
+        "cell_text": "500 mA",
+        "document_condition_context": "ABSOLUTE MAXIMUM RATINGS (Tamb = 25 °C, unless otherwise specified)",
+        "table_index": 2,
+        "row_index": 5,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "1N4148",
+      "source_document_sha256": "aefe85400a427ed886a4e1c88205ceabb9f9b38044b29c6acee4bb00146a44b7",
+      "match_notes": [],
+      "document_id": "VISHAY_1N4148"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "continuous",
+      "raw_value": "300 mA",
+      "normalized_value": 0.3,
+      "normalized_unit": "A",
+      "source_text": "300 mA",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "continuous",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_MATCHED",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Forward continuous current",
+        "variant": "",
+        "column_header": "",
+        "cell_text": "300 mA",
+        "document_condition_context": "ABSOLUTE MAXIMUM RATINGS (Tamb = 25 °C, unless otherwise specified)",
+        "table_index": 2,
+        "row_index": 6,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "1N4148",
+      "source_document_sha256": "aefe85400a427ed886a4e1c88205ceabb9f9b38044b29c6acee4bb00146a44b7",
+      "match_notes": [],
+      "document_id": "VISHAY_1N4148"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "continuous",
+      "raw_value": "150 mA",
+      "normalized_value": 0.15,
+      "normalized_unit": "A",
+      "source_text": "150 mA",
+      "pdf_page_index": 0,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Average forward current",
+        "variant": "",
+        "column_header": "",
+        "cell_text": "150 mA",
+        "document_condition_context": "ABSOLUTE MAXIMUM RATINGS (Tamb = 25 °C, unless otherwise specified)",
+        "table_index": 2,
+        "row_index": 7,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "1N4148",
+      "source_document_sha256": "aefe85400a427ed886a4e1c88205ceabb9f9b38044b29c6acee4bb00146a44b7",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_1N4148"
+    },
+    {
+      "rating_key": "max_abs_voltage_v",
+      "rating_type": "voltage_rating",
+      "rating_kind": "continuous",
+      "raw_value": "100 V",
+      "normalized_value": 100.0,
+      "normalized_unit": "V",
+      "source_text": "100 V",
+      "pdf_page_index": 1,
+      "printed_page_number": "100",
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "table_matrix_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "table_context": {
+        "row_label": "Breakdown voltage",
+        "variant": "",
+        "column_header": "",
+        "cell_text": "100 V",
+        "document_condition_context": "ELECTRICAL CHARACTERISTICS (Tamb = 25 °C, unless otherwise specified)",
+        "table_index": 1,
+        "row_index": 6,
+        "column_index": 3
+      },
+      "manufacturer": "Vishay",
+      "mpn": "1N4148",
+      "source_document_sha256": "aefe85400a427ed886a4e1c88205ceabb9f9b38044b29c6acee4bb00146a44b7",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "VISHAY_1N4148"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "continuous",
+      "raw_value": "1.5 A",
+      "normalized_value": 1.5,
+      "normalized_unit": "A",
+      "source_text": "1•    Output Current up to 1.5 A\n•    Available in Fixed 5-V, 12-V, and 15-V Options                          positive  voltage  regulators  employ  internal  current-\nlimiting,       thermal       shutdown       and       safe-area",
+      "pdf_page_index": 0,
+      "printed_page_number": "1",
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "CONDITION_INCOMPLETE",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "Rating duration/use condition is not explicit in the quoted evidence; reviewer input is required."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "continuous",
+      "raw_value": "340A",
+      "normalized_value": 340.0,
+      "normalized_unit": "A",
+      "source_text": "(LM340A)                                                                 If adequate heat sinking is provided, they can deliver\n•    Line Regulation of 0.01% / V of at 1-A Load                             over 1.5-A output current. They are intended as fixed\n(LM340A)                                                                 voltage  regulators  in  a  wide  range  of  applications\n•    Load Regulation of 0.3% / A (LM340A)                                    including  local  (on-card)  regulation  for  elimination  of",
+      "pdf_page_index": 0,
+      "printed_page_number": "1",
+      "conditions": {
+        "temperature_c": null,
+        "duration": null,
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "2.1                          A",
+      "normalized_value": 2.1,
+      "normalized_unit": "A",
+      "source_text": "RO                 Short-circuit current         TJ = 25°C                                                                                  2.1                          A\nPeak output current           TJ = 25°C                                                                                  2.4                          A\nAverage TC of VO              Min, TJ = 0°C, IO = 5 mA                                                                  -0.6                       mV/°C\nVIN                Input voltage required to     TJ = 25°C                                                                7.5                                            V",
+      "pdf_page_index": 4,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "2.4                          A",
+      "normalized_value": 2.4,
+      "normalized_unit": "A",
+      "source_text": "RO                 Short-circuit current         TJ = 25°C                                                                                  2.1                          A\nPeak output current           TJ = 25°C                                                                                  2.4                          A\nAverage TC of VO              Min, TJ = 0°C, IO = 5 mA                                                                  -0.6                       mV/°C\nVIN                Input voltage required to     TJ = 25°C                                                                7.5                                            V",
+      "pdf_page_index": 4,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "5 mA",
+      "normalized_value": 0.005,
+      "normalized_unit": "A",
+      "source_text": "RO                 Short-circuit current         TJ = 25°C                                                                                  2.1                          A\nPeak output current           TJ = 25°C                                                                                  2.4                          A\nAverage TC of VO              Min, TJ = 0°C, IO = 5 mA                                                                  -0.6                       mV/°C\nVIN                Input voltage required to     TJ = 25°C                                                                7.5                                            V",
+      "pdf_page_index": 4,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": null
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "2.1                        A",
+      "normalized_value": 2.1,
+      "normalized_unit": "A",
+      "source_text": "RO                 Short-circuit current              TJ = 25°C                                                                             2.1                        A\nPeak output current                TJ = 25°C                                                                             2.4                        A\nAverage TC of VOUT                 Over temperature, IO = 5 mA                                                         -0.6                       mV/°C\nVIN                Input voltage required to          TJ = 25°C, IO ≤ 1 A                                                   7.5                                        V",
+      "pdf_page_index": 5,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                 Over temperature, IO = 5 mA                                                         -0.6                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "2.4                        A",
+      "normalized_value": 2.4,
+      "normalized_unit": "A",
+      "source_text": "RO                 Short-circuit current              TJ = 25°C                                                                             2.1                        A\nPeak output current                TJ = 25°C                                                                             2.4                        A\nAverage TC of VOUT                 Over temperature, IO = 5 mA                                                         -0.6                       mV/°C\nVIN                Input voltage required to          TJ = 25°C, IO ≤ 1 A                                                   7.5                                        V",
+      "pdf_page_index": 5,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                 Over temperature, IO = 5 mA                                                         -0.6                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "5 mA",
+      "normalized_value": 0.005,
+      "normalized_unit": "A",
+      "source_text": "RO                 Short-circuit current              TJ = 25°C                                                                             2.1                        A\nPeak output current                TJ = 25°C                                                                             2.4                        A\nAverage TC of VOUT                 Over temperature, IO = 5 mA                                                         -0.6                       mV/°C\nVIN                Input voltage required to          TJ = 25°C, IO ≤ 1 A                                                   7.5                                        V",
+      "pdf_page_index": 5,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                 Over temperature, IO = 5 mA                                                         -0.6                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "1 A",
+      "normalized_value": 1.0,
+      "normalized_unit": "A",
+      "source_text": "RO                 Short-circuit current              TJ = 25°C                                                                             2.1                        A\nPeak output current                TJ = 25°C                                                                             2.4                        A\nAverage TC of VOUT                 Over temperature, IO = 5 mA                                                         -0.6                       mV/°C\nVIN                Input voltage required to          TJ = 25°C, IO ≤ 1 A                                                   7.5                                        V",
+      "pdf_page_index": 5,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                 Over temperature, IO = 5 mA                                                         -0.6                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "1.5                          A",
+      "normalized_value": 1.5,
+      "normalized_unit": "A",
+      "source_text": "RO                Short-circuit current               TJ = 25°C                                                                             1.5                          A\nPeak output current                 TJ = 25°C                                                                             2.4                          A\nAverage TC of VOUT                  Over temperature, IO = 5 mA                                                          -1.5                       mV/°C\nVIN               Input voltage required to           TJ = 25°C, IO ≤ 1 A                                                 14.6                                           V",
+      "pdf_page_index": 6,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                  Over temperature, IO = 5 mA                                                          -1.5                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "2.4                          A",
+      "normalized_value": 2.4,
+      "normalized_unit": "A",
+      "source_text": "RO                Short-circuit current               TJ = 25°C                                                                             1.5                          A\nPeak output current                 TJ = 25°C                                                                             2.4                          A\nAverage TC of VOUT                  Over temperature, IO = 5 mA                                                          -1.5                       mV/°C\nVIN               Input voltage required to           TJ = 25°C, IO ≤ 1 A                                                 14.6                                           V",
+      "pdf_page_index": 6,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                  Over temperature, IO = 5 mA                                                          -1.5                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "5 mA",
+      "normalized_value": 0.005,
+      "normalized_unit": "A",
+      "source_text": "RO                Short-circuit current               TJ = 25°C                                                                             1.5                          A\nPeak output current                 TJ = 25°C                                                                             2.4                          A\nAverage TC of VOUT                  Over temperature, IO = 5 mA                                                          -1.5                       mV/°C\nVIN               Input voltage required to           TJ = 25°C, IO ≤ 1 A                                                 14.6                                           V",
+      "pdf_page_index": 6,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                  Over temperature, IO = 5 mA                                                          -1.5                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "1 A",
+      "normalized_value": 1.0,
+      "normalized_unit": "A",
+      "source_text": "RO                Short-circuit current               TJ = 25°C                                                                             1.5                          A\nPeak output current                 TJ = 25°C                                                                             2.4                          A\nAverage TC of VOUT                  Over temperature, IO = 5 mA                                                          -1.5                       mV/°C\nVIN               Input voltage required to           TJ = 25°C, IO ≤ 1 A                                                 14.6                                           V",
+      "pdf_page_index": 6,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                  Over temperature, IO = 5 mA                                                          -1.5                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "1.2                         A",
+      "normalized_value": 1.2,
+      "normalized_unit": "A",
+      "source_text": "RO                Short-circuit current               TJ = 25°C                                                                            1.2                         A\nPeak output current                 TJ = 25°C                                                                            2.4                         A\nAverage TC of VOUT                  Over temperature, IO = 5 mA                                                        -1.8                       mV/°C\nVIN               Input voltage required to           TJ = 25°C, IO ≤ 1 A                                                17.7                                          V",
+      "pdf_page_index": 7,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                  Over temperature, IO = 5 mA                                                        -1.8                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "2.4                         A",
+      "normalized_value": 2.4,
+      "normalized_unit": "A",
+      "source_text": "RO                Short-circuit current               TJ = 25°C                                                                            1.2                         A\nPeak output current                 TJ = 25°C                                                                            2.4                         A\nAverage TC of VOUT                  Over temperature, IO = 5 mA                                                        -1.8                       mV/°C\nVIN               Input voltage required to           TJ = 25°C, IO ≤ 1 A                                                17.7                                          V",
+      "pdf_page_index": 7,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                  Over temperature, IO = 5 mA                                                        -1.8                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "5 mA",
+      "normalized_value": 0.005,
+      "normalized_unit": "A",
+      "source_text": "RO                Short-circuit current               TJ = 25°C                                                                            1.2                         A\nPeak output current                 TJ = 25°C                                                                            2.4                         A\nAverage TC of VOUT                  Over temperature, IO = 5 mA                                                        -1.8                       mV/°C\nVIN               Input voltage required to           TJ = 25°C, IO ≤ 1 A                                                17.7                                          V",
+      "pdf_page_index": 7,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                  Over temperature, IO = 5 mA                                                        -1.8                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    },
+    {
+      "rating_key": "max_current_a",
+      "rating_type": "current_rating",
+      "rating_kind": "peak",
+      "raw_value": "1 A",
+      "normalized_value": 1.0,
+      "normalized_unit": "A",
+      "source_text": "RO                Short-circuit current               TJ = 25°C                                                                            1.2                         A\nPeak output current                 TJ = 25°C                                                                            2.4                         A\nAverage TC of VOUT                  Over temperature, IO = 5 mA                                                        -1.8                       mV/°C\nVIN               Input voltage required to           TJ = 25°C, IO ≤ 1 A                                                17.7                                          V",
+      "pdf_page_index": 7,
+      "printed_page_number": null,
+      "conditions": {
+        "temperature_c": 25.0,
+        "duration": "peak",
+        "polarity": null,
+        "derating_text": "Average TC of VOUT                  Over temperature, IO = 5 mA                                                        -1.8                       mV/°C"
+      },
+      "extraction_method": "text_rule_based",
+      "extraction_status": "candidate",
+      "evidence_status": "SOURCE_AMBIGUOUS",
+      "human_approved": false,
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "source_document_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "match_notes": [
+        "The quoted evidence contains a range or multiple limits; the rating relationship needs human disambiguation."
+      ],
+      "document_id": "TI_LM7805_FAMILY"
+    }
+  ]
+}

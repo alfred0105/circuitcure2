@@ -1,0 +1,319 @@
+{
+  "fault_type": "regulator_output_rise",
+  "simulation_success": true,
+  "power_sign_convention": "Positive power is absorbed by the component; voltage-source delivery is negative.",
+  "components": [
+    {
+      "component_ref": "R1",
+      "status": "simulated",
+      "baseline": {
+        "voltage_v": {
+          "first": 2.5,
+          "last": 2.5,
+          "minimum": 2.5,
+          "maximum": 2.5
+        },
+        "current_a": {
+          "first": 0.0025,
+          "last": 0.0025,
+          "minimum": 0.0025,
+          "maximum": 0.0025
+        },
+        "power_w": {
+          "first": 0.00625,
+          "last": 0.00625,
+          "minimum": 0.00625,
+          "maximum": 0.00625
+        }
+      },
+      "fault": {
+        "voltage_v": {
+          "first": 3.0,
+          "last": 3.0,
+          "minimum": 3.0,
+          "maximum": 3.0
+        },
+        "current_a": {
+          "first": 0.003,
+          "last": 0.003,
+          "minimum": 0.003,
+          "maximum": 0.003
+        },
+        "power_w": {
+          "first": 0.009000000000000001,
+          "last": 0.009000000000000001,
+          "minimum": 0.009000000000000001,
+          "maximum": 0.009000000000000001
+        }
+      },
+      "delta_fault_minus_baseline": {
+        "voltage_v": {
+          "first": 0.5,
+          "last": 0.5,
+          "minimum": 0.5,
+          "maximum": 0.5
+        },
+        "current_a": {
+          "first": 0.0005,
+          "last": 0.0005,
+          "minimum": 0.0005,
+          "maximum": 0.0005
+        },
+        "power_w": {
+          "first": 0.0027500000000000007,
+          "last": 0.0027500000000000007,
+          "minimum": 0.0027500000000000007,
+          "maximum": 0.0027500000000000007
+        }
+      },
+      "calculation_method": "V=V(node1)-V(node2); I=V/R; P=V²/R. R1=1k, R2=1k.",
+      "current_direction": "VOUT to LOAD"
+    },
+    {
+      "component_ref": "RLOAD",
+      "status": "simulated",
+      "baseline": {
+        "voltage_v": {
+          "first": 2.5,
+          "last": 2.5,
+          "minimum": 2.5,
+          "maximum": 2.5
+        },
+        "current_a": {
+          "first": 0.0025,
+          "last": 0.0025,
+          "minimum": 0.0025,
+          "maximum": 0.0025
+        },
+        "power_w": {
+          "first": 0.00625,
+          "last": 0.00625,
+          "minimum": 0.00625,
+          "maximum": 0.00625
+        }
+      },
+      "fault": {
+        "voltage_v": {
+          "first": 3.0,
+          "last": 3.0,
+          "minimum": 3.0,
+          "maximum": 3.0
+        },
+        "current_a": {
+          "first": 0.003,
+          "last": 0.003,
+          "minimum": 0.003,
+          "maximum": 0.003
+        },
+        "power_w": {
+          "first": 0.009000000000000001,
+          "last": 0.009000000000000001,
+          "minimum": 0.009000000000000001,
+          "maximum": 0.009000000000000001
+        }
+      },
+      "delta_fault_minus_baseline": {
+        "voltage_v": {
+          "first": 0.5,
+          "last": 0.5,
+          "minimum": 0.5,
+          "maximum": 0.5
+        },
+        "current_a": {
+          "first": 0.0005,
+          "last": 0.0005,
+          "minimum": 0.0005,
+          "maximum": 0.0005
+        },
+        "power_w": {
+          "first": 0.0027500000000000007,
+          "last": 0.0027500000000000007,
+          "minimum": 0.0027500000000000007,
+          "maximum": 0.0027500000000000007
+        }
+      },
+      "calculation_method": "V=V(node1)-V(node2); I=V/R; P=V²/R. R1=1k, R2=1k.",
+      "current_direction": "LOAD to 0"
+    },
+    {
+      "component_ref": "C1",
+      "status": "voltage_only",
+      "baseline": {
+        "voltage_v": {
+          "first": 5.0,
+          "last": 5.0,
+          "minimum": 5.0,
+          "maximum": 5.0
+        },
+        "current_a": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "power_w": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "fault": {
+        "voltage_v": {
+          "first": 6.0,
+          "last": 6.0,
+          "minimum": 6.0,
+          "maximum": 6.0
+        },
+        "current_a": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "power_w": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "delta_fault_minus_baseline": {
+        "voltage_v": {
+          "first": 1.0,
+          "last": 1.0,
+          "minimum": 1.0,
+          "maximum": 1.0
+        },
+        "current_a": null,
+        "power_w": null
+      },
+      "calculation_method": "V=V(VOUT)-V(0); capacitor current, ESR loss, and heating are not modeled.",
+      "unsupported_metrics": {
+        "current_a": "Capacitor current is not calculated in this phase.",
+        "power_w": "Capacitor ESR loss and heating are not modeled."
+      }
+    },
+    {
+      "component_ref": "U1",
+      "status": "simulated",
+      "baseline": {
+        "voltage_v": {
+          "first": 5.0,
+          "last": 5.0,
+          "minimum": 5.0,
+          "maximum": 5.0
+        },
+        "current_a": {
+          "first": -0.0025,
+          "last": -0.0025,
+          "minimum": -0.0025,
+          "maximum": -0.00249999998
+        },
+        "power_w": {
+          "first": -0.0125,
+          "last": -0.0125,
+          "minimum": -0.0125,
+          "maximum": -0.012499999900000001
+        }
+      },
+      "fault": {
+        "voltage_v": {
+          "first": 6.0,
+          "last": 6.0,
+          "minimum": 6.0,
+          "maximum": 6.0
+        },
+        "current_a": {
+          "first": -0.003,
+          "last": -0.003,
+          "minimum": -0.00300000001,
+          "maximum": -0.003
+        },
+        "power_w": {
+          "first": -0.018000000000000002,
+          "last": -0.018000000000000002,
+          "minimum": -0.01800000006,
+          "maximum": -0.018000000000000002
+        }
+      },
+      "delta_fault_minus_baseline": {
+        "voltage_v": {
+          "first": 1.0,
+          "last": 1.0,
+          "minimum": 1.0,
+          "maximum": 1.0
+        },
+        "current_a": {
+          "first": -0.0005,
+          "last": -0.0005,
+          "minimum": -0.0005000000199999999,
+          "maximum": -0.0005
+        },
+        "power_w": {
+          "first": -0.005500000000000001,
+          "last": -0.005500000000000001,
+          "minimum": -0.00550000011,
+          "maximum": -0.005500000000000001
+        }
+      },
+      "calculation_method": "V=V(node1)-V(node2); I from ngspice source branch current; P=V×I (positive absorbed)."
+    },
+    {
+      "component_ref": "Q1",
+      "status": "measured_voltage_only",
+      "baseline": {
+        "voltage_v": {
+          "first": 11.999976000048,
+          "last": 6.000000000838668e-06,
+          "minimum": 6.000000000838668e-06,
+          "maximum": 11.999976000048
+        },
+        "current_a": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "power_w": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "fault": {
+        "voltage_v": {
+          "first": 11.999976000048,
+          "last": 6.000000000838668e-06,
+          "minimum": 6.000000000838668e-06,
+          "maximum": 11.999976000048
+        },
+        "current_a": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        },
+        "power_w": {
+          "first": null,
+          "last": null,
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "delta_fault_minus_baseline": {
+        "voltage_v": {
+          "first": 0.0,
+          "last": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "current_a": null,
+        "power_w": null
+      },
+      "calculation_method": "Switch voltage is measured; switch current/power are not supported by this analyzer."
+    }
+  ],
+  "time_series_csv": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/component_stress.csv"
+}

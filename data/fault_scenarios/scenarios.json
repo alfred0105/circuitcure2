@@ -1,0 +1,81 @@
+{
+  "baseline_file": "baseline.cir",
+  "scenarios": [
+    {
+      "changes": [
+        {
+          "after": "R1 VOUT LOAD 1T",
+          "before": "R1 VOUT LOAD 1k",
+          "component_ref": "R1",
+          "description": "Open-circuit approximation using a high resistance",
+          "spice_element": "R1"
+        }
+      ],
+      "netlist_file": "fault_r1_resistor_open.cir",
+      "scenario": {
+        "assumptions": [
+          "The resistor is approximated as an ideal 1 TΩ resistance."
+        ],
+        "component_ref": "R1",
+        "description": "Apply resistor open to R1",
+        "fault_type": "resistor_open",
+        "parameters": {
+          "fault_resistance": "1T"
+        },
+        "scenario_id": "FAULT_R1_RESISTOR_OPEN"
+      },
+      "simulation_status": "not_run"
+    },
+    {
+      "changes": [
+        {
+          "after": "R1 VOUT LOAD 1u",
+          "before": "R1 VOUT LOAD 1k",
+          "component_ref": "R1",
+          "description": "Short-circuit approximation using a small non-zero resistance",
+          "spice_element": "R1"
+        }
+      ],
+      "netlist_file": "fault_r1_resistor_short.cir",
+      "scenario": {
+        "assumptions": [
+          "The resistor is approximated as an ideal 1 µΩ resistance."
+        ],
+        "component_ref": "R1",
+        "description": "Apply resistor short to R1",
+        "fault_type": "resistor_short",
+        "parameters": {
+          "fault_resistance": "1u"
+        },
+        "scenario_id": "FAULT_R1_RESISTOR_SHORT"
+      },
+      "simulation_status": "not_run"
+    },
+    {
+      "changes": [
+        {
+          "after": "R1 VOUT LOAD 10k",
+          "before": "R1 VOUT LOAD 1k",
+          "component_ref": "R1",
+          "description": "Set resistor to the explicitly requested drift value",
+          "spice_element": "R1"
+        }
+      ],
+      "netlist_file": "fault_r1_resistance_drift.cir",
+      "scenario": {
+        "assumptions": [
+          "The resistor is modeled as an ideal linear element at the specified value."
+        ],
+        "component_ref": "R1",
+        "description": "Apply resistance drift to R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "10k"
+        },
+        "scenario_id": "FAULT_R1_RESISTANCE_DRIFT"
+      },
+      "simulation_status": "not_run"
+    }
+  ],
+  "simulation_status": "not_run"
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <components>
+    <comp ref="J1"><value>5V pulse input</value></comp>
+    <comp ref="RCHARGE"><value>10k</value></comp>
+    <comp ref="C1"><value>100uF</value></comp>
+    <comp ref="RBLEED"><value>100k</value></comp>
+  </components>
+  <nets>
+    <net code="1" name="VIN"><node ref="J1" pin="1"/><node ref="RCHARGE" pin="1"/></net>
+    <net code="2" name="VC"><node ref="RCHARGE" pin="2"/><node ref="C1" pin="1"/><node ref="RBLEED" pin="1"/></net>
+    <net code="3" name="GND"><node ref="J1" pin="2"/><node ref="C1" pin="2"/><node ref="RBLEED" pin="2"/></net>
+  </nets>
+</export>

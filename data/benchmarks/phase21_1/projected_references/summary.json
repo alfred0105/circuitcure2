@@ -1,0 +1,884 @@
+{
+  "schema": "phase21.1-projected-reference-v1",
+  "prism_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+  "circuitcare_commit": "c2cad0133d0fbeda32caf68fb469e0bb186f77a2",
+  "sample_results": [
+    {
+      "sample_id": "Cascade",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 46,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 70,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 46,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 70,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Connector",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 13,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 23,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "AVAILABLE",
+              "count": 1,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 13,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 23,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "AVAILABLE",
+              "count": 1,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Crossover",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 12,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 23,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 12,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 23,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Divider",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 8,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 10,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 8,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 10,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Elements",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 40,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 112,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 40,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 112,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Filter",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 18,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 40,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 18,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 40,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Floating",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 8,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 7,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "AVAILABLE",
+              "count": 1,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 8,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 7,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "AVAILABLE",
+              "count": 1,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Groundplane",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 8,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 7,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 8,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 7,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Meander",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 6,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 155,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 6,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 155,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Round",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 8,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 6,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 8,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 6,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Simple",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 4,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "AVAILABLE",
+              "count": 1,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "AVAILABLE",
+              "count": 2,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 4,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "AVAILABLE",
+              "count": 1,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    },
+    {
+      "sample_id": "Transistors",
+      "sides": {
+        "TOP": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 14,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 32,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        },
+        "BOTTOM": {
+          "status": "NOT_PROJECTED_REGISTRATION_NOT_VERIFIED",
+          "registration_status": "REGISTRATION_UNVERIFIED",
+          "reference_inventory": {
+            "outline": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "pads": {
+              "status": "AVAILABLE",
+              "count": 14,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "vias": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "segments": {
+              "status": "AVAILABLE",
+              "count": 32,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "zones": {
+              "status": "NOT_AVAILABLE",
+              "count": 0,
+              "source": "PRISM evaluation/reference; KiCad-derived, not native-parser output"
+            },
+            "visual_observability": "NOT_ASSESSED",
+            "electrical_connectivity": "DESIGN_REFERENCE_ONLY_NOT_PHYSICALLY_VERIFIED"
+          },
+          "visibility_mask": "NOT_AVAILABLE"
+        }
+      }
+    }
+  ],
+  "note": "Projected design geometry is not equivalent to photo-visible copper. Occlusion requires independent annotation."
+}

@@ -1,0 +1,12 @@
+CircuitCare AI Phase 04 low-voltage fault injection starter
+V1 VIN 0 DC 12
+VREG VOUT 0 DC 6
+R1 VOUT LOAD 1k
+RLOAD LOAD 0 1k
+C1 VOUT 0 100u
+S1 VIN SWITCH_OUT CTRL 0 SWMOD
+R2 SWITCH_OUT 0 2k
+VCTRL CTRL 0 PULSE(0 5 0 1u 1u 1m 2m)
+.model SWMOD SW(Ron=1m Roff=1G Vt=2.5 Vh=0)
+.tran 10u 5m
+.end

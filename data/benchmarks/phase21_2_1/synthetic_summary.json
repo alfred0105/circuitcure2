@@ -1,0 +1,63 @@
+{
+  "schema_version": "circuitcare.phase21.2.1.synthetic-benchmark.v1",
+  "track": "SYNTHETIC_GEOMETRY_AND_INJECTED_DETECTION_NOT_REAL_ACCURACY",
+  "seed": 216,
+  "input_views": 3,
+  "input_size_px": [
+    420,
+    420
+  ],
+  "known_crop_offsets_px": [
+    0,
+    120,
+    240
+  ],
+  "registration_status_counts": {
+    "REFERENCE": 1,
+    "REGISTERED_CANDIDATE": 2
+  },
+  "known_translation_error_px": [
+    1.0,
+    0.995043132926765,
+    0.9727459637243998
+  ],
+  "independent_landmark_error": "NOT_EVALUATED_NO_INDEPENDENT_LANDMARK_BUNDLE",
+  "mosaic_size_px": [
+    660,
+    422
+  ],
+  "valid_pixel_coverage_ratio": 0.995260663507109,
+  "canvas_coverage_ratio": 0.9907647880596033,
+  "unobserved_area_ratio": 0.004739336492890996,
+  "overlap_union_ratio_to_canvas": 0.6333476949590694,
+  "source_contribution_ratio": {
+    "photo_39a85350e4fb1972": 0.36363636363636365,
+    "photo_762f82b19c163cbd": 0.0,
+    "photo_c25888e0e8715b3c": 0.6363636363636364
+  },
+  "overlap_photometric_residual_mean_abs_rgb": 1.3845833333333333,
+  "ghosting_parallax": "NOT_EVALUATED_PARALLAX_AND_EDGE_ARTIFACT_GROUND_TRUTH_UNAVAILABLE",
+  "injected_component_count": 1,
+  "injected_observation_count": 3,
+  "identity_stability_after_added_view": "PRESERVED",
+  "identity_precision": "NOT_EVALUATED_NO_INDEPENDENT_COMPONENT_IDENTITY_LABELS",
+  "fault_overlay": "UNIT_TESTED_WITH_INJECTED_DETECTIONS_ONLY",
+  "runtime_seconds": 0.10186233400600031,
+  "python_tracemalloc_peak_bytes": 19978690,
+  "memory_note": "Python allocation peak only; excludes native OpenCV/Pillow and process RSS.",
+  "phase21_2_baseline_comparison": {
+    "baseline_runtime_seconds": 0.12515829101903364,
+    "current_runtime_seconds_same_geometry_no_detector": 0.10186233400600031,
+    "baseline_mosaic_size_px": [
+      660,
+      422
+    ],
+    "current_mosaic_size_px": [
+      660,
+      422
+    ],
+    "baseline_scene_rectangle_coverage_estimate": 1.0,
+    "current_valid_pixel_coverage_ratio": 0.995260663507109,
+    "comparison_note": "Same seeded crop fixture; one local timing per version. Legacy coverage used scene rectangle area, current coverage uses valid warped masks."
+  }
+}

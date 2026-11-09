@@ -1,0 +1,7 @@
+{
+  "status": "skipped",
+  "model": "gemma4:12b",
+  "reason": "The --no-llm option was selected.",
+  "fallback_used": true,
+  "fallback_explanation": "결정론적 분석에서 C1는 우선 점검 후보입니다(EXCEEDED). 실제 손상 여부는 확인되지 않았으며, 수치와 가정은 evidence.json을 참조하세요."
+}

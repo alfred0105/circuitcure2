@@ -1,0 +1,6 @@
+* Independent resistor-divider evaluation circuit
+V1 VIN 0 DC 5
+R1 VIN VOUT 10k
+R2 VOUT 0 1k
+.tran 10u 5m
+.end

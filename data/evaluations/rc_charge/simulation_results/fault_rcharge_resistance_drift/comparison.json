@@ -1,0 +1,42 @@
+{
+  "scenario_id": "FAULT_RCHARGE_RESISTANCE_DRIFT",
+  "simulation_success": true,
+  "analysis_stage": "transient_voltage_comparison",
+  "evidence_level": "simulated_electrical_change",
+  "damage_assessment": "not_performed",
+  "baseline": {
+    "circuit": "data/evaluations/rc_charge/baseline.cir",
+    "log": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/baseline.log",
+    "csv": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/baseline.csv"
+  },
+  "fault": {
+    "circuit": "data/evaluations/rc_charge/fault_rcharge_resistance_drift.cir",
+    "log": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/fault.log",
+    "csv": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/fault.csv"
+  },
+  "time_range_s": {
+    "start": 0.0,
+    "stop": 0.05,
+    "samples": 545
+  },
+  "voltage_nodes": {
+    "VC": {
+      "baseline": {
+        "minimum": 0.0,
+        "maximum": 0.243246962,
+        "last": 0.243246962
+      },
+      "fault": {
+        "minimum": 0.0,
+        "maximum": 0.0248751681,
+        "last": 0.0248751681
+      },
+      "delta_fault_minus_baseline": {
+        "minimum": -0.2183717939,
+        "maximum": 0.0,
+        "last": -0.2183717939
+      }
+    }
+  },
+  "time_series_csv": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/comparison.csv"
+}

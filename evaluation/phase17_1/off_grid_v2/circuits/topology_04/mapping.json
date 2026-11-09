@@ -1,0 +1,22 @@
+{
+  "R1": {
+    "spice_element": "R1",
+    "model_type": "resistor"
+  },
+  "R2": {
+    "spice_element": "R2",
+    "model_type": "resistor"
+  },
+  "R3": {
+    "spice_element": "R3",
+    "model_type": "resistor"
+  },
+  "R4": {
+    "spice_element": "R4",
+    "model_type": "resistor"
+  },
+  "R5": {
+    "spice_element": "R5",
+    "model_type": "resistor"
+  }
+}

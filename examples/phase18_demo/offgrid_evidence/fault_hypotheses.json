@@ -1,0 +1,392 @@
+[
+  {
+    "component_ref": "Q1",
+    "component_value": "NMOS switch",
+    "fault_type": "stuck_on",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_Q1_STUCK_ON_default",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "VIN"
+    ],
+    "parameters": {},
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "Q1",
+    "component_value": "NMOS switch",
+    "fault_type": "stuck_open",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_Q1_STUCK_OPEN_default",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "VIN"
+    ],
+    "parameters": {},
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "R1",
+    "component_value": "1k",
+    "fault_type": "resistance_drift",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_R1_RESISTANCE_DRIFT_fault_resistance_2000",
+    "library_id": "",
+    "nets": [
+      "LOAD",
+      "VOUT"
+    ],
+    "parameters": {
+      "fault_resistance": "2000"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "R1",
+    "component_value": "1k",
+    "fault_type": "resistance_drift",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_R1_RESISTANCE_DRIFT_fault_resistance_500",
+    "library_id": "",
+    "nets": [
+      "LOAD",
+      "VOUT"
+    ],
+    "parameters": {
+      "fault_resistance": "500"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "R1",
+    "component_value": "1k",
+    "fault_type": "resistance_drift",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_R1_RESISTANCE_DRIFT_fault_resistance_10000",
+    "library_id": "",
+    "nets": [
+      "LOAD",
+      "VOUT"
+    ],
+    "parameters": {
+      "fault_resistance": "10000"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "R1",
+    "component_value": "1k",
+    "fault_type": "resistance_drift",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_R1_RESISTANCE_DRIFT_fault_resistance_100",
+    "library_id": "",
+    "nets": [
+      "LOAD",
+      "VOUT"
+    ],
+    "parameters": {
+      "fault_resistance": "100"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "R1",
+    "component_value": "1k",
+    "fault_type": "resistor_open",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_R1_RESISTOR_OPEN_default",
+    "library_id": "",
+    "nets": [
+      "LOAD",
+      "VOUT"
+    ],
+    "parameters": {},
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "R1",
+    "component_value": "1k",
+    "fault_type": "resistor_short",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_R1_RESISTOR_SHORT_default",
+    "library_id": "",
+    "nets": [
+      "LOAD",
+      "VOUT"
+    ],
+    "parameters": {},
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "RLOAD",
+    "component_value": "1k",
+    "fault_type": "resistance_drift",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_RLOAD_RESISTANCE_DRIFT_fault_resistance_2000",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "LOAD"
+    ],
+    "parameters": {
+      "fault_resistance": "2000"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "RLOAD",
+    "component_value": "1k",
+    "fault_type": "resistance_drift",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_RLOAD_RESISTANCE_DRIFT_fault_resistance_500",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "LOAD"
+    ],
+    "parameters": {
+      "fault_resistance": "500"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "RLOAD",
+    "component_value": "1k",
+    "fault_type": "resistance_drift",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_RLOAD_RESISTANCE_DRIFT_fault_resistance_10000",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "LOAD"
+    ],
+    "parameters": {
+      "fault_resistance": "10000"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "RLOAD",
+    "component_value": "1k",
+    "fault_type": "resistance_drift",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_RLOAD_RESISTANCE_DRIFT_fault_resistance_100",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "LOAD"
+    ],
+    "parameters": {
+      "fault_resistance": "100"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "RLOAD",
+    "component_value": "1k",
+    "fault_type": "resistor_open",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_RLOAD_RESISTOR_OPEN_default",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "LOAD"
+    ],
+    "parameters": {},
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "RLOAD",
+    "component_value": "1k",
+    "fault_type": "resistor_short",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_RLOAD_RESISTOR_SHORT_default",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "LOAD"
+    ],
+    "parameters": {},
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "U1",
+    "component_value": "Regulator",
+    "fault_type": "regulator_output_drop",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_U1_REGULATOR_OUTPUT_DROP_output_voltage_4",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "VIN",
+      "VOUT"
+    ],
+    "parameters": {
+      "output_voltage": "4"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "U1",
+    "component_value": "Regulator",
+    "fault_type": "regulator_output_drop",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_U1_REGULATOR_OUTPUT_DROP_output_voltage_3",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "VIN",
+      "VOUT"
+    ],
+    "parameters": {
+      "output_voltage": "3"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "U1",
+    "component_value": "Regulator",
+    "fault_type": "regulator_output_loss",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_U1_REGULATOR_OUTPUT_LOSS_default",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "VIN",
+      "VOUT"
+    ],
+    "parameters": {},
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "U1",
+    "component_value": "Regulator",
+    "fault_type": "regulator_output_rise",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_U1_REGULATOR_OUTPUT_RISE_output_voltage_6",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "VIN",
+      "VOUT"
+    ],
+    "parameters": {
+      "output_voltage": "6"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  },
+  {
+    "component_ref": "U1",
+    "component_value": "Regulator",
+    "fault_type": "regulator_output_rise",
+    "generation_method": "catalog_rule",
+    "hypothesis_id": "FAULT_U1_REGULATOR_OUTPUT_RISE_output_voltage_8",
+    "library_id": "",
+    "nets": [
+      "GND",
+      "VIN",
+      "VOUT"
+    ],
+    "parameters": {
+      "output_voltage": "8"
+    },
+    "preflight_status": "NOT_CHECKED",
+    "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+    "simulation_status": "SIMULATION_NOT_RUN",
+    "simulation_supported": null,
+    "status": "proposed",
+    "supporting_observations": []
+  }
+]

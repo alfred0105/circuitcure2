@@ -1,0 +1,21 @@
+<div class="cc-viewer" data-schematic-viewer>
+  <div class="cc-toolbar" role="toolbar" aria-label="회로도 보기 조작">
+    <button type="button" data-action="fit">화면 맞춤</button>
+    <button type="button" data-action="zoom-in" aria-label="확대">＋</button>
+    <button type="button" data-action="zoom-out" aria-label="축소">−</button>
+    <button type="button" data-action="reset">초기화</button>
+    <span data-zoom-label>100%</span>
+    <span data-geometry-label></span>
+  </div>
+  <div class="cc-viewport" data-viewport>
+    <svg class="cc-page" data-page xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-label="Interactive KiCad schematic">
+      <g data-camera>
+        <image data-schematic-image preserveAspectRatio="none"></image>
+        <g data-hit-regions></g>
+        <g data-selection-overlay pointer-events="none"></g>
+        <g data-analysis-overlay pointer-events="none"></g>
+      </g>
+    </svg>
+    <div class="cc-empty" data-empty hidden>회로도 화면을 사용할 수 없습니다.</div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+{
+  "status": "success",
+  "question": "U1이 100% 고장난 거야?",
+  "model": "gemma4:12b",
+  "model_info": {
+    "name": "gemma4:12b",
+    "size": 7714091504,
+    "digest": "c7597fc90b86aff6965317f37dd5465402284e26382d9b4bf2dfe3ef1491f4b6",
+    "details": {
+      "parent_model": "",
+      "format": "safetensors",
+      "family": "",
+      "families": null,
+      "parameter_size": "",
+      "quantization_level": "",
+      "runner": "mlx"
+    }
+  },
+  "json_mode": false,
+  "response": {
+    "answer": "U1이 100% 고장났다는 확정적 증거는 없습니다. 분석 결과 U1_OUTPUT_8V 가설의 사후 확률(posterior)이 1.0으로 나타났으나, 이는 설정된 가설 세트와 측정 모델에 기반한 조건부 확률이며 실제 고장 확률을 의미하지는 않습니다 [E002]. 또한, 현재 데이터는 시뮬레이션된 데모 관측치(simulated_demo)를 포함하고 있으며, 모델 불일치(model_mismatch)가 발생하지 않았더라도 실제 물리적 손상을 확인한 것은 아닙니다.",
+    "facts": [
+      {
+        "text": "U1_OUTPUT_8V 가설의 조건부 사후 확률은 1.0입니다 [E002].",
+        "evidence_ids": [
+          "E002"
+        ]
+      },
+      {
+        "text": "VOUT의 관측값 7.9V는 시뮬레이션 데모 관측치입니다 [E005].",
+        "evidence_ids": [
+          "E005"
+        ]
+      },
+      {
+        "text": "사후 확률 값은 설정된 가설과 측정 불확실성에 조건부로 부여됩니다 [E002].",
+        "evidence_ids": [
+          "E002"
+        ]
+      }
+    ],
+    "assumptions": [
+      {
+        "text": "VOUT 관측값은 실제 장비 측정이 아닌 시뮬레이션 데모 입력입니다 [E005].",
+        "evidence_ids": [
+          "E005"
+        ]
+      },
+      {
+        "text": "사후 확률은 실제 고장 확률이 아닙니다.",
+        "evidence_ids": []
+      }
+    ],
+    "recommendations": [
+      {
+        "text": "전원을 차단하고 격리한 상태에서 점검하십시오.",
+        "evidence_ids": []
+      },
+      {
+        "text": "저장된 에너지를 방전시키고 비전력 상태를 확인하십시오.",
+        "evidence_ids": []
+      }
+    ],
+    "unknowns": [
+      {
+        "text": "어떠한 부품 손해도 확인되지 않았습니다.",
+        "evidence_ids": []
+      },
+      {
+        "text": "J1은 충분한 등급이나 측정값이 없어 안전 여부가 알 수 없습니다.",
+        "evidence_ids": [
+          "E090"
+        ]
+      }
+    ]
+  },
+  "rejected_response": null,
+  "validation_error": null,
+  "validation": {
+    "evidence_ids_checked": true,
+    "numeric_claims_checked": true
+  },
+  "inference": {
+    "done": true,
+    "done_reason": "stop",
+    "total_duration_ns": 29700048084,
+    "eval_count": 605
+  },
+  "fallback_used": false
+}

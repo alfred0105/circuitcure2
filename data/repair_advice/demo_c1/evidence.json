@@ -1,0 +1,1211 @@
+{
+  "facts": [
+    {
+      "evidence_id": "E001",
+      "component_ref": "U1",
+      "metric": "selected_fault_hypothesis",
+      "value": "U1_OUTPUT_8V",
+      "unit": "hypothesis_id",
+      "source_file": "diagnosis.json",
+      "context": "regulator_output_rise"
+    },
+    {
+      "evidence_id": "E002",
+      "component_ref": "U1",
+      "metric": "conditional_posterior",
+      "value": 1.0,
+      "unit": "probability_weight",
+      "source_file": "diagnosis.json",
+      "context": "U1_OUTPUT_8V"
+    },
+    {
+      "evidence_id": "E003",
+      "component_ref": "U1",
+      "metric": "conditional_posterior",
+      "value": 2.862518580549353e-20,
+      "unit": "probability_weight",
+      "source_file": "diagnosis.json",
+      "context": "U1_OUTPUT_6V"
+    },
+    {
+      "evidence_id": "E004",
+      "component_ref": "U1",
+      "metric": "conditional_posterior",
+      "value": 5.148200222412013e-131,
+      "unit": "probability_weight",
+      "source_file": "diagnosis.json",
+      "context": "U1_OUTPUT_3V"
+    },
+    {
+      "evidence_id": "E005",
+      "component_ref": "VOUT",
+      "metric": "observed_voltage",
+      "value": 7.9,
+      "unit": "V",
+      "source_file": "diagnosis.json",
+      "source_type": "simulated_demo",
+      "context": "measurement uncertainty sigma=0.2"
+    },
+    {
+      "evidence_id": "E006",
+      "component_ref": "VOUT",
+      "metric": "simulated_prediction_for_measurement",
+      "value": 8.0,
+      "unit": "V",
+      "source_file": "diagnosis.json",
+      "context": "U1_OUTPUT_8V"
+    },
+    {
+      "evidence_id": "E007",
+      "component_ref": "VOUT",
+      "metric": "simulated_prediction_for_measurement",
+      "value": 6.0,
+      "unit": "V",
+      "source_file": "diagnosis.json",
+      "context": "U1_OUTPUT_6V"
+    },
+    {
+      "evidence_id": "E008",
+      "component_ref": "VOUT",
+      "metric": "simulated_prediction_for_measurement",
+      "value": 3.0,
+      "unit": "V",
+      "source_file": "diagnosis.json",
+      "context": "U1_OUTPUT_3V"
+    },
+    {
+      "evidence_id": "E009",
+      "component_ref": "C1",
+      "metric": "scenario_conditional_risk_level",
+      "value": "EXCEEDED",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E010",
+      "component_ref": "C1",
+      "metric": "scenario_conditional_priority_index",
+      "value": 98.93,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E011",
+      "component_ref": "C1",
+      "metric": "scenario_max_abs_voltage_v_stress",
+      "value": 8.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E012",
+      "component_ref": "C1",
+      "metric": "scenario_max_abs_voltage_v_rating",
+      "value": 6.3,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E013",
+      "component_ref": "C1",
+      "metric": "scenario_max_abs_voltage_v_utilization",
+      "value": 1.2698412698412698,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0; exceeded=True"
+    },
+    {
+      "evidence_id": "E014",
+      "component_ref": "C1",
+      "metric": "scenario_conditional_risk_level",
+      "value": "NEAR_LIMIT",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E015",
+      "component_ref": "C1",
+      "metric": "scenario_conditional_priority_index",
+      "value": 69.7,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E016",
+      "component_ref": "C1",
+      "metric": "scenario_max_abs_voltage_v_stress",
+      "value": 6.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E017",
+      "component_ref": "C1",
+      "metric": "scenario_max_abs_voltage_v_rating",
+      "value": 6.3,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E018",
+      "component_ref": "C1",
+      "metric": "scenario_max_abs_voltage_v_utilization",
+      "value": 0.9523809523809524,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20; exceeded=False"
+    },
+    {
+      "evidence_id": "E019",
+      "component_ref": "C1",
+      "metric": "scenario_conditional_risk_level",
+      "value": "WITHIN_LIMIT",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E020",
+      "component_ref": "C1",
+      "metric": "scenario_conditional_priority_index",
+      "value": 33.35,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E021",
+      "component_ref": "C1",
+      "metric": "scenario_max_abs_voltage_v_stress",
+      "value": 3.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E022",
+      "component_ref": "C1",
+      "metric": "scenario_max_abs_voltage_v_rating",
+      "value": 6.3,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E023",
+      "component_ref": "C1",
+      "metric": "scenario_max_abs_voltage_v_utilization",
+      "value": 0.4761904761904762,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131; exceeded=False"
+    },
+    {
+      "evidence_id": "E024",
+      "component_ref": "RLOAD",
+      "metric": "scenario_conditional_risk_level",
+      "value": "WITHIN_LIMIT",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E025",
+      "component_ref": "RLOAD",
+      "metric": "scenario_conditional_priority_index",
+      "value": 33.71,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E026",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_abs_voltage_v_stress",
+      "value": 4.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E027",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_current_a_stress",
+      "value": 0.004,
+      "unit": "A",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E028",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_power_w_stress",
+      "value": 0.016,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E029",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_power_w_rating",
+      "value": 0.125,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E030",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_power_w_utilization",
+      "value": 0.128,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0; exceeded=False"
+    },
+    {
+      "evidence_id": "E031",
+      "component_ref": "RLOAD",
+      "metric": "scenario_conditional_risk_level",
+      "value": "WITHIN_LIMIT",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E032",
+      "component_ref": "RLOAD",
+      "metric": "scenario_conditional_priority_index",
+      "value": 32.96,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E033",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_abs_voltage_v_stress",
+      "value": 3.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E034",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_current_a_stress",
+      "value": 0.003,
+      "unit": "A",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E035",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_power_w_stress",
+      "value": 0.009000000000000001,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E036",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_power_w_rating",
+      "value": 0.125,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E037",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_power_w_utilization",
+      "value": 0.07200000000000001,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20; exceeded=False"
+    },
+    {
+      "evidence_id": "E038",
+      "component_ref": "RLOAD",
+      "metric": "scenario_conditional_risk_level",
+      "value": "WITHIN_LIMIT",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E039",
+      "component_ref": "RLOAD",
+      "metric": "scenario_conditional_priority_index",
+      "value": 27.24,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E040",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_abs_voltage_v_stress",
+      "value": 1.5,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E041",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_current_a_stress",
+      "value": 0.0015,
+      "unit": "A",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E042",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_power_w_stress",
+      "value": 0.0022500000000000003,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E043",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_power_w_rating",
+      "value": 0.125,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E044",
+      "component_ref": "RLOAD",
+      "metric": "scenario_max_power_w_utilization",
+      "value": 0.018000000000000002,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131; exceeded=False"
+    },
+    {
+      "evidence_id": "E045",
+      "component_ref": "R1",
+      "metric": "scenario_conditional_risk_level",
+      "value": "WITHIN_LIMIT",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E046",
+      "component_ref": "R1",
+      "metric": "scenario_conditional_priority_index",
+      "value": 32.85,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E047",
+      "component_ref": "R1",
+      "metric": "scenario_max_abs_voltage_v_stress",
+      "value": 4.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E048",
+      "component_ref": "R1",
+      "metric": "scenario_max_abs_voltage_v_rating",
+      "value": 200.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E049",
+      "component_ref": "R1",
+      "metric": "scenario_max_abs_voltage_v_utilization",
+      "value": 0.02,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0; exceeded=False"
+    },
+    {
+      "evidence_id": "E050",
+      "component_ref": "R1",
+      "metric": "scenario_max_current_a_stress",
+      "value": 0.004,
+      "unit": "A",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E051",
+      "component_ref": "R1",
+      "metric": "scenario_max_current_a_rating",
+      "value": 0.25,
+      "unit": "A",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E052",
+      "component_ref": "R1",
+      "metric": "scenario_max_current_a_utilization",
+      "value": 0.016,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0; exceeded=False"
+    },
+    {
+      "evidence_id": "E053",
+      "component_ref": "R1",
+      "metric": "scenario_max_power_w_stress",
+      "value": 0.016,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E054",
+      "component_ref": "R1",
+      "metric": "scenario_max_power_w_rating",
+      "value": 0.25,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E055",
+      "component_ref": "R1",
+      "metric": "scenario_max_power_w_utilization",
+      "value": 0.064,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0; exceeded=False"
+    },
+    {
+      "evidence_id": "E056",
+      "component_ref": "R1",
+      "metric": "scenario_conditional_risk_level",
+      "value": "WITHIN_LIMIT",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E057",
+      "component_ref": "R1",
+      "metric": "scenario_conditional_priority_index",
+      "value": 32.48,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E058",
+      "component_ref": "R1",
+      "metric": "scenario_max_abs_voltage_v_stress",
+      "value": 3.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E059",
+      "component_ref": "R1",
+      "metric": "scenario_max_abs_voltage_v_rating",
+      "value": 200.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E060",
+      "component_ref": "R1",
+      "metric": "scenario_max_abs_voltage_v_utilization",
+      "value": 0.015,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20; exceeded=False"
+    },
+    {
+      "evidence_id": "E061",
+      "component_ref": "R1",
+      "metric": "scenario_max_current_a_stress",
+      "value": 0.003,
+      "unit": "A",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E062",
+      "component_ref": "R1",
+      "metric": "scenario_max_current_a_rating",
+      "value": 0.25,
+      "unit": "A",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E063",
+      "component_ref": "R1",
+      "metric": "scenario_max_current_a_utilization",
+      "value": 0.012,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20; exceeded=False"
+    },
+    {
+      "evidence_id": "E064",
+      "component_ref": "R1",
+      "metric": "scenario_max_power_w_stress",
+      "value": 0.009000000000000001,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E065",
+      "component_ref": "R1",
+      "metric": "scenario_max_power_w_rating",
+      "value": 0.25,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E066",
+      "component_ref": "R1",
+      "metric": "scenario_max_power_w_utilization",
+      "value": 0.036000000000000004,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20; exceeded=False"
+    },
+    {
+      "evidence_id": "E067",
+      "component_ref": "R1",
+      "metric": "scenario_conditional_risk_level",
+      "value": "WITHIN_LIMIT",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E068",
+      "component_ref": "R1",
+      "metric": "scenario_conditional_priority_index",
+      "value": 27.12,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E069",
+      "component_ref": "R1",
+      "metric": "scenario_max_abs_voltage_v_stress",
+      "value": 1.5,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E070",
+      "component_ref": "R1",
+      "metric": "scenario_max_abs_voltage_v_rating",
+      "value": 200.0,
+      "unit": "V",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E071",
+      "component_ref": "R1",
+      "metric": "scenario_max_abs_voltage_v_utilization",
+      "value": 0.0075,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131; exceeded=False"
+    },
+    {
+      "evidence_id": "E072",
+      "component_ref": "R1",
+      "metric": "scenario_max_current_a_stress",
+      "value": 0.0015,
+      "unit": "A",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E073",
+      "component_ref": "R1",
+      "metric": "scenario_max_current_a_rating",
+      "value": 0.25,
+      "unit": "A",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E074",
+      "component_ref": "R1",
+      "metric": "scenario_max_current_a_utilization",
+      "value": 0.006,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131; exceeded=False"
+    },
+    {
+      "evidence_id": "E075",
+      "component_ref": "R1",
+      "metric": "scenario_max_power_w_stress",
+      "value": 0.0022500000000000003,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E076",
+      "component_ref": "R1",
+      "metric": "scenario_max_power_w_rating",
+      "value": 0.25,
+      "unit": "W",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "source_type": "demo_assumption",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E077",
+      "component_ref": "R1",
+      "metric": "scenario_max_power_w_utilization",
+      "value": 0.009000000000000001,
+      "unit": "ratio",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131; exceeded=False"
+    },
+    {
+      "evidence_id": "E078",
+      "component_ref": "J1",
+      "metric": "scenario_conditional_risk_level",
+      "value": "UNKNOWN",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E079",
+      "component_ref": "J1",
+      "metric": "scenario_conditional_priority_index",
+      "value": 0.0,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_8V; posterior=1.0"
+    },
+    {
+      "evidence_id": "E080",
+      "component_ref": "J1",
+      "metric": "scenario_conditional_risk_level",
+      "value": "UNKNOWN",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E081",
+      "component_ref": "J1",
+      "metric": "scenario_conditional_priority_index",
+      "value": 0.0,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "context": "U1_OUTPUT_6V; posterior=2.862518580549353e-20"
+    },
+    {
+      "evidence_id": "E082",
+      "component_ref": "J1",
+      "metric": "scenario_conditional_risk_level",
+      "value": "UNKNOWN",
+      "unit": "classification",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E083",
+      "component_ref": "J1",
+      "metric": "scenario_conditional_priority_index",
+      "value": 0.0,
+      "unit": "index_0_to_100",
+      "source_file": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json",
+      "context": "U1_OUTPUT_3V; posterior=5.148200222412013e-131"
+    },
+    {
+      "evidence_id": "E084",
+      "component_ref": "C1",
+      "metric": "risk_level",
+      "value": "EXCEEDED",
+      "unit": "classification",
+      "source_file": "risk_assessment.json",
+      "context": "Simulated voltage stress exceeded an explicitly configured rating. Only voltage was measured; unsupported current and power remain unknown."
+    },
+    {
+      "evidence_id": "E085",
+      "component_ref": "C1",
+      "metric": "inspection_priority_index",
+      "value": 98.93,
+      "unit": "index_0_to_100",
+      "source_file": "risk_assessment.json",
+      "context": "Not a damage probability"
+    },
+    {
+      "evidence_id": "E086",
+      "component_ref": "RLOAD",
+      "metric": "risk_level",
+      "value": "WITHIN_LIMIT",
+      "unit": "classification",
+      "source_file": "risk_assessment.json",
+      "context": "All configured and measurable ratings evaluated for this component were within the near-limit threshold."
+    },
+    {
+      "evidence_id": "E087",
+      "component_ref": "RLOAD",
+      "metric": "inspection_priority_index",
+      "value": 33.71,
+      "unit": "index_0_to_100",
+      "source_file": "risk_assessment.json",
+      "context": "Not a damage probability"
+    },
+    {
+      "evidence_id": "E088",
+      "component_ref": "R1",
+      "metric": "risk_level",
+      "value": "WITHIN_LIMIT",
+      "unit": "classification",
+      "source_file": "risk_assessment.json",
+      "context": "All configured and measurable ratings evaluated for this component were within the near-limit threshold."
+    },
+    {
+      "evidence_id": "E089",
+      "component_ref": "R1",
+      "metric": "inspection_priority_index",
+      "value": 32.85,
+      "unit": "index_0_to_100",
+      "source_file": "risk_assessment.json",
+      "context": "Not a damage probability"
+    },
+    {
+      "evidence_id": "E090",
+      "component_ref": "J1",
+      "metric": "risk_level",
+      "value": "UNKNOWN",
+      "unit": "classification",
+      "source_file": "risk_assessment.json",
+      "context": "Connected candidate has no sufficient measured stress and explicit rating pair; safety is unknown."
+    },
+    {
+      "evidence_id": "E091",
+      "component_ref": "J1",
+      "metric": "inspection_priority_index",
+      "value": 0.0,
+      "unit": "index_0_to_100",
+      "source_file": "risk_assessment.json",
+      "context": "Not a damage probability"
+    },
+    {
+      "evidence_id": "E092",
+      "component_ref": "R1",
+      "metric": "fault_last_voltage_v",
+      "value": 4.0,
+      "unit": "V",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E093",
+      "component_ref": "R1",
+      "metric": "baseline_last_voltage_v",
+      "value": 2.5,
+      "unit": "V",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E094",
+      "component_ref": "R1",
+      "metric": "fault_last_current_a",
+      "value": 0.004,
+      "unit": "A",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E095",
+      "component_ref": "R1",
+      "metric": "baseline_last_current_a",
+      "value": 0.0025,
+      "unit": "A",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E096",
+      "component_ref": "R1",
+      "metric": "fault_last_power_w",
+      "value": 0.016,
+      "unit": "W",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E097",
+      "component_ref": "R1",
+      "metric": "baseline_last_power_w",
+      "value": 0.00625,
+      "unit": "W",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E098",
+      "component_ref": "RLOAD",
+      "metric": "fault_last_voltage_v",
+      "value": 4.0,
+      "unit": "V",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E099",
+      "component_ref": "RLOAD",
+      "metric": "baseline_last_voltage_v",
+      "value": 2.5,
+      "unit": "V",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E100",
+      "component_ref": "RLOAD",
+      "metric": "fault_last_current_a",
+      "value": 0.004,
+      "unit": "A",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E101",
+      "component_ref": "RLOAD",
+      "metric": "baseline_last_current_a",
+      "value": 0.0025,
+      "unit": "A",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E102",
+      "component_ref": "RLOAD",
+      "metric": "fault_last_power_w",
+      "value": 0.016,
+      "unit": "W",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E103",
+      "component_ref": "RLOAD",
+      "metric": "baseline_last_power_w",
+      "value": 0.00625,
+      "unit": "W",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E104",
+      "component_ref": "C1",
+      "metric": "fault_last_voltage_v",
+      "value": 8.0,
+      "unit": "V",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E105",
+      "component_ref": "C1",
+      "metric": "baseline_last_voltage_v",
+      "value": 5.0,
+      "unit": "V",
+      "source_file": "component_stress.json"
+    },
+    {
+      "evidence_id": "E106",
+      "component_ref": null,
+      "metric": "next_measurement_recommendation_status",
+      "value": "none_needed_or_available",
+      "unit": "status",
+      "source_file": "measurement_recommendations.json",
+      "context": "No unmeasured configured node provides meaningful expected information gain."
+    }
+  ],
+  "assumptions": [
+    {
+      "text": "The VOUT observation is simulated demo input, not a real instrument measurement.",
+      "evidence_ids": [
+        "E005"
+      ]
+    },
+    {
+      "text": "The C1 rating in U1_OUTPUT_8V is a labeled demo assumption, not a manufacturer-verified value.",
+      "evidence_ids": []
+    },
+    {
+      "text": "The C1 rating in U1_OUTPUT_6V is a labeled demo assumption, not a manufacturer-verified value.",
+      "evidence_ids": []
+    },
+    {
+      "text": "The C1 rating in U1_OUTPUT_3V is a labeled demo assumption, not a manufacturer-verified value.",
+      "evidence_ids": []
+    },
+    {
+      "text": "The RLOAD rating in U1_OUTPUT_8V is a labeled demo assumption, not a manufacturer-verified value.",
+      "evidence_ids": []
+    },
+    {
+      "text": "The RLOAD rating in U1_OUTPUT_6V is a labeled demo assumption, not a manufacturer-verified value.",
+      "evidence_ids": []
+    },
+    {
+      "text": "The RLOAD rating in U1_OUTPUT_3V is a labeled demo assumption, not a manufacturer-verified value.",
+      "evidence_ids": []
+    },
+    {
+      "text": "The R1 rating in U1_OUTPUT_8V is a labeled demo assumption, not a manufacturer-verified value.",
+      "evidence_ids": []
+    },
+    {
+      "text": "The R1 rating in U1_OUTPUT_6V is a labeled demo assumption, not a manufacturer-verified value.",
+      "evidence_ids": []
+    },
+    {
+      "text": "The R1 rating in U1_OUTPUT_3V is a labeled demo assumption, not a manufacturer-verified value.",
+      "evidence_ids": []
+    },
+    {
+      "text": "Illustrative limits only; resistor part number and datasheet are not specified.",
+      "evidence_ids": []
+    },
+    {
+      "text": "Example 0.125 W resistor rating for demonstration only; not verified against a manufacturer datasheet.",
+      "evidence_ids": []
+    },
+    {
+      "text": "Example 6.3 V capacitor rating for demonstration only; not verified against a manufacturer datasheet.",
+      "evidence_ids": []
+    },
+    {
+      "text": "Posterior update history is sequential and conditioned on the configured hypothesis set and Gaussian measurement model.",
+      "evidence_ids": []
+    },
+    {
+      "text": "The regulator output fault is modeled as an ideal voltage-source setpoint change, not an internal regulator failure mechanism.",
+      "evidence_ids": []
+    },
+    {
+      "text": "Bayesian posterior values are conditional on the configured hypotheses, simulated predictions, and stated measurement uncertainty; they are not real-world failure probabilities.",
+      "evidence_ids": []
+    },
+    {
+      "text": "Connectivity paths are candidate evidence only; sharing GND alone does not establish stress propagation.",
+      "evidence_ids": []
+    },
+    {
+      "text": "Only configured ratings and supported measured metrics are evaluated.",
+      "evidence_ids": []
+    },
+    {
+      "text": "Short transient maxima are compared with configured rating types; exposure duration is retained in simulation data but no pulse derating is applied.",
+      "evidence_ids": []
+    }
+  ],
+  "recommendations": [
+    {
+      "action": "Review the scenario-specific stress evidence for C1, verify its actual manufacturer rating, and inspect it while de-energized after isolation and stored-energy checks.",
+      "component_ref": "C1",
+      "action_type": "rating_verification_and_unpowered_inspection",
+      "basis": "At least one configured fault hypothesis has simulated stress above its configured rating; scenario likelihood and actual damage are not confirmed.",
+      "evidence_ids": [
+        "E009",
+        "E010",
+        "E011",
+        "E012",
+        "E013",
+        "E014",
+        "E015",
+        "E016",
+        "E017",
+        "E018",
+        "E019",
+        "E020",
+        "E021",
+        "E022",
+        "E023",
+        "E084",
+        "E085",
+        "E104",
+        "E105"
+      ]
+    },
+    {
+      "action": "Identify J1 and obtain its actual ratings before drawing a safety conclusion.",
+      "component_ref": "J1",
+      "action_type": "identify_and_verify_rating",
+      "basis": "The current data are insufficient to classify this component as within limits.",
+      "evidence_ids": [
+        "E078",
+        "E079",
+        "E080",
+        "E081",
+        "E082",
+        "E083",
+        "E090",
+        "E091"
+      ]
+    }
+  ],
+  "unknowns": [
+    "The top posterior is conditional on only the configured scenarios and measurement model; it is not certainty about the real circuit.",
+    "Q1 is excluded from physical ranking: The KiCad Q1 pins (VIN and GND) do not correspond to the SPICE S1 power terminals (VIN and SWITCH_OUT); this example cannot establish the switch's physical stress mapping.",
+    "J1 has insufficient ratings or measurements and is not confirmed safe.",
+    "C1 has unsupported or incomplete stress metrics (voltage_only).",
+    "Q1 has unsupported or incomplete stress metrics (measured_voltage_only).",
+    "No component damage has been confirmed by these simulated and configured data."
+  ],
+  "analysis_context": {
+    "failed_component": "U1",
+    "fault_type": "regulator_output_rise",
+    "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+    "model_mismatch": false,
+    "model_mismatch_rule": {
+      "best_hypothesis_max_standardized_residual": 0.4999999999999982,
+      "threshold_sigma": 4.0,
+      "interpretation": "All configured hypotheses poorly explain the used measurements; inspect model coverage or measurement assumptions."
+    },
+    "inspection_order": [
+      {
+        "component_ref": "C1",
+        "priority_rank": 1,
+        "priority_score": 98.93,
+        "risk_level": "EXCEEDED",
+        "any_hypothesis_exceeded": true,
+        "scenario_risk_levels": [
+          {
+            "hypothesis_id": "U1_OUTPUT_8V",
+            "posterior": 1.0,
+            "risk_level": "EXCEEDED"
+          },
+          {
+            "hypothesis_id": "U1_OUTPUT_6V",
+            "posterior": 2.862518580549353e-20,
+            "risk_level": "NEAR_LIMIT"
+          },
+          {
+            "hypothesis_id": "U1_OUTPUT_3V",
+            "posterior": 5.148200222412013e-131,
+            "risk_level": "WITHIN_LIMIT"
+          }
+        ]
+      },
+      {
+        "component_ref": "RLOAD",
+        "priority_rank": 2,
+        "priority_score": 33.71,
+        "risk_level": "WITHIN_LIMIT",
+        "any_hypothesis_exceeded": false,
+        "scenario_risk_levels": [
+          {
+            "hypothesis_id": "U1_OUTPUT_8V",
+            "posterior": 1.0,
+            "risk_level": "WITHIN_LIMIT"
+          },
+          {
+            "hypothesis_id": "U1_OUTPUT_6V",
+            "posterior": 2.862518580549353e-20,
+            "risk_level": "WITHIN_LIMIT"
+          },
+          {
+            "hypothesis_id": "U1_OUTPUT_3V",
+            "posterior": 5.148200222412013e-131,
+            "risk_level": "WITHIN_LIMIT"
+          }
+        ]
+      },
+      {
+        "component_ref": "R1",
+        "priority_rank": 3,
+        "priority_score": 32.85,
+        "risk_level": "WITHIN_LIMIT",
+        "any_hypothesis_exceeded": false,
+        "scenario_risk_levels": [
+          {
+            "hypothesis_id": "U1_OUTPUT_8V",
+            "posterior": 1.0,
+            "risk_level": "WITHIN_LIMIT"
+          },
+          {
+            "hypothesis_id": "U1_OUTPUT_6V",
+            "posterior": 2.862518580549353e-20,
+            "risk_level": "WITHIN_LIMIT"
+          },
+          {
+            "hypothesis_id": "U1_OUTPUT_3V",
+            "posterior": 5.148200222412013e-131,
+            "risk_level": "WITHIN_LIMIT"
+          }
+        ]
+      },
+      {
+        "component_ref": "J1",
+        "priority_rank": 4,
+        "priority_score": 0.0,
+        "risk_level": "UNKNOWN",
+        "any_hypothesis_exceeded": false,
+        "scenario_risk_levels": [
+          {
+            "hypothesis_id": "U1_OUTPUT_8V",
+            "posterior": 1.0,
+            "risk_level": "UNKNOWN"
+          },
+          {
+            "hypothesis_id": "U1_OUTPUT_6V",
+            "posterior": 2.862518580549353e-20,
+            "risk_level": "UNKNOWN"
+          },
+          {
+            "hypothesis_id": "U1_OUTPUT_3V",
+            "posterior": 5.148200222412013e-131,
+            "risk_level": "UNKNOWN"
+          }
+        ]
+      }
+    ],
+    "measurement_recommendation": null,
+    "recommendation_status": "none_needed_or_available",
+    "source_files": {
+      "diagnosis": "data/diagnosis/posterior_results/diagnosis.json",
+      "inspection_ranking": "data/diagnosis/posterior_results/inspection_ranking.json",
+      "measurement_recommendations": "data/diagnosis/posterior_results/measurement_recommendations.json",
+      "risk_assessment": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json",
+      "component_stress": "data/fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/component_stress.json"
+    }
+  }
+}

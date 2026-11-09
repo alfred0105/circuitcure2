@@ -1,0 +1,65 @@
+{
+  "dataset_id": "datasheet-extraction-development-pilot-v1",
+  "version": "1.0.0",
+  "split": "development_pilot_after_feedback",
+  "independent_holdout": false,
+  "description": "Small official-source development pilot with one document per available component family. The first evaluation revealed parser errors that were corrected using this same corpus; post-fix scores are development results and are not independent holdout estimates. Phase 14's YAGEO RC0805FR-071KL development document is excluded. PDFs are kept outside Git and supplied locally as <document_id>.pdf.",
+  "documents": [
+    {
+      "document_id": "VISHAY_MCT0603",
+      "manufacturer": "Vishay",
+      "mpn": "MCT0603 family, standard operation mode",
+      "component_family": "resistor",
+      "source_url": "https://www.vishay.com/docs/28700/mcx0x0xpre.pdf",
+      "source_sha256": "2afcb4283f64f804fba2fd03f9e4250319b360340f1a8a43e898c2a9afd0cdee",
+      "revision": "02-Dec-2025",
+      "page_count": 10,
+      "split": "development_pilot_after_feedback"
+    },
+    {
+      "document_id": "KEMET_C0603C104K4RACTU",
+      "manufacturer": "KEMET",
+      "mpn": "C0603C104K4RACTU",
+      "component_family": "capacitor",
+      "source_url": "https://search.kemet.com/download/specsheet/C0603C104K4RACTU",
+      "source_sha256": "c9946863f1e61509bec6b20088279e7d5da0e17840fddbd94904881e530f2368",
+      "revision": "generated 2026-11-03",
+      "page_count": 4,
+      "split": "development_pilot_after_feedback"
+    },
+    {
+      "document_id": "VISHAY_1N4148",
+      "manufacturer": "Vishay",
+      "mpn": "1N4148",
+      "component_family": "diode",
+      "source_url": "https://www.vishay.com/docs/81857/1n4148.pdf",
+      "source_sha256": "aefe85400a427ed886a4e1c88205ceabb9f9b38044b29c6acee4bb00146a44b7",
+      "revision": "1.6, 07-Nov-2024",
+      "page_count": 4,
+      "split": "development_pilot_after_feedback"
+    },
+    {
+      "document_id": "TI_LM7805_FAMILY",
+      "manufacturer": "Texas Instruments",
+      "mpn": "LM7805 family",
+      "component_family": "regulator_ic",
+      "source_url": "https://www.ti.com/lit/ds/symlink/lm7800.pdf",
+      "source_sha256": "49391342cf3b05f89ae94607257ef03f678ae9f1a3bdd388252adb8b00da043d",
+      "revision": "Rev. L, September 2016",
+      "page_count": 38,
+      "split": "development_pilot_after_feedback"
+    }
+  ],
+  "not_acquired": [
+    {
+      "component_family": "capacitor alternate manufacturer",
+      "manufacturer": "TDK",
+      "mpn": "C1608X7R1C105K080AC",
+      "source_url": "https://product.tdk.com/system/files/dam/doc/product/capacitor/ceramic/mlcc/charasheet/c1608x7r1c105k080ac.pdf",
+      "status": "ACCESS_DENIED_HTTP_403",
+      "reason": "Attempted direct official PDF retrieval during Phase 15; retained the lead but excluded it from the scored set."
+    }
+  ],
+  "ground_truth_complete": false,
+  "evaluation_scope_policy": "One explicit target rating per document; complete document inventories are not labeled."
+}

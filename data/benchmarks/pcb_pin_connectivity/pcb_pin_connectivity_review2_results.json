@@ -1,0 +1,662 @@
+{
+  "source": "pin-only PCB CAD data only; the prior schematic/Phase 22 training records were not loaded",
+  "pcb_graph_count": 190,
+  "train_graphs": 153,
+  "validation_graphs": 19,
+  "test_graphs": 18,
+  "candidate_audit_validation": [
+    {
+      "radius_mm": 25.0,
+      "k_nearest": 8,
+      "validation_candidate_recall_micro": 0.6269142160184307,
+      "validation_candidate_recall_macro": 0.8565887076899914,
+      "validation_mean_candidate_degree": 116.94865164388622,
+      "validation_mean_undirected_edges_per_pin": 58.47432582194311,
+      "train_candidate_recall_micro": 0.5565500965458057,
+      "train_mean_candidate_degree": 105.92587978822796
+    },
+    {
+      "radius_mm": 50.0,
+      "k_nearest": 16,
+      "validation_candidate_recall_micro": 0.89571757690744,
+      "validation_candidate_recall_macro": 0.959472501800184,
+      "validation_mean_candidate_degree": 190.71813816032508,
+      "validation_mean_undirected_edges_per_pin": 95.35906908016254,
+      "train_candidate_recall_micro": 0.876713151684188,
+      "train_mean_candidate_degree": 171.18353576248313
+    },
+    {
+      "radius_mm": 100.0,
+      "k_nearest": 32,
+      "validation_candidate_recall_micro": 0.999864480281881,
+      "validation_candidate_recall_macro": 0.9999754916978126,
+      "validation_mean_candidate_degree": 208.38936091614335,
+      "validation_mean_undirected_edges_per_pin": 104.19468045807167,
+      "train_candidate_recall_micro": 0.999888435957949,
+      "train_mean_candidate_degree": 190.1221841586214
+    },
+    {
+      "radius_mm": 150.0,
+      "k_nearest": 64,
+      "validation_candidate_recall_micro": 1.0,
+      "validation_candidate_recall_macro": 1.0,
+      "validation_mean_candidate_degree": 208.4403398596232,
+      "validation_mean_undirected_edges_per_pin": 104.2201699298116,
+      "train_candidate_recall_micro": 1.0,
+      "train_mean_candidate_degree": 190.15125090833592
+    }
+  ],
+  "selected_candidate": {
+    "radius_mm": 100.0,
+    "k_nearest": 32,
+    "mean_candidate_degree_validation": 208.38936091614335
+  },
+  "target": "same-net membership between different components; not a literal direct copper segment",
+  "same_component_policy": "Excluded consistently from candidate and truth pairs; multiple IC pads on one ground net remain members of that truth net and are not discarded from grouping.",
+  "degree_metric": "Mean candidate degree is 2E/N. The prior report's 104.2 was E/N; corrected degree is approximately 208.4.",
+  "trace_feature_policy": "No original copper-track/via features are included: raw CAD routing would reveal the target and would not simulate image-derived trace masks.",
+  "semantic_features": "Stable hashed component value, footprint, pad number/name, and pad shape; no net names, net IDs, or source-repository IDs enter model features.",
+  "gnn_message_graph": "16-nearest cross-component pad graph, separate from the wider candidate graph, to reduce dense-neighbor aggregation noise.",
+  "candidate_recall": {
+    "train": 0.999888435957949,
+    "validation": 0.999864480281881,
+    "test": 1.0
+  },
+  "model_artifacts": {
+    "LightGBM_geometry": "data/benchmarks/pcb_pin_connectivity/models/lightgbm_pcb_geometry_review2.txt",
+    "LightGBM_semantic": "data/benchmarks/pcb_pin_connectivity/models/lightgbm_pcb_semantic_review2.txt",
+    "GNN_semantic_CUDA": "data/benchmarks/pcb_pin_connectivity/models/gnn_cuda_pcb_semantic_review2.pt"
+  },
+  "LightGBM_geometry": {
+    "device": "CPU; installed Windows LightGBM learner has no CUDA support",
+    "training_examples": 446885,
+    "validation_candidate_metrics": {
+      "candidate_pr_auc": 0.059442054478536704,
+      "candidate_roc_auc": 0.5019258471074104,
+      "candidate_recall_micro": 0.999864480281881,
+      "truth_edges_all": 14758,
+      "candidate_truth_edges": 14756,
+      "end_to_end_recall_at_5_micro": 0.060475674210597644,
+      "end_to_end_recall_at_5_macro": 0.2488545082895497,
+      "oracle_recall_at_5_micro": 0.2537945521073316,
+      "pin_precision_at_5_macro": 0.15535248041775457,
+      "eligible_anchor_pins": 2298
+    },
+    "test_candidate_metrics": {
+      "candidate_pr_auc": 0.0839993686839107,
+      "candidate_roc_auc": 0.581944775255397,
+      "candidate_recall_micro": 1.0,
+      "truth_edges_all": 5514,
+      "candidate_truth_edges": 5514,
+      "end_to_end_recall_at_5_micro": 0.10056220529561118,
+      "end_to_end_recall_at_5_macro": 0.29224385639138234,
+      "oracle_recall_at_5_micro": 0.3519223793978963,
+      "pin_precision_at_5_macro": 0.18796610169491523,
+      "eligible_anchor_pins": 1180
+    },
+    "cluster_calibration_validation": {
+      "threshold": {
+        "method": "threshold",
+        "threshold": 0.5654996903329316,
+        "topk": 3,
+        "net_pair_precision": 0.05204194787359825,
+        "net_pair_recall": 0.9603604824501965,
+        "net_pair_f1": 0.09873352467467329,
+        "predicted_transitive_pairs": 272338,
+        "true_cross_component_pairs": 14758,
+        "predicted_nontrivial_clusters": 23,
+        "false_merge_clusters": 23,
+        "overmerged_truth_net_count": 561,
+        "rejected_cluster_merges": 0
+      },
+      "mutual_topk": {
+        "method": "mutual_topk",
+        "threshold": 0.5,
+        "topk": 12,
+        "net_pair_precision": 0.044334012032531546,
+        "net_pair_recall": 0.7834394904458599,
+        "net_pair_f1": 0.08391912930818614,
+        "predicted_transitive_pairs": 260793,
+        "true_cross_component_pairs": 14758,
+        "predicted_nontrivial_clusters": 23,
+        "false_merge_clusters": 20,
+        "overmerged_truth_net_count": 557,
+        "rejected_cluster_merges": 0
+      },
+      "constrained": {
+        "method": "constrained",
+        "threshold": 0.5654996903329316,
+        "topk": 3,
+        "net_pair_precision": 0.06262428797735009,
+        "net_pair_recall": 0.12589781813253828,
+        "net_pair_f1": 0.08364282981070069,
+        "predicted_transitive_pairs": 29669,
+        "true_cross_component_pairs": 14758,
+        "predicted_nontrivial_clusters": 211,
+        "false_merge_clusters": 159,
+        "overmerged_truth_net_count": 841,
+        "rejected_cluster_merges": 20791
+      }
+    },
+    "test_cluster_metrics": {
+      "threshold": {
+        "method": "threshold",
+        "threshold": 0.5654996903329316,
+        "topk": 3,
+        "net_pair_precision": 0.06555929042863802,
+        "net_pair_recall": 0.9691693870148712,
+        "net_pair_f1": 0.12281104931746104,
+        "predicted_transitive_pairs": 81514,
+        "true_cross_component_pairs": 5514,
+        "predicted_nontrivial_clusters": 21,
+        "false_merge_clusters": 19,
+        "overmerged_truth_net_count": 298,
+        "rejected_cluster_merges": 0
+      },
+      "mutual_topk": {
+        "method": "mutual_topk",
+        "threshold": 0.5,
+        "topk": 12,
+        "net_pair_precision": 0.06670771756978654,
+        "net_pair_recall": 0.9430540442509975,
+        "net_pair_f1": 0.12460163419835624,
+        "predicted_transitive_pairs": 77952,
+        "true_cross_component_pairs": 5514,
+        "predicted_nontrivial_clusters": 27,
+        "false_merge_clusters": 21,
+        "overmerged_truth_net_count": 301,
+        "rejected_cluster_merges": 0
+      },
+      "constrained": {
+        "method": "constrained",
+        "threshold": 0.5654996903329316,
+        "topk": 3,
+        "net_pair_precision": 0.09666107638359506,
+        "net_pair_recall": 0.11498005077983316,
+        "net_pair_f1": 0.10502774786714156,
+        "predicted_transitive_pairs": 6559,
+        "true_cross_component_pairs": 5514,
+        "predicted_nontrivial_clusters": 166,
+        "false_merge_clusters": 126,
+        "overmerged_truth_net_count": 506,
+        "rejected_cluster_merges": 3864
+      }
+    }
+  },
+  "LightGBM_semantic": {
+    "device": "CPU; installed Windows LightGBM learner has no CUDA support",
+    "training_examples": 446885,
+    "validation_candidate_metrics": {
+      "candidate_pr_auc": 0.06070509124173031,
+      "candidate_roc_auc": 0.4988333425580369,
+      "candidate_recall_micro": 0.999864480281881,
+      "truth_edges_all": 14758,
+      "candidate_truth_edges": 14756,
+      "end_to_end_recall_at_5_micro": 0.06288114920720965,
+      "end_to_end_recall_at_5_macro": 0.2531447080157573,
+      "oracle_recall_at_5_micro": 0.2537945521073316,
+      "pin_precision_at_5_macro": 0.16153176675369887,
+      "eligible_anchor_pins": 2298
+    },
+    "test_candidate_metrics": {
+      "candidate_pr_auc": 0.08534429990241471,
+      "candidate_roc_auc": 0.5874918007713561,
+      "candidate_recall_micro": 1.0,
+      "truth_edges_all": 5514,
+      "candidate_truth_edges": 5514,
+      "end_to_end_recall_at_5_micro": 0.09974610083424011,
+      "end_to_end_recall_at_5_macro": 0.2885950424524787,
+      "oracle_recall_at_5_micro": 0.3519223793978963,
+      "pin_precision_at_5_macro": 0.1864406779661017,
+      "eligible_anchor_pins": 1180
+    },
+    "cluster_calibration_validation": {
+      "threshold": {
+        "method": "threshold",
+        "threshold": 0.5590017208779797,
+        "topk": 3,
+        "net_pair_precision": 0.05154819650607243,
+        "net_pair_recall": 0.9577178479468763,
+        "net_pair_f1": 0.09783075155391281,
+        "predicted_transitive_pairs": 274190,
+        "true_cross_component_pairs": 14758,
+        "predicted_nontrivial_clusters": 19,
+        "false_merge_clusters": 19,
+        "overmerged_truth_net_count": 554,
+        "rejected_cluster_merges": 0
+      },
+      "mutual_topk": {
+        "method": "mutual_topk",
+        "threshold": 0.5,
+        "topk": 12,
+        "net_pair_precision": 0.0462299858928007,
+        "net_pair_recall": 0.8127117495595609,
+        "net_pair_f1": 0.0874835886214442,
+        "predicted_transitive_pairs": 259442,
+        "true_cross_component_pairs": 14758,
+        "predicted_nontrivial_clusters": 26,
+        "false_merge_clusters": 19,
+        "overmerged_truth_net_count": 555,
+        "rejected_cluster_merges": 0
+      },
+      "constrained": {
+        "method": "constrained",
+        "threshold": 0.5590017208779797,
+        "topk": 3,
+        "net_pair_precision": 0.06516106330571639,
+        "net_pair_recall": 0.13802683290418755,
+        "net_pair_f1": 0.08852865120928312,
+        "predicted_transitive_pairs": 31261,
+        "true_cross_component_pairs": 14758,
+        "predicted_nontrivial_clusters": 199,
+        "false_merge_clusters": 156,
+        "overmerged_truth_net_count": 852,
+        "rejected_cluster_merges": 19403
+      }
+    },
+    "test_cluster_metrics": {
+      "threshold": {
+        "method": "threshold",
+        "threshold": 0.5590017208779797,
+        "topk": 3,
+        "net_pair_precision": 0.06594700686947988,
+        "net_pair_recall": 0.9749727965179543,
+        "net_pair_f1": 0.12353792770641356,
+        "predicted_transitive_pairs": 81520,
+        "true_cross_component_pairs": 5514,
+        "predicted_nontrivial_clusters": 24,
+        "false_merge_clusters": 21,
+        "overmerged_truth_net_count": 298,
+        "rejected_cluster_merges": 0
+      },
+      "mutual_topk": {
+        "method": "mutual_topk",
+        "threshold": 0.5,
+        "topk": 12,
+        "net_pair_precision": 0.06791300538562631,
+        "net_pair_recall": 0.955930359085963,
+        "net_pair_f1": 0.12681647579636224,
+        "predicted_transitive_pairs": 77614,
+        "true_cross_component_pairs": 5514,
+        "predicted_nontrivial_clusters": 31,
+        "false_merge_clusters": 20,
+        "overmerged_truth_net_count": 302,
+        "rejected_cluster_merges": 0
+      },
+      "constrained": {
+        "method": "constrained",
+        "threshold": 0.5590017208779797,
+        "topk": 3,
+        "net_pair_precision": 0.10130823229100192,
+        "net_pair_recall": 0.1151614073268045,
+        "net_pair_f1": 0.10779154642675268,
+        "predicted_transitive_pairs": 6268,
+        "true_cross_component_pairs": 5514,
+        "predicted_nontrivial_clusters": 158,
+        "false_merge_clusters": 123,
+        "overmerged_truth_net_count": 524,
+        "rejected_cluster_merges": 4151
+      }
+    }
+  },
+  "GNN_semantic_CUDA": {
+    "device": "NVIDIA GeForce RTX 4060 Ti",
+    "epochs": 15,
+    "validation_candidate_metrics": {
+      "candidate_pr_auc": 0.050402005310637744,
+      "candidate_roc_auc": 0.45865096043757664,
+      "candidate_recall_micro": 0.999864480281881,
+      "truth_edges_all": 14758,
+      "candidate_truth_edges": 14756,
+      "end_to_end_recall_at_5_micro": 0.05102317387179835,
+      "end_to_end_recall_at_5_macro": 0.2061672813587449,
+      "oracle_recall_at_5_micro": 0.2537945521073316,
+      "pin_precision_at_5_macro": 0.1310704960835509,
+      "eligible_anchor_pins": 2298
+    },
+    "test_candidate_metrics": {
+      "candidate_pr_auc": 0.06869685930089402,
+      "candidate_roc_auc": 0.5336811773107819,
+      "candidate_recall_micro": 1.0,
+      "truth_edges_all": 5514,
+      "candidate_truth_edges": 5514,
+      "end_to_end_recall_at_5_micro": 0.08124773304316286,
+      "end_to_end_recall_at_5_macro": 0.24319685073677824,
+      "oracle_recall_at_5_micro": 0.3519223793978963,
+      "pin_precision_at_5_macro": 0.15186440677966104,
+      "eligible_anchor_pins": 1180
+    },
+    "cluster_calibration_validation": {
+      "threshold": {
+        "method": "threshold",
+        "threshold": 0.5541755557060242,
+        "topk": 3,
+        "net_pair_precision": 0.05080336289625332,
+        "net_pair_recall": 0.8799295297465781,
+        "net_pair_f1": 0.09606059821504526,
+        "predicted_transitive_pairs": 255613,
+        "true_cross_component_pairs": 14758,
+        "predicted_nontrivial_clusters": 21,
+        "false_merge_clusters": 19,
+        "overmerged_truth_net_count": 555,
+        "rejected_cluster_merges": 0
+      },
+      "mutual_topk": {
+        "method": "mutual_topk",
+        "threshold": 0.5,
+        "topk": 12,
+        "net_pair_precision": 0.049925330166612686,
+        "net_pair_recall": 0.7520666757013146,
+        "net_pair_f1": 0.09363479141181928,
+        "predicted_transitive_pairs": 222312,
+        "true_cross_component_pairs": 14758,
+        "predicted_nontrivial_clusters": 44,
+        "false_merge_clusters": 22,
+        "overmerged_truth_net_count": 559,
+        "rejected_cluster_merges": 0
+      },
+      "constrained": {
+        "method": "constrained",
+        "threshold": 0.5541755557060242,
+        "topk": 3,
+        "net_pair_precision": 0.048885850141405354,
+        "net_pair_recall": 0.10658625830058273,
+        "net_pair_f1": 0.06702886971343347,
+        "predicted_transitive_pairs": 32177,
+        "true_cross_component_pairs": 14758,
+        "predicted_nontrivial_clusters": 165,
+        "false_merge_clusters": 130,
+        "overmerged_truth_net_count": 906,
+        "rejected_cluster_merges": 19417
+      }
+    },
+    "test_cluster_metrics": {
+      "threshold": {
+        "method": "threshold",
+        "threshold": 0.5541755557060242,
+        "topk": 3,
+        "net_pair_precision": 0.06760592723768848,
+        "net_pair_recall": 0.9416031918752267,
+        "net_pair_f1": 0.1261541452036155,
+        "predicted_transitive_pairs": 76798,
+        "true_cross_component_pairs": 5514,
+        "predicted_nontrivial_clusters": 18,
+        "false_merge_clusters": 18,
+        "overmerged_truth_net_count": 283,
+        "rejected_cluster_merges": 0
+      },
+      "mutual_topk": {
+        "method": "mutual_topk",
+        "threshold": 0.5,
+        "topk": 12,
+        "net_pair_precision": 0.07108248223644248,
+        "net_pair_recall": 0.9125861443598113,
+        "net_pair_f1": 0.13189175021296115,
+        "predicted_transitive_pairs": 70791,
+        "true_cross_component_pairs": 5514,
+        "predicted_nontrivial_clusters": 42,
+        "false_merge_clusters": 20,
+        "overmerged_truth_net_count": 300,
+        "rejected_cluster_merges": 0
+      },
+      "constrained": {
+        "method": "constrained",
+        "threshold": 0.5541755557060242,
+        "topk": 3,
+        "net_pair_precision": 0.06743717527303573,
+        "net_pair_recall": 0.11534276387377584,
+        "net_pair_f1": 0.08511207761793242,
+        "predicted_transitive_pairs": 9431,
+        "true_cross_component_pairs": 5514,
+        "predicted_nontrivial_clusters": 112,
+        "false_merge_clusters": 92,
+        "overmerged_truth_net_count": 487,
+        "rejected_cluster_merges": 5873
+      }
+    }
+  },
+  "baselines": {
+    "distance_only": {
+      "validation_candidate_metrics": {
+        "candidate_pr_auc": 0.06817972791696772,
+        "candidate_roc_auc": 0.543466849857783,
+        "candidate_recall_micro": 0.999864480281881,
+        "truth_edges_all": 14758,
+        "candidate_truth_edges": 14756,
+        "end_to_end_recall_at_5_micro": 0.05932375660658626,
+        "end_to_end_recall_at_5_macro": 0.21904865805007828,
+        "oracle_recall_at_5_micro": 0.2537945521073316,
+        "pin_precision_at_5_macro": 0.15239338555265447,
+        "eligible_anchor_pins": 2298
+      },
+      "test_candidate_metrics": {
+        "candidate_pr_auc": 0.08891337930858684,
+        "candidate_roc_auc": 0.5730308849768382,
+        "candidate_recall_micro": 1.0,
+        "truth_edges_all": 5514,
+        "candidate_truth_edges": 5514,
+        "end_to_end_recall_at_5_micro": 0.08605368153790352,
+        "end_to_end_recall_at_5_macro": 0.2400661464893406,
+        "oracle_recall_at_5_micro": 0.3519223793978963,
+        "pin_precision_at_5_macro": 0.16084745762711866,
+        "eligible_anchor_pins": 1180
+      },
+      "cluster_calibration_validation": {
+        "threshold": {
+          "method": "threshold",
+          "threshold": 0.2612185478210449,
+          "topk": 3,
+          "net_pair_precision": 0.07219784603111289,
+          "net_pair_recall": 0.14717441387721913,
+          "net_pair_f1": 0.09687346683912403,
+          "predicted_transitive_pairs": 30084,
+          "true_cross_component_pairs": 14758,
+          "predicted_nontrivial_clusters": 189,
+          "false_merge_clusters": 141,
+          "overmerged_truth_net_count": 450,
+          "rejected_cluster_merges": 0
+        },
+        "mutual_topk": {
+          "method": "mutual_topk",
+          "threshold": 0.5,
+          "topk": 12,
+          "net_pair_precision": 0.04580615549164347,
+          "net_pair_recall": 0.7370917468491666,
+          "net_pair_f1": 0.08625221517858205,
+          "predicted_transitive_pairs": 237479,
+          "true_cross_component_pairs": 14758,
+          "predicted_nontrivial_clusters": 23,
+          "false_merge_clusters": 21,
+          "overmerged_truth_net_count": 562,
+          "rejected_cluster_merges": 0
+        },
+        "constrained": {
+          "method": "constrained",
+          "threshold": 0.09471224248409271,
+          "topk": 3,
+          "net_pair_precision": 0.07423232495869651,
+          "net_pair_recall": 0.17658219270903916,
+          "net_pair_f1": 0.10452430611262634,
+          "predicted_transitive_pairs": 35106,
+          "true_cross_component_pairs": 14758,
+          "predicted_nontrivial_clusters": 165,
+          "false_merge_clusters": 123,
+          "overmerged_truth_net_count": 836,
+          "rejected_cluster_merges": 15557
+        }
+      },
+      "test_cluster_metrics": {
+        "threshold": {
+          "method": "threshold",
+          "threshold": 0.2612185478210449,
+          "topk": 3,
+          "net_pair_precision": 0.10351300616787343,
+          "net_pair_recall": 0.07000362713093942,
+          "net_pair_f1": 0.08352266580114683,
+          "predicted_transitive_pairs": 3729,
+          "true_cross_component_pairs": 5514,
+          "predicted_nontrivial_clusters": 142,
+          "false_merge_clusters": 120,
+          "overmerged_truth_net_count": 343,
+          "rejected_cluster_merges": 0
+        },
+        "mutual_topk": {
+          "method": "mutual_topk",
+          "threshold": 0.5,
+          "topk": 12,
+          "net_pair_precision": 0.06633294794750283,
+          "net_pair_recall": 0.9468625317373958,
+          "net_pair_f1": 0.12398038540541184,
+          "predicted_transitive_pairs": 78709,
+          "true_cross_component_pairs": 5514,
+          "predicted_nontrivial_clusters": 24,
+          "false_merge_clusters": 20,
+          "overmerged_truth_net_count": 303,
+          "rejected_cluster_merges": 0
+        },
+        "constrained": {
+          "method": "constrained",
+          "threshold": 0.09471224248409271,
+          "topk": 3,
+          "net_pair_precision": 0.09427387455264645,
+          "net_pair_recall": 0.181537903518317,
+          "net_pair_f1": 0.12410116538556903,
+          "predicted_transitive_pairs": 10618,
+          "true_cross_component_pairs": 5514,
+          "predicted_nontrivial_clusters": 101,
+          "false_merge_clusters": 82,
+          "overmerged_truth_net_count": 498,
+          "rejected_cluster_merges": 4907
+        }
+      }
+    },
+    "random": {
+      "validation_candidate_metrics": {
+        "candidate_pr_auc": 0.05213948384321135,
+        "candidate_roc_auc": 0.49669683878800686,
+        "candidate_recall_micro": 0.999864480281881,
+        "truth_edges_all": 14758,
+        "candidate_truth_edges": 14756,
+        "end_to_end_recall_at_5_micro": 0.028662420382165606,
+        "end_to_end_recall_at_5_macro": 0.043230970522611364,
+        "oracle_recall_at_5_micro": 0.2537945521073316,
+        "pin_precision_at_5_macro": 0.07362924281984334,
+        "eligible_anchor_pins": 2298
+      },
+      "test_candidate_metrics": {
+        "candidate_pr_auc": 0.06265134503370157,
+        "candidate_roc_auc": 0.49780521889822327,
+        "candidate_recall_micro": 1.0,
+        "truth_edges_all": 5514,
+        "candidate_truth_edges": 5514,
+        "end_to_end_recall_at_5_micro": 0.04434167573449402,
+        "end_to_end_recall_at_5_macro": 0.06168179909514794,
+        "oracle_recall_at_5_micro": 0.3519223793978963,
+        "pin_precision_at_5_macro": 0.08288135593220339,
+        "eligible_anchor_pins": 1180
+      },
+      "cluster_calibration_validation": {
+        "threshold": {
+          "method": "threshold",
+          "threshold": 0.8506283482499472,
+          "topk": 3,
+          "net_pair_precision": 0.052310331627227744,
+          "net_pair_recall": 1.0,
+          "net_pair_f1": 0.09941997157119664,
+          "predicted_transitive_pairs": 282124,
+          "true_cross_component_pairs": 14758,
+          "predicted_nontrivial_clusters": 19,
+          "false_merge_clusters": 19,
+          "overmerged_truth_net_count": 555,
+          "rejected_cluster_merges": 0
+        },
+        "mutual_topk": {
+          "method": "mutual_topk",
+          "threshold": 0.5,
+          "topk": 12,
+          "net_pair_precision": 0.052310331627227744,
+          "net_pair_recall": 1.0,
+          "net_pair_f1": 0.09941997157119664,
+          "predicted_transitive_pairs": 282124,
+          "true_cross_component_pairs": 14758,
+          "predicted_nontrivial_clusters": 19,
+          "false_merge_clusters": 19,
+          "overmerged_truth_net_count": 555,
+          "rejected_cluster_merges": 0
+        },
+        "constrained": {
+          "method": "constrained",
+          "threshold": 0.8506283482499472,
+          "topk": 3,
+          "net_pair_precision": 0.05806305284645044,
+          "net_pair_recall": 0.017346523919230247,
+          "net_pair_f1": 0.026712578911671097,
+          "predicted_transitive_pairs": 4409,
+          "true_cross_component_pairs": 14758,
+          "predicted_nontrivial_clusters": 686,
+          "false_merge_clusters": 599,
+          "overmerged_truth_net_count": 1325,
+          "rejected_cluster_merges": 39174
+        }
+      },
+      "test_cluster_metrics": {
+        "threshold": {
+          "method": "threshold",
+          "threshold": 0.8506283482499472,
+          "topk": 3,
+          "net_pair_precision": 0.06269688733211268,
+          "net_pair_recall": 0.9998186434530286,
+          "net_pair_f1": 0.1179945422441008,
+          "predicted_transitive_pairs": 87931,
+          "true_cross_component_pairs": 5514,
+          "predicted_nontrivial_clusters": 19,
+          "false_merge_clusters": 18,
+          "overmerged_truth_net_count": 282,
+          "rejected_cluster_merges": 0
+        },
+        "mutual_topk": {
+          "method": "mutual_topk",
+          "threshold": 0.5,
+          "topk": 12,
+          "net_pair_precision": 0.06268330946047336,
+          "net_pair_recall": 1.0,
+          "net_pair_f1": 0.11797175866495507,
+          "predicted_transitive_pairs": 87966,
+          "true_cross_component_pairs": 5514,
+          "predicted_nontrivial_clusters": 18,
+          "false_merge_clusters": 18,
+          "overmerged_truth_net_count": 283,
+          "rejected_cluster_merges": 0
+        },
+        "constrained": {
+          "method": "constrained",
+          "threshold": 0.8506283482499472,
+          "topk": 3,
+          "net_pair_precision": 0.07477678571428571,
+          "net_pair_recall": 0.024301777294160318,
+          "net_pair_f1": 0.03668217903093347,
+          "predicted_transitive_pairs": 1792,
+          "true_cross_component_pairs": 5514,
+          "predicted_nontrivial_clusters": 390,
+          "false_merge_clusters": 306,
+          "overmerged_truth_net_count": 603,
+          "rejected_cluster_merges": 11849
+        }
+      }
+    }
+  },
+  "evaluation_notes": {
+    "net_membership_and_direct_connection": "This run predicts same-net membership, not direct copper path. Direct trace labels need a separate route-graph target.",
+    "clustering": "Compared threshold union, mutual top-k, and support-constrained agglomerative merges. Thresholds/top-k are selected on validation only. Multi-pin component nets are preserved as truth groups.",
+    "candidate_degree": "Reported as 2E/N, the actual average number of adjacent candidate pins per pin.",
+    "traces_and_vias": "Not used as model inputs because the original CAD routing would leak the net target and is not equivalent to a mask detected from a photograph.",
+    "image_evaluation": "No photo-to-pad registration or image-derived traces were evaluated; this remains PCB-CAD-to-CAD.",
+    "prior_training_excluded": true
+  },
+  "run": {
+    "seed": 42,
+    "lightgbm_trees": 350,
+    "gnn_epochs": 15,
+    "training_scope": "All training examples came from the PCB pin-only archive; validation/test were repository grouped."
+  }
+}

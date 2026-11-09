@@ -1,0 +1,321 @@
+{
+  "source": "pcb_pin_only_training only; prior schematic/Phase 22 training records excluded",
+  "input_manifest": "data/external/pcb-photo-cad-2026-11-09/pin_only_training/dataset_manifest.json",
+  "pcb_graph_count": 190,
+  "train_graphs": 153,
+  "validation_graphs": 19,
+  "test_graphs": 18,
+  "candidate_audit_validation": [
+    {
+      "radius_mm": 25.0,
+      "k_nearest": 8,
+      "validation_candidate_recall_micro": 0.6269142160184307,
+      "validation_candidate_recall_macro": 0.8565887076899914,
+      "validation_mean_candidates_per_pin": 58.47432582194311,
+      "train_candidate_recall_micro": 0.5565500965458057
+    },
+    {
+      "radius_mm": 50.0,
+      "k_nearest": 16,
+      "validation_candidate_recall_micro": 0.89571757690744,
+      "validation_candidate_recall_macro": 0.959472501800184,
+      "validation_mean_candidates_per_pin": 95.35906908016254,
+      "train_candidate_recall_micro": 0.876713151684188
+    },
+    {
+      "radius_mm": 100.0,
+      "k_nearest": 32,
+      "validation_candidate_recall_micro": 0.999864480281881,
+      "validation_candidate_recall_macro": 0.9999754916978126,
+      "validation_mean_candidates_per_pin": 104.19468045807167,
+      "train_candidate_recall_micro": 0.999888435957949
+    },
+    {
+      "radius_mm": 150.0,
+      "k_nearest": 64,
+      "validation_candidate_recall_micro": 1.0,
+      "validation_candidate_recall_macro": 1.0,
+      "validation_mean_candidates_per_pin": 104.2201699298116,
+      "train_candidate_recall_micro": 1.0
+    }
+  ],
+  "selected_candidate": {
+    "radius_mm": 100.0,
+    "k_nearest": 32
+  },
+  "same_component_policy": "Excluded consistently from candidate edges, candidate labels, truth edges, and ranking anchors.",
+  "target_policy": "same original net across different components; this is net membership, not a literal single copper segment.",
+  "candidate_recall_train": 0.999888435957949,
+  "candidate_recall_validation": 0.999864480281881,
+  "candidate_recall_test": 1.0,
+  "LightGBM": {
+    "training_device": "CPU (LightGBM wheel has no CUDA learner)",
+    "training_examples": 446885,
+    "validation": {
+      "candidate_pr_auc": 0.059442054478536704,
+      "candidate_roc_auc": 0.5019258471074104,
+      "candidate_recall_micro": 0.999864480281881,
+      "truth_edges_all": 14758,
+      "candidate_truth_edges": 14756,
+      "end_to_end_recall_at_5_micro": 0.060475674210597644,
+      "end_to_end_recall_at_5_macro": 0.2488545082895497,
+      "oracle_recall_at_5_micro": 0.2537945521073316,
+      "pin_precision_at_5_macro": 0.15535248041775457,
+      "eligible_anchor_pins": 2298,
+      "net_reconstruction": {
+        "threshold": 0.4032918705425593,
+        "net_pair_precision": 0.052470126627429996,
+        "net_pair_recall": 0.9967475267651443,
+        "net_pair_f1": 0.09969231603345215,
+        "predicted_nontrivial_clusters": 19,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 280350
+      }
+    },
+    "test": {
+      "candidate_pr_auc": 0.0839993686839107,
+      "candidate_roc_auc": 0.581944775255397,
+      "candidate_recall_micro": 1.0,
+      "truth_edges_all": 5514,
+      "candidate_truth_edges": 5514,
+      "end_to_end_recall_at_5_micro": 0.10056220529561118,
+      "end_to_end_recall_at_5_macro": 0.29224385639138234,
+      "oracle_recall_at_5_micro": 0.3519223793978963,
+      "pin_precision_at_5_macro": 0.18796610169491523,
+      "eligible_anchor_pins": 1180,
+      "net_reconstruction": {
+        "threshold": 0.4032918705425593,
+        "net_pair_precision": 0.06367815560894474,
+        "net_pair_recall": 0.9998186434530286,
+        "net_pair_f1": 0.11973069822999241,
+        "predicted_nontrivial_clusters": 20,
+        "true_cross_component_pairs": 5514,
+        "predicted_transitive_pairs": 86576
+      }
+    },
+    "net_threshold_calibration_validation": [
+      {
+        "threshold": 0.2885819337844064,
+        "net_pair_precision": 0.052322215632025514,
+        "net_pair_recall": 0.9982382436644531,
+        "net_pair_f1": 0.09943270979782061,
+        "predicted_nontrivial_clusters": 19,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 281563
+      },
+      {
+        "threshold": 0.4032918705425593,
+        "net_pair_precision": 0.052470126627429996,
+        "net_pair_recall": 0.9967475267651443,
+        "net_pair_f1": 0.09969231603345215,
+        "predicted_nontrivial_clusters": 19,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 280350
+      },
+      {
+        "threshold": 0.5007489360415828,
+        "net_pair_precision": 0.052397411780785455,
+        "net_pair_recall": 0.9871256267786963,
+        "net_pair_f1": 0.0995126149726593,
+        "predicted_nontrivial_clusters": 19,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 278029
+      },
+      {
+        "threshold": 0.6357639977989965,
+        "net_pair_precision": 0.04814477353496866,
+        "net_pair_recall": 0.8270768396801734,
+        "net_pair_f1": 0.09099278752073355,
+        "predicted_nontrivial_clusters": 33,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 253527
+      },
+      {
+        "threshold": 0.731010203937597,
+        "net_pair_precision": 0.03825644632199577,
+        "net_pair_recall": 0.5381488006504946,
+        "net_pair_f1": 0.07143467486969153,
+        "predicted_nontrivial_clusters": 63,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 207599
+      },
+      {
+        "threshold": 0.792799718270357,
+        "net_pair_precision": 0.03554000098585301,
+        "net_pair_recall": 0.3908388670551565,
+        "net_pair_f1": 0.06515526336597874,
+        "predicted_nontrivial_clusters": 83,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 162296
+      },
+      {
+        "threshold": 0.8854985350309655,
+        "net_pair_precision": 0.04649117664302046,
+        "net_pair_recall": 0.16120070470253423,
+        "net_pair_f1": 0.07216854494987031,
+        "predicted_nontrivial_clusters": 173,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 51171
+      },
+      {
+        "threshold": 0.9141259370695135,
+        "net_pair_precision": 0.038831388093665126,
+        "net_pair_recall": 0.03584496544247188,
+        "net_pair_f1": 0.03727846094217963,
+        "predicted_nontrivial_clusters": 143,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 13623
+      },
+      {
+        "threshold": 0.9388864459839876,
+        "net_pair_precision": 0.09304511278195489,
+        "net_pair_recall": 0.006708226046889822,
+        "net_pair_f1": 0.012514220705346985,
+        "predicted_nontrivial_clusters": 124,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 1064
+      }
+    ]
+  },
+  "model_artifacts": {
+    "LightGBM": "data/benchmarks/pcb_pin_connectivity/models/lightgbm_pcb_pin_only.txt",
+    "GNN_CUDA": "data/benchmarks/pcb_pin_connectivity/models/gnn_cuda_pcb_pin_only.pt"
+  },
+  "GNN_CUDA": {
+    "training_device": "NVIDIA GeForce RTX 4060 Ti",
+    "epochs": 15,
+    "validation": {
+      "candidate_pr_auc": 0.057437665839303445,
+      "candidate_roc_auc": 0.5035083799780216,
+      "candidate_recall_micro": 0.999864480281881,
+      "truth_edges_all": 14758,
+      "candidate_truth_edges": 14756,
+      "end_to_end_recall_at_5_micro": 0.05315760943217238,
+      "end_to_end_recall_at_5_macro": 0.23868470467118622,
+      "oracle_recall_at_5_micro": 0.2537945521073316,
+      "pin_precision_at_5_macro": 0.13655352480417754,
+      "eligible_anchor_pins": 2298,
+      "net_reconstruction": {
+        "threshold": 0.759916365146637,
+        "net_pair_precision": 0.06813023453365366,
+        "net_pair_recall": 0.3478113565523784,
+        "net_pair_f1": 0.1139413312023441,
+        "predicted_nontrivial_clusters": 97,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 75341
+      }
+    },
+    "test": {
+      "candidate_pr_auc": 0.0663766869652315,
+      "candidate_roc_auc": 0.5208486674327756,
+      "candidate_recall_micro": 1.0,
+      "truth_edges_all": 5514,
+      "candidate_truth_edges": 5514,
+      "end_to_end_recall_at_5_micro": 0.07381211461733768,
+      "end_to_end_recall_at_5_macro": 0.24709794276593455,
+      "oracle_recall_at_5_micro": 0.3519223793978963,
+      "pin_precision_at_5_macro": 0.13796610169491527,
+      "eligible_anchor_pins": 1180,
+      "net_reconstruction": {
+        "threshold": 0.759916365146637,
+        "net_pair_precision": 0.051043138757814556,
+        "net_pair_recall": 0.3864708015959376,
+        "net_pair_f1": 0.09017624780483675,
+        "predicted_nontrivial_clusters": 55,
+        "true_cross_component_pairs": 5514,
+        "predicted_transitive_pairs": 41749
+      }
+    },
+    "net_threshold_calibration_validation": [
+      {
+        "threshold": 0.3654635548591614,
+        "net_pair_precision": 0.05343985474353155,
+        "net_pair_recall": 0.9971540859195013,
+        "net_pair_f1": 0.10144313125359748,
+        "predicted_nontrivial_clusters": 19,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 275375
+      },
+      {
+        "threshold": 0.4755643308162689,
+        "net_pair_precision": 0.053297698458276276,
+        "net_pair_recall": 0.9810272394633419,
+        "net_pair_f1": 0.1011026459312435,
+        "predicted_nontrivial_clusters": 22,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 271644
+      },
+      {
+        "threshold": 0.5495818257331848,
+        "net_pair_precision": 0.05272693852900244,
+        "net_pair_recall": 0.9524325789402358,
+        "net_pair_f1": 0.09992215796601252,
+        "predicted_nontrivial_clusters": 24,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 266581
+      },
+      {
+        "threshold": 0.6501493453979492,
+        "net_pair_precision": 0.05180664543454706,
+        "net_pair_recall": 0.8553327009079821,
+        "net_pair_f1": 0.09769594526612334,
+        "predicted_nontrivial_clusters": 27,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 243656
+      },
+      {
+        "threshold": 0.7205187082290649,
+        "net_pair_precision": 0.050270757545728295,
+        "net_pair_recall": 0.5327957717847946,
+        "net_pair_f1": 0.0918730392414603,
+        "predicted_nontrivial_clusters": 52,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 156413
+      },
+      {
+        "threshold": 0.759916365146637,
+        "net_pair_precision": 0.06813023453365366,
+        "net_pair_recall": 0.3478113565523784,
+        "net_pair_f1": 0.1139413312023441,
+        "predicted_nontrivial_clusters": 97,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 75341
+      },
+      {
+        "threshold": 0.8151448965072632,
+        "net_pair_precision": 0.06620467763890607,
+        "net_pair_recall": 0.14500609838731535,
+        "net_pair_f1": 0.0909052291746315,
+        "predicted_nontrivial_clusters": 85,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 32324
+      },
+      {
+        "threshold": 0.8368285298347473,
+        "net_pair_precision": 0.06461583750367972,
+        "net_pair_recall": 0.08923973438135249,
+        "net_pair_f1": 0.07495731360273193,
+        "predicted_nontrivial_clusters": 89,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 20382
+      },
+      {
+        "threshold": 0.8746742606163025,
+        "net_pair_precision": 0.08601134215500945,
+        "net_pair_recall": 0.006166147174413877,
+        "net_pair_f1": 0.011507334344967122,
+        "predicted_nontrivial_clusters": 56,
+        "true_cross_component_pairs": 14758,
+        "predicted_transitive_pairs": 1058
+      }
+    ]
+  },
+  "evaluation_notes": {
+    "oracle_recall_definition": "Best possible Recall@5 after candidate generation: assumes all candidate true links rank ahead of false links, with same-component pairs consistently excluded.",
+    "end_to_end_recall_definition": "Top-k hits among candidate links divided by all eligible cross-component same-net truth links, including links omitted by candidate generation.",
+    "net_metrics": "Predicted edges are thresholded using validation-only calibration, then connected components impose transitivity; pairwise net precision/recall/F1 are reported on test.",
+    "candidate_choice": "On validation, select the lowest mean-candidate-cost setting within 0.5 percentage points of the best candidate recall, capped at 150 mean candidates per pin.",
+    "no_image_claim": "This benchmark uses PCB CAD placement/pad geometry and PCB CAD net labels. It does not establish accuracy from photographs.",
+    "prior_training_excluded": true
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "assessment_mode": "prior_only",
+  "hypothesis_count": 3,
+  "hypotheses_source": "data/diagnosis/demo_hypotheses.json",
+  "available_measurement_nodes": [
+    "LOAD",
+    "SWITCH_OUT",
+    "VOUT"
+  ],
+  "measurements_file": null,
+  "posterior": [
+    {
+      "hypothesis_id": "U1_OUTPUT_3V",
+      "component_ref": "U1",
+      "fault_type": "regulator_output_drop",
+      "parameters": {
+        "output_voltage": 3.0
+      },
+      "prior_weight": 1.0,
+      "posterior": 0.3333333333333333,
+      "simulation_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/comparison.json",
+      "risk_assessment_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json"
+    },
+    {
+      "hypothesis_id": "U1_OUTPUT_6V",
+      "component_ref": "U1",
+      "fault_type": "regulator_output_rise",
+      "parameters": {
+        "output_voltage": 6.0
+      },
+      "prior_weight": 1.0,
+      "posterior": 0.3333333333333333,
+      "simulation_source": "../fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+      "risk_assessment_source": "../fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json"
+    },
+    {
+      "hypothesis_id": "U1_OUTPUT_8V",
+      "component_ref": "U1",
+      "fault_type": "regulator_output_rise",
+      "parameters": {
+        "output_voltage": 8.0
+      },
+      "prior_weight": 1.0,
+      "posterior": 0.3333333333333333,
+      "simulation_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+      "risk_assessment_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json"
+    }
+  ],
+  "posterior_history": [],
+  "used_measurements": [],
+  "unsupported_measurements": [],
+  "model_mismatch": false,
+  "model_mismatch_rule": {
+    "best_hypothesis_max_standardized_residual": null,
+    "threshold_sigma": 4.0,
+    "interpretation": "All configured hypotheses poorly explain the used measurements; inspect model coverage or measurement assumptions."
+  },
+  "probability_interpretation": "Posterior weights are conditional on this configured hypothesis set, priors, simulated predictions, and stated Gaussian uncertainty. They are not real-world component failure probabilities.",
+  "top_hypothesis": {
+    "hypothesis_id": "U1_OUTPUT_3V",
+    "component_ref": "U1",
+    "fault_type": "regulator_output_drop",
+    "parameters": {
+      "output_voltage": 3.0
+    },
+    "prior_weight": 1.0,
+    "posterior": 0.3333333333333333,
+    "simulation_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/comparison.json",
+    "risk_assessment_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json"
+  },
+  "recommendation_file": "data/diagnosis/prior_results/measurement_recommendations.json",
+  "inspection_ranking_file": "data/diagnosis/prior_results/inspection_ranking.json",
+  "diagnosis_file": "data/diagnosis/prior_results/diagnosis.json"
+}

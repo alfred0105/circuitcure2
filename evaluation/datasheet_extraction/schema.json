@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Human-verified datasheet rating label",
+  "type": "object",
+  "required": ["document_id", "manufacturer", "mpn", "source_url", "source_sha256", "rating_key", "rating_kind", "value", "unit", "pdf_page_index", "evidence_text", "verified_by", "verification_status", "split", "evaluation_scope"],
+  "properties": {
+    "document_id": {"type": "string"},
+    "manufacturer": {"type": "string"},
+    "mpn": {"type": "string"},
+    "source_url": {"type": "string", "format": "uri"},
+    "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "revision": {"type": ["string", "null"]},
+    "rating_key": {"enum": ["max_power_w", "max_current_a", "max_abs_voltage_v"]},
+    "rating_kind": {"enum": ["continuous", "peak", "absolute_max", "unknown"]},
+    "value": {"type": "number"},
+    "unit": {"enum": ["W", "A", "V"]},
+    "conditions": {"type": "object"},
+    "pdf_page_index": {"type": "integer", "minimum": 0},
+    "printed_page_number": {"type": ["string", "null"]},
+    "evidence_text": {"type": "string"},
+    "table_context": {"type": ["object", "null"], "properties": {
+      "row_label": {"type": "string"}, "variant": {"type": "string"},
+      "column_header": {"type": "string"}, "cell_text": {"type": "string"}
+    }},
+    "verified_by": {"type": "string"},
+    "verification_status": {"enum": ["verified", "pending", "rejected"]},
+    "evaluation_scope": {"type": "object", "required": ["scope_type", "complete_target_scope", "complete_document_inventory"],
+      "properties": {"scope_type": {"const": "target_rating"}, "complete_target_scope": {"type": "boolean"},
+        "complete_document_inventory": {"type": "boolean"}, "component_variant": {"type": "string"},
+        "row_label": {"type": "string"}, "column_header": {"type": "string"}, "source_anchor": {"type": "string"},
+        "allow_blank_column": {"type": "boolean"}}},
+    "split": {"enum": ["development", "development_pilot_after_feedback", "independent_holdout"]}
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "evaluation_status": "LEAKAGE_FREE_DEVELOPMENT_RESULT",
+  "run_metadata": {
+    "git_commit_sha": "0abfd79a04b65ceeb337e0e3d944e65bed0e8c0a",
+    "timestamp_utc": "2026-11-03T06:01:08.635556+00:00",
+    "python": "3.12.14",
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "llm": {
+      "name": "gemma4:12b",
+      "size": 7714091504,
+      "digest": "c7597fc90b86aff6965317f37dd5465402284e26382d9b4bf2dfe3ef1491f4b6",
+      "details": {
+        "parent_model": "",
+        "format": "safetensors",
+        "family": "",
+        "families": null,
+        "parameter_size": "",
+        "quantization_level": "",
+        "runner": "mlx"
+      }
+    },
+    "model_requested": "gemma4:12b",
+    "prompt_version": "fault-hypothesis-v2",
+    "seed": null,
+    "generation_options": null,
+    "simulator": "******\n** ngspice-47 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2026, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n******\n",
+    "simulate": true,
+    "llm_enabled": true,
+    "repeat_count": 3
+  },
+  "method": "B_local_llm_only",
+  "metrics": {
+    "proposal_quality": {
+      "status": "MEASURED_SYNTHETIC",
+      "case_count": 3,
+      "ground_truth_count": 3,
+      "candidate_count": 3,
+      "correct_candidate_count": 0,
+      "candidate_precision": 0.0,
+      "candidate_recall": 0.0,
+      "candidate_f1": 0.0,
+      "valid_proposal_rate": 0.3333333333333333,
+      "unsupported_proposal_rate": 0.6666666666666666,
+      "hallucinated_reference_rate": 0.0,
+      "per_case": [
+        {
+          "case_id": "REGULATOR_U1_RISE_8V",
+          "ground_truth_count": 1,
+          "candidate_count": 1,
+          "correct_candidate_count": 0
+        },
+        {
+          "case_id": "DIVIDER_R1_DRIFT_10K",
+          "ground_truth_count": 1,
+          "candidate_count": 1,
+          "correct_candidate_count": 0
+        },
+        {
+          "case_id": "RC_RCHARGE_DRIFT_100K",
+          "ground_truth_count": 1,
+          "candidate_count": 1,
+          "correct_candidate_count": 0
+        }
+      ]
+    },
+    "diagnostic_ranking": {
+      "status": "MEASURED_SYNTHETIC",
+      "case_count": 3,
+      "ranked_case_count": 1,
+      "ranking_coverage": 0.3333333333333333,
+      "top_k_accuracy": {
+        "1": 0.0,
+        "3": 0.0
+      },
+      "precision_at_k": {
+        "1": 0.0,
+        "3": 0.0
+      },
+      "top_k_evaluated_cases": {
+        "1": 3,
+        "3": 3
+      },
+      "per_case": [
+        {
+          "case_id": "REGULATOR_U1_RISE_8V",
+          "candidate_count": 1,
+          "ranked_candidate_count": 0,
+          "has_ranked_result": false,
+          "top_k_hits": {
+            "1": 0,
+            "3": 0
+          },
+          "correct_rank": null
+        },
+        {
+          "case_id": "DIVIDER_R1_DRIFT_10K",
+          "candidate_count": 1,
+          "ranked_candidate_count": 0,
+          "has_ranked_result": false,
+          "top_k_hits": {
+            "1": 0,
+            "3": 0
+          },
+          "correct_rank": null
+        },
+        {
+          "case_id": "RC_RCHARGE_DRIFT_100K",
+          "candidate_count": 1,
+          "ranked_candidate_count": 1,
+          "has_ranked_result": true,
+          "top_k_hits": {
+            "1": 0,
+            "3": 0
+          },
+          "correct_rank": null
+        }
+      ]
+    },
+    "simulation": {
+      "candidate_count": 3,
+      "eligible_count": 1,
+      "unsupported_candidate_count": 2,
+      "attempted_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "eligible_not_run_count": 0,
+      "success_rate_of_attempted": 1.0,
+      "status": "MEASURED"
+    },
+    "inference_latency_seconds": [
+      4.3189,
+      4.1164,
+      3.9361
+    ],
+    "mean_inference_latency_seconds": 4.1238
+  },
+  "cases": {
+    "REGULATOR_U1_RISE_8V": [
+      {
+        "component_ref": "U1",
+        "fault_type": "regulator_output_drop",
+        "parameters": {
+          "expected_voltage": 12.0,
+          "measured_voltage": 8.0
+        },
+        "reason": "The measured VOUT of 8.0V is significantly lower than the expected 12V input, suggesting a voltage drop in the regulator output.",
+        "supporting_observations": [
+          "VOUT = 8.0V"
+        ],
+        "generation_method": "local_llm",
+        "status": "proposed",
+        "validation_status": "INVALID_PARAMETERS",
+        "validation_reasons": [
+          "Parameters do not match the allowlisted schema for this fault type."
+        ],
+        "simulation_supported": false,
+        "simulation_status": "SIMULATION_NOT_RUN",
+        "observation_status": "NOT_SIMULATED",
+        "evidence_rank": null,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      }
+    ],
+    "DIVIDER_R1_DRIFT_10K": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "value": 1000
+        },
+        "reason": "The measured VOUT of 0.45V is significantly lower than the expected 2.5V for a 1k/1k voltage divider, suggesting a change in R1 resistance.",
+        "supporting_observations": [
+          "VOUT = 0.454545455 V"
+        ],
+        "generation_method": "local_llm",
+        "status": "proposed",
+        "validation_status": "INVALID_PARAMETERS",
+        "validation_reasons": [
+          "Parameters do not match the allowlisted schema for this fault type."
+        ],
+        "simulation_supported": false,
+        "simulation_status": "SIMULATION_NOT_RUN",
+        "observation_status": "NOT_SIMULATED",
+        "evidence_rank": null,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      }
+    ],
+    "RC_RCHARGE_DRIFT_100K": [
+      {
+        "hypothesis_id": "H_6731A205700C",
+        "component_ref": "RCHARGE",
+        "component_value": "10k",
+        "library_id": "",
+        "nets": [
+          "VC",
+          "VIN"
+        ],
+        "fault_type": "resistor_open",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "55bd7ed0266af6ddb4f0c92a5822fe875e25ee0225c98bf1819934fe587f4ab7",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 2.49373553e-09
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 2.49373553e-09,
+              "residual": 0.02487516560626447,
+              "uncertainty": 0.01,
+              "normalized_residual": 2.487516560626447,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 2.487516560626447,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.018077,
+        "observation_status": "CONSISTENT_WITH_OBSERVATIONS",
+        "evidence_rank": 1,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      }
+    ]
+  }
+}

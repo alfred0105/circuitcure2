@@ -1,0 +1,276 @@
+{
+  "source": "connectivity-dataset-v1",
+  "seed": 42,
+  "training_schematics": 3920,
+  "validation_schematics": 515,
+  "test_schematics": 513,
+  "oof_folds": 3,
+  "metrics_definition": {
+    "pin_precision_at_k": "macro mean over anchor pins with at least one candidate positive in the generated set; hits among top K divided by K",
+    "pin_recall_at_k": "macro fraction of anchor pins with at least one candidate positive that place any positive in top K",
+    "end_to_end_recall_at_5": "micro recall of all directed truth links, including links omitted by candidate generation, among each anchor pin's top five candidates",
+    "candidate_recall_mean": "macro mean of per-schematic candidate recall; see candidate_recall_micro for truth-pair-weighted coverage"
+  },
+  "models": {
+    "H0_baseline": {
+      "candidate_edges": 3258373,
+      "positive_edges": 182509,
+      "pr_auc": 0.27849046183142273,
+      "roc_auc": 0.7959351332285356,
+      "candidate_recall_mean": 0.8065484913870787,
+      "pin_precision_at_1": 0.3218510308570532,
+      "pin_recall_at_1": 0.3218510308570532,
+      "pin_precision_at_5": 0.24982246895658827,
+      "pin_recall_at_5": 0.5188614473193793,
+      "end_to_end_recall_at_5": 0.11307031469189602,
+      "candidate_conditional_recall_at_5": 0.17444619169465617,
+      "candidate_eligible_anchor_pins": 50977
+    },
+    "H1_random75_hard25": {
+      "candidate_edges": 3258373,
+      "positive_edges": 182509,
+      "pr_auc": 0.2468128895283311,
+      "roc_auc": 0.781888396168596,
+      "candidate_recall_mean": 0.8065484913870787,
+      "pin_precision_at_1": 0.29797751927339783,
+      "pin_recall_at_1": 0.29797751927339783,
+      "pin_precision_at_5": 0.23149263393295014,
+      "pin_recall_at_5": 0.4637385487572827,
+      "end_to_end_recall_at_5": 0.10477418255042138,
+      "candidate_conditional_recall_at_5": 0.1616468228964051,
+      "candidate_eligible_anchor_pins": 50977
+    },
+    "H2_random50_hard50": {
+      "candidate_edges": 3258373,
+      "positive_edges": 182509,
+      "pr_auc": 0.21235685513518118,
+      "roc_auc": 0.7581028742269558,
+      "candidate_recall_mean": 0.8065484913870787,
+      "pin_precision_at_1": 0.2822449339898386,
+      "pin_recall_at_1": 0.2822449339898386,
+      "pin_precision_at_5": 0.21720383702454052,
+      "pin_recall_at_5": 0.4437687584596975,
+      "end_to_end_recall_at_5": 0.09830703502061602,
+      "candidate_conditional_recall_at_5": 0.15166923275016575,
+      "candidate_eligible_anchor_pins": 50977
+    },
+    "N1_net_weighted": {
+      "candidate_edges": 3258373,
+      "positive_edges": 182509,
+      "pr_auc": 0.09277413902464349,
+      "roc_auc": 0.5577140087513064,
+      "candidate_recall_mean": 0.8065484913870787,
+      "pin_precision_at_1": 0.2799301645840281,
+      "pin_recall_at_1": 0.2799301645840281,
+      "pin_precision_at_5": 0.20020793691272534,
+      "pin_recall_at_5": 0.5967200894521059,
+      "end_to_end_recall_at_5": 0.09061464537231377,
+      "candidate_conditional_recall_at_5": 0.13980132486617097,
+      "candidate_eligible_anchor_pins": 50977
+    },
+    "N2_net_positive_cap64": {
+      "candidate_edges": 3258373,
+      "positive_edges": 182509,
+      "pr_auc": 0.24078431922745258,
+      "roc_auc": 0.7886979334226711,
+      "candidate_recall_mean": 0.8065484913870787,
+      "pin_precision_at_1": 0.330482374404143,
+      "pin_recall_at_1": 0.330482374404143,
+      "pin_precision_at_5": 0.24820605371049692,
+      "pin_recall_at_5": 0.604547148714126,
+      "end_to_end_recall_at_5": 0.11233872084722829,
+      "candidate_conditional_recall_at_5": 0.1733174802338515,
+      "candidate_eligible_anchor_pins": 50977
+    },
+    "B_lightgbm_ranker": {
+      "candidate_edges": 3258373,
+      "positive_edges": 182509,
+      "pr_auc": 0.2103259737581,
+      "roc_auc": 0.7428782465263284,
+      "candidate_recall_mean": 0.8065484913870787,
+      "pin_precision_at_1": 0.34854934578339253,
+      "pin_recall_at_1": 0.34854934578339253,
+      "pin_precision_at_5": 0.24553033721089906,
+      "pin_recall_at_5": 0.6250858230182239,
+      "end_to_end_recall_at_5": 0.1111276844344531,
+      "candidate_conditional_recall_at_5": 0.17144907922349034,
+      "candidate_eligible_anchor_pins": 50977
+    },
+    "GNN_CUDA": {
+      "candidate_edges": 3258373,
+      "positive_edges": 182509,
+      "pr_auc": 0.21328740759275938,
+      "roc_auc": 0.7929949492288353,
+      "candidate_recall_mean": 0.8065484913870787,
+      "pin_precision_at_1": 0.2686898012829315,
+      "pin_recall_at_1": 0.2686898012829315,
+      "pin_precision_at_5": 0.19788532083096297,
+      "pin_recall_at_5": 0.5484826490378013,
+      "end_to_end_recall_at_5": 0.08956342314890775,
+      "candidate_conditional_recall_at_5": 0.13817948703899532,
+      "candidate_eligible_anchor_pins": 50977
+    },
+    "E_lgbm_gnn_ensemble": {
+      "validation_alpha_selection": {
+        "0.25": {
+          "candidate_edges": 3256763,
+          "positive_edges": 189373,
+          "pr_auc": 0.19126008357625493,
+          "roc_auc": 0.7648749907963202,
+          "candidate_recall_mean": 0.8075677357748307,
+          "pin_precision_at_1": 0.3294854428018925,
+          "pin_recall_at_1": 0.3294854428018925,
+          "pin_precision_at_5": 0.24044604118813437,
+          "pin_recall_at_5": 0.61167716983725,
+          "end_to_end_recall_at_5": 0.09136917994825626,
+          "candidate_conditional_recall_at_5": 0.16168619602583262,
+          "candidate_eligible_anchor_pins": 50937
+        },
+        "0.5": {
+          "candidate_edges": 3256763,
+          "positive_edges": 189373,
+          "pr_auc": 0.20976517327795927,
+          "roc_auc": 0.776275356076469,
+          "candidate_recall_mean": 0.8075677357748307,
+          "pin_precision_at_1": 0.343031588040128,
+          "pin_recall_at_1": 0.343031588040128,
+          "pin_precision_at_5": 0.25746314074248583,
+          "pin_recall_at_5": 0.6162907120560692,
+          "end_to_end_recall_at_5": 0.09783565543562918,
+          "candidate_conditional_recall_at_5": 0.1731292211666922,
+          "candidate_eligible_anchor_pins": 50937
+        },
+        "0.75": {
+          "candidate_edges": 3256763,
+          "positive_edges": 189373,
+          "pr_auc": 0.220388403129719,
+          "roc_auc": 0.7781932894698151,
+          "candidate_recall_mean": 0.8075677357748307,
+          "pin_precision_at_1": 0.356872214696586,
+          "pin_recall_at_1": 0.356872214696586,
+          "pin_precision_at_5": 0.26852386281092333,
+          "pin_recall_at_5": 0.6120894438227614,
+          "end_to_end_recall_at_5": 0.10203871529901853,
+          "candidate_conditional_recall_at_5": 0.18056692347905984,
+          "candidate_eligible_anchor_pins": 50937
+        },
+        "0.9": {
+          "candidate_edges": 3256763,
+          "positive_edges": 189373,
+          "pr_auc": 0.2226284247908122,
+          "roc_auc": 0.7753847368838345,
+          "candidate_recall_mean": 0.8075677357748307,
+          "pin_precision_at_1": 0.36140722853721263,
+          "pin_recall_at_1": 0.36140722853721263,
+          "pin_precision_at_5": 0.2735496790152542,
+          "pin_recall_at_5": 0.6035691147888568,
+          "end_to_end_recall_at_5": 0.10394851885781811,
+          "candidate_conditional_recall_at_5": 0.1839464971247221,
+          "candidate_eligible_anchor_pins": 50937
+        }
+      },
+      "selected_alpha_by_validation_pin_precision_at_1": 0.9,
+      "test_by_alpha": {
+        "0.25": {
+          "candidate_edges": 3258373,
+          "positive_edges": 182509,
+          "pr_auc": 0.170508831328727,
+          "roc_auc": 0.7532838107650666,
+          "candidate_recall_mean": 0.8065484913870787,
+          "pin_precision_at_1": 0.30056692233752474,
+          "pin_recall_at_1": 0.30056692233752474,
+          "pin_precision_at_5": 0.22415206857994782,
+          "pin_recall_at_5": 0.5846165917963003,
+          "end_to_end_recall_at_5": 0.10145182312475808,
+          "candidate_conditional_recall_at_5": 0.15652104827707128,
+          "candidate_eligible_anchor_pins": 50977
+        },
+        "0.5": {
+          "candidate_edges": 3258373,
+          "positive_edges": 182509,
+          "pr_auc": 0.18587025990480138,
+          "roc_auc": 0.7644338001198202,
+          "candidate_recall_mean": 0.8065484913870787,
+          "pin_precision_at_1": 0.3156129234752928,
+          "pin_recall_at_1": 0.3156129234752928,
+          "pin_precision_at_5": 0.23906467622653352,
+          "pin_recall_at_5": 0.5903642819310669,
+          "end_to_end_recall_at_5": 0.10820130905578225,
+          "candidate_conditional_recall_at_5": 0.16693423338027166,
+          "candidate_eligible_anchor_pins": 50977
+        },
+        "0.75": {
+          "candidate_edges": 3258373,
+          "positive_edges": 182509,
+          "pr_auc": 0.19506639958717836,
+          "roc_auc": 0.7662601526815205,
+          "candidate_recall_mean": 0.8065484913870787,
+          "pin_precision_at_1": 0.32661788649783235,
+          "pin_recall_at_1": 0.32661788649783235,
+          "pin_precision_at_5": 0.24800596347372345,
+          "pin_recall_at_5": 0.5828903230868823,
+          "end_to_end_recall_at_5": 0.11224815947325244,
+          "candidate_conditional_recall_at_5": 0.17317776109671304,
+          "candidate_eligible_anchor_pins": 50977
+        },
+        "0.9": {
+          "candidate_edges": 3258373,
+          "positive_edges": 182509,
+          "pr_auc": 0.19721876519366555,
+          "roc_auc": 0.7633860202741907,
+          "candidate_recall_mean": 0.8065484913870787,
+          "pin_precision_at_1": 0.3297565568785923,
+          "pin_recall_at_1": 0.3297565568785923,
+          "pin_precision_at_5": 0.2509366969417581,
+          "pin_recall_at_5": 0.5744747631284697,
+          "end_to_end_recall_at_5": 0.11357461724501645,
+          "candidate_conditional_recall_at_5": 0.17522423551715258,
+          "candidate_eligible_anchor_pins": 50977
+        }
+      },
+      "selected_test_metrics": {
+        "candidate_edges": 3258373,
+        "positive_edges": 182509,
+        "pr_auc": 0.19721876519366555,
+        "roc_auc": 0.7633860202741907,
+        "candidate_recall_mean": 0.8065484913870787,
+        "pin_precision_at_1": 0.3297565568785923,
+        "pin_recall_at_1": 0.3297565568785923,
+        "pin_precision_at_5": 0.2509366969417581,
+        "pin_recall_at_5": 0.5744747631284697,
+        "end_to_end_recall_at_5": 0.11357461724501645,
+        "candidate_conditional_recall_at_5": 0.17522423551715258,
+        "candidate_eligible_anchor_pins": 50977
+      }
+    }
+  },
+  "D_adaptive_candidates": {
+    "fixed_k96_radius250": {
+      "mean_candidate_recall": 0.8065387048066929,
+      "mean_edges": 6364.864440078585
+    },
+    "adaptive_density_k_radius_plus_longrange_power_hint": {
+      "mean_candidate_recall": 0.6845776926977335,
+      "mean_edges": 3957.7681728880157
+    }
+  },
+  "limitations": [
+    "H3 is represented by three-fold project-group out-of-fold hard-negative mining in H1/H2; no self-scored negatives are used.",
+    "Net-aware labels are recovered from archived truth-edge cliques; N1 equalizes positive mass approximately per net and N2 caps sampled positives at 64 per net.",
+    "Adaptive search is a candidate-recall audit using archived pin coordinates; no power/ground net metadata is available, so long-range search uses only common pin-name hints.",
+    "Pin Precision@K is conditional on at least one positive link being present in the candidate set; end-to-end Recall@5 includes candidate misses in its denominator."
+  ],
+  "truth_pair_counts_by_split": {
+    "train": 2197553,
+    "validation": 335113,
+    "test": 281577
+  },
+  "backends": {
+    "lightgbm_classifier_and_ranker": "CPU (installed Windows wheel has no GPU learner)",
+    "graph_neural_network": "CUDA on NVIDIA GeForce RTX 4060 Ti"
+  },
+  "candidate_recall_micro": {
+    "validation": 0.5651019208446106,
+    "test": 0.6481672863905787
+  }
+}

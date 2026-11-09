@@ -1,0 +1,51 @@
+{
+  "measurement_model": {
+    "model_mismatch_threshold_sigma": 4.0,
+    "candidate_nodes": {
+      "VOUT": {
+        "unit": "V",
+        "uncertainty": 0.2,
+        "uncertainty_source": "demo_assumption",
+        "safety_status": "low_voltage_demo"
+      },
+      "LOAD": {
+        "unit": "V",
+        "uncertainty": 0.2,
+        "uncertainty_source": "demo_assumption",
+        "safety_status": "low_voltage_demo"
+      }
+    }
+  },
+  "hypotheses": [
+    {
+      "hypothesis_id": "U1_OUTPUT_8V",
+      "component_ref": "U1",
+      "fault_type": "regulator_output_rise",
+      "parameters": {"output_voltage": 8.0},
+      "prior_weight": 1.0,
+      "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+      "simulation_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+      "risk_assessment_source": "../fault_scenarios/overvoltage_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json"
+    },
+    {
+      "hypothesis_id": "U1_OUTPUT_6V",
+      "component_ref": "U1",
+      "fault_type": "regulator_output_rise",
+      "parameters": {"output_voltage": 6.0},
+      "prior_weight": 1.0,
+      "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_RISE",
+      "simulation_source": "../fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/comparison.json",
+      "risk_assessment_source": "../fault_scenarios/output_6v_demo/simulation_results/fault_u1_regulator_output_rise/risk_assessment.json"
+    },
+    {
+      "hypothesis_id": "U1_OUTPUT_3V",
+      "component_ref": "U1",
+      "fault_type": "regulator_output_drop",
+      "parameters": {"output_voltage": 3.0},
+      "prior_weight": 1.0,
+      "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_DROP",
+      "simulation_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/comparison.json",
+      "risk_assessment_source": "../fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/risk_assessment.json"
+    }
+  ]
+}

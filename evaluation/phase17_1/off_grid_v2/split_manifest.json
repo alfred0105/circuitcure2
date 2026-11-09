@@ -1,0 +1,83 @@
+{
+  "dataset_id": "circuitcare-phase17-1-off-grid-v2",
+  "version": "2.0.0",
+  "split": "off_grid_parameter_reused_topology",
+  "off_grid": true,
+  "independent_holdout": false,
+  "data_type": "synthetic_spice_injected_off_grid_parameters",
+  "topology_source": "Phase 17 synthetic topology templates; topology groups reused, not independently novel",
+  "case_count": 10,
+  "topology_group_count": 5,
+  "topology_groups": [
+    "topology_01",
+    "topology_02",
+    "topology_03",
+    "topology_04",
+    "topology_05"
+  ],
+  "case_ids": [
+    "p17o_0001",
+    "p17o_0002",
+    "p17o_0003",
+    "p17o_0004",
+    "p17o_0005",
+    "p17o_0006",
+    "p17o_0007",
+    "p17o_0008",
+    "p17o_0009",
+    "p17o_0010"
+  ],
+  "code_freeze_sha": "064ec91eef9b7d38aef58fbaca6ca26500c8d6d5",
+  "builder": "scripts/build_phase17_1_off_grid.py",
+  "benchmark_code_fingerprint": {
+    "sha256": "f36ce6e156c18795c244f582f14fd8986c8bb6469d5ac668520e7462a76192e2",
+    "files": {
+      "scripts/run_phase17_benchmark.py": "6298d45344401fea6d840cf540a6628dade1b6cecc70d130c724e5a1b42d4d3d",
+      "scripts/build_phase17_synthetic_holdout.py": "88ff46edf5be484212e934a3a04d2930e36641091e14f13319f725f08e8d9d4b",
+      "scripts/build_phase17_1_off_grid.py": "34bc8175273ac3e156f1ef7058ab0695f9201a63f8e013a4f4c47bf0182b64c1",
+      "src/circuitcare/fault_ai/evaluation.py": "4ad0fec9d33fd8e01b114a2cb0c26029a4ac5c946475f67c65460003d5623339",
+      "src/circuitcare/local_llm.py": "407b3cfc5b433aefb3a0c66228562cb684235f01119b597ec1ed12725c989f17",
+      "src/circuitcare/benchmark/dataset.py": "c61b01f29cf3f0dd666f94c298209357980648c43dc5ebf5e7333718ef70af3a",
+      "src/circuitcare/benchmark/integrity.py": "19d20a9af7fb6b25c710fc6965df3dca6a01d27006ea8fc92434bf994fc8879c",
+      "src/circuitcare/benchmark/methods.py": "05346263efa2aa70e2fc0a5dc7c2824c8a778caae3e29f056f0fd3cce6e8f701",
+      "src/circuitcare/benchmark/scoring.py": "62e33bc7526ea9754a0f03cdd4887200efc46e1e806d2642346e82dff1baba55",
+      "src/circuitcare/benchmark/statistics.py": "26d6a2ade522894a6efb8935be54ebd0852f5de18be05a4516f530db61b2dc0d",
+      "src/circuitcare/fault_ai/fault_catalog.py": "1a6fc79474861bfd6c3b70eeb8db57f41d229fc30621573c4ed4e3f1cbc33507",
+      "src/circuitcare/fault_ai/hypothesis_validator.py": "b1e71506bea7017b571166c89614270b5a7254f022b5307d95eb443616fde318",
+      "src/circuitcare/fault_ai/simulation_bridge.py": "c95b6d1e90f9e3521a3fe0579161f554897ab58b8494740feab756e96340a10d",
+      "src/circuitcare/fault_ai/hypothesis_ranking.py": "cd87a11faaf49210d9b3ccb932d5a595d1297b33684499fa13c7fecfef3cc053",
+      "src/circuitcare/fault_ai/observation_matcher.py": "15ccaa385583d85af148c9567b7b4badb8328d82ac4f06728093c3f8ec28c21f",
+      "src/circuitcare/fault_ai/llm_hypothesis.py": "4dd30970e42e6dc15f0e5bbdab2e6fbd7d8de5aa3ee30b255c416fb35bb0d5bc",
+      "src/circuitcare/fault_models.py": "68acab85ffbf12b734873cc219b7ddbec029d97cef722b757c935ecb556b8eed",
+      "src/circuitcare/fault_injector.py": "3b4c5eaf4f22f0a7670a166662f50ccb280d280a4c6e680dec8523582e6aea04",
+      "src/circuitcare/spice_runner.py": "f983da1f9be1d651229384c39aaba284a55a6f549163cc28c5a458d38a123061"
+    }
+  },
+  "asset_hashes": {
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_01/baseline.cir": "f6b8306de44a7465a1a98610322fe04f6ea4abe5b08a85c6f384570cdd3747d8",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_01/mapping.json": "2bc921bfebce18a39abb2e73bae7ae233c4f26706701063e117da71faad4db72",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_01/netlist.xml": "b06c3078ac8663a9938c2f4c781dba7c2af455aa12a26d96df3668ee5f11314d",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_01/probes.json": "f5375d4b2eb01d2acd2158c4a83194b3f5b81ebe97239b7d56d23e87a41fee05",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_02/baseline.cir": "31f357f8079c84393ca3a0b5570993b2207843389df8412bb1b634b5468399bb",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_02/mapping.json": "ea84c04d4e2c827e2cd4a0eff690e160a6e778ec18232935c872bbdd5cde2b07",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_02/netlist.xml": "0316e947270947b557963d21ca442f9eef8260a4076cda2d30292c907ee4889e",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_02/probes.json": "078f2bb6d978033e5704cce88b0b12e98d92d1ef85503d08875361a29e35face",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_03/baseline.cir": "6152cc5d1dbde5657b0a1be78d23d1a1218daaf7990dfde16eee9843cf0a1770",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_03/mapping.json": "ec9ba6caf3ca086685545416dfd9ce9672186365663c077d623cb7c4a7b47f15",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_03/netlist.xml": "c982639d4674197e3a1e6af0d2451a7a073089d25e6320d658c596e3e61a7c50",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_03/probes.json": "078f2bb6d978033e5704cce88b0b12e98d92d1ef85503d08875361a29e35face",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_04/baseline.cir": "11f277c878150905a8ffb56061767bfe4a76bbe1550dc98bcca721fe6416b89f",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_04/mapping.json": "b78bff12068bf80432ed2cdf9925e1aca60fd3bea7690c78df9a5264018a86e4",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_04/netlist.xml": "f91c5d150f194616beecaa9e384127536e4dc38ea51513dd07101cc2010ad503",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_04/probes.json": "ec23550af15c81177c2134d4d8a962e8ec745398794df05eba7bcc5dfb4cea2c",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_05/baseline.cir": "9f35c645f3287c04884903e04ee16528d4d04eec16c8e345c932057d68d877fc",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_05/mapping.json": "3297f6f80ebad2979a9d0d9fa3e54d1b258211311dbb087794d912c8103d0557",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_05/netlist.xml": "d071cb1c1f2f1dbc5518233a8a124216265f0d90c6bedd1b33bb56d0630fd0ae",
+    "evaluation/phase17_1/off_grid_v2/circuits/topology_05/probes.json": "b9f50e3a6eee5ebc52c453e779d66f0a84559d0c07996ccbb8ccbea1f2e0a2af"
+  },
+  "hashes": {
+    "public_cases": "451f9a0fe661602ab16736ed0ff9ca8cd2955a0e6834a3f94ea6c17d4e1d68d4",
+    "private_ground_truth": "d8ef2fac227ecee403def32040914c1fe31d1c82add705ae764d8eb3043f0ce7"
+  },
+  "fault_grid_policy": "resistor drift factors 1.37 and 0.73; regulator output offsets +0.7 V and -0.7 V, outside Phase 17 rule grid"
+}

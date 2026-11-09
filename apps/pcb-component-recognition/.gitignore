@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+weights/*
+!weights/.gitignore
+!weights/README.md
+data/samples/*
+!data/samples/.gitkeep

@@ -1,0 +1,500 @@
+{
+  "schema_version": "circuitcare.pcb-detector-baseline-summary.v1",
+  "evaluation_status": "SOURCE_LABEL_COMPARISON",
+  "repository": {
+    "commit_sha": "4f771da54322f64528ff586b94fc6573adcd80e8",
+    "working_tree_dirty": false
+  },
+  "dataset": {
+    "dataset_id": "pcb-component-detection-val-0d7ae73",
+    "dataset_name": "PCB Component Detection Dataset validation split",
+    "dataset_source": "wangshnegqi/pcb-component-detection-dataset-yolo",
+    "dataset_source_url": "https://github.com/wangshnegqi/pcb-component-detection-dataset-yolo",
+    "source_version": "0d7ae7310fa607389779b6132285336ad73e96e1",
+    "dataset_license": "CC BY 4.0 (source-declared)",
+    "annotation_source": "Source-provided YOLO label files; not independently reviewed",
+    "annotation_review_status": "SOURCE_PROVIDED_UNADJUDICATED",
+    "split": "validation",
+    "split_method": "SOURCE_PROVIDED_IMAGE_SPLIT",
+    "board_grouping_policy": "Board IDs are absent; all images remain BOARD_ID_UNRESOLVED until human audit",
+    "split_policy": "Source-provided split; board-level grouping not verified.",
+    "image_count": 13,
+    "labeled_object_count": 196,
+    "unannotated_image_count": 1,
+    "annotation_manifest_sha256": "7d09d4b88672d1db26e024bc67a1065353c8dd974d2079df35c1a3386338eaa7",
+    "board_id_status": "BOARD_ID_UNRESOLVED",
+    "input_fingerprints": {
+      "IMG_20260529_163319.jpg": {
+        "image_sha256": "99d6eb15da3b2baafd235444dd02d245d70a49e636a1787c02eedee3e7250905",
+        "label_sha256": "5664a876ce6a2790b43d934687e8cf0aa2cc61401565243eb77217275318e279",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 12,
+        "prediction_count": 176
+      },
+      "IMG_20260529_163712.jpg": {
+        "image_sha256": "8dabb5ecf6ae8c31c70b5776aa1186239ffebe0ceeadbf737d782e80cdca3a81",
+        "label_sha256": "c666efc20224121c8f5401ccb7065a4033c4da67486ab2809ac172773949b0aa",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 4,
+        "prediction_count": 11
+      },
+      "IMG_20260529_163718.jpg": {
+        "image_sha256": "64cc8b4419df81e3adef8f17a0a9a1ff8e356a4162c227eab8da4d93d1708e74",
+        "label_sha256": "0d45b03f14f96f2f9ea26158cf085f39611749d05875ad147fbf56b7d5c72d40",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 4,
+        "prediction_count": 11
+      },
+      "IMG_20260529_164033.jpg": {
+        "image_sha256": "da12a56d013ceded6e6f1c6033a76a0bd0a680478d54bfd4e4965c8cad069e53",
+        "label_sha256": "91789f14ad9267eed7f23e20fc84f6168702ee302543a6bb515663d3356bf23a",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 37,
+        "prediction_count": 946
+      },
+      "IMG_20260529_164111.jpg": {
+        "image_sha256": "dc863aca9cd785b5ee456d307797f6edcc9100382715d798b06727b79ab11426",
+        "label_sha256": "8c191994226e4c59ded05f9476dd3061654540cc1ae037d2f6ca095919d79a4e",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 6,
+        "prediction_count": 19
+      },
+      "IMG_20260529_164115.jpg": {
+        "image_sha256": "6afe899cac1208b3f5aa4dd5b54a27932088f76bd178444fa9a7664482b79fd4",
+        "label_sha256": "8c56d559abd97b9dd7f991ac4f83db1fb7fae3472662e17ddf4d07ea037e79fa",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 6,
+        "prediction_count": 26
+      },
+      "IMG_20260529_164129.jpg": {
+        "image_sha256": "b0c556c37082fa417545d599423743d54a58fb31b997f364dc0d95f9cf3359bb",
+        "label_sha256": "3fd02839275b78e5b652181d492e4f0a058f0d101a12682269b1330a2e55fb01",
+        "image_size_px": [
+          2248,
+          4000
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 4,
+        "prediction_count": 11
+      },
+      "IMG_20260529_164142.jpg": {
+        "image_sha256": "2625ca359a28176cebe8a3540d2f791ea37b56f26a6ac9cc519b4c6e998b087a",
+        "label_sha256": "09c0a1f80e886e53488117d05d86f99e7cf952571d52b697232c64ebf103cde4",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 4,
+        "prediction_count": 11
+      },
+      "IMG_20260529_164146.jpg": {
+        "image_sha256": "fb2c5d8477ab1a18203d88810e460499d8917c168912a584f245292429eae705",
+        "label_sha256": "407c9874b689de94453cf8a7198c7e9344b2bdf7d0617ba2a505e08bcfb7e5c0",
+        "image_size_px": [
+          4096,
+          2304
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 4,
+        "prediction_count": 9
+      },
+      "IMG_20260529_164428.jpg": {
+        "image_sha256": "28ae6d07b3399140d050f46e9812296fea6cd6342467b5469b0f7f72b08bdaaa",
+        "label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "UNANNOTATED",
+        "ground_truth_count": 0,
+        "prediction_count": 46
+      },
+      "IMG_20260529_164501.jpg": {
+        "image_sha256": "218f25749107bd347725078b6ce9fd03a9294e96039c84a1c457af2a838ef85e",
+        "label_sha256": "f85c229cbe0d491a31eac2f4765dc8827a3aecf99ffc50899a950aaf3767282b",
+        "image_size_px": [
+          2248,
+          4000
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 6,
+        "prediction_count": 149
+      },
+      "IMG_20260529_164604.jpg": {
+        "image_sha256": "cb0056eac1dd37cc46fd1f5c4b89d2fca87b963e9d110894935a9b7299e47346",
+        "label_sha256": "fbc6eb967e8b114542e1525d33955bb3b07e5ac685d8c5c3b6bd6981aa025db2",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 59,
+        "prediction_count": 228
+      },
+      "IMG_20260529_164608.jpg": {
+        "image_sha256": "6dc24ca92c445036ef72c70728b717479d263b800d4a8e0fcefa0d5a7d90afe1",
+        "label_sha256": "9e23bfab7e5eb8778ea78b504e15e237225d40197188a646185b64808cfae611",
+        "image_size_px": [
+          2304,
+          4096
+        ],
+        "board_id": "BOARD_ID_UNRESOLVED",
+        "board_side": "UNKNOWN",
+        "label_state": "LABELED",
+        "ground_truth_count": 50,
+        "prediction_count": 172
+      }
+    }
+  },
+  "model": {
+    "status": "READY",
+    "path": "pcb_component_detector.onnx",
+    "sha256": "45a1dc54bb2eaff067edc631be30fee650deb1236e97a038610faa11aef28424",
+    "model_id": "pcb-yolov8s-2026-07-11",
+    "size_bytes": 44943271,
+    "repository_relative_path": "models/pcb_component_detector.onnx"
+  },
+  "runtime_versions": {
+    "python": "3.12.14",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "opencv": "4.14.0",
+    "numpy": "2.5.4",
+    "onnxruntime": "1.31.1",
+    "pillow": "13.0.0"
+  },
+  "inference_mode": "single",
+  "inference_configuration": {
+    "model_input_size_px": 960,
+    "nms_iou_threshold": 0.45,
+    "metric_iou_threshold": 0.5,
+    "tile_size_px": null,
+    "tile_overlap_px": null,
+    "raw_prediction_confidence_floor": 0.001,
+    "reported_confidence_threshold": 0.25,
+    "confidence_threshold_sweep": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ]
+  },
+  "first_call_model_load_and_inference_ms": 488.3134999545291,
+  "steady_per_image_latency_ms": {
+    "mean": 250.4025545472709,
+    "median": 241.43379100132734,
+    "p95": 288.8102164375595,
+    "image_count": 13
+  },
+  "peak_process_rss_bytes": 1172848640,
+  "metrics": {
+    "images_evaluated": 13,
+    "iou_threshold": 0.5,
+    "confidence_threshold_for_precision_recall": 0.25,
+    "precision": 0.4979253112033195,
+    "recall": 0.6122448979591837,
+    "f1": 0.5491990846681922,
+    "true_positive_count": 120,
+    "false_positive_count": 121,
+    "false_negative_count": 76,
+    "map50": 0.584773864363781,
+    "map50_95": 0.33361352396645755,
+    "map_by_iou_threshold": {
+      "0.50": 0.584773864363781,
+      "0.55": 0.5621107434589977,
+      "0.60": 0.5465342671348438,
+      "0.65": 0.48064418095968175,
+      "0.70": 0.3892444982369404,
+      "0.75": 0.3324191703535913,
+      "0.80": 0.2622142152247613,
+      "0.85": 0.14685354660632302,
+      "0.90": 0.03118667012072428,
+      "0.95": 0.00015408320493066256
+    },
+    "confidence_threshold_curve": [
+      {
+        "confidence_threshold": 0.05,
+        "true_positives": 136,
+        "false_positives": 386,
+        "false_negatives": 60,
+        "precision": 0.26053639846743293,
+        "recall": 0.6938775510204082,
+        "f1": 0.3788300835654596
+      },
+      {
+        "confidence_threshold": 0.1,
+        "true_positives": 130,
+        "false_positives": 248,
+        "false_negatives": 66,
+        "precision": 0.3439153439153439,
+        "recall": 0.6632653061224489,
+        "f1": 0.4529616724738676
+      },
+      {
+        "confidence_threshold": 0.15,
+        "true_positives": 128,
+        "false_positives": 181,
+        "false_negatives": 68,
+        "precision": 0.41423948220064727,
+        "recall": 0.6530612244897959,
+        "f1": 0.5069306930693069
+      },
+      {
+        "confidence_threshold": 0.2,
+        "true_positives": 126,
+        "false_positives": 144,
+        "false_negatives": 70,
+        "precision": 0.4666666666666667,
+        "recall": 0.6428571428571429,
+        "f1": 0.5407725321888412
+      },
+      {
+        "confidence_threshold": 0.25,
+        "true_positives": 120,
+        "false_positives": 121,
+        "false_negatives": 76,
+        "precision": 0.4979253112033195,
+        "recall": 0.6122448979591837,
+        "f1": 0.5491990846681922
+      },
+      {
+        "confidence_threshold": 0.3,
+        "true_positives": 116,
+        "false_positives": 99,
+        "false_negatives": 80,
+        "precision": 0.5395348837209303,
+        "recall": 0.5918367346938775,
+        "f1": 0.5644768856447688
+      },
+      {
+        "confidence_threshold": 0.4,
+        "true_positives": 112,
+        "false_positives": 71,
+        "false_negatives": 84,
+        "precision": 0.6120218579234973,
+        "recall": 0.5714285714285714,
+        "f1": 0.5910290237467019
+      },
+      {
+        "confidence_threshold": 0.5,
+        "true_positives": 103,
+        "false_positives": 54,
+        "false_negatives": 93,
+        "precision": 0.6560509554140127,
+        "recall": 0.5255102040816326,
+        "f1": 0.5835694050991501
+      },
+      {
+        "confidence_threshold": 0.6,
+        "true_positives": 91,
+        "false_positives": 39,
+        "false_negatives": 105,
+        "precision": 0.7,
+        "recall": 0.4642857142857143,
+        "f1": 0.558282208588957
+      }
+    ],
+    "small_object_area_px2_cutoff": 1024.0,
+    "classes": {
+      "resistor": {
+        "ground_truth_count": 52,
+        "support_status": "MEASURED",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 408,
+        "true_positive_count": 22,
+        "false_positive_count": 27,
+        "false_negative_count": 30,
+        "precision_at_confidence_threshold": 0.4489795918367347,
+        "recall_at_confidence_threshold": 0.4230769230769231,
+        "ap50": 0.3243616283986539,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "capacitor": {
+        "ground_truth_count": 59,
+        "support_status": "MEASURED",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 1099,
+        "true_positive_count": 40,
+        "false_positive_count": 52,
+        "false_negative_count": 19,
+        "precision_at_confidence_threshold": 0.43478260869565216,
+        "recall_at_confidence_threshold": 0.6779661016949152,
+        "ap50": 0.618151334947091,
+        "small_object_ground_truth_count": 8,
+        "small_object_recall_at_confidence_threshold": 0.25
+      },
+      "diode": {
+        "ground_truth_count": 2,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 7,
+        "true_positive_count": 0,
+        "false_positive_count": 0,
+        "false_negative_count": 2,
+        "precision_at_confidence_threshold": 0.0,
+        "recall_at_confidence_threshold": 0.0,
+        "ap50": 0.0,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "led": {
+        "ground_truth_count": 15,
+        "support_status": "MEASURED",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 27,
+        "true_positive_count": 10,
+        "false_positive_count": 0,
+        "false_negative_count": 5,
+        "precision_at_confidence_threshold": 1.0,
+        "recall_at_confidence_threshold": 0.6666666666666666,
+        "ap50": 0.6666666666666666,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "integrated_circuit": {
+        "ground_truth_count": 32,
+        "support_status": "MEASURED",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 183,
+        "true_positive_count": 24,
+        "false_positive_count": 36,
+        "false_negative_count": 8,
+        "precision_at_confidence_threshold": 0.4,
+        "recall_at_confidence_threshold": 0.75,
+        "ap50": 0.6280618718782577,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "connector": {
+        "ground_truth_count": 9,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 26,
+        "true_positive_count": 4,
+        "false_positive_count": 3,
+        "false_negative_count": 5,
+        "precision_at_confidence_threshold": 0.5714285714285714,
+        "recall_at_confidence_threshold": 0.4444444444444444,
+        "ap50": 0.7264957264957265,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "switch_button": {
+        "ground_truth_count": 6,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 14,
+        "true_positive_count": 5,
+        "false_positive_count": 1,
+        "false_negative_count": 1,
+        "precision_at_confidence_threshold": 0.8333333333333334,
+        "recall_at_confidence_threshold": 0.8333333333333334,
+        "ap50": 0.9761904761904762,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "header": {
+        "ground_truth_count": 8,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 23,
+        "true_positive_count": 5,
+        "false_positive_count": 2,
+        "false_negative_count": 3,
+        "precision_at_confidence_threshold": 0.7142857142857143,
+        "recall_at_confidence_threshold": 0.625,
+        "ap50": 0.657810939060939,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "crystal": {
+        "ground_truth_count": 4,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 2,
+        "true_positive_count": 1,
+        "false_positive_count": 0,
+        "false_negative_count": 3,
+        "precision_at_confidence_threshold": 1.0,
+        "recall_at_confidence_threshold": 0.25,
+        "ap50": 0.25,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      },
+      "debug_test_point": {
+        "ground_truth_count": 9,
+        "support_status": "INSUFFICIENT_SUPPORT",
+        "minimum_support_for_reporting": 10,
+        "prediction_count": 26,
+        "true_positive_count": 9,
+        "false_positive_count": 0,
+        "false_negative_count": 0,
+        "precision_at_confidence_threshold": 1.0,
+        "recall_at_confidence_threshold": 1.0,
+        "ap50": 1.0,
+        "small_object_ground_truth_count": 0,
+        "small_object_recall_at_confidence_threshold": null
+      }
+    },
+    "note": "Scores apply only to supplied annotations/split. They are not board-independent without verified board-group provenance."
+  },
+  "limitations": [
+    "Source-provided or unresolved annotations do not establish reviewed ground truth.",
+    "Image-split metrics are not board-independent without resolved board grouping and a board-held-out split.",
+    "Board side and physical component identity are not inferred from filenames or pixels."
+  ]
+}

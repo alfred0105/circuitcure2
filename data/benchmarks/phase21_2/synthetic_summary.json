@@ -1,0 +1,52 @@
+{
+  "schema_version": "circuitcare.phase21.2.synthetic-benchmark.v1",
+  "track": "SYNTHETIC_GEOMETRY_ONLY_NOT_REAL_PHOTO_ACCURACY",
+  "seed": 216,
+  "input_views": 3,
+  "input_size_px": [
+    420,
+    420
+  ],
+  "known_crop_offsets_px": [
+    0,
+    120,
+    240
+  ],
+  "registration_status_counts": {
+    "REFERENCE": 1,
+    "REGISTERED_CANDIDATE": 2
+  },
+  "registered_inlier_ratios": [
+    null,
+    1.0,
+    0.9976470588235294
+  ],
+  "registered_rmse_px": [
+    null,
+    0.5115859508514404,
+    0.31523221731185913
+  ],
+  "registered_p95_reprojection_error_px": [
+    null,
+    0.9407857060432434,
+    0.43060389161109924
+  ],
+  "known_translation_error_px": [
+    1.0,
+    0.995043132926765,
+    0.9727459637243998
+  ],
+  "mosaic_size_px": [
+    660,
+    422
+  ],
+  "expected_mosaic_size_px": [
+    660,
+    420
+  ],
+  "expected_scene_coverage_ratio": 1.0,
+  "runtime_seconds": 0.12515829101903364,
+  "component_detection_metrics": "NOT_EVALUATED_NO_INDEPENDENT_ANNOTATIONS",
+  "fault_overlay": "UNIT_TESTED_WITH_INJECTED_DETECTIONS_ONLY",
+  "host_timing_note": "One local run; timings are diagnostic and not a performance guarantee."
+}

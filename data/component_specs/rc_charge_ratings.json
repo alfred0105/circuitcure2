@@ -1,0 +1,7 @@
+{
+  "components": {
+    "RCHARGE": {"ratings": {"max_power_w": 0.125}, "rating_types": {"max_power_w": "continuous"}, "source": {"type": "demo_assumption", "note": "Illustrative resistor power rating for evaluation only."}},
+    "RBLEED": {"ratings": {"max_power_w": 0.125}, "rating_types": {"max_power_w": "continuous"}, "source": {"type": "demo_assumption", "note": "Illustrative resistor power rating for evaluation only."}},
+    "C1": {"ratings": {"max_abs_voltage_v": 6.3}, "rating_types": {"max_abs_voltage_v": "continuous"}, "source": {"type": "demo_assumption", "note": "Illustrative capacitor voltage rating for evaluation only."}}
+  }
+}

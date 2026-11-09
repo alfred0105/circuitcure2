@@ -1,0 +1,1115 @@
+{
+  "score_interpretation": "Posterior-weighted deterministic inspection-priority index, not damage probability.",
+  "prior_weighted_inspection_order": [
+    {
+      "component_ref": "C1",
+      "posterior_weighted_score_sum": 67.3267,
+      "posterior_evidence_coverage": 1.0,
+      "scenario_evidence": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "EXCEEDED",
+          "priority_score": 98.93,
+          "dominant_metric": "voltage",
+          "reason": "Simulated voltage stress exceeded an explicitly configured rating. Only voltage was measured; unsupported current and power remain unknown.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 8.0,
+              "baseline_stress": 5.0,
+              "stress_increase": 3.0,
+              "rated_limit": 6.3,
+              "unit": "V",
+              "utilization_ratio": 1.2698412698412698,
+              "rating_exceeded": true,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Required simulated measurement is unavailable.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "W",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "NEAR_LIMIT",
+          "priority_score": 69.7,
+          "dominant_metric": "voltage",
+          "reason": "Simulated voltage stress reached at least 80% of its configured rating. Only voltage was measured; unsupported current and power remain unknown.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 6.0,
+              "baseline_stress": 5.0,
+              "stress_increase": 1.0,
+              "rated_limit": 6.3,
+              "unit": "V",
+              "utilization_ratio": 0.9523809523809524,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Required simulated measurement is unavailable.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "W",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 33.35,
+          "dominant_metric": "voltage",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold. Only voltage was measured; unsupported current and power remain unknown.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 3.0,
+              "baseline_stress": 5.0,
+              "stress_increase": -2.0,
+              "rated_limit": 6.3,
+              "unit": "V",
+              "utilization_ratio": 0.4761904761904762,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Required simulated measurement is unavailable.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "W",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        }
+      ],
+      "any_hypothesis_exceeded": true,
+      "exceeded_hypotheses": [
+        "U1_OUTPUT_8V"
+      ],
+      "unassessed_posterior_weight": 0.0,
+      "posterior_weighted_priority_score": 67.3267,
+      "priority_rank": 1
+    },
+    {
+      "component_ref": "RLOAD",
+      "posterior_weighted_score_sum": 31.3033,
+      "posterior_evidence_coverage": 1.0,
+      "scenario_evidence": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 33.71,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 4.0,
+              "baseline_stress": 2.5,
+              "stress_increase": 1.5,
+              "rated_limit": null,
+              "unit": "V",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.004,
+              "baseline_stress": 0.0025,
+              "stress_increase": 0.0015,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.016,
+              "baseline_stress": 0.00625,
+              "stress_increase": 0.00975,
+              "rated_limit": 0.125,
+              "unit": "W",
+              "utilization_ratio": 0.128,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 32.96,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 3.0,
+              "baseline_stress": 2.5,
+              "stress_increase": 0.5,
+              "rated_limit": null,
+              "unit": "V",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.003,
+              "baseline_stress": 0.0025,
+              "stress_increase": 0.0005,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.009000000000000001,
+              "baseline_stress": 0.00625,
+              "stress_increase": 0.0027500000000000007,
+              "rated_limit": 0.125,
+              "unit": "W",
+              "utilization_ratio": 0.07200000000000001,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 27.24,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 1.5,
+              "baseline_stress": 2.5,
+              "stress_increase": -1.0,
+              "rated_limit": null,
+              "unit": "V",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.0015,
+              "baseline_stress": 0.0025,
+              "stress_increase": -0.001,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.0022500000000000003,
+              "baseline_stress": 0.00625,
+              "stress_increase": -0.004,
+              "rated_limit": 0.125,
+              "unit": "W",
+              "utilization_ratio": 0.018000000000000002,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        }
+      ],
+      "any_hypothesis_exceeded": false,
+      "exceeded_hypotheses": [],
+      "unassessed_posterior_weight": 0.0,
+      "posterior_weighted_priority_score": 31.3033,
+      "priority_rank": 2
+    },
+    {
+      "component_ref": "R1",
+      "posterior_weighted_score_sum": 30.8167,
+      "posterior_evidence_coverage": 1.0,
+      "scenario_evidence": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 32.85,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 4.0,
+              "baseline_stress": 2.5,
+              "stress_increase": 1.5,
+              "rated_limit": 200.0,
+              "unit": "V",
+              "utilization_ratio": 0.02,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.004,
+              "baseline_stress": 0.0025,
+              "stress_increase": 0.0015,
+              "rated_limit": 0.25,
+              "unit": "A",
+              "utilization_ratio": 0.016,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.016,
+              "baseline_stress": 0.00625,
+              "stress_increase": 0.00975,
+              "rated_limit": 0.25,
+              "unit": "W",
+              "utilization_ratio": 0.064,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 32.48,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 3.0,
+              "baseline_stress": 2.5,
+              "stress_increase": 0.5,
+              "rated_limit": 200.0,
+              "unit": "V",
+              "utilization_ratio": 0.015,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.003,
+              "baseline_stress": 0.0025,
+              "stress_increase": 0.0005,
+              "rated_limit": 0.25,
+              "unit": "A",
+              "utilization_ratio": 0.012,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.009000000000000001,
+              "baseline_stress": 0.00625,
+              "stress_increase": 0.0027500000000000007,
+              "rated_limit": 0.25,
+              "unit": "W",
+              "utilization_ratio": 0.036000000000000004,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 27.12,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 1.5,
+              "baseline_stress": 2.5,
+              "stress_increase": -1.0,
+              "rated_limit": 200.0,
+              "unit": "V",
+              "utilization_ratio": 0.0075,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.0015,
+              "baseline_stress": 0.0025,
+              "stress_increase": -0.001,
+              "rated_limit": 0.25,
+              "unit": "A",
+              "utilization_ratio": 0.006,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.0022500000000000003,
+              "baseline_stress": 0.00625,
+              "stress_increase": -0.004,
+              "rated_limit": 0.25,
+              "unit": "W",
+              "utilization_ratio": 0.009000000000000001,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        }
+      ],
+      "any_hypothesis_exceeded": false,
+      "exceeded_hypotheses": [],
+      "unassessed_posterior_weight": 0.0,
+      "posterior_weighted_priority_score": 30.8167,
+      "priority_rank": 3
+    },
+    {
+      "component_ref": "J1",
+      "posterior_weighted_score_sum": 0.0,
+      "posterior_evidence_coverage": 1.0,
+      "scenario_evidence": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "UNKNOWN",
+          "priority_score": 0.0,
+          "dominant_metric": null,
+          "reason": "Connected candidate has no sufficient measured stress and explicit rating pair; safety is unknown.",
+          "metrics": {}
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "UNKNOWN",
+          "priority_score": 0.0,
+          "dominant_metric": null,
+          "reason": "Connected candidate has no sufficient measured stress and explicit rating pair; safety is unknown.",
+          "metrics": {}
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "UNKNOWN",
+          "priority_score": 0.0,
+          "dominant_metric": null,
+          "reason": "Connected candidate has no sufficient measured stress and explicit rating pair; safety is unknown.",
+          "metrics": {}
+        }
+      ],
+      "any_hypothesis_exceeded": false,
+      "exceeded_hypotheses": [],
+      "unassessed_posterior_weight": 0.0,
+      "posterior_weighted_priority_score": 0.0,
+      "priority_rank": 4
+    }
+  ],
+  "posterior_weighted_inspection_order": [
+    {
+      "component_ref": "C1",
+      "posterior_weighted_score_sum": 67.3267,
+      "posterior_evidence_coverage": 1.0,
+      "scenario_evidence": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "EXCEEDED",
+          "priority_score": 98.93,
+          "dominant_metric": "voltage",
+          "reason": "Simulated voltage stress exceeded an explicitly configured rating. Only voltage was measured; unsupported current and power remain unknown.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 8.0,
+              "baseline_stress": 5.0,
+              "stress_increase": 3.0,
+              "rated_limit": 6.3,
+              "unit": "V",
+              "utilization_ratio": 1.2698412698412698,
+              "rating_exceeded": true,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Required simulated measurement is unavailable.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "W",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "NEAR_LIMIT",
+          "priority_score": 69.7,
+          "dominant_metric": "voltage",
+          "reason": "Simulated voltage stress reached at least 80% of its configured rating. Only voltage was measured; unsupported current and power remain unknown.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 6.0,
+              "baseline_stress": 5.0,
+              "stress_increase": 1.0,
+              "rated_limit": 6.3,
+              "unit": "V",
+              "utilization_ratio": 0.9523809523809524,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Required simulated measurement is unavailable.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "W",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 33.35,
+          "dominant_metric": "voltage",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold. Only voltage was measured; unsupported current and power remain unknown.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 3.0,
+              "baseline_stress": 5.0,
+              "stress_increase": -2.0,
+              "rated_limit": 6.3,
+              "unit": "V",
+              "utilization_ratio": 0.4761904761904762,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Required simulated measurement is unavailable.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": null,
+              "baseline_stress": null,
+              "stress_increase": null,
+              "rated_limit": null,
+              "unit": "W",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "Dissipated-power rating comparison is only supported for resistors; source delivery power is not dissipation.",
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        }
+      ],
+      "any_hypothesis_exceeded": true,
+      "exceeded_hypotheses": [
+        "U1_OUTPUT_8V"
+      ],
+      "unassessed_posterior_weight": 0.0,
+      "posterior_weighted_priority_score": 67.3267,
+      "priority_rank": 1
+    },
+    {
+      "component_ref": "RLOAD",
+      "posterior_weighted_score_sum": 31.3033,
+      "posterior_evidence_coverage": 1.0,
+      "scenario_evidence": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 33.71,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 4.0,
+              "baseline_stress": 2.5,
+              "stress_increase": 1.5,
+              "rated_limit": null,
+              "unit": "V",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.004,
+              "baseline_stress": 0.0025,
+              "stress_increase": 0.0015,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.016,
+              "baseline_stress": 0.00625,
+              "stress_increase": 0.00975,
+              "rated_limit": 0.125,
+              "unit": "W",
+              "utilization_ratio": 0.128,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 32.96,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 3.0,
+              "baseline_stress": 2.5,
+              "stress_increase": 0.5,
+              "rated_limit": null,
+              "unit": "V",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.003,
+              "baseline_stress": 0.0025,
+              "stress_increase": 0.0005,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.009000000000000001,
+              "baseline_stress": 0.00625,
+              "stress_increase": 0.0027500000000000007,
+              "rated_limit": 0.125,
+              "unit": "W",
+              "utilization_ratio": 0.07200000000000001,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 27.24,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 1.5,
+              "baseline_stress": 2.5,
+              "stress_increase": -1.0,
+              "rated_limit": null,
+              "unit": "V",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.0015,
+              "baseline_stress": 0.0025,
+              "stress_increase": -0.001,
+              "rated_limit": null,
+              "unit": "A",
+              "utilization_ratio": null,
+              "rating_exceeded": null,
+              "rating_type": "unknown",
+              "status": "unknown",
+              "reason": "No explicit rating is configured for this metric.",
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.0022500000000000003,
+              "baseline_stress": 0.00625,
+              "stress_increase": -0.004,
+              "rated_limit": 0.125,
+              "unit": "W",
+              "utilization_ratio": 0.018000000000000002,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        }
+      ],
+      "any_hypothesis_exceeded": false,
+      "exceeded_hypotheses": [],
+      "unassessed_posterior_weight": 0.0,
+      "posterior_weighted_priority_score": 31.3033,
+      "priority_rank": 2
+    },
+    {
+      "component_ref": "R1",
+      "posterior_weighted_score_sum": 30.8167,
+      "posterior_evidence_coverage": 1.0,
+      "scenario_evidence": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 32.85,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 4.0,
+              "baseline_stress": 2.5,
+              "stress_increase": 1.5,
+              "rated_limit": 200.0,
+              "unit": "V",
+              "utilization_ratio": 0.02,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.004,
+              "baseline_stress": 0.0025,
+              "stress_increase": 0.0015,
+              "rated_limit": 0.25,
+              "unit": "A",
+              "utilization_ratio": 0.016,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.016,
+              "baseline_stress": 0.00625,
+              "stress_increase": 0.00975,
+              "rated_limit": 0.25,
+              "unit": "W",
+              "utilization_ratio": 0.064,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 32.48,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 3.0,
+              "baseline_stress": 2.5,
+              "stress_increase": 0.5,
+              "rated_limit": 200.0,
+              "unit": "V",
+              "utilization_ratio": 0.015,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.003,
+              "baseline_stress": 0.0025,
+              "stress_increase": 0.0005,
+              "rated_limit": 0.25,
+              "unit": "A",
+              "utilization_ratio": 0.012,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.009000000000000001,
+              "baseline_stress": 0.00625,
+              "stress_increase": 0.0027500000000000007,
+              "rated_limit": 0.25,
+              "unit": "W",
+              "utilization_ratio": 0.036000000000000004,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "WITHIN_LIMIT",
+          "priority_score": 27.12,
+          "dominant_metric": "power",
+          "reason": "All configured and measurable ratings evaluated for this component were within the near-limit threshold.",
+          "metrics": {
+            "max_abs_voltage_v": {
+              "measured_stress": 1.5,
+              "baseline_stress": 2.5,
+              "stress_increase": -1.0,
+              "rated_limit": 200.0,
+              "unit": "V",
+              "utilization_ratio": 0.0075,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_current_a": {
+              "measured_stress": 0.0015,
+              "baseline_stress": 0.0025,
+              "stress_increase": -0.001,
+              "rated_limit": 0.25,
+              "unit": "A",
+              "utilization_ratio": 0.006,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            },
+            "max_power_w": {
+              "measured_stress": 0.0022500000000000003,
+              "baseline_stress": 0.00625,
+              "stress_increase": -0.004,
+              "rated_limit": 0.25,
+              "unit": "W",
+              "utilization_ratio": 0.009000000000000001,
+              "rating_exceeded": false,
+              "rating_type": "continuous",
+              "status": "evaluated",
+              "reason": null,
+              "rating_source_type": "demo_assumption"
+            }
+          }
+        }
+      ],
+      "any_hypothesis_exceeded": false,
+      "exceeded_hypotheses": [],
+      "unassessed_posterior_weight": 0.0,
+      "posterior_weighted_priority_score": 30.8167,
+      "priority_rank": 3
+    },
+    {
+      "component_ref": "J1",
+      "posterior_weighted_score_sum": 0.0,
+      "posterior_evidence_coverage": 1.0,
+      "scenario_evidence": [
+        {
+          "hypothesis_id": "U1_OUTPUT_8V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "UNKNOWN",
+          "priority_score": 0.0,
+          "dominant_metric": null,
+          "reason": "Connected candidate has no sufficient measured stress and explicit rating pair; safety is unknown.",
+          "metrics": {}
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_6V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "UNKNOWN",
+          "priority_score": 0.0,
+          "dominant_metric": null,
+          "reason": "Connected candidate has no sufficient measured stress and explicit rating pair; safety is unknown.",
+          "metrics": {}
+        },
+        {
+          "hypothesis_id": "U1_OUTPUT_3V",
+          "posterior": 0.3333333333333333,
+          "risk_level": "UNKNOWN",
+          "priority_score": 0.0,
+          "dominant_metric": null,
+          "reason": "Connected candidate has no sufficient measured stress and explicit rating pair; safety is unknown.",
+          "metrics": {}
+        }
+      ],
+      "any_hypothesis_exceeded": false,
+      "exceeded_hypotheses": [],
+      "unassessed_posterior_weight": 0.0,
+      "posterior_weighted_priority_score": 0.0,
+      "priority_rank": 4
+    }
+  ],
+  "rank_changes_after_measurements": [
+    {
+      "component_ref": "C1",
+      "prior_rank": 1,
+      "posterior_rank": 1,
+      "rank_change": 0,
+      "prior_weighted_priority_score": 67.3267,
+      "posterior_weighted_priority_score": 67.3267,
+      "priority_score_change": 0.0
+    },
+    {
+      "component_ref": "RLOAD",
+      "prior_rank": 2,
+      "posterior_rank": 2,
+      "rank_change": 0,
+      "prior_weighted_priority_score": 31.3033,
+      "posterior_weighted_priority_score": 31.3033,
+      "priority_score_change": 0.0
+    },
+    {
+      "component_ref": "R1",
+      "prior_rank": 3,
+      "posterior_rank": 3,
+      "rank_change": 0,
+      "prior_weighted_priority_score": 30.8167,
+      "posterior_weighted_priority_score": 30.8167,
+      "priority_score_change": 0.0
+    },
+    {
+      "component_ref": "J1",
+      "prior_rank": 4,
+      "posterior_rank": 4,
+      "rank_change": 0,
+      "prior_weighted_priority_score": 0.0,
+      "posterior_weighted_priority_score": 0.0,
+      "priority_score_change": 0.0
+    }
+  ],
+  "scenario_conditional_exceeded_evidence": [
+    {
+      "hypothesis_id": "U1_OUTPUT_8V",
+      "posterior": 0.3333333333333333,
+      "components": [
+        {
+          "component_ref": "C1",
+          "risk_level": "EXCEEDED",
+          "reason": "Simulated voltage stress exceeded an explicitly configured rating. Only voltage was measured; unsupported current and power remain unknown."
+        }
+      ]
+    },
+    {
+      "hypothesis_id": "U1_OUTPUT_6V",
+      "posterior": 0.3333333333333333,
+      "components": []
+    },
+    {
+      "hypothesis_id": "U1_OUTPUT_3V",
+      "posterior": 0.3333333333333333,
+      "components": []
+    }
+  ],
+  "unassessed_or_model_mismatch_components": [
+    {
+      "component_ref": "Q1",
+      "reasons": [
+        "The KiCad Q1 pins (VIN and GND) do not correspond to the SPICE S1 power terminals (VIN and SWITCH_OUT); this example cannot establish the switch's physical stress mapping."
+      ],
+      "risk_level": "UNKNOWN_OR_EXCLUDED"
+    }
+  ],
+  "damage_confirmed": false,
+  "damage_probability": null
+}

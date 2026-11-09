@@ -1,0 +1,4 @@
+{
+  "voltage_nodes": ["VC"],
+  "components": ["RCHARGE", "C1", "RBLEED"]
+}

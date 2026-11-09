@@ -1,0 +1,205 @@
+{
+  "phase": "09",
+  "evaluation_type": "small local engineering evaluation; not generalization or damage-accuracy validation",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "cpu": "arm",
+    "ngspice": "ngspice-47",
+    "local_ollama_models_detected": [
+      {
+        "name": "gemma4:12b",
+        "size_bytes": 7714091504,
+        "runner": "mlx",
+        "quantization_level": ""
+      }
+    ],
+    "peak_process_memory_mb": 26.69,
+    "memory_scope": "evaluation script process peak RSS via resource.getrusage; excludes Ollama/ngspice child process peaks"
+  },
+  "independent_circuits": [
+    {
+      "circuit": "resistor_divider",
+      "topology": "resistor divider",
+      "distinct_topology": true,
+      "fault_injection": {
+        "component": "R1",
+        "type": "resistance_drift",
+        "parameter": "10k"
+      },
+      "simulation_engine": "ngspice",
+      "simulation_success": true,
+      "graph_only": {
+        "direct_candidate_count": 2,
+        "path_candidate_count": 2,
+        "candidate_refs": [
+          "J1",
+          "R2"
+        ],
+        "evidence": "connectivity_only; not physical stress or damage"
+      },
+      "physics_only": {
+        "rated_exceeded_refs": [],
+        "measured_change_rank": [
+          {
+            "component_ref": "R2",
+            "risk_rank": 1,
+            "status": "simulated"
+          }
+        ],
+        "reference_affected_components": [
+          "R2"
+        ],
+        "reference_method": "Independent Ohm's law: Vout 5×R2/(R1+R2) changes 2.5000 V → 0.4545 V; not inferred from CircuitCare ranking.",
+        "damage_detection_claim": false
+      },
+      "measurements": {
+        "VOUT": {
+          "baseline": {
+            "minimum": 2.5,
+            "maximum": 2.5,
+            "last": 2.5
+          },
+          "fault": {
+            "minimum": 0.454545455,
+            "maximum": 0.454545455,
+            "last": 0.454545455
+          },
+          "delta_fault_minus_baseline": {
+            "minimum": -2.045454545,
+            "maximum": -2.045454545,
+            "last": -2.045454545
+          }
+        }
+      },
+      "timings_seconds": {
+        "netlist_parse": 0.000238,
+        "graph_paths": 6e-05,
+        "fault_injection_ngspice_risk_cli_end_to_end": 0.099875
+      },
+      "end_to_end_wall_seconds": 0.099875,
+      "result_files": {
+        "comparison": "data/evaluations/divider/simulation_results/fault_r1_resistance_drift/comparison.json",
+        "risk_assessment": "data/evaluations/divider/simulation_results/fault_r1_resistance_drift/risk_assessment.json"
+      }
+    },
+    {
+      "circuit": "rc_charging",
+      "topology": "first-order RC charge network",
+      "distinct_topology": true,
+      "fault_injection": {
+        "component": "RCHARGE",
+        "type": "resistance_drift",
+        "parameter": "100k"
+      },
+      "simulation_engine": "ngspice",
+      "simulation_success": true,
+      "graph_only": {
+        "direct_candidate_count": 3,
+        "path_candidate_count": 3,
+        "candidate_refs": [
+          "C1",
+          "J1",
+          "RBLEED"
+        ],
+        "evidence": "connectivity_only; not physical stress or damage"
+      },
+      "physics_only": {
+        "rated_exceeded_refs": [],
+        "measured_change_rank": [
+          {
+            "component_ref": "C1",
+            "risk_rank": 1,
+            "status": "voltage_only"
+          },
+          {
+            "component_ref": "RBLEED",
+            "risk_rank": 2,
+            "status": "simulated"
+          }
+        ],
+        "reference_affected_components": [
+          "C1",
+          "RBLEED"
+        ],
+        "reference_method": "Independent first-order RC circuit equation predicts a changed VC transient and bleed branch response after RCHARGE changes from 10 kΩ to 100 kΩ; no real damage labels.",
+        "damage_detection_claim": false
+      },
+      "measurements": {
+        "VC": {
+          "baseline": {
+            "minimum": 0.0,
+            "maximum": 0.243246962,
+            "last": 0.243246962
+          },
+          "fault": {
+            "minimum": 0.0,
+            "maximum": 0.0248751681,
+            "last": 0.0248751681
+          },
+          "delta_fault_minus_baseline": {
+            "minimum": -0.2183717939,
+            "maximum": 0.0,
+            "last": -0.2183717939
+          }
+        }
+      },
+      "timings_seconds": {
+        "netlist_parse": 0.000186,
+        "graph_paths": 6.1e-05,
+        "fault_injection_ngspice_risk_cli_end_to_end": 0.083346
+      },
+      "end_to_end_wall_seconds": 0.083346,
+      "result_files": {
+        "comparison": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/comparison.json",
+        "risk_assessment": "data/evaluations/rc_charge/simulation_results/fault_rcharge_resistance_drift/risk_assessment.json"
+      }
+    }
+  ],
+  "graph_only_vs_physics_only": "Graph ranks topological neighbors; physics adds ngspice stress and configured rating comparisons. Candidate sets/targets differ by topology, and neither output is physical damage ground truth.",
+  "physics_plus_bayesian": {
+    "circuit": "regulator+divider demo (not counted as an independent held-out topology)",
+    "measurement_source": "simulated_demo",
+    "measurement_node": "VOUT",
+    "posterior_order": [
+      {
+        "hypothesis_id": "U1_OUTPUT_8V",
+        "posterior": 1.0
+      },
+      {
+        "hypothesis_id": "U1_OUTPUT_6V",
+        "posterior": 2.862518580549353e-20
+      },
+      {
+        "hypothesis_id": "U1_OUTPUT_3V",
+        "posterior": 5.148200222412013e-131
+      }
+    ],
+    "model_mismatch": false,
+    "time_seconds": 0.004179,
+    "interpretation": "Conditional on configured scenarios/measurement model; not failure probability. Simulated demo measurement is not an instrument measurement."
+  },
+  "local_llm_recorded_runs": [
+    {
+      "artifact": "data/repair_advice/demo_c1",
+      "model": "gemma4:12b",
+      "total_duration_ns": 60303459917,
+      "eval_count": 657,
+      "wall_time_seconds": null
+    },
+    {
+      "artifact": "data/repair_advice/demo_probability",
+      "model": "gemma4:12b",
+      "total_duration_ns": 29700048084,
+      "eval_count": 605,
+      "wall_time_seconds": null
+    }
+  ],
+  "limitations": [
+    "Only two small topologies were evaluated.",
+    "Rating limits are explicit demo assumptions, not datasheet verified.",
+    "No real damaged-component labels or field measurements were available; Top-k damage coverage and avoidable inspections are not calculated.",
+    "Bayesian demo is a separate third circuit scenario and uses simulated_demo input.",
+    "No cross-topology accuracy or calibrated failure probability is claimed."
+  ]
+}

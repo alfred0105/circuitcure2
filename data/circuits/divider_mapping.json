@@ -1,0 +1,4 @@
+{
+  "R1": {"spice_element": "R1", "model_type": "resistor"},
+  "R2": {"spice_element": "R2", "model_type": "resistor"}
+}

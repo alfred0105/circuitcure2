@@ -1,0 +1,103 @@
+{
+  "schema_version": "circuitcare.phase21.2.prism-intake-smoke.v1",
+  "dataset_commit": "9189c87bbec6995b745b809db99cef6d3269401f",
+  "track": "REAL_PRISM_IMAGES_INTAKE_AND_SIDE_ISOLATION_ONLY_NOT_STITCHING_ACCURACY",
+  "samples": [
+    {
+      "board_id": "Cascade",
+      "input_sha256": {
+        "TOP.png": "f4d02de6faf080276d4a5396e2e49ae84d8c78bb12d4d5faaa1974efe7506fcf",
+        "BOTTOM.png": "9e58c20c7a1695d260ad614b3d8cbe17145bb8467a4e553ff3609ff0624172e0"
+      },
+      "input_photo_count": 2,
+      "processed_image_sizes_px": [
+        [
+          765,
+          884
+        ],
+        [
+          765,
+          884
+        ]
+      ],
+      "side_keys": [
+        "BOTTOM",
+        "TOP"
+      ],
+      "registration_counts": {
+        "TOP": 1,
+        "BOTTOM": 1
+      },
+      "components": 0,
+      "detection_statuses": {
+        "TOP": "DETECTOR_NOT_CONFIGURED",
+        "BOTTOM": "DETECTOR_NOT_CONFIGURED"
+      },
+      "runtime_seconds": 0.08677449997048825
+    },
+    {
+      "board_id": "Elements",
+      "input_sha256": {
+        "TOP.png": "daba60f23f241d688e394a91cafb223010437064d932162b77c9ec0091f4d8a9",
+        "BOTTOM.png": "38b64638ab74c4f062b985ca18ba850f42432e2a2fd6d3415efffe330fac6cfd"
+      },
+      "input_photo_count": 2,
+      "processed_image_sizes_px": [
+        [
+          1600,
+          609
+        ],
+        [
+          1600,
+          609
+        ]
+      ],
+      "side_keys": [
+        "BOTTOM",
+        "TOP"
+      ],
+      "registration_counts": {
+        "TOP": 1,
+        "BOTTOM": 1
+      },
+      "components": 0,
+      "detection_statuses": {
+        "TOP": "DETECTOR_NOT_CONFIGURED",
+        "BOTTOM": "DETECTOR_NOT_CONFIGURED"
+      },
+      "runtime_seconds": 0.11828270799014717
+    },
+    {
+      "board_id": "Simple",
+      "input_sha256": {
+        "TOP.png": "013d34f12ab97eda2d28308e67adf1736b595fed1df0c13299e2cd2e50d375b1",
+        "BOTTOM.png": "ba3754c260c113c718fa400213e6f824abdef44daae9645562c5a65a3d2ec52e"
+      },
+      "input_photo_count": 2,
+      "processed_image_sizes_px": [
+        [
+          1600,
+          609
+        ],
+        [
+          1600,
+          609
+        ]
+      ],
+      "side_keys": [
+        "BOTTOM",
+        "TOP"
+      ],
+      "registration_counts": {
+        "TOP": 1,
+        "BOTTOM": 1
+      },
+      "components": 0,
+      "detection_statuses": {
+        "TOP": "DETECTOR_NOT_CONFIGURED",
+        "BOTTOM": "DETECTOR_NOT_CONFIGURED"
+      },
+      "runtime_seconds": 0.1098956250352785
+    }
+  ]
+}

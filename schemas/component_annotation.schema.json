@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://circuitcare.local/schemas/component_annotation.schema.json",
+  "title": "CircuitCare PCB Component Annotation Manifest",
+  "type": "object",
+  "required": ["schema_version", "dataset_id", "dataset_name", "dataset_source", "dataset_source_url", "source_version", "dataset_license", "annotation_source", "annotation_review_status", "split_name", "split_method", "board_grouping_policy", "split_policy", "images"],
+  "properties": {
+    "schema_version": {"const": "circuitcare.component-annotation.v1"},
+    "dataset_name": {"type": "string", "minLength": 1},
+    "dataset_source": {"type": "string", "minLength": 1},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "dataset_source_url": {"type": "string", "format": "uri"},
+    "source_version": {"type": "string", "minLength": 1},
+    "dataset_license": {"type": "string", "minLength": 1},
+    "annotation_source": {"type": "string", "minLength": 1},
+    "annotation_review_status": {"enum": ["SOURCE_PROVIDED_UNADJUDICATED", "HUMAN_REVIEWED", "MIXED_REVIEW", "MODEL_PSEUDO_LABEL"]},
+    "split_name": {"type": "string", "minLength": 1},
+    "split_method": {"type": "string", "minLength": 1},
+    "board_grouping_policy": {"type": "string", "minLength": 1},
+    "split_policy": {"type": "string", "minLength": 1},
+    "class_names": {"type": "array", "items": {"type": "string"}},
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["image_id", "image_path", "board_id", "board_revision", "board_side", "split", "image_sha256", "image_size_px", "source", "label_state", "annotations"],
+        "properties": {
+          "image_id": {"type": "string", "minLength": 1},
+          "image_path": {"type": "string", "minLength": 1},
+          "label_path": {"type": "string"},
+          "board_id": {"type": "string", "minLength": 1},
+          "board_revision": {"type": "string", "minLength": 1},
+          "board_side": {"enum": ["TOP", "BOTTOM", "UNKNOWN"]},
+          "split": {"enum": ["development", "training", "validation", "sealed_test"]},
+          "image_sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+          "label_sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"},
+          "image_size_px": {"type": "array", "prefixItems": [{"type": "integer", "minimum": 1}, {"type": "integer", "minimum": 1}], "minItems": 2, "maxItems": 2},
+          "source": {"type": "string", "minLength": 1},
+          "label_state": {"enum": ["LABELED", "REVIEWED_EMPTY", "UNANNOTATED"]},
+          "reviewer": {"type": ["string", "null"]},
+          "review_provenance": {"type": "object"},
+          "annotations": {"type": "array", "items": {"$ref": "#/$defs/annotation"}}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "annotation": {
+      "type": "object",
+      "required": ["component_id", "class", "bbox_xyxy", "occlusion_state", "small_component", "annotation_status", "reviewer", "source"],
+      "properties": {
+        "component_id": {"type": "string", "minLength": 1},
+        "class": {"type": "string", "minLength": 1},
+        "bbox_xyxy": {"type": "array", "items": {"type": "number"}, "minItems": 4, "maxItems": 4},
+        "polygon_xy": {"type": "array", "items": {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2}, "minItems": 3},
+        "occlusion_state": {"enum": ["VISIBLE", "PARTIAL", "OCCLUDED", "UNKNOWN"]},
+        "small_component": {"type": ["boolean", "null"]},
+        "annotation_status": {"enum": ["REVIEWED_GROUND_TRUTH", "DRAFT_ANNOTATION", "MODEL_PSEUDO_LABEL", "UNRESOLVED"]},
+        "reviewer": {"type": ["string", "null"]},
+        "source": {"type": "string", "minLength": 1},
+        "provenance": {"type": "object", "properties": {"reviewed_at": {"type": "string"}, "review_method": {"type": "string"}, "notes": {"type": "string"}}}
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "cases": {
+    "p17d_0001": [
+      {
+        "component_ref": "U1",
+        "fault_type": "regulator_output_rise",
+        "parameters": {
+          "output_voltage": "8"
+        }
+      }
+    ],
+    "p17d_0002": [
+      {
+        "component_ref": "R1",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "10000"
+        }
+      }
+    ],
+    "p17d_0003": [
+      {
+        "component_ref": "RCHARGE",
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "100000"
+        }
+      }
+    ]
+  }
+}

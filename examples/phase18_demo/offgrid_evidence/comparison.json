@@ -1,0 +1,76 @@
+{
+  "analysis_stage": "transient_voltage_comparison",
+  "baseline": {
+    "circuit": "baseline.cir",
+    "csv": "baseline.csv",
+    "log": "baseline.log"
+  },
+  "damage_assessment": "not_performed",
+  "evidence_level": "simulated_electrical_change",
+  "fault": {
+    "circuit": "fault_r1_resistance_drift.cir",
+    "csv": "fault.csv",
+    "log": "fault.log"
+  },
+  "scenario_id": "FAULT_R1_RESISTANCE_DRIFT",
+  "simulation_success": true,
+  "time_range_s": {
+    "samples": 608,
+    "start": 0.0,
+    "stop": 0.005
+  },
+  "time_series_csv": "comparison.csv",
+  "voltage_nodes": {
+    "LOAD": {
+      "baseline": {
+        "last": 2.5,
+        "maximum": 2.5,
+        "minimum": 2.5
+      },
+      "delta_fault_minus_baseline": {
+        "last": -0.3902953600000001,
+        "maximum": -0.3902953600000001,
+        "minimum": -0.3902953600000001
+      },
+      "fault": {
+        "last": 2.10970464,
+        "maximum": 2.10970464,
+        "minimum": 2.10970464
+      }
+    },
+    "SWITCH_OUT": {
+      "baseline": {
+        "last": 11.999994,
+        "maximum": 11.999994,
+        "minimum": 2.3999952e-05
+      },
+      "delta_fault_minus_baseline": {
+        "last": 0.0,
+        "maximum": 0.0,
+        "minimum": 0.0
+      },
+      "fault": {
+        "last": 11.999994,
+        "maximum": 11.999994,
+        "minimum": 2.3999952e-05
+      }
+    },
+    "VOUT": {
+      "baseline": {
+        "last": 5.0,
+        "maximum": 5.0,
+        "minimum": 5.0
+      },
+      "delta_fault_minus_baseline": {
+        "last": 0.0,
+        "maximum": 0.0,
+        "minimum": 0.0
+      },
+      "fault": {
+        "last": 5.0,
+        "maximum": 5.0,
+        "minimum": 5.0
+      }
+    }
+  }
+}

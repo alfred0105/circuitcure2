@@ -1,0 +1,76 @@
+{
+  "scenario_id": "FAULT_U1_REGULATOR_OUTPUT_DROP",
+  "simulation_success": true,
+  "analysis_stage": "transient_voltage_comparison",
+  "evidence_level": "simulated_electrical_change",
+  "damage_assessment": "not_performed",
+  "baseline": {
+    "circuit": "data/fault_scenarios/output_3v_demo/baseline.cir",
+    "log": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/baseline.log",
+    "csv": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/baseline.csv"
+  },
+  "fault": {
+    "circuit": "data/fault_scenarios/output_3v_demo/fault_u1_regulator_output_drop.cir",
+    "log": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/fault.log",
+    "csv": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/fault.csv"
+  },
+  "time_range_s": {
+    "start": 0.0,
+    "stop": 0.005,
+    "samples": 608
+  },
+  "voltage_nodes": {
+    "VOUT": {
+      "baseline": {
+        "minimum": 5.0,
+        "maximum": 5.0,
+        "last": 5.0
+      },
+      "fault": {
+        "minimum": 3.0,
+        "maximum": 3.0,
+        "last": 3.0
+      },
+      "delta_fault_minus_baseline": {
+        "minimum": -2.0,
+        "maximum": -2.0,
+        "last": -2.0
+      }
+    },
+    "LOAD": {
+      "baseline": {
+        "minimum": 2.5,
+        "maximum": 2.5,
+        "last": 2.5
+      },
+      "fault": {
+        "minimum": 1.5,
+        "maximum": 1.5,
+        "last": 1.5
+      },
+      "delta_fault_minus_baseline": {
+        "minimum": -1.0,
+        "maximum": -1.0,
+        "last": -1.0
+      }
+    },
+    "SWITCH_OUT": {
+      "baseline": {
+        "minimum": 2.3999952e-05,
+        "maximum": 11.999994,
+        "last": 11.999994
+      },
+      "fault": {
+        "minimum": 2.3999952e-05,
+        "maximum": 11.999994,
+        "last": 11.999994
+      },
+      "delta_fault_minus_baseline": {
+        "minimum": 0.0,
+        "maximum": 0.0,
+        "last": 0.0
+      }
+    }
+  },
+  "time_series_csv": "data/fault_scenarios/output_3v_demo/simulation_results/fault_u1_regulator_output_drop/comparison.csv"
+}

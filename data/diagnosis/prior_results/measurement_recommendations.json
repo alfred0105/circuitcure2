@@ -1,0 +1,50 @@
+{
+  "recommended_measurement": {
+    "node": "VOUT",
+    "measurement_type": "voltage",
+    "unit": "V",
+    "uncertainty": 0.2,
+    "uncertainty_source": "demo_assumption",
+    "safety_status": "low_voltage_demo",
+    "predicted_range_v": {
+      "minimum": 3.0,
+      "maximum": 8.0
+    },
+    "expected_information_gain_nats": 1.0986117132239628,
+    "reason": "Simulated final-time voltage predictions differ across remaining hypotheses; information gain is estimated under the configured Gaussian measurement uncertainty."
+  },
+  "recommendation_status": "recommended",
+  "reason": "Maximum information gain among configured low-voltage demo nodes.",
+  "ranked_candidates": [
+    {
+      "node": "VOUT",
+      "measurement_type": "voltage",
+      "unit": "V",
+      "uncertainty": 0.2,
+      "uncertainty_source": "demo_assumption",
+      "safety_status": "low_voltage_demo",
+      "predicted_range_v": {
+        "minimum": 3.0,
+        "maximum": 8.0
+      },
+      "expected_information_gain_nats": 1.0986117132239628,
+      "reason": "Simulated final-time voltage predictions differ across remaining hypotheses; information gain is estimated under the configured Gaussian measurement uncertainty."
+    },
+    {
+      "node": "LOAD",
+      "measurement_type": "voltage",
+      "unit": "V",
+      "uncertainty": 0.2,
+      "uncertainty_source": "demo_assumption",
+      "safety_status": "low_voltage_demo",
+      "predicted_range_v": {
+        "minimum": 1.5,
+        "maximum": 4.0
+      },
+      "expected_information_gain_nats": 1.0869696519064358,
+      "reason": "Simulated final-time voltage predictions differ across remaining hypotheses; information gain is estimated under the configured Gaussian measurement uncertainty."
+    }
+  ],
+  "excluded_candidates": [],
+  "safety_notice": "This is an information-priority result for a low-voltage simulated demo only; it is not live-work authorization or an electrical safety approval."
+}

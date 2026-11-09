@@ -1,0 +1,2515 @@
+{
+  "run_metadata": {
+    "git_commit_sha": "8cc38925c73158573798b1aca35c3619e94ecd03",
+    "timestamp_utc": "2026-11-03T05:29:44.428226+00:00",
+    "python": "3.12.14",
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "llm": {
+      "name": "gemma4:12b",
+      "size": 7714091504,
+      "digest": "c7597fc90b86aff6965317f37dd5465402284e26382d9b4bf2dfe3ef1491f4b6",
+      "details": {
+        "parent_model": "",
+        "format": "safetensors",
+        "family": "",
+        "families": null,
+        "parameter_size": "",
+        "quantization_level": "",
+        "runner": "mlx"
+      }
+    },
+    "model_requested": "gemma4:12b",
+    "prompt_version": "fault-hypothesis-v1",
+    "simulator": "******\n** ngspice-47 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2026, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n******\n",
+    "simulate": true,
+    "llm_enabled": true
+  },
+  "method": "A_rule_based",
+  "metrics": {
+    "status": "MEASURED_SYNTHETIC",
+    "case_count": 3,
+    "ground_truth_count": 3,
+    "candidate_count": 43,
+    "correct_candidate_count": 3,
+    "candidate_precision": 0.06976744186046512,
+    "candidate_recall": 1.0,
+    "candidate_f1": 0.13043478260869565,
+    "executable_hypothesis_rate": 1.0,
+    "unsupported_proposal_rate": 0.0,
+    "hallucinated_reference_rate": 0.0,
+    "top_k_accuracy": {
+      "1": 1.0,
+      "3": 1.0
+    },
+    "precision_at_k": {
+      "1": 1.0,
+      "3": 0.3333333333333333
+    },
+    "top_k_evaluated_cases": {
+      "1": 3,
+      "3": 3
+    },
+    "simulation_attempt_count": 43,
+    "simulation_success_count": 43,
+    "simulation_success_rate": 1.0,
+    "mean_simulation_runtime_seconds": 0.021187511627906976,
+    "per_case": [
+      {
+        "case_id": "REGULATOR_U1_RISE_8V",
+        "truth_count": 1,
+        "candidate_count": 19,
+        "correct_candidate_count": 1,
+        "ranked_candidate_count": 19,
+        "correct_rank": 1
+      },
+      {
+        "case_id": "DIVIDER_R1_DRIFT_10K",
+        "truth_count": 1,
+        "candidate_count": 12,
+        "correct_candidate_count": 1,
+        "ranked_candidate_count": 12,
+        "correct_rank": 1
+      },
+      {
+        "case_id": "RC_RCHARGE_DRIFT_100K",
+        "truth_count": 1,
+        "candidate_count": 12,
+        "correct_candidate_count": 1,
+        "ranked_candidate_count": 12,
+        "correct_rank": 1
+      }
+    ]
+  },
+  "cases": {
+    "REGULATOR_U1_RISE_8V": [
+      {
+        "hypothesis_id": "H_478D780F44CE",
+        "component_ref": "U1",
+        "component_value": "Regulator",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "regulator_output_rise",
+        "parameters": {
+          "output_voltage": "8"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "dd449a701a4e83e9cd8f200867692807dd17948582e31b4336f77b0cdde1a232",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 8.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 8.0,
+              "residual": 0.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 0.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 0.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.017369,
+        "observation_status": "CONSISTENT_WITH_OBSERVATIONS",
+        "evidence_rank": 1,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_569BDCD359B8",
+        "component_ref": "U1",
+        "component_value": "Regulator",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "regulator_output_rise",
+        "parameters": {
+          "output_voltage": "6"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "c75c4f7697db43cf68b503a362facdb120e93ddebf9fc7062890306ab676bba0",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 6.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 6.0,
+              "residual": 2.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 10.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 10.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.018441,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 2,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_0DC34C789F83",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "LOAD",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "500"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "e6ef327dbee43f0edd4973ab481293b425e5fae258e3305e164cc2f6fb8c39eb",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019964,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 3,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_19554BAD9602",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "LOAD",
+          "VOUT"
+        ],
+        "fault_type": "resistor_open",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "36a8570403dc0910ce15c1d45355252a64df83ed12161b8777dcbbaf8e33018f",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020335,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 4,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_2439A6E0AFF2",
+        "component_ref": "RLOAD",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "LOAD"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "100"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "ad6be1258c61b657e402a5f4c9348036ae516db2b8fe4eb825fb66b5a6f5108e",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020264,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 5,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_337FEE3360A4",
+        "component_ref": "RLOAD",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "LOAD"
+        ],
+        "fault_type": "resistor_short",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "15f4c5da2148d1628f1641e674958d82b213a3c41bd89149dc5299f995edd9b0",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019211,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 6,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_4FC55A2648A3",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "LOAD",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "100"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "51c5b02f8886a22230d09681d1d7c61682b707c6c46d4ebad923937342fa409b",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019901,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 7,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_58382C9CEE32",
+        "component_ref": "Q1",
+        "component_value": "NMOS switch",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VIN"
+        ],
+        "fault_type": "stuck_on",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "af15b7c9ee99519eb4f5da0fe84601e9805f4416684b2c5df67b541d75741480",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.041504,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 8,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_5A7F75CED298",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "LOAD",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "10000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "63e696ca32ce45dfc3f47ededa31e1fb9a28821b61c6fc48ce2f971474510183",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.02045,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 9,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_69D0223D2EB6",
+        "component_ref": "RLOAD",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "LOAD"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "10000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "5f8dde5b79fd7a8489d26c94c37a7cdd58bc0395846d14e0a626822cb7ae5e63",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020245,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 10,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_9FCEFFC20BB5",
+        "component_ref": "Q1",
+        "component_value": "NMOS switch",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VIN"
+        ],
+        "fault_type": "stuck_open",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "8efc5b8772aab22de02d4862471df59ecd3ca83512222c0515fc8c2b4ca42ba9",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.018532,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 11,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_AC5701D67490",
+        "component_ref": "RLOAD",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "LOAD"
+        ],
+        "fault_type": "resistor_open",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "00fef6b44ba996883025b201f0266468ef08a52783c747de35ddbee5a247b930",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019895,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 12,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_BF0EE6A27CEB",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "LOAD",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "2000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "25bf5c433c7f263a108d2c365db8ef66c01d1e00df7478fc44da001a40487248",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019889,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 13,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_C7E7B2C79D18",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "LOAD",
+          "VOUT"
+        ],
+        "fault_type": "resistor_short",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "bcc357df96dc9f035d321ae236a0ea14c332b26081d14e9b400768ec7b85ddaa",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019911,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 14,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_D09F5BDAB765",
+        "component_ref": "RLOAD",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "LOAD"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "500"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "c7bf7e4d5b683bd2955e97cbc9c06441dd73ccab01aa7e0284e09a810a7a1deb",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020174,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 15,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_E7C315C7FA4C",
+        "component_ref": "RLOAD",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "LOAD"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "2000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "01e0a58285bfc1feeb4fcaa3396974d91bf22690cef0f7dc354c4c6d201b86b1",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 5.0,
+              "residual": 3.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 15.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 15.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019821,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 16,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_F84AF88A952B",
+        "component_ref": "U1",
+        "component_value": "Regulator",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "regulator_output_drop",
+        "parameters": {
+          "output_voltage": "4"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "9e822277c31544dec2e432502531bbf2ed35286ae5a94eab0c06437c50a8b2b7",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 4.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 4.0,
+              "residual": 4.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 20.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 20.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019325,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 17,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_65B48FE63855",
+        "component_ref": "U1",
+        "component_value": "Regulator",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "regulator_output_drop",
+        "parameters": {
+          "output_voltage": "3"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "294e866c561644848ed83821ba949734da8879b1a8c659f11d9ab52db2b06d59",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 3.0
+        },
+        "unsupported_probes": {
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 3.0,
+              "residual": 5.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 25.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 25.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.018673,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 18,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_CC0536AA54ED",
+        "component_ref": "U1",
+        "component_value": "Regulator",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "regulator_output_loss",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "84308233fb183e3c0cff5f74156fef1445e0c5a24c6fe128a6f936a40890e454",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 0.0
+        },
+        "unsupported_probes": {
+          "U1": "Mapped SPICE element VREG is absent from this circuit.",
+          "Q1": "Switch current and power are not reported by this probe backend."
+        },
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 8.0,
+              "predicted": 0.0,
+              "residual": 8.0,
+              "uncertainty": 0.2,
+              "normalized_residual": 40.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 40.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.018768,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 19,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      }
+    ],
+    "DIVIDER_R1_DRIFT_10K": [
+      {
+        "hypothesis_id": "H_5A7F75CED298",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "10000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "f51704a232da7ef4bf74687ede586f8679366b2f9c61e8ab3ceb488675ff36f4",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 0.454545455
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 0.454545455,
+              "residual": 0.0,
+              "uncertainty": 0.02,
+              "normalized_residual": 0.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 0.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019912,
+        "observation_status": "CONSISTENT_WITH_OBSERVATIONS",
+        "evidence_rank": 1,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_C580BAC3F881",
+        "component_ref": "R2",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "100"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "e640167001b9ed85e12d22aa8bbe5f1a238abf5e8396b956881ff9c3180a9ce1",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 0.454545455
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 0.454545455,
+              "residual": 0.0,
+              "uncertainty": 0.02,
+              "normalized_residual": 0.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 0.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020272,
+        "observation_status": "CONSISTENT_WITH_OBSERVATIONS",
+        "evidence_rank": 2,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_ED12A3D78A6B",
+        "component_ref": "R2",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VOUT"
+        ],
+        "fault_type": "resistor_short",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "01a66f328ee1a535787b07fa4601cac5b9f9e6bad84f9487dd6c8c058f7518e4",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5e-09
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 5e-09,
+              "residual": 0.45454544999999996,
+              "uncertainty": 0.02,
+              "normalized_residual": 22.727272499999998,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 22.727272499999998,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020253,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 3,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_19554BAD9602",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "resistor_open",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "c28a11d3ae2e20b9d7980926b00c908f2818d210dc813baf6d2717abb468294d",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 4.99999999e-09
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 4.99999999e-09,
+              "residual": 0.45454545,
+              "uncertainty": 0.02,
+              "normalized_residual": 22.7272725,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 22.7272725,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.021436,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 4,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_66A9D5B5826B",
+        "component_ref": "R2",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "500"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "2e4043e453e7f7e47e3f0b9ff941c52250e5364fa749b62ecbffaaf7c0acaf77",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 1.66666667
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 1.66666667,
+              "residual": -1.2121212149999998,
+              "uncertainty": 0.02,
+              "normalized_residual": -60.60606074999999,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 60.60606074999999,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020358,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 5,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_BF0EE6A27CEB",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "2000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "36a8373603710be2ef9702c51984272da93d3deddf12bac3c922e55157ad01dd",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 1.66666667
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 1.66666667,
+              "residual": -1.2121212149999998,
+              "uncertainty": 0.02,
+              "normalized_residual": -60.60606074999999,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 60.60606074999999,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.022211,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 6,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_0DC34C789F83",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "500"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "57685e82de5ae7ca7d4b4ce74c6c6eda80354d0dbe915d624e50164ec3abde64",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 3.33333333
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 3.33333333,
+              "residual": -2.878787875,
+              "uncertainty": 0.02,
+              "normalized_residual": -143.93939375,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 143.93939375,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020336,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 7,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_BAB683A59C6E",
+        "component_ref": "R2",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "2000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "aabe59e8715b064888d7af4d5e4e5946deae13a3453a51728c5ab55055b04688",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 3.33333333
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 3.33333333,
+              "residual": -2.878787875,
+              "uncertainty": 0.02,
+              "normalized_residual": -143.93939375,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 143.93939375,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020451,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 8,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_4FC55A2648A3",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "100"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "5364b2102aaca55f5eea5756532c89c599615240b11e9c19f59cf40add0e46bf",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 4.54545455
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 4.54545455,
+              "residual": -4.090909095,
+              "uncertainty": 0.02,
+              "normalized_residual": -204.54545474999998,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 204.54545474999998,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019342,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 9,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_650C9F4E8161",
+        "component_ref": "R2",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VOUT"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "10000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "805f2d4ce986ada8643d3e96cb1c3032987b46d35cdb0edf558ef42eab20f502",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 4.54545455
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 4.54545455,
+              "residual": -4.090909095,
+              "uncertainty": 0.02,
+              "normalized_residual": -204.54545474999998,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 204.54545474999998,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.03221,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 10,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_41B88FB1CDC0",
+        "component_ref": "R2",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VOUT"
+        ],
+        "fault_type": "resistor_open",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "bba1acd8ce127fa07518b9943b0f3c2b74dad98cdfcd5a5ff8be2bfb3bde9b1e",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 5.0,
+              "residual": -4.545454545,
+              "uncertainty": 0.02,
+              "normalized_residual": -227.27272725,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 227.27272725,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.023464,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 11,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_C7E7B2C79D18",
+        "component_ref": "R1",
+        "component_value": "1k",
+        "library_id": "",
+        "nets": [
+          "VIN",
+          "VOUT"
+        ],
+        "fault_type": "resistor_short",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VOUT"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "dd9ec0370473660247e15ebe618e046c15a708aa4b4157a48d2496a1f1d26e71",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VOUT": 5.0
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VOUT",
+              "unit": "V",
+              "measured": 0.454545455,
+              "predicted": 5.0,
+              "residual": -4.545454545,
+              "uncertainty": 0.02,
+              "normalized_residual": -227.27272725,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 227.27272725,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020515,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 12,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      }
+    ],
+    "RC_RCHARGE_DRIFT_100K": [
+      {
+        "hypothesis_id": "H_C08A9B79EC07",
+        "component_ref": "RCHARGE",
+        "component_value": "10k",
+        "library_id": "",
+        "nets": [
+          "VC",
+          "VIN"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "100000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "fec5e43e1f4ac3a33fb5ac51ea5ef6d04306dc3fb3cccc2f16d1f77decce0115",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 0.0248751681
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.0248751681,
+              "residual": 0.0,
+              "uncertainty": 0.01,
+              "normalized_residual": 0.0,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 0.0,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.018745,
+        "observation_status": "CONSISTENT_WITH_OBSERVATIONS",
+        "evidence_rank": 1,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_6731A205700C",
+        "component_ref": "RCHARGE",
+        "component_value": "10k",
+        "library_id": "",
+        "nets": [
+          "VC",
+          "VIN"
+        ],
+        "fault_type": "resistor_open",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "55bd7ed0266af6ddb4f0c92a5822fe875e25ee0225c98bf1819934fe587f4ab7",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 2.49373553e-09
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 2.49373553e-09,
+              "residual": 0.02487516560626447,
+              "uncertainty": 0.01,
+              "normalized_residual": 2.487516560626447,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 2.487516560626447,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.018098,
+        "observation_status": "CONSISTENT_WITH_OBSERVATIONS",
+        "evidence_rank": 2,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_0A899EB9AF94",
+        "component_ref": "RBLEED",
+        "component_value": "100k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VC"
+        ],
+        "fault_type": "resistor_short",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "7df397c8391fc45190bb8465f4ed851ff4cc6d4242d5998558f1becf92672065",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 5.00000077e-10
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "CONSISTENT_WITH_OBSERVATIONS",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 5.00000077e-10,
+              "residual": 0.024875167599999925,
+              "uncertainty": 0.01,
+              "normalized_residual": 2.4875167599999926,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 2.4875167599999926,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020574,
+        "observation_status": "CONSISTENT_WITH_OBSERVATIONS",
+        "evidence_rank": 3,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_CB1EBC8130B0",
+        "component_ref": "RCHARGE",
+        "component_value": "10k",
+        "library_id": "",
+        "nets": [
+          "VC",
+          "VIN"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "20000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "7f7c3453e7a8e39f38018ab7342847a0230f0f2339a305280f887cc49911947e",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 0.123142397
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.123142397,
+              "residual": -0.0982672289,
+              "uncertainty": 0.01,
+              "normalized_residual": -9.826722890000001,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 9.826722890000001,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.018641,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 4,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_9A2413915270",
+        "component_ref": "RBLEED",
+        "component_value": "100k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VC"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "10000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "596c73d295396a4871446a659ee34a28f77e0206567cef09e6cfcfec6c3771f8",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 0.237904194
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.237904194,
+              "residual": -0.2130290259,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.30290259,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.30290259,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.01898,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 5,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_93085C54F504",
+        "component_ref": "RBLEED",
+        "component_value": "100k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VC"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "50000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "5a874ec0fc9c469e4890d29984dc9ba08dbd5bc25bcfdb2c81a5841d5eb5d014",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 0.242645423
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.242645423,
+              "residual": -0.2177702549,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.77702549,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.77702549,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.02004,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 6,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_68119AE72BE2",
+        "component_ref": "RBLEED",
+        "component_value": "100k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VC"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "200000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "22f072ea20cb0deaaf044d87140c32d5a2068d73d84f14969338bb397326748a",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 0.24354848
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.24354848,
+              "residual": -0.2186733119,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.867331189999998,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.867331189999998,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.044115,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 7,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_194569A035C6",
+        "component_ref": "RBLEED",
+        "component_value": "100k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VC"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "1000000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "df62abf1d88d26d050fd3093d337c11e29eef69db3b8a02268c1a6b3eade8423",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 0.243790056
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.243790056,
+              "residual": -0.2189148879,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.89148879,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.89148879,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.020834,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 8,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_D01129CB4D30",
+        "component_ref": "RBLEED",
+        "component_value": "100k",
+        "library_id": "",
+        "nets": [
+          "GND",
+          "VC"
+        ],
+        "fault_type": "resistor_open",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "c669630af338e1ce6ea50f98919a8e090024fd0131cc8308117edea3a2d1ba97",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 0.2438505
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.2438505,
+              "residual": -0.2189753319,
+              "uncertainty": 0.01,
+              "normalized_residual": -21.897533189999997,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 21.897533189999997,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019702,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 9,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_1458F6A194CE",
+        "component_ref": "RCHARGE",
+        "component_value": "10k",
+        "library_id": "",
+        "nets": [
+          "VC",
+          "VIN"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "5000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "294a27758eafc2bf92fb339c84c68025ac184e5c634c1c5f9fae5ede9a7f5c60",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 0.474640631
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 0.474640631,
+              "residual": -0.44976546289999997,
+              "uncertainty": 0.01,
+              "normalized_residual": -44.976546289999995,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 44.976546289999995,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019146,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 10,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_15ECE6DE0199",
+        "component_ref": "RCHARGE",
+        "component_value": "10k",
+        "library_id": "",
+        "nets": [
+          "VC",
+          "VIN"
+        ],
+        "fault_type": "resistance_drift",
+        "parameters": {
+          "fault_resistance": "1000"
+        },
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "e6d8a10cee9a3a7fdd5eaf40a9781fa119317ea9ef0f5267078b3c2af48ed9bf",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 1.96282873
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 1.96282873,
+              "residual": -1.9379535619000001,
+              "uncertainty": 0.01,
+              "normalized_residual": -193.79535619,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 193.79535619,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019719,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 11,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      },
+      {
+        "hypothesis_id": "H_DA9775951591",
+        "component_ref": "RCHARGE",
+        "component_value": "10k",
+        "library_id": "",
+        "nets": [
+          "VC",
+          "VIN"
+        ],
+        "fault_type": "resistor_short",
+        "parameters": {},
+        "reason": "Catalog candidate from an explicit compatible SPICE mapping; connectivity is context only.",
+        "supporting_observations": [
+          "VC"
+        ],
+        "generation_method": "catalog_rule",
+        "status": "proposed",
+        "simulation_status": "SIMULATION_SUCCESS",
+        "simulation_supported": true,
+        "preflight_status": "NOT_CHECKED",
+        "validation_status": "VALIDATED_EXECUTABLE",
+        "validation_reasons": [],
+        "simulation_result_key": "8709cd9d234fbe0729d7a990b78328ba404e504949bf1495ef91cfbd06762d31",
+        "simulation_log_summary": "Transient ngspice run succeeded; data was kept in a temporary directory.",
+        "prediction_method": "last transient sample for final_sample observations",
+        "predicted_measurements": {
+          "VC": 5.00000077
+        },
+        "unsupported_probes": {},
+        "observation_match": {
+          "status": "MODEL_MISMATCH",
+          "comparisons": [
+            {
+              "node": "VC",
+              "unit": "V",
+              "measured": 0.0248751681,
+              "predicted": 5.00000077,
+              "residual": -4.975125601899999,
+              "uncertainty": 0.01,
+              "normalized_residual": -497.51256018999993,
+              "source": "synthetic_fault_simulation",
+              "measurement_mode": "final_sample"
+            }
+          ],
+          "unsupported_measurements": [],
+          "max_absolute_normalized_residual": 497.51256018999993,
+          "model_mismatch_threshold_sigma": 4.0,
+          "interpretation": "Fit to the selected model and observations only; this does not confirm a physical failure."
+        },
+        "simulation_seconds": 0.019037,
+        "observation_status": "MODEL_MISMATCH",
+        "evidence_rank": 12,
+        "ranking_basis": "minimum maximum absolute standardized residual; no failure-probability claim"
+      }
+    ]
+  },
+  "evaluation_status": "LEAKED_DEVELOPMENT_RESULT",
+  "integrity_note": "The prior prompt included an answer-bearing case ID and a 'known injected fault' symptom. Retained for audit only; not valid blinded proposal or ranking performance."
+}

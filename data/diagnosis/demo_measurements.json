@@ -1,0 +1,11 @@
+{
+  "measurements": [
+    {
+      "node": "VOUT",
+      "value": 7.9,
+      "unit": "V",
+      "uncertainty": 0.2,
+      "source": "simulated_demo"
+    }
+  ]
+}

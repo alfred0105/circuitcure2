@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/alfred0105/CircuitCare-AI/evaluation/experiment_record.schema.json",
+  "title": "CircuitCare AI Experiment Record",
+  "type": "object",
+  "required": ["experiment_id", "task", "dataset_id", "dataset_version", "evaluation_split", "model_version", "code_commit", "baseline", "metrics", "limitations", "reproducibility"],
+  "properties": {
+    "experiment_id": {"type": "string", "minLength": 1},
+    "task": {"type": "string", "enum": ["pcb_reconstruction", "fault_diagnosis", "active_measurement", "other"]},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "dataset_version": {"type": "string", "minLength": 1},
+    "evaluation_split": {"type": "string", "minLength": 1},
+    "independent_unit": {"type": ["string", "null"]},
+    "model_version": {"type": "string", "minLength": 1},
+    "code_commit": {"type": "string", "minLength": 1},
+    "baseline": {"type": ["string", "array", "object"]},
+    "metrics": {"type": "object", "additionalProperties": {"type": ["number", "string", "object", "array", "null"]}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "reproducibility": {
+      "type": "object",
+      "properties": {
+        "data_manifest_sha256": {"type": ["string", "null"]},
+        "model_sha256": {"type": ["string", "null"]},
+        "command": {"type": ["string", "array", "null"]},
+        "config": {"type": ["object", "null"]},
+        "environment": {"type": ["object", "null"]},
+        "seed": {"type": ["integer", "array", "null"]},
+        "hardware": {"type": ["string", "null"]},
+        "scorer_version": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

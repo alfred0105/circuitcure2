@@ -1,0 +1,5 @@
+{
+  "RCHARGE": {"spice_element": "RCHARGE", "model_type": "resistor"},
+  "C1": {"spice_element": "C1", "model_type": "capacitor"},
+  "RBLEED": {"spice_element": "RBLEED", "model_type": "resistor"}
+}

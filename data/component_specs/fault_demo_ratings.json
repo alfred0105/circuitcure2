@@ -1,0 +1,44 @@
+{
+  "components": {
+    "C1": {
+      "ratings": {
+        "max_abs_voltage_v": 6.3
+      },
+      "rating_types": {
+        "max_abs_voltage_v": "continuous"
+      },
+      "source": {
+        "type": "demo_assumption",
+        "note": "Example 6.3 V capacitor rating for demonstration only; not verified against a manufacturer datasheet."
+      }
+    },
+    "R1": {
+      "ratings": {
+        "max_abs_voltage_v": 200.0,
+        "max_current_a": 0.25,
+        "max_power_w": 0.25
+      },
+      "rating_types": {
+        "max_abs_voltage_v": "continuous",
+        "max_current_a": "continuous",
+        "max_power_w": "continuous"
+      },
+      "source": {
+        "type": "demo_assumption",
+        "note": "Illustrative limits only; resistor part number and datasheet are not specified."
+      }
+    },
+    "RLOAD": {
+      "ratings": {
+        "max_power_w": 0.125
+      },
+      "rating_types": {
+        "max_power_w": "continuous"
+      },
+      "source": {
+        "type": "demo_assumption",
+        "note": "Example 0.125 W resistor rating for demonstration only; not verified against a manufacturer datasheet."
+      }
+    }
+  }
+}

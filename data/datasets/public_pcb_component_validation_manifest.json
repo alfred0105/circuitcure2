@@ -1,0 +1,3999 @@
+{
+  "schema_version": "circuitcare.component-annotation.v1",
+  "dataset_id": "pcb-component-detection-val-0d7ae73",
+  "dataset_name": "PCB Component Detection Dataset validation split",
+  "dataset_source": "wangshnegqi/pcb-component-detection-dataset-yolo",
+  "dataset_source_url": "https://github.com/wangshnegqi/pcb-component-detection-dataset-yolo",
+  "source_version": "0d7ae7310fa607389779b6132285336ad73e96e1",
+  "dataset_license": "CC BY 4.0 (source-declared)",
+  "annotation_source": "Source-provided YOLO label files; not independently reviewed",
+  "annotation_review_status": "SOURCE_PROVIDED_UNADJUDICATED",
+  "split_name": "validation",
+  "split_method": "SOURCE_PROVIDED_IMAGE_SPLIT",
+  "board_grouping_policy": "Board IDs are absent; all images remain BOARD_ID_UNRESOLVED until human audit",
+  "split_policy": "Source-provided split; board-level grouping not verified.",
+  "class_names": [
+    "resistor",
+    "capacitor",
+    "diode",
+    "led",
+    "integrated_circuit",
+    "connector",
+    "switch_button",
+    "header",
+    "crystal",
+    "debug_test_point"
+  ],
+  "images": [
+    {
+      "image_id": "IMG_20260529_163319.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_163319.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_163319.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "99d6eb15da3b2baafd235444dd02d245d70a49e636a1787c02eedee3e7250905",
+      "label_sha256": "5664a876ce6a2790b43d934687e8cf0aa2cc61401565243eb77217275318e279",
+      "image_size_px": [
+        2304,
+        4096
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "connector",
+          "bbox_xyxy": [
+            990.8893439999999,
+            1993.424896,
+            1427.490432,
+            2594.7340799999997
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "connector",
+          "bbox_xyxy": [
+            585.6595199999999,
+            2036.5619199999999,
+            1002.653568,
+            2607.8023679999997
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1526.836608,
+            2002.577408,
+            1792.1952,
+            2233.94816
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "connector",
+          "bbox_xyxy": [
+            1481.084928,
+            2265.319424,
+            1729.45152,
+            2454.861824
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        },
+        {
+          "component_id": "annotation:0005",
+          "class": "header",
+          "bbox_xyxy": [
+            435.333888,
+            1035.2558080000001,
+            645.790464,
+            1972.51072
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 5
+          }
+        },
+        {
+          "component_id": "annotation:0006",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            875.8552319999999,
+            1384.27392,
+            1183.045248,
+            1649.63328
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 6
+          }
+        },
+        {
+          "component_id": "annotation:0007",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1181.737728,
+            1384.271872,
+            1397.4243840000001,
+            1627.410432
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 7
+          }
+        },
+        {
+          "component_id": "annotation:0008",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1141.214976,
+            1145.05728,
+            1397.424384,
+            1342.4435199999998
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 8
+          }
+        },
+        {
+          "component_id": "annotation:0009",
+          "class": "header",
+          "bbox_xyxy": [
+            1556.902656,
+            683.6224,
+            1840.5619199999999,
+            1420.877824
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 9
+          }
+        },
+        {
+          "component_id": "annotation:0010",
+          "class": "switch_button",
+          "bbox_xyxy": [
+            1529.449344,
+            992.118784,
+            1670.6269439999999,
+            1218.26304
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 10
+          }
+        },
+        {
+          "component_id": "annotation:0011",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1582.850304,
+            1818.43968,
+            1708.3814399999999,
+            1886.523392
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 11
+          }
+        },
+        {
+          "component_id": "annotation:0012",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1608.80832,
+            1393.8974719999999,
+            1699.887744,
+            1489.670144
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163319.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 12
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_163712.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_163712.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_163712.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "8dabb5ecf6ae8c31c70b5776aa1186239ffebe0ceeadbf737d782e80cdca3a81",
+      "label_sha256": "c666efc20224121c8f5401ccb7065a4033c4da67486ab2809ac172773949b0aa",
+      "image_size_px": [
+        4096,
+        2304
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163712.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1786.888192,
+            172.70668800000004,
+            2582.847488,
+            1003.0106880000001
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163712.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            2091.9377919999997,
+            817.151616,
+            2807.0912,
+            1540.3841280000001
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163712.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "led",
+          "bbox_xyxy": [
+            930.3224320000002,
+            1394.9279999999999,
+            1425.270784,
+            2019.171456
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163712.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            3166.687232,
+            1322.20224,
+            3665.678336,
+            1568.668032
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163712.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_163718.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_163718.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_163718.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "64cc8b4419df81e3adef8f17a0a9a1ff8e356a4162c227eab8da4d93d1708e74",
+      "label_sha256": "0d45b03f14f96f2f9ea26158cf085f39611749d05875ad147fbf56b7d5c72d40",
+      "image_size_px": [
+        4096,
+        2304
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163718.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1966.6882560000001,
+            354.524544,
+            2584.868864,
+            1091.899008
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163718.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "led",
+          "bbox_xyxy": [
+            1184.8704,
+            1398.9680640000001,
+            1661.636608,
+            2104.019712
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163718.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            2297.9993600000003,
+            807.049728,
+            2873.757696,
+            1497.959424
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163718.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            3298.000896,
+            1154.526336,
+            3750.5269759999996,
+            1427.2531199999999
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_163718.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_164033.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164033.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164033.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "da12a56d013ceded6e6f1c6033a76a0bd0a680478d54bfd4e4965c8cad069e53",
+      "label_sha256": "91789f14ad9267eed7f23e20fc84f6168702ee302543a6bb515663d3356bf23a",
+      "image_size_px": [
+        2304,
+        4096
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            489.50784000000004,
+            1713.006592,
+            538.113024,
+            1778.079744
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            451.792512,
+            1912.2094080000002,
+            498.538368,
+            1941.159936
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            475.962624,
+            1808.357376,
+            505.44460799999996,
+            1849.526272
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            628.154496,
+            1771.440128,
+            723.7728000000001,
+            1866.7909120000002
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        },
+        {
+          "component_id": "annotation:0005",
+          "class": "crystal",
+          "bbox_xyxy": [
+            812.592,
+            1858.072576,
+            872.148096,
+            1910.5177600000002
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 5
+          }
+        },
+        {
+          "component_id": "annotation:0006",
+          "class": "crystal",
+          "bbox_xyxy": [
+            863.555328,
+            1788.4467200000001,
+            936.739584,
+            1824.59392
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 6
+          }
+        },
+        {
+          "component_id": "annotation:0007",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            852.887808,
+            1709.9264,
+            944.44416,
+            1756.7395840000001
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 7
+          }
+        },
+        {
+          "component_id": "annotation:0008",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            764.295552,
+            1804.146688,
+            800.443008,
+            1821.034496
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 8
+          }
+        },
+        {
+          "component_id": "annotation:0009",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            787.704192,
+            1674.371072,
+            802.2216960000001,
+            1706.369024
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 9
+          }
+        },
+        {
+          "component_id": "annotation:0010",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            748.889856,
+            1691.25888,
+            776.7406080000001,
+            1703.112704
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 10
+          }
+        },
+        {
+          "component_id": "annotation:0011",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            826.51968,
+            1709.928448,
+            838.963584,
+            1733.03808
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 11
+          }
+        },
+        {
+          "component_id": "annotation:0012",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            795.1103999999999,
+            1752.590336,
+            809.035776,
+            1779.554304
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 12
+          }
+        },
+        {
+          "component_id": "annotation:0013",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            708.887808,
+            1895.999488,
+            725.481216,
+            1928.59136
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 13
+          }
+        },
+        {
+          "component_id": "annotation:0014",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            717.184512,
+            1941.927936,
+            748.887552,
+            1958.815744
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 14
+          }
+        },
+        {
+          "component_id": "annotation:0015",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            810.814464,
+            1924.7411200000001,
+            830.665728,
+            1941.039104
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 15
+          }
+        },
+        {
+          "component_id": "annotation:0016",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            953.0150400000001,
+            1668.47488,
+            1250.157312,
+            1910.3805439999999
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 16
+          }
+        },
+        {
+          "component_id": "annotation:0017",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            389.470464,
+            1374.943232,
+            485.45049600000004,
+            1473.7592319999999
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 17
+          }
+        },
+        {
+          "component_id": "annotation:0018",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            385.21612799999997,
+            1280.37888,
+            497.74579200000005,
+            1344.206848
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 18
+          }
+        },
+        {
+          "component_id": "annotation:0019",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            298.69056,
+            1311.111168,
+            328.476672,
+            1378.248704
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 19
+          }
+        },
+        {
+          "component_id": "annotation:0020",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            275.52384,
+            1199.527936,
+            302.946048,
+            1263.83104
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 20
+          }
+        },
+        {
+          "component_id": "annotation:0021",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            527.530752,
+            1234.9890560000001,
+            599.871744,
+            1281.798144
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 21
+          }
+        },
+        {
+          "component_id": "annotation:0022",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            832.969728,
+            1238.296576,
+            888.288768,
+            1265.719296
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 22
+          }
+        },
+        {
+          "component_id": "annotation:0023",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            945.9728640000001,
+            1231.67744,
+            1001.764224,
+            1259.575296
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 23
+          }
+        },
+        {
+          "component_id": "annotation:0024",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1028.241792,
+            1224.1121280000002,
+            1087.8163200000001,
+            1263.355904
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 24
+          }
+        },
+        {
+          "component_id": "annotation:0025",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            648.0483839999999,
+            2040.2053119999998,
+            967.636224,
+            2341.9248639999996
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 25
+          }
+        },
+        {
+          "component_id": "annotation:0026",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1004.747904,
+            2056.699904,
+            1234.988928,
+            2384.5355520000003
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 26
+          }
+        },
+        {
+          "component_id": "annotation:0027",
+          "class": "crystal",
+          "bbox_xyxy": [
+            1539.29664,
+            2103.498752,
+            1589.6459519999999,
+            2177.624064
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 27
+          }
+        },
+        {
+          "component_id": "annotation:0028",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            967.9599360000001,
+            2832.484352,
+            1086.604416,
+            2944.3502080000003
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 28
+          }
+        },
+        {
+          "component_id": "annotation:0029",
+          "class": "connector",
+          "bbox_xyxy": [
+            769.655808,
+            3043.219456,
+            1193.384448,
+            3687.852032
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 29
+          }
+        },
+        {
+          "component_id": "annotation:0030",
+          "class": "connector",
+          "bbox_xyxy": [
+            336.32179199999996,
+            3057.90976,
+            770.2202879999999,
+            3679.944704
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 30
+          }
+        },
+        {
+          "component_id": "annotation:0031",
+          "class": "header",
+          "bbox_xyxy": [
+            62.763263999999985,
+            1389.584384,
+            318.318336,
+            2814.582784
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 31
+          }
+        },
+        {
+          "component_id": "annotation:0032",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1329.4298880000001,
+            2920.8309759999997,
+            1623.874176,
+            3195.83232
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 32
+          }
+        },
+        {
+          "component_id": "annotation:0033",
+          "class": "connector",
+          "bbox_xyxy": [
+            1273.874688,
+            3223.611392,
+            1536.374016,
+            3494.443008
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 33
+          }
+        },
+        {
+          "component_id": "annotation:0034",
+          "class": "connector",
+          "bbox_xyxy": [
+            1082.208384,
+            681.94304,
+            1489.152384,
+            1194.442752
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 34
+          }
+        },
+        {
+          "component_id": "annotation:0035",
+          "class": "connector",
+          "bbox_xyxy": [
+            662.7640319999999,
+            812.498944,
+            1057.208832,
+            1191.665664
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 35
+          }
+        },
+        {
+          "component_id": "annotation:0036",
+          "class": "switch_button",
+          "bbox_xyxy": [
+            1432.209024,
+            1438.8899840000001,
+            1614.1536,
+            1729.169408
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 36
+          }
+        },
+        {
+          "component_id": "annotation:0037",
+          "class": "header",
+          "bbox_xyxy": [
+            1569.708288,
+            938.889216,
+            1773.8749440000001,
+            2099.99872
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164033.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 37
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_164111.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164111.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164111.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "dc863aca9cd785b5ee456d307797f6edcc9100382715d798b06727b79ab11426",
+      "label_sha256": "8c191994226e4c59ded05f9476dd3061654540cc1ae037d2f6ca095919d79a4e",
+      "image_size_px": [
+        4096,
+        2304
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164111.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            592.9512960000001,
+            586.8495360000001,
+            1047.4967040000001,
+            1376.7482880000002
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164111.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1063.6574719999999,
+            491.89939200000003,
+            1443.454976,
+            1267.656192
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164111.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "led",
+          "bbox_xyxy": [
+            2029.3140480000002,
+            182.807424,
+            2538.4058880000002,
+            386.84736000000004
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164111.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "led",
+          "bbox_xyxy": [
+            1944.4633600000002,
+            708.05952,
+            2209.110016,
+            1170.686592
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164111.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        },
+        {
+          "component_id": "annotation:0005",
+          "class": "led",
+          "bbox_xyxy": [
+            1457.596416,
+            1368.665856,
+            2039.412736,
+            1766.6449919999998
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164111.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 5
+          }
+        },
+        {
+          "component_id": "annotation:0006",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            2055.5776,
+            1536.3440640000001,
+            2405.072896,
+            1908.062208
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164111.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 6
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_164115.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164115.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164115.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "6afe899cac1208b3f5aa4dd5b54a27932088f76bd178444fa9a7664482b79fd4",
+      "label_sha256": "8c56d559abd97b9dd7f991ac4f83db1fb7fae3472662e17ddf4d07ea037e79fa",
+      "image_size_px": [
+        4096,
+        2304
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164115.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1095.979008,
+            732.3022080000001,
+            1392.9471999999998,
+            1578.766464
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164115.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1530.322944,
+            619.1723519999999,
+            1736.384512,
+            1413.1123199999997
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164115.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "led",
+          "bbox_xyxy": [
+            2122.2400000000002,
+            322.201728,
+            2508.099584,
+            495.939456
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164115.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "led",
+          "bbox_xyxy": [
+            2199.011328,
+            837.353088,
+            2326.28224,
+            1233.311616
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164115.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        },
+        {
+          "component_id": "annotation:0005",
+          "class": "led",
+          "bbox_xyxy": [
+            1883.858944,
+            1504.0200959999997,
+            2338.404352,
+            1784.829312
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164115.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 5
+          }
+        },
+        {
+          "component_id": "annotation:0006",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            2336.382976,
+            1556.5455359999999,
+            2542.444544,
+            1885.837824
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164115.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 6
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_164129.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164129.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164129.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "b0c556c37082fa417545d599423743d54a58fb31b997f364dc0d95f9cf3359bb",
+      "label_sha256": "3fd02839275b78e5b652181d492e4f0a058f0d101a12682269b1330a2e55fb01",
+      "image_size_px": [
+        2248,
+        4000
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164129.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            430.52234799999997,
+            1134.056,
+            865.3057799999999,
+            1623.912
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164129.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "led",
+          "bbox_xyxy": [
+            1236.317948,
+            870.292,
+            2042.115796,
+            1154.3480000000002
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164129.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "led",
+          "bbox_xyxy": [
+            1372.551244,
+            1580.436,
+            2062.406244,
+            2044.2040000000002
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164129.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "led",
+          "bbox_xyxy": [
+            1607.333488,
+            2165.9439999999995,
+            1787.043104,
+            2786.232
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164129.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_164142.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164142.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164142.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "2625ca359a28176cebe8a3540d2f791ea37b56f26a6ac9cc519b4c6e998b087a",
+      "label_sha256": "09c0a1f80e886e53488117d05d86f99e7cf952571d52b697232c64ebf103cde4",
+      "image_size_px": [
+        4096,
+        2304
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164142.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1544.466432,
+            215.13024,
+            2047.4961919999998,
+            869.675904
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164142.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            154.56665600000002,
+            988.8675840000001,
+            730.3249920000001,
+            1748.4641279999998
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164142.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1831.3318400000003,
+            1132.3031039999998,
+            2399.008768,
+            1784.82816
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164142.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            2186.889216,
+            708.060672,
+            2873.7597440000004,
+            849.475584
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164142.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_164146.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164146.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164146.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "fb2c5d8477ab1a18203d88810e460499d8917c168912a584f245292429eae705",
+      "label_sha256": "407c9874b689de94453cf8a7198c7e9344b2bdf7d0617ba2a505e08bcfb7e5c0",
+      "image_size_px": [
+        4096,
+        2304
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164146.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1429.3135359999999,
+            316.14105600000005,
+            1992.951808,
+            1075.7376
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164146.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            536.3814400000001,
+            1241.3952,
+            837.392384,
+            1904.020992
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164146.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1562.648576,
+            1415.1329280000002,
+            2162.64704,
+            2029.273344
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164146.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            2075.7790720000003,
+            819.171072,
+            2861.637632,
+            1000.9889280000001
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164146.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_164428.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164428.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164428.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "28ae6d07b3399140d050f46e9812296fea6cd6342467b5469b0f7f72b08bdaaa",
+      "label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "image_size_px": [
+        2304,
+        4096
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164428.jpg",
+      "label_state": "UNANNOTATED",
+      "annotations": []
+    },
+    {
+      "image_id": "IMG_20260529_164501.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164501.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164501.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "218f25749107bd347725078b6ce9fd03a9294e96039c84a1c457af2a838ef85e",
+      "label_sha256": "f85c229cbe0d491a31eac2f4765dc8827a3aecf99ffc50899a950aaf3767282b",
+      "image_size_px": [
+        2248,
+        4000
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164501.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            851.2434159999999,
+            2016.666,
+            1126.884184,
+            2223.078
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164501.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "header",
+          "bbox_xyxy": [
+            942.8876319999999,
+            1756.0000000000002,
+            1073.55488,
+            1990.224
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164501.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "connector",
+          "bbox_xyxy": [
+            843.776684,
+            1693.334,
+            1018.4440359999999,
+            1842.666
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164501.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "switch_button",
+          "bbox_xyxy": [
+            846.4439359999999,
+            1864.8899999999999,
+            940.666608,
+            1981.3339999999998
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164501.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        },
+        {
+          "component_id": "annotation:0005",
+          "class": "crystal",
+          "bbox_xyxy": [
+            889.7786319999999,
+            2206.0,
+            1143.555352,
+            2329.9999999999995
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164501.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 5
+          }
+        },
+        {
+          "component_id": "annotation:0006",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            942.6673280000001,
+            2314.444,
+            1128.00144,
+            2421.556
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164501.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 6
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_164604.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164604.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164604.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "cb0056eac1dd37cc46fd1f5c4b89d2fca87b963e9d110894935a9b7299e47346",
+      "label_sha256": "fbc6eb967e8b114542e1525d33955bb3b07e5ac685d8c5c3b6bd6981aa025db2",
+      "image_size_px": [
+        2304,
+        4096
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1214.59392,
+            1444.2700799999998,
+            1255.059072,
+            1512.927232
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1113.267456,
+            2477.6007680000002,
+            1156.716288,
+            2553.884672
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1227.3626880000002,
+            2467.651584,
+            1262.5194239999998,
+            2556.870656
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1353.7301759999998,
+            2459.858944,
+            1394.85888,
+            2540.455936
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        },
+        {
+          "component_id": "annotation:0005",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1459.7015039999999,
+            2454.550528,
+            1504.47744,
+            2537.138176
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 5
+          }
+        },
+        {
+          "component_id": "annotation:0006",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1558.5408,
+            2455.877632,
+            1602.3214079999998,
+            2535.14752
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 6
+          }
+        },
+        {
+          "component_id": "annotation:0007",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1657.0483200000003,
+            2454.54848,
+            1699.170048,
+            2525.8598399999996
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 7
+          }
+        },
+        {
+          "component_id": "annotation:0008",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1502.528256,
+            2903.717888,
+            1546.57152,
+            2989.877248
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 8
+          }
+        },
+        {
+          "component_id": "annotation:0009",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1111.95072,
+            2670.4855039999998,
+            1157.8625279999999,
+            2757.59104
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 9
+          }
+        },
+        {
+          "component_id": "annotation:0010",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1104.974208,
+            2271.135744,
+            1144.112256,
+            2340.124672
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 10
+          }
+        },
+        {
+          "component_id": "annotation:0011",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1007.13024,
+            2062.841856,
+            1043.2823039999998,
+            2127.18592
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 11
+          }
+        },
+        {
+          "component_id": "annotation:0012",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1202.1569279999999,
+            2160.6850560000003,
+            1238.972544,
+            2226.024448
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 12
+          }
+        },
+        {
+          "component_id": "annotation:0013",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1308.7572480000001,
+            1951.883264,
+            1345.1973120000002,
+            2015.1582720000001
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 13
+          }
+        },
+        {
+          "component_id": "annotation:0014",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1403.9550720000002,
+            1947.648,
+            1437.853824,
+            2002.16576
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 14
+          }
+        },
+        {
+          "component_id": "annotation:0015",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1361.314944,
+            1600.98304,
+            1446.804864,
+            1627.6480000000001
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 15
+          }
+        },
+        {
+          "component_id": "annotation:0016",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1271.3287679999999,
+            1448.1264640000002,
+            1303.676928,
+            1500.592128
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 16
+          }
+        },
+        {
+          "component_id": "annotation:0017",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1506.66048,
+            1297.739776,
+            1748.467584,
+            1649.152
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 17
+          }
+        },
+        {
+          "component_id": "annotation:0018",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1340.199936,
+            2548.0847360000002,
+            1472.942592,
+            2851.328
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 18
+          }
+        },
+        {
+          "component_id": "annotation:0019",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1497.723264,
+            2542.1824,
+            1640.4952320000002,
+            2836.578304
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 19
+          }
+        },
+        {
+          "component_id": "annotation:0020",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1649.935872,
+            2538.6434560000002,
+            1799.198208,
+            2838.347776
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 20
+          }
+        },
+        {
+          "component_id": "annotation:0021",
+          "class": "switch_button",
+          "bbox_xyxy": [
+            1513.2234239999998,
+            2910.869504,
+            1819.853568,
+            3217.50016
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 21
+          }
+        },
+        {
+          "component_id": "annotation:0022",
+          "class": "switch_button",
+          "bbox_xyxy": [
+            1843.9453440000002,
+            2572.455936,
+            2216.900736,
+            2945.4131199999997
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 22
+          }
+        },
+        {
+          "component_id": "annotation:0023",
+          "class": "resistor",
+          "bbox_xyxy": [
+            699.940224,
+            2144.1187840000002,
+            743.078016,
+            2215.8848
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 23
+          }
+        },
+        {
+          "component_id": "annotation:0024",
+          "class": "resistor",
+          "bbox_xyxy": [
+            698.3723520000001,
+            2349.606912,
+            724.647168,
+            2426.8615680000003
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 24
+          }
+        },
+        {
+          "component_id": "annotation:0025",
+          "class": "resistor",
+          "bbox_xyxy": [
+            691.7068800000001,
+            2494.90432,
+            721.903104,
+            2571.76576
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 25
+          }
+        },
+        {
+          "component_id": "annotation:0026",
+          "class": "resistor",
+          "bbox_xyxy": [
+            684.6474240000001,
+            2677.059584,
+            714.8436479999999,
+            2755.489792
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 26
+          }
+        },
+        {
+          "component_id": "annotation:0027",
+          "class": "resistor",
+          "bbox_xyxy": [
+            239.73235200000002,
+            2757.869568,
+            566.584704,
+            3080.093696
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 27
+          }
+        },
+        {
+          "component_id": "annotation:0028",
+          "class": "debug_test_point",
+          "bbox_xyxy": [
+            782.913024,
+            1948.2726400000001,
+            892.84608,
+            2058.205184
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 28
+          }
+        },
+        {
+          "component_id": "annotation:0029",
+          "class": "debug_test_point",
+          "bbox_xyxy": [
+            781.9545599999999,
+            2108.4262400000002,
+            886.399488,
+            2212.870144
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 29
+          }
+        },
+        {
+          "component_id": "annotation:0030",
+          "class": "debug_test_point",
+          "bbox_xyxy": [
+            778.0400639999999,
+            2269.32736,
+            894.014208,
+            2385.301504
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 30
+          }
+        },
+        {
+          "component_id": "annotation:0031",
+          "class": "resistor",
+          "bbox_xyxy": [
+            264.730752,
+            2406.0170239999998,
+            575.842176,
+            2721.757184
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 31
+          }
+        },
+        {
+          "component_id": "annotation:0032",
+          "class": "resistor",
+          "bbox_xyxy": [
+            300.84249600000004,
+            2080.557056,
+            602.6941439999999,
+            2394.445824
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 32
+          }
+        },
+        {
+          "component_id": "annotation:0033",
+          "class": "resistor",
+          "bbox_xyxy": [
+            345.286656,
+            1775.0016,
+            614.73024,
+            2073.14944
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 33
+          }
+        },
+        {
+          "component_id": "annotation:0034",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1367.9735039999998,
+            1999.5381759999998,
+            1568.898432,
+            2151.3891839999997
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 34
+          }
+        },
+        {
+          "component_id": "annotation:0035",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            971.862912,
+            2877.435904,
+            1228.139136,
+            3054.9237759999996
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 35
+          }
+        },
+        {
+          "component_id": "annotation:0036",
+          "class": "led",
+          "bbox_xyxy": [
+            1006.7304960000001,
+            2163.38432,
+            1046.474496,
+            2247.360512
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 36
+          }
+        },
+        {
+          "component_id": "annotation:0037",
+          "class": "led",
+          "bbox_xyxy": [
+            1006.089984,
+            2279.4096640000002,
+            1052.8842240000001,
+            2354.41152
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 37
+          }
+        },
+        {
+          "component_id": "annotation:0038",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1098.718848,
+            1960.1776639999998,
+            1130.1292799999999,
+            2028.76928
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 38
+          }
+        },
+        {
+          "component_id": "annotation:0039",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1099.3593600000002,
+            2062.104576,
+            1137.820032,
+            2135.181312
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 39
+          }
+        },
+        {
+          "component_id": "annotation:0040",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1101.282048,
+            2160.1792,
+            1142.947584,
+            2240.309248
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 40
+          }
+        },
+        {
+          "component_id": "annotation:0041",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1196.79552,
+            2058.8974080000003,
+            1233.334656,
+            2124.281856
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 41
+          }
+        },
+        {
+          "component_id": "annotation:0042",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1192.3084800000001,
+            1950.5643519999999,
+            1228.2048,
+            2021.720064
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 42
+          }
+        },
+        {
+          "component_id": "annotation:0043",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1204.4874240000001,
+            2274.60096,
+            1243.5909120000001,
+            2341.910528
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 43
+          }
+        },
+        {
+          "component_id": "annotation:0044",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1593.5904,
+            1940.9469439999998,
+            1635.898752,
+            2005.049344
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 44
+          }
+        },
+        {
+          "component_id": "annotation:0045",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1503.525888,
+            1946.7161600000002,
+            1532.371968,
+            1994.151936
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 45
+          }
+        },
+        {
+          "component_id": "annotation:0046",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1619.551872,
+            2065.9507200000003,
+            1645.8336,
+            2126.206976
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 46
+          }
+        },
+        {
+          "component_id": "annotation:0047",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1710.5783040000001,
+            2064.0256000000004,
+            1743.2697600000001,
+            2121.71776
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 47
+          }
+        },
+        {
+          "component_id": "annotation:0048",
+          "class": "diode",
+          "bbox_xyxy": [
+            1689.4229760000003,
+            1931.014144,
+            1733.012352,
+            2010.5011200000001
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 48
+          }
+        },
+        {
+          "component_id": "annotation:0049",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1203.2052480000002,
+            2655.0517760000002,
+            1286.538624,
+            2747.359232
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 49
+          }
+        },
+        {
+          "component_id": "annotation:0050",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1405.449216,
+            2899.601408,
+            1452.883968,
+            3000.2442239999996
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 50
+          }
+        },
+        {
+          "component_id": "annotation:0051",
+          "class": "debug_test_point",
+          "bbox_xyxy": [
+            1201.761792,
+            1556.430848,
+            1330.334208,
+            1631.1910400000002
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 51
+          }
+        },
+        {
+          "component_id": "annotation:0052",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1229.8567679999999,
+            1689.524224,
+            1310.810112,
+            1750.4768000000001
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 52
+          }
+        },
+        {
+          "component_id": "annotation:0053",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1151.284608,
+            2360.000512,
+            1223.1901440000001,
+            2430.0011520000003
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 53
+          }
+        },
+        {
+          "component_id": "annotation:0054",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1388.427264,
+            1682.141184,
+            1452.7134720000001,
+            1741.664256
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 54
+          }
+        },
+        {
+          "component_id": "annotation:0055",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1410.571008,
+            1525.23776,
+            1445.33376,
+            1582.3810560000002
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 55
+          }
+        },
+        {
+          "component_id": "annotation:0056",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            1326.33792,
+            2178.0418560000003,
+            1728.8075519999998,
+            2331.129856
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 56
+          }
+        },
+        {
+          "component_id": "annotation:0057",
+          "class": "debug_test_point",
+          "bbox_xyxy": [
+            1637.980416,
+            1694.621696,
+            1752.143616,
+            1808.785408
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 57
+          }
+        },
+        {
+          "component_id": "annotation:0058",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1043.622144,
+            1201.4960640000002,
+            1196.70912,
+            1450.057728
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 58
+          }
+        },
+        {
+          "component_id": "annotation:0059",
+          "class": "header",
+          "bbox_xyxy": [
+            1259.536896,
+            2041.737216,
+            1316.3489280000001,
+            2281.73824
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164604.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 59
+          }
+        }
+      ]
+    },
+    {
+      "image_id": "IMG_20260529_164608.jpg",
+      "image_path": "../external/pcb-component-detection/dataset/images/val/IMG_20260529_164608.jpg",
+      "label_path": "../external/pcb-component-detection/dataset/labels/val/IMG_20260529_164608.txt",
+      "board_id": "BOARD_ID_UNRESOLVED",
+      "board_revision": "BOARD_REVISION_UNRESOLVED",
+      "board_side": "UNKNOWN",
+      "split": "validation",
+      "image_sha256": "6dc24ca92c445036ef72c70728b717479d263b800d4a8e0fcefa0d5a7d90afe1",
+      "label_sha256": "9e23bfab7e5eb8778ea78b504e15e237225d40197188a646185b64808cfae611",
+      "image_size_px": [
+        2304,
+        4096
+      ],
+      "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.jpg",
+      "label_state": "LABELED",
+      "annotations": [
+        {
+          "component_id": "annotation:0001",
+          "class": "header",
+          "bbox_xyxy": [
+            427.37932799999993,
+            2512.1218559999998,
+            502.16486399999997,
+            2783.49824
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 1
+          }
+        },
+        {
+          "component_id": "annotation:0002",
+          "class": "resistor",
+          "bbox_xyxy": [
+            892.2216959999998,
+            2538.000384,
+            946.665216,
+            2631.33184
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 2
+          }
+        },
+        {
+          "component_id": "annotation:0003",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            963.334656,
+            2539.1104,
+            1008.009216,
+            2624.667648
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 3
+          }
+        },
+        {
+          "component_id": "annotation:0004",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1045.556352,
+            2475.776,
+            1244.444544,
+            2765.7768960000003
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 4
+          }
+        },
+        {
+          "component_id": "annotation:0005",
+          "class": "resistor",
+          "bbox_xyxy": [
+            508.88793599999997,
+            1909.1107840000002,
+            548.88768,
+            1971.33312
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 5
+          }
+        },
+        {
+          "component_id": "annotation:0006",
+          "class": "diode",
+          "bbox_xyxy": [
+            504.821376,
+            2003.591168,
+            549.949824,
+            2080.514048
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 6
+          }
+        },
+        {
+          "component_id": "annotation:0007",
+          "class": "resistor",
+          "bbox_xyxy": [
+            687.896064,
+            2006.667264,
+            737.1279360000001,
+            2074.35776
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 7
+          }
+        },
+        {
+          "component_id": "annotation:0008",
+          "class": "resistor",
+          "bbox_xyxy": [
+            783.281664,
+            2003.5891199999999,
+            831.485952,
+            2072.307712
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 8
+          }
+        },
+        {
+          "component_id": "annotation:0009",
+          "class": "resistor",
+          "bbox_xyxy": [
+            882.768384,
+            1999.4849279999999,
+            921.7428480000001,
+            2068.20352
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 9
+          }
+        },
+        {
+          "component_id": "annotation:0010",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1169.9493120000002,
+            1904.101376,
+            1215.0777600000001,
+            1963.5875839999999
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 10
+          }
+        },
+        {
+          "component_id": "annotation:0011",
+          "class": "resistor",
+          "bbox_xyxy": [
+            987.38496,
+            1831.282688,
+            1030.462848,
+            1889.744896
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 11
+          }
+        },
+        {
+          "component_id": "annotation:0012",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1068.409728,
+            1747.177472,
+            1113.538176,
+            1807.691776
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 12
+          }
+        },
+        {
+          "component_id": "annotation:0013",
+          "class": "resistor",
+          "bbox_xyxy": [
+            973.5932159999999,
+            1622.052864,
+            1010.975616,
+            1674.842112
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 13
+          }
+        },
+        {
+          "component_id": "annotation:0014",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1063.282176,
+            1622.052864,
+            1093.506048,
+            1671.376896
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 14
+          }
+        },
+        {
+          "component_id": "annotation:0015",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1055.07648,
+            1511.28064,
+            1087.89696,
+            1561.53856
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 15
+          }
+        },
+        {
+          "component_id": "annotation:0016",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            742.255488,
+            2235.3858560000003,
+            828.40896,
+            2310.25664
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 16
+          }
+        },
+        {
+          "component_id": "annotation:0017",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            911.4865920000001,
+            2231.279616,
+            992.51136,
+            2296.922112
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 17
+          }
+        },
+        {
+          "component_id": "annotation:0018",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            959.6920320000002,
+            1502.0503039999999,
+            1016.103168,
+            1556.40832
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 18
+          }
+        },
+        {
+          "component_id": "annotation:0019",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            911.486592,
+            1914.35776,
+            953.536896,
+            1973.843968
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 19
+          }
+        },
+        {
+          "component_id": "annotation:0020",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            991.48608,
+            1911.283712,
+            1036.614528,
+            1972.822016
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 20
+          }
+        },
+        {
+          "component_id": "annotation:0021",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            993.5389439999999,
+            1995.3827840000001,
+            1038.667392,
+            2061.0252800000003
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 21
+          }
+        },
+        {
+          "component_id": "annotation:0022",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1085.8452479999999,
+            1992.3066880000001,
+            1135.07712,
+            2052.820992
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 22
+          }
+        },
+        {
+          "component_id": "annotation:0023",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1071.783936,
+            1822.932992,
+            1118.665728,
+            1886.666752
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 23
+          }
+        },
+        {
+          "component_id": "annotation:0024",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            991.7763839999999,
+            1749.948416,
+            1018.182528,
+            1807.525888
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 24
+          }
+        },
+        {
+          "component_id": "annotation:0025",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            1084.82112,
+            1909.231616,
+            1122.7703040000001,
+            1971.79392
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 25
+          }
+        },
+        {
+          "component_id": "annotation:0026",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            737.129088,
+            2446.665728,
+            791.48736,
+            2525.6407040000004
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 26
+          }
+        },
+        {
+          "component_id": "annotation:0027",
+          "class": "resistor",
+          "bbox_xyxy": [
+            744.3717119999999,
+            2386.09408,
+            830.518272,
+            2421.159936
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 27
+          }
+        },
+        {
+          "component_id": "annotation:0028",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1380.2054400000002,
+            1504.104448,
+            1423.283328,
+            1556.4103679999998
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 28
+          }
+        },
+        {
+          "component_id": "annotation:0029",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1399.6926720000001,
+            1613.846528,
+            1442.77056,
+            1663.076352
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 29
+          }
+        },
+        {
+          "component_id": "annotation:0030",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1419.179904,
+            1694.8736,
+            1457.1290879999997,
+            1744.103424
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 30
+          }
+        },
+        {
+          "component_id": "annotation:0031",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1443.79584,
+            1839.4869760000001,
+            1483.795584,
+            1898.973184
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 31
+          }
+        },
+        {
+          "component_id": "annotation:0032",
+          "class": "resistor",
+          "bbox_xyxy": [
+            607.89888,
+            1908.20352,
+            643.7952,
+            1964.613632
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 32
+          }
+        },
+        {
+          "component_id": "annotation:0033",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            996.6159359999999,
+            1679.4869760000001,
+            1079.693568,
+            1740.00128
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 33
+          }
+        },
+        {
+          "component_id": "annotation:0034",
+          "class": "led",
+          "bbox_xyxy": [
+            1155.590784,
+            1743.079424,
+            1197.641088,
+            1807.693824
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 34
+          }
+        },
+        {
+          "component_id": "annotation:0035",
+          "class": "led",
+          "bbox_xyxy": [
+            1158.6677759999998,
+            1817.9481600000001,
+            1204.821504,
+            1884.614656
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 35
+          }
+        },
+        {
+          "component_id": "annotation:0036",
+          "class": "debug_test_point",
+          "bbox_xyxy": [
+            1332.867456,
+            1954.3592959999999,
+            1425.3983999999998,
+            2046.892032
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 36
+          }
+        },
+        {
+          "component_id": "annotation:0037",
+          "class": "debug_test_point",
+          "bbox_xyxy": [
+            1318.5239040000001,
+            1828.0611840000001,
+            1407.015936,
+            1916.551168
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 37
+          }
+        },
+        {
+          "component_id": "annotation:0038",
+          "class": "debug_test_point",
+          "bbox_xyxy": [
+            1291.116672,
+            1706.295296,
+            1387.2418559999999,
+            1802.4202240000002
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 38
+          }
+        },
+        {
+          "component_id": "annotation:0039",
+          "class": "debug_test_point",
+          "bbox_xyxy": [
+            906.357888,
+            2380.036096,
+            1008.7499519999999,
+            2476.140544
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 39
+          }
+        },
+        {
+          "component_id": "annotation:0040",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            992.49984,
+            1311.123456,
+            1188.332928,
+            1436.956672
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 40
+          }
+        },
+        {
+          "component_id": "annotation:0041",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            579.165696,
+            1628.2091520000001,
+            910.605312,
+            1761.85344
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 41
+          }
+        },
+        {
+          "component_id": "annotation:0042",
+          "class": "integrated_circuit",
+          "bbox_xyxy": [
+            687.9168000000001,
+            1775.21664,
+            874.167552,
+            1883.20768
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 42
+          }
+        },
+        {
+          "component_id": "annotation:0043",
+          "class": "resistor",
+          "bbox_xyxy": [
+            578.4606719999999,
+            1346.844672,
+            680.2560000000001,
+            1604.53632
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 43
+          }
+        },
+        {
+          "component_id": "annotation:0044",
+          "class": "resistor",
+          "bbox_xyxy": [
+            705.8972160000001,
+            1345.820672,
+            801.282816,
+            1587.873792
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 44
+          }
+        },
+        {
+          "component_id": "annotation:0045",
+          "class": "resistor",
+          "bbox_xyxy": [
+            820.7493119999999,
+            1347.405824,
+            923.129856,
+            1585.5022079999999
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 45
+          }
+        },
+        {
+          "component_id": "annotation:0046",
+          "class": "resistor",
+          "bbox_xyxy": [
+            1602.814464,
+            1694.9698560000002,
+            1848.4853759999999,
+            2058.391552
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 46
+          }
+        },
+        {
+          "component_id": "annotation:0047",
+          "class": "switch_button",
+          "bbox_xyxy": [
+            314.797824,
+            1209.905152,
+            518.370048,
+            1534.9063680000002
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 47
+          }
+        },
+        {
+          "component_id": "annotation:0048",
+          "class": "capacitor",
+          "bbox_xyxy": [
+            600.649344,
+            2005.141504,
+            637.013376,
+            2075.703296
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 48
+          }
+        },
+        {
+          "component_id": "annotation:0049",
+          "class": "resistor",
+          "bbox_xyxy": [
+            377.50003200000003,
+            2164.8752640000002,
+            650.001024,
+            2523.209728
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 49
+          }
+        },
+        {
+          "component_id": "annotation:0050",
+          "class": "header",
+          "bbox_xyxy": [
+            923.750784,
+            1586.960384,
+            968.7502079999999,
+            1891.1252479999998
+          ],
+          "occlusion_state": "UNKNOWN",
+          "small_component": null,
+          "annotation_status": "DRAFT_ANNOTATION",
+          "reviewer": null,
+          "source": "wangshnegqi/pcb-component-detection-dataset-yolo:IMG_20260529_164608.txt",
+          "provenance": {
+            "origin": "source_label_file_not_independently_reviewed",
+            "line_number": 50
+          }
+        }
+      ]
+    }
+  ]
+}

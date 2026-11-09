@@ -1,0 +1,40 @@
+{
+  "fault_component": "R1",
+  "fault_type": "resistance_drift",
+  "scenario_id": "FAULT_R1_RESISTANCE_DRIFT",
+  "analysis_stage": "fault_impact_simulated",
+  "simulation_status": "success",
+  "simulation_engine": "ngspice",
+  "simulation_run_status": {
+    "baseline": "success",
+    "fault": "success"
+  },
+  "connected_candidates": [
+    {
+      "component_ref": "J1",
+      "shared_nets": [
+        "VIN"
+      ],
+      "probe_status": "not_probed",
+      "electrical_change_observed": null,
+      "stress_record": null
+    },
+    {
+      "component_ref": "R2",
+      "shared_nets": [
+        "VOUT"
+      ],
+      "probe_status": "simulated",
+      "electrical_change_observed": true,
+      "stress_record": "component_stress.json"
+    }
+  ],
+  "measured_voltage_nodes": [
+    "VOUT"
+  ],
+  "comparison_json": "data/evaluations/divider/simulation_results/fault_r1_resistance_drift/comparison.json",
+  "comparison_csv": "data/evaluations/divider/simulation_results/fault_r1_resistance_drift/comparison.csv",
+  "component_stress_json": "data/evaluations/divider/simulation_results/fault_r1_resistance_drift/component_stress.json",
+  "component_stress_csv": "data/evaluations/divider/simulation_results/fault_r1_resistance_drift/component_stress.csv",
+  "damage_assessment": "not_performed"
+}
