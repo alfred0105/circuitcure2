@@ -3,5 +3,14 @@ __pycache__/
 weights/*
 !weights/.gitignore
 !weights/README.md
+!weights/any_best.pt
+!weights/external/
+weights/external/*
+!weights/external/pcb-ai-doctor/
+!weights/external/pcb-yolov8s-detection/
+weights/external/pcb-ai-doctor/*
+weights/external/pcb-yolov8s-detection/*
+!weights/external/pcb-ai-doctor/best_v12n.pt
+!weights/external/pcb-yolov8s-detection/best.pt
 data/samples/*
 !data/samples/.gitkeep
