@@ -1,0 +1,100 @@
+tests:
+  ASK_POWER_SOURCE:
+    name: 전원 입력 상태 확인
+    type: question
+    risk_level: none
+    question: 외부 전원이나 배터리 연결 상태가 정상인가요?
+    results:
+      yes: {observations: {POWER_SOURCE_VERIFIED: true}}
+      no: {observations: {POWER_SOURCE_VERIFIED: false}}
+  ASK_BUZZER_EXPECTED_OPERATION:
+    name: 버저 동작 조건 확인
+    type: question
+    risk_level: none
+    question: 현재 상황에서 버저가 원래 울려야 하나요?
+    results:
+      yes: {observations: {BUZZER_EXPECTED_TO_SOUND: true}}
+      no: {observations: {BUZZER_EXPECTED_TO_SOUND: false}}
+  ASK_SWITCH_EXPECTED_OPERATION:
+    name: 스위치 동작 조건 확인
+    type: question
+    risk_level: none
+    question: 해당 버튼이나 스위치를 조작했을 때 이 기능이 동작해야 하나요?
+    results:
+      yes: {observations: {SWITCH_EXPECTED_TO_RESPOND: true}}
+      no: {observations: {SWITCH_EXPECTED_TO_RESPOND: false}}
+  ASK_OTHER_OUTPUTS:
+    name: 다른 기능의 동작 확인
+    type: question
+    risk_level: none
+    question: 문제가 발생한 기능 외에 LED·화면·버저 등 다른 기능은 정상인가요?
+    results:
+      yes: {observations: {OTHER_FUNCTIONS_WORKING: true}}
+      no: {observations: {MULTIPLE_FUNCTIONS_FAILED: true}}
+  ASK_RELAY_EXPECTED_OPERATION:
+    name: 릴레이 동작 조건 확인
+    type: question
+    risk_level: none
+    question: 현재 동작 조건에서 릴레이가 작동해야 하나요?
+    results:
+      yes: {observations: {RELAY_EXPECTED_TO_ACTUATE: true}}
+      no: {observations: {RELAY_EXPECTED_TO_ACTUATE: false}}
+  ASK_LOAD_EXPECTED_OPERATION:
+    name: 외부 부하 상태 확인
+    type: question
+    risk_level: none
+    question: 릴레이가 동작할 때 연결된 부하도 작동해야 하나요?
+    results:
+      yes: {observations: {LOAD_EXPECTED_TO_WORK: true}}
+      no: {observations: {LOAD_EXPECTED_TO_WORK: false}}
+  ASK_POWER_CYCLE:
+    name: 전원 재시작 양상 확인
+    type: question
+    risk_level: none
+    question: 전원이 꺼졌다 다시 켜지는 현상이 반복되나요?
+    results:
+      yes: {observations: {REPEATED_POWER_CYCLE: true}}
+      no: {observations: {REPEATED_POWER_CYCLE: false}}
+  ASK_TIMING_EXPECTATION:
+    name: 타이밍 이상 확인
+    type: question
+    risk_level: none
+    question: 주기·속도·시간 오차가 평소와 달라졌나요?
+    results:
+      yes: {observations: {TIMING_UNSTABLE: true}}
+      no: {observations: {TIMING_UNSTABLE: false}}
+  ASK_MOVEMENT_EFFECT:
+    name: 움직임에 따른 변화 확인
+    type: question
+    risk_level: none
+    question: 기판이나 커넥터를 움직일 때 증상이 달라지나요?
+    results:
+      yes: {observations: {CONNECTOR_MOVEMENT_AFFECTS: true}}
+      no: {observations: {CONNECTOR_MOVEMENT_AFFECTS: false}}
+  INSPECT_POWER_CONNECTOR:
+    name: 전원 커넥터 외관 확인
+    type: visual_inspection
+    risk_level: low
+    requires_power_off: true
+    question: 전원을 안전하게 차단한 뒤 전원 커넥터의 헐거움·변형·오염을 눈으로 확인하세요.
+    results:
+      damage_found: {observations: {VISIBLE_CONNECTOR_DAMAGE: true}}
+      no_visible_damage: {observations: {VISIBLE_CONNECTOR_DAMAGE: false}}
+  INSPECT_LOCAL_HEATING:
+    name: 발열 부위 외관 확인
+    type: visual_inspection
+    risk_level: low
+    requires_power_off: true
+    question: 전원을 차단하고 식힌 뒤 변색·그을림·부품 손상을 확인하세요.
+    results:
+      damage_found: {observations: {VISIBLE_HEAT_DAMAGE: true}}
+      no_visible_damage: {observations: {VISIBLE_HEAT_DAMAGE: false}}
+  INSPECT_VISIBLE_SOLDER_AND_TRACES:
+    name: 납땜·패턴 외관 확인
+    type: visual_inspection
+    risk_level: low
+    requires_power_off: true
+    question: 전원을 차단하고 저장 에너지가 안전하게 제거된 뒤 납땜 균열·패턴 손상을 육안으로 확인하세요.
+    results:
+      damage_found: {observations: {VISIBLE_SOLDER_DAMAGE: true}}
+      no_visible_damage: {observations: {VISIBLE_SOLDER_DAMAGE: false}}

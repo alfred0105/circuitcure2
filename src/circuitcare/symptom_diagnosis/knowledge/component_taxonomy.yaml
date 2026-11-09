@@ -1,0 +1,28 @@
+component_types:
+  battery: [power, protection]
+  switch: [control]
+  buzzer: [output]
+  capacitor: [power, protection]
+  clock: [control]
+  connector: [power, input_output]
+  diode: [power, protection]
+  display: [output]
+  fuse: [power, protection]
+  heatsink: [protection]
+  ic: [power, control, driver, output]
+  inductor: [power]
+  led: [output]
+  potentiometer: [control, input]
+  relay: [driver, output]
+  resistor: [control, protection, driver]
+  transformer: [power]
+  transistor: [driver, power]
+system_faults:
+  - EXTERNAL_SUPPLY_FAILURE
+  - LOAD_FAILURE
+  - SOLDER_JOINT_FAILURE
+  - PCB_TRACE_OPEN
+  - PCB_TRACE_SHORT
+  - SOFTWARE_OR_CONFIGURATION_FAILURE
+  - COMPOUND_FAILURE
+  - UNKNOWN_UNREGISTERED_FAILURE
