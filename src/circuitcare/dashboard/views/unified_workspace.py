@@ -219,9 +219,9 @@ def _style(st: Any) -> None:
     header[data-testid="stHeader"], [data-testid="stToolbar"] { display:none !important; }
     [data-testid="stAppViewContainer"] > .main { margin-top:0 !important; padding-top:0 !important; }
     [data-testid="stMainBlockContainer"] { max-width:none !important; padding:0 2rem .9rem !important; overflow:visible; }
-    .st-key-cc_workbench_top_navigation { position:relative; z-index:2; overflow:visible; margin:0 0 .2rem; padding:0; }
-    .st-key-cc_workbench_brand_and_steps { gap:.35rem; }
-    .st-key-cc_workbench_stepper { margin-top:.2rem; margin-bottom:0; }
+    .st-key-cc_workbench_top_navigation { position:relative; top:-.35rem; z-index:2; overflow:visible; margin:0 0 .2rem; padding:0; }
+    .st-key-cc_workbench_brand_and_steps { gap:.5rem; margin-bottom:-.35rem; }
+    .st-key-cc_workbench_stepper { margin-top:.25rem; margin-bottom:0; }
     .st-key-cc_workbench_stepper [data-testid="stMarkdownContainer"] p { margin:.1rem 0; line-height:1.25; }
     .st-key-cc_workbench_body h4 { margin:.2rem 0 .25rem; }
     .cc-wb-header { display:flex; align-items:center; gap:.6rem; color:#e9eef4; font-weight:700; font-size:1.1rem; margin:0; line-height:1.2; }
