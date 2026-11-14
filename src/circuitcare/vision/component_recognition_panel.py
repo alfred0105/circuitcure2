@@ -392,8 +392,15 @@ def merge_ai_review_rows(current_rows: list[dict], worker_rows: list[dict]) -> l
 
 def _apply_qwen_proposal_to_row(row: dict, proposal: dict) -> bool:
     """Apply an unconfirmed Qwen class as an AI proposal, never as user approval."""
-    if (row.get("상태") in {"확인", "제외"} or row.get("user_edited")
-            or row.get("user_confirmed") or proposal.get("response_status") == "NO_RESPONSE"):
+    # A hand-drawn/moved box is a user-edited observation, not a user-confirmed
+    # class. Let Qwen suggest its type while preserving geometry and explicit
+    # class decisions.
+    if (row.get("상태") in {"확인", "제외"}
+            or any(row.get(key) for key in (
+                "user_confirmed", "user_confirmed_class", "training_label_user_confirmed",
+                "confirmed_base_class", "user_component_type_id",
+            ))
+            or proposal.get("response_status") == "NO_RESPONSE"):
         return False
     proposed = normalize_qwen_class(proposal.get("proposed_class"))
     evidence = str(proposal.get("visual_evidence") or proposal.get("evidence") or "").strip()
@@ -929,7 +936,10 @@ def render_component_recognition_panel(st_api: Any, *, image_bytes: bytes, proje
     selected_row = next((row for row in rows if str(row.get("component_id") or "") == selected_id
                          and row.get("상태") != "제외"), None)
     if selected_row:
-        st_api.caption(f"Qwen 분석 대상 · {selected_id} · {selected_row.get('소자 종류', 'unknown')}")
+        visible_rows = [row for row in rows if row.get("상태") != "제외"]
+        box_number = next((index + 1 for index, row in enumerate(visible_rows)
+                           if str(row.get("component_id")) == selected_id), None)
+        st_api.caption(f"Qwen 분석 대상 · 박스 {box_number or '?'} · {selected_row.get('소자 종류', 'unknown')}")
         st_api.caption("선택 박스와 주변 실크스크린·확보된 OCR 후보를 함께 참고해 종류를 추정합니다. 이미지 해석은 오래 걸릴 수 있으며 결과는 사용자 확인 전까지 미확정입니다.")
     else:
         st_api.info("PCB에서 소자 박스를 선택하면 해당 박스의 종류만 Qwen으로 확인할 수 있습니다.")
@@ -1117,7 +1127,9 @@ def render_component_recognition_panel(st_api: Any, *, image_bytes: bytes, proje
                 if target is None or target.get("상태") == "제외":
                     continue
                 base_class = proposal.get("proposed_base_class", proposal.get("proposed_class", "unknown"))
-                title = f"{target['component_id']} · YOLO {target.get('소자 종류', 'unknown')} → Qwen {base_class}"
+                box_number = next((box_index + 1 for box_index, row in enumerate(visible_rows)
+                                   if str(row.get("component_id")) == str(target.get("component_id"))), "?")
+                title = f"박스 {box_number} · YOLO {target.get('소자 종류', 'unknown')} → Qwen {base_class}"
                 if proposal.get("proposed_subtype"):
                     title += f" / {proposal['proposed_subtype']}"
                 st_api.markdown(f"**{title}** · {proposal.get('confidence', 0) * 100:.0f}/100 · 사용자 확인 필요")

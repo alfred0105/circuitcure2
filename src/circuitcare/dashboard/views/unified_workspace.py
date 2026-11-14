@@ -443,11 +443,7 @@ def _prepare_photo_component_snapshot(
         project_id=project.project_id, board_id=project.board_id or "", board_side=side,
         component_id=str(row.get("component_id") or f"auto-{review_hash}-{index + 1}"),
         component_type=str(review_taxonomy(row)["effective_class"]),
-        display_label=(f"{row['user_component_type_name']} · {review_taxonomy(row)['effective_class']}"
-                       if row.get("user_component_type_name") else
-                       f"AI 제안 · {review_taxonomy(row)['effective_class']}" if row.get("source") == "qwen_suggestion"
-                       else f"수동 · {review_taxonomy(row)['effective_class']}" if row.get("source") == "manual"
-                       else f"{index + 1} · {review_taxonomy(row)['effective_class']}"),
+        display_label=f"박스 {index + 1} · {row.get('user_component_type_name') or review_taxonomy(row)['effective_class']}",
         canonical_frame_id=photo_id, coordinate_frame="SOURCE_PHOTO_PIXEL",
         bbox_xyxy=(float(row["x1"]), float(row["y1"]), float(row["x2"]), float(row["y2"])),
         polygon_xy=(), source_backend_photo_ids=(photo_id,), observation_ids=(),
@@ -2505,19 +2501,11 @@ def _render_workbench_shell_body(st: Any, project: ProjectContext) -> None:
                 active = [row for row in board_registry.get("components", [])
                           if isinstance(row, dict) and row.get("presence_status") != "EXCLUDED"
                           and row.get("source_components")]
-                needs_type_confirmation = [row for row in active
-                    if str(row.get("component_type") or "unknown") != "unknown"
-                    and row.get("presence_status") != "CONFIRMED"]
-                if needs_type_confirmation:
-                    st.warning(
-                        f"종류가 지정된 소자 {len(needs_type_confirmation)}개가 아직 사용자 확인 상태가 아닙니다. "
-                        "각 소자의 검수 상태를 ‘확인’으로 저장한 뒤 진행해 주세요."
-                    )
                 _render_component_inspector(st, project, preview, compact=True, board_registry=board_registry)
                 if len(active) == 0:
                     st.warning("유효한 소자 관측이 없습니다. 사진을 다시 탐지하거나 직접 박스를 추가해 주세요.")
                 if st.button("검수 완료 · 고장 질문으로 진행", type="primary",
-                             disabled=preview or len(active) == 0 or bool(needs_type_confirmation),
+                             disabled=preview or len(active) == 0,
                              key=f"cc_wf_review_next_{project.project_id}"):
                     for state_key in list(st.session_state.keys()):
                         prefix = f"cc_component_review_rows_{project.project_id}_"

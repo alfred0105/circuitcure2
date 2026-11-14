@@ -408,11 +408,16 @@ def render_inspection_panel(
             else:
                 component_id = selected_component.component_id
                 board_component_id = str(selected_component.board_component_id or component_id)
+                box_index = next((index + 1 for index, item in enumerate(components)
+                                  if item.component_id == component_id), None)
+                box_label = (selected_component.display_label.split(" · ", 1)[0]
+                             if selected_component.display_label and selected_component.display_label.startswith("박스 ")
+                             else f"박스 {box_index}" if box_index is not None else "선택 박스")
                 compact_rows_key = review_keys(review_scope)[1] if review_scope else None
                 compact_review_row = next((row for row in st.session_state.get(compact_rows_key, [])
                                            if row.get("component_id") == component_id), {}) if compact_rows_key else {}
                 shown_type = compact_review_row.get("user_component_type_name") or selected_component.component_type
-                st.markdown(f"**{selected_component.reference_designators[0] if selected_component.reference_designators else component_id}** · {shown_type}")
+                st.markdown(f"**{box_label}** · {shown_type}")
                 if selected_component.ocr_marking:
                     st.caption(f"각인 후보 · {selected_component.ocr_marking}")
                 if review_scope and review_image_bytes is not None:
@@ -621,7 +626,12 @@ def render_inspection_panel(
             current_type = selected_component.component_type
             current_marking = edit.get("ocr_marking", selected_component.ocr_marking or "")
             current_value = edit.get("component_info", selected_component.component_info or "")
-            st.caption(f"부품 ID · {selected_component.component_id}")
+            box_index = next((index + 1 for index, item in enumerate(components)
+                              if item.component_id == selected_component.component_id), None)
+            box_label = (selected_component.display_label.split(" · ", 1)[0]
+                         if selected_component.display_label and selected_component.display_label.startswith("박스 ")
+                         else f"박스 {box_index}" if box_index is not None else "선택 박스")
+            st.caption(box_label)
             inventory_item = inventory.setdefault(selected_component.component_id, {
                 "presence_status": "UNCONFIRMED", "component_type_status": "UNCONFIRMED",
                 "part_identity_status": "UNCONFIRMED", "confirmed_functional_roles": [],
