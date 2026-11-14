@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from circuitcare.datasheet.evaluation import score_extractions
 from circuitcare.fault_ai.evaluation import score_fault_cases, score_fault_proposals, score_fault_rankings
 from circuitcare.fault_ai.fault_catalog import generate_rule_candidates
@@ -13,6 +15,7 @@ from circuitcare.local_llm import OllamaClient
 from circuitcare.netlist import load_netlist
 
 ROOT = Path(__file__).resolve().parents[1]
+pytestmark = pytest.mark.optional_circuit
 
 
 def _demo():

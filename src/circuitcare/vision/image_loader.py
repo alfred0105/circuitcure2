@@ -42,15 +42,27 @@ def load_board_image(data: bytes, *, max_file_bytes: int = MAX_FILE_BYTES,
         raise ImageLoadError("이미지 파일이 비어 있습니다.")
     if len(data) > max_file_bytes:
         raise ImageLoadError(f"이미지 파일은 {max_file_bytes // (1024 * 1024)} MB 이하만 지원합니다.")
+    if max_edge < 1:
+        raise ValueError("max_edge는 양수여야 합니다.")
     global _IMAGE_CACHE_HITS, _IMAGE_CACHE_MISSES
     digest = hashlib.sha256(data).hexdigest()
-    cache_key = (digest, max_pixels, max_edge)
+    # Keep one canonical decode per image at the normal inference resolution.
+    # Intake validates at 2400px, while the preview asks for 720px; putting
+    # max_edge in the cache key used to decode the same upload a second time.
+    cache_edge = max(MAX_EDGE, max_edge)
+    cache_key = (digest, max_pixels, cache_edge)
     if cache_key in _IMAGE_CACHE:
         _IMAGE_CACHE_HITS += 1
         _IMAGE_CACHE.move_to_end(cache_key)
         cached = _IMAGE_CACHE[cache_key]
-        return BoardImage(cached.image.copy(), cached.sha256, cached.original_size,
-                          cached.processed_size, cached.scale_xy, cached.format)
+        image = cached.image.copy()
+        if max_edge < max(image.size):
+            image.thumbnail((max_edge, max_edge), Image.Resampling.LANCZOS)
+        processed_size = image.size
+        return BoardImage(image, cached.sha256, cached.original_size,
+                          processed_size,
+                          (processed_size[0] / cached.original_size[0],
+                           processed_size[1] / cached.original_size[1]), cached.format)
     _IMAGE_CACHE_MISSES += 1
     try:
         with warnings.catch_warnings():
@@ -67,20 +79,22 @@ def load_board_image(data: bytes, *, max_file_bytes: int = MAX_FILE_BYTES,
             Image.DecompressionBombWarning) as exc:
         raise ImageLoadError("이미지를 읽을 수 없습니다. 손상되었거나 허용 크기를 초과했는지 확인하세요.") from exc
 
-    if max_edge < 1:
-        raise ValueError("max_edge는 양수여야 합니다.")
-    image.thumbnail((max_edge, max_edge), Image.Resampling.LANCZOS)
-    processed_size = image.size
-    result = BoardImage(
-        image=image,
+    image.thumbnail((cache_edge, cache_edge), Image.Resampling.LANCZOS)
+    canonical_size = image.size
+    canonical = BoardImage(
+        image=image.copy(),
         sha256=digest,
         original_size=original_size,
-        processed_size=processed_size,
-        scale_xy=(processed_size[0] / original_size[0], processed_size[1] / original_size[1]),
+        processed_size=canonical_size,
+        scale_xy=(canonical_size[0] / original_size[0], canonical_size[1] / original_size[1]),
         format=image_format,
     )
-    _IMAGE_CACHE[cache_key] = BoardImage(image.copy(), digest, original_size,
-                                         processed_size, result.scale_xy, image_format)
+    _IMAGE_CACHE[cache_key] = canonical
     while len(_IMAGE_CACHE) > _IMAGE_CACHE_LIMIT:
         _IMAGE_CACHE.popitem(last=False)
-    return result
+    if max_edge < max(image.size):
+        image.thumbnail((max_edge, max_edge), Image.Resampling.LANCZOS)
+    processed_size = image.size
+    return BoardImage(image, digest, original_size, processed_size,
+                      (processed_size[0] / original_size[0],
+                       processed_size[1] / original_size[1]), image_format)

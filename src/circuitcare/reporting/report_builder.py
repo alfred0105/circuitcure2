@@ -6,6 +6,8 @@ import hashlib
 import json
 import platform
 import re
+import mimetypes
+from dataclasses import asdict, is_dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -15,6 +17,131 @@ from circuitcare.workspace.measurement_provenance import (
     measurement_source_class,
     normalize_measurements,
 )
+
+
+def build_pcb_diagnostic_snapshot(*, root: Path, project: Any, registry: dict[str, Any],
+                                 analysis_snapshot: dict[str, Any], photos: list[dict[str, Any]],
+                                 selected_board_component_id: str | None = None,
+                                 candidate_strategy: str = "baseline") -> dict[str, Any]:
+    """Build an export snapshot from the current PCB analysis state without rerunning it."""
+    from datetime import datetime, timezone
+
+    record = analysis_snapshot.get("record", {})
+    result = analysis_snapshot.get("result") if record.get("status") == "CURRENT" else None
+    raw_measurements = analysis_snapshot.get("measurements", [])
+    raw_measurements = [row.to_dict() if hasattr(row, "to_dict") else asdict(row) if is_dataclass(row)
+                        else dict(row) for row in raw_measurements]
+    # PCB MeasurementRecord uses component/target identity instead of a circuit
+    # node. Adapt it to the report hash contract without dropping its provenance.
+    measurements = []
+    for row in raw_measurements:
+        node = (row.get("node") or row.get("measurement_target") or row.get("measurement_location")
+                or row.get("board_component_id") or row.get("component_id") or row.get("measurement_id"))
+        if not node or "value" not in row:
+            continue
+        measurements.append({**row, "node": str(node),
+                             "source": row.get("source") or "unknown"})
+    measurements = normalize_measurements(measurements)
+    photo_rows = []
+    photo_artifacts = []
+    for image_record in project.image_records:
+        raw = next((item.get("data") for item in photos
+                    if item.get("image_id") == image_record.image_id), None)
+        digest = image_record.content_sha256 or (hashlib.sha256(raw).hexdigest() if isinstance(raw, bytes) else None)
+        suffix = Path(image_record.filename or "").suffix.lower()
+        if suffix not in {".png", ".jpg", ".jpeg", ".webp", ".bmp", ".tif", ".tiff"}:
+            suffix = mimetypes.guess_extension(image_record.media_type or "") or ".img"
+        archive_path = f"photos/{hashlib.sha256(image_record.image_id.encode()).hexdigest()[:12]}{suffix}"
+        photo_rows.append({"photo_id": image_record.image_id, "filename": image_record.filename,
+                           "side": image_record.side, "capture_type": image_record.capture_type,
+                           "media_type": image_record.media_type, "sha256": digest,
+                           "dimensions": list(image_record.image_dimensions or ()),
+                           "bundle_path": archive_path if isinstance(raw, bytes) else None,
+                           "bundle_included": False})
+        if isinstance(raw, bytes):
+            photo_artifacts.append({"archive_path": archive_path, "data": raw,
+                                    "photo_id": image_record.image_id, "sha256": hashlib.sha256(raw).hexdigest()})
+    if isinstance(result, dict):
+        if candidate_strategy == "evidence_v1":
+            strategy_rows = result.get("evidence_v1", {}).get("component_candidates", [])
+        elif candidate_strategy == "candidate_fusion_v1":
+            strategy_rows = result.get("candidate_fusion", {}).get("top_candidates", [])
+        else:
+            candidate_strategy = "baseline"
+            strategy_rows = result.get("component_candidates", [])
+        candidates = [row for row in strategy_rows if isinstance(row, dict)][:3]             if isinstance(strategy_rows, list) else []
+    else:
+        candidate_strategy, candidates = "baseline", []
+    result_snapshot = ({key: result.get(key) for key in (
+        "status", "hypotheses", "hypothesis_groups", "next_tests", "measurement_evidence",
+        "matched_rules", "functional_blocks", "llm_assist", "llm_component_explanations",
+        "llm_unverified_suggestions", "score_semantics", "qwen_fault_proposals",
+        "candidate_fusion", "evidence_v1", "qwen_run_metadata", "pcb_context_summary", "user_suspicions",
+    ) if key in result} | {"component_candidates": candidates,
+                            "display_candidate_strategy": candidate_strategy}) if isinstance(result, dict) else None
+    symptoms = list(analysis_snapshot.get("symptoms", []))
+    component_rows = list(registry.get("components", []))
+    board_id = project.board_id or ""
+    workspace = {"workspace_id": project.project_id, "board_id": board_id,
+                 "validation_status": "PCB_WORKFLOW", "circuit_id": None,
+                 "input_hashes": {"registry_version": registry.get("version")}}
+    evidence = [{"evidence_id": "EV-PCB", "evidence_type": "PCB_PHOTO_REFERENCE",
+                 "verification_status": "HASHED_REFERENCE" if photo_rows else "NOT_EVALUATED",
+                 "source_artifact": None, "circuit_hash": None, "scenario_id": None}]
+    if measurements:
+        evidence.append({"evidence_id": "EV-MEAS", "evidence_type": "MEASUREMENT_RECORDS",
+                         "verification_status": "RECORDED_NOT_AUTOMATICALLY_CONFIRMED",
+                         "source_artifact": None, "circuit_hash": None, "scenario_id": None})
+    if candidates:
+        evidence.append({"evidence_id": "EV-DIAG", "evidence_type": "CURRENT_DIAGNOSIS_CANDIDATES",
+                         "verification_status": "CURRENT_ANALYSIS" if result else "NOT_EVALUATED",
+                         "source_artifact": None, "circuit_hash": None, "scenario_id": None})
+    return {
+        "schema_version": "circuitcare-pcb-diagnosis-report-v1",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "workspace": workspace,
+        "circuit": {"name": project.project_id, "hash": None, "component_count": len(component_rows),
+                    "net_count": 0, "components": {}, "nets": []},
+        "fault_or_symptom": {"mode": "PCB_SYMPTOM", "symptom": analysis_snapshot.get("symptom_text", ""),
+                             "component_ref": selected_board_component_id, "fault_type": None,
+                             "observations": measurements, "observation_classification": "PCB_MEASUREMENTS"},
+        "measurement_context": {"status": "RECORDED" if measurements else "NOT_EVALUATED",
+                                 "measurement_count": len(measurements),
+                                 "measurement_set_sha256": measurement_set_sha256(measurements)},
+        "diagnosis_context": {"status": record.get("status", "NOT_RUN"),
+                              "scope": getattr(analysis_snapshot.get("scope"), "to_dict", lambda: {})(),
+                              "fingerprints": getattr(analysis_snapshot.get("fingerprints"), "to_dict", lambda: {})(),
+                              "reason": record.get("reason")},
+        "diagnosis": {"status": "NOT_EVALUATED"},
+        "fault_influence": {"status": record.get("status", "NOT_RUN"),
+                            "hypotheses": candidates,
+                            "hypothesis_groups": result.get("hypothesis_groups", {}) if result else {},
+                            "next_tests": result.get("next_tests", []) if result else []},
+        "recommended_inspection": {"status": "AVAILABLE" if result else "NOT_EVALUATED",
+                                   "ranking": result.get("next_tests", []) if result else []},
+        "spice_verification": {"status": "NOT_APPLICABLE", "source": "PCB_PHOTO_WORKFLOW",
+                               "scenario_id": None, "comparison": None},
+        "secondary_damage_risk": {"status": "NOT_EVALUATED", "damage_confirmed": False},
+        "evidence": evidence,
+        "findings": [],
+                        "limitations": ["후보 순위는 보정된 고장 확률이 아닙니다.",
+                        "원본 사진은 Evidence Bundle에만 포함되며 JSON·Markdown·HTML에는 해시 참조가 포함됩니다.",
+                        "측정 기록은 기록 사실이며 별도 검증 조건이 충족되지 않으면 판정 근거로 확정되지 않습니다."],
+        "pcb_context": {"board_id": board_id, "registry_version": registry.get("version"),
+                        "analysis_status": record.get("status", "NOT_RUN"),
+                        "analysis_scope": getattr(analysis_snapshot.get("scope"), "to_dict", lambda: {})(),
+                        "analysis_fingerprints": getattr(analysis_snapshot.get("fingerprints"), "to_dict", lambda: {})(),
+                        "selected_board_component_id": selected_board_component_id,
+                        "photos": photo_rows, "components": component_rows,
+                        "symptoms": symptoms, "measurements": measurements,
+                        "top3_candidates": candidates, "candidate_strategy": candidate_strategy,
+                        "current_result": result_snapshot,
+                        "photo_artifacts": photo_artifacts},
+        "reproducibility": {"git_sha": _git_sha(root), "python": platform.python_version(),
+                            "platform": platform.platform(), "workspace_id": project.project_id,
+                            "analysis_timestamp": datetime.now(timezone.utc).isoformat(),
+                            "model_version": None, "prompt_version": None},
+    }
 
 
 def _git_sha(root: Path) -> str | None:

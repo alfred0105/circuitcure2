@@ -19,6 +19,7 @@ from circuitcare.reporting.exporters import (
 )
 from circuitcare.reporting.report_builder import (
     _git_sha,
+    build_pcb_diagnostic_snapshot,
     build_diagnostic_snapshot,
     classify_parameter_grid_coverage,
 )
@@ -41,6 +42,7 @@ from circuitcare.workspace.simulation_context import (
 )
 from circuitcare.workspace.state_validator import stale_analysis_records
 from circuitcare.workspace.workflow import workflow_steps
+from circuitcare.frontend.models import ImageRecord, ProjectContext
 
 
 def _report(tmp_path: Path) -> dict:
@@ -151,6 +153,57 @@ def test_report_snapshot_portable_paths_and_simulated_observation_are_labelled(t
     serialized = export_json(report)
     assert "operator private memo" not in serialized
     assert "/Users/alice/private" not in serialized
+
+
+def test_pcb_report_exports_current_board_snapshot_and_validates_bundle(tmp_path: Path) -> None:
+    project = ProjectContext("pcb-project", "board-1",
+                              image_records=(ImageRecord("front-1", side="front", filename="front.png"),))
+    image = b"pcb-image-bytes"
+    result = {"component_candidates": [{"board_component_id": "bc-1", "fault_id": "open_circuit",
+                                        "visual_status": "SUSPECTED"}]}
+    snapshot = build_pcb_diagnostic_snapshot(
+        root=tmp_path, project=project,
+        registry={"version": "registry:v3", "components": [{"board_component_id": "bc-1"}]},
+        analysis_snapshot={"record": {"status": "CURRENT"}, "result": result,
+                           "symptoms": ["NO_OUTPUT"], "symptom_text": "출력이 없음",
+                           "measurements": []},
+        photos=[{"image_id": "front-1", "data": image}],
+        selected_board_component_id="bc-1",
+    )
+    assert validate_report(snapshot) == []
+    assert snapshot["pcb_context"]["photos"][0]["sha256"] == __import__("hashlib").sha256(image).hexdigest()
+    assert snapshot["pcb_context"]["top3_candidates"][0]["board_component_id"] == "bc-1"
+    assert "PCB 진단 Snapshot" in export_markdown(snapshot)
+    assert "registry:v3" in export_html(snapshot)
+    assert "photo_artifacts" not in export_json(snapshot)
+    bundle = export_bundle(snapshot, root=tmp_path)
+    manifest = verify_bundle(bundle)
+    assert "diagnosis.json" in manifest["artifacts"]
+    assert any(name.startswith("photos/") for name in manifest["artifacts"])
+
+
+def test_pcb_report_measurement_hash_tracks_current_measurements_and_tampering(tmp_path: Path) -> None:
+    project = ProjectContext("pcb-project", "board-1",
+                              image_records=(ImageRecord("front-1", side="front", filename="front.png"),))
+    measurement = {"measurement_id": "m-1", "component_id": "bc-1", "board_component_id": "bc-1",
+                   "measurement_type": "resistance", "value": 12.0, "unit": "ohm",
+                   "source": "user_measurement", "measurement_target": "R1 terminals"}
+    snapshot = build_pcb_diagnostic_snapshot(
+        root=tmp_path, project=project, registry={"components": []},
+        analysis_snapshot={"record": {"status": "CURRENT"}, "result": {"component_candidates": []},
+                           "measurements": [measurement]}, photos=[],
+    )
+    assert snapshot["fault_or_symptom"]["observations"] == snapshot["pcb_context"]["measurements"]
+    assert validate_report(snapshot) == []
+    modified = __import__("copy").deepcopy(snapshot)
+    modified["fault_or_symptom"]["observations"][0]["value"] = 99.0
+    assert "MEASUREMENT_DIAGNOSIS_MISMATCH" in validate_report(modified)
+    deleted = __import__("copy").deepcopy(snapshot)
+    deleted["fault_or_symptom"]["observations"] = []
+    assert "MEASUREMENT_DIAGNOSIS_MISMATCH" in validate_report(deleted)
+    context_modified = __import__("copy").deepcopy(snapshot)
+    context_modified["pcb_context"]["measurements"][0]["value"] = 77.0
+    assert "MEASUREMENT_PCB_CONTEXT_MISMATCH" in validate_report(context_modified)
 
 
 def test_report_snapshot_uses_verified_source_file_digest_not_reserialized_object(tmp_path: Path) -> None:
@@ -361,7 +414,7 @@ def test_live_ngspice_result_manifest_is_verified_then_detects_tamper(tmp_path: 
         "--spice-mapping", case["mapping"], "--output", str(output), "--simulate", "--probes", case["probes"],
         "--ratings", case["ratings"], "--assess-risk"]
     completed = subprocess.run(command, check=False, cwd=root, capture_output=True, text=True, timeout=120)
-    from circuitcare.ui import _validate_live_result
+    from circuitcare.services.simulation_service import _validate_live_result
     verified_dir = _validate_live_result(completed, output, "R1", "resistance_drift", case=case, fault_value="10k")
     fingerprint = build_simulation_fingerprint(netlist=root / case["netlist"], spice_deck=root / case["base"],
         component_mapping=root / case["mapping"], probes=root / case["probes"],
@@ -426,24 +479,17 @@ def test_bundle_verifier_rejects_duplicate_and_traversal_paths() -> None:
         verify_bundle(traversal.getvalue())
 
 
-def test_streamlit_app_keeps_original_tabs_and_displays_workspace_reports() -> None:
+def test_streamlit_app_uses_photo_diagnosis_entry_only() -> None:
     pytest.importorskip("streamlit")
     from streamlit.testing.v1 import AppTest
 
     script = Path(__file__).resolve().parents[1] / "src/circuitcare/ui.py"
     app = AppTest.from_file(str(script), default_timeout=30).run()
     assert not app.exception
-    assert any("출처 확인 필요" in item.value for item in app.markdown)
-    assert app.session_state["active_analysis_view"] == "회로도 Workbench"
-    next(item for item in app.button if item.label == "AI 성능 평가").click().run()
-    assert not app.exception
-    assert app.session_state["active_analysis_view"] == "AI 성능 평가"
-    next(item for item in app.radio if item.key == "main_area").set_value("보고서").run()
-    assert any(button.label == "Evidence Bundle ZIP" for button in app.download_button)
-    selector = next(item for item in app.selectbox if item.key == "case_name")
-    selector.select("KiCad XML 업로드 (연결 그래프 전용)").run()
-    assert not app.exception
-    assert any("KiCad XML을 올리면" in item.value for item in app.info)
+    assert any("PCB 사진으로 고장 원인 찾기" in item.value for item in app.markdown)
+    assert len(app.file_uploader) == 1
+    assert any(item.label == "분석 시작" and item.disabled for item in app.button)
+    assert "active_analysis_view" not in app.session_state
 
 
 def test_git_sha_reads_checkout_metadata_without_subprocess(tmp_path, monkeypatch):
@@ -458,3 +504,18 @@ def test_git_sha_reads_checkout_metadata_without_subprocess(tmp_path, monkeypatc
 
     monkeypatch.setattr("subprocess.run", reject_subprocess)
     assert _git_sha(tmp_path) == sha
+
+
+def test_pcb_report_uses_selected_candidate_strategy_without_mutating_baseline(tmp_path: Path) -> None:
+    project = ProjectContext("pcb-project", "board-1")
+    result = {"component_candidates": [{"component_id": "bc-base", "fault_id": "F1"}],
+              "evidence_v1": {"component_candidates": [{"component_id": "bc-evidence", "fault_id": "F2"}]},
+              "candidate_fusion": {"top_candidates": [{"component_id": "bc-qwen", "fault_id": "F3"}]}}
+    snapshot = build_pcb_diagnostic_snapshot(
+        root=tmp_path, project=project, registry={"components": []},
+        analysis_snapshot={"record": {"status": "CURRENT"}, "result": result, "measurements": []},
+        photos=[], candidate_strategy="candidate_fusion_v1",
+    )
+    assert snapshot["pcb_context"]["candidate_strategy"] == "candidate_fusion_v1"
+    assert [row["component_id"] for row in snapshot["pcb_context"]["top3_candidates"]] == ["bc-qwen"]
+    assert result["component_candidates"][0]["component_id"] == "bc-base"

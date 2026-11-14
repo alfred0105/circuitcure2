@@ -2,17 +2,20 @@ import subprocess
 
 import pytest
 
-from circuitcare.ui import (
-    SimulationRunError,
+pytestmark = pytest.mark.optional_circuit
+
+from circuitcare.dashboard.context import (
     _advisor_matches,
     _analysis_context_key,
-    _cached_download_bytes,
-    _download_file_digest,
     _measurement_set_id,
     _simulation_result_id,
     _simulation_status,
     _supports_bayesian_demo,
     _upsert_measurement,
+)
+from circuitcare.dashboard.downloads import _cached_download_bytes, _download_file_digest
+from circuitcare.services.simulation_service import (
+    SimulationRunError,
     _validate_live_result,
 )
 
@@ -54,7 +57,7 @@ def test_csv_download_cache_is_context_scoped_and_detects_racing_change(tmp_path
 
 
 def test_csv_download_size_limit_is_enforced(tmp_path):
-    from circuitcare.ui import MAX_DOWNLOAD_CSV_BYTES
+    from circuitcare.dashboard.downloads import MAX_DOWNLOAD_CSV_BYTES
 
     path = tmp_path / "large.csv"
     with path.open("wb") as output:

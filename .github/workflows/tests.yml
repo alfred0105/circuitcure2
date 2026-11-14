@@ -31,9 +31,13 @@ jobs:
           filters: |
             code:
               - 'src/**'
+              - 'apps/pcb-component-recognition/**'
               - 'tests/**'
               - 'scripts/**'
+              - 'experiments/connectivity_candidates/**'
               - 'pyproject.toml'
+              - 'requirements-macos-arm64*.txt'
+              - 'README.md'
               - 'setup.cfg'
               - '.github/workflows/**'
   python:
@@ -51,9 +55,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
           cache-dependency-path: pyproject.toml
-      - run: python -m pip install -e ".[dev,ui,vision,datasheet]"
-      - run: python -m pytest -q -m "not integration and not stress and not crash_injection"
-  ngspice-integration:
+      - run: python -m pip install -e ".[dev,ui,vision,vision-ocr,datasheet,connectivity]"
+      - run: python -m pytest -q -m "not integration and not stress and not crash_injection and not optional_circuit and not model_performance"
+  optional-circuit-regression:
     needs: changes
     if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
@@ -64,10 +68,65 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: pyproject.toml
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y ngspice
-      - run: python -m pip install -e ".[dev,ui,vision,vision-ai,vision-ocr,datasheet]"
-      - run: python -m pytest -q -m integration
+      - run: python -m pip install -e ".[dev,ui,vision,vision-ocr,datasheet,connectivity]"
+      - run: python -m pytest -q -m optional_circuit
+  connectivity-validation:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -e ".[dev,connectivity]"
+      - run: python -m pytest -q tests/test_connectivity_candidates.py
+  ngspice-integration:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.code == 'true'
+    # ubuntu-latest currently resolves to 26.04 in hosted CI; its Resolute
+    # mirrors failed DNS resolution repeatedly in the ngspice install job.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install ngspice (retry transient Ubuntu mirror failures)
+        shell: bash
+        run: |
+          set -uo pipefail
+          installed=false
+          for attempt in 1 2 3; do
+            echo "ngspice install attempt ${attempt}/3"
+            if timeout 60s sudo apt-get -o Acquire::Retries=0 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update \
+              && timeout 60s sudo apt-get -o Acquire::Retries=0 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y ngspice; then
+              installed=true
+              break
+            else
+              status=$?
+            fi
+            echo "apt-get attempt ${attempt} failed with exit code ${status}" >&2
+            if [ "${attempt}" -lt 3 ]; then
+              sleep $((attempt * 10))
+            fi
+          done
+          if [ "${installed}" != true ]; then
+            echo "ngspice installation failed after 3 attempts" >&2
+            exit 1
+          fi
+          ngspice --version
+      - run: python -m pip install -e ".[dev,ui,vision,vision-ai,vision-ocr,datasheet,connectivity]"
+      - run: python -m pytest -q -m "integration and not model_performance"
   bounded-stress:
     needs: changes
     if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.code == 'true'
@@ -79,7 +138,7 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: pyproject.toml
-      - run: python -m pip install -e ".[dev,ui,vision,datasheet]"
+      - run: python -m pip install -e ".[dev,ui,vision,datasheet,connectivity]"
       - run: python -m pytest -q -m stress
   native-ocr-inference:
     needs: changes
@@ -107,7 +166,7 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: pyproject.toml
-      - run: python -m pip install -e ".[dev,ui,vision,datasheet]"
+      - run: python -m pip install -e ".[dev,ui,vision,datasheet,connectivity]"
       - run: python -m pytest -q -m crash_injection -rs
   prism-benchmark:
     if: github.event_name == 'workflow_dispatch' && inputs.run_prism_benchmark

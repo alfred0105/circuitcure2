@@ -39,6 +39,7 @@ class MeasurementRecord:
     node_id: str | None
     mapping_status: str
     measurement_type: str
+    test_id: str | None
     value: float
     unit: str
     entered_value: float
@@ -50,6 +51,26 @@ class MeasurementRecord:
     analysis_context_id: str | None = None
     measurement_set_id: str | None = None
     changed_at: str | None = None
+    measurement_target: str | None = None
+    fault_hypothesis: str | None = None
+    reference_min: float | None = None
+    reference_max: float | None = None
+    reference_source: str | None = None
+    reference_source_id: str | None = None
+    reference_verification_status: str = "UNVERIFIED"
+    operating_conditions: str | None = None
+    reference_conditions: str | None = None
+    location_verified: bool = False
+    uncertainty_source: str | None = None
+    component_type: str = "unknown"
+    board_component_id: str | None = None
+    source_photo_id: str | None = None
+    source_photo_fingerprint: str | None = None
+    source_observation_fingerprint: str | None = None
+    source_component_id: str | None = None
+    measurement_location: str | None = None
+    identity_resolution_status: str = "UNRESOLVED"
+    measurement_conditions: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -74,6 +95,20 @@ def create_measurement_record(
     component_map_version: str | None = None,
     analysis_context_id: str | None = None, measurement_id: str | None = None,
     timestamp: str | None = None,
+    measurement_target: str | None = None, fault_hypothesis: str | None = None,
+    test_id: str | None = None,
+    reference_min: Any = None, reference_max: Any = None, reference_source: str | None = None,
+    reference_source_id: str | None = None,
+    reference_verification_status: str = "UNVERIFIED",
+    operating_conditions: str | None = None, reference_conditions: str | None = None,
+    location_verified: bool = False, uncertainty_source: str | None = None,
+    component_type: str = "unknown",
+    board_component_id: str | None = None, source_photo_id: str | None = None,
+    source_photo_fingerprint: str | None = None, source_component_id: str | None = None,
+    source_observation_fingerprint: str | None = None,
+    measurement_location: str | None = None,
+    identity_resolution_status: str = "UNRESOLVED",
+    measurement_conditions: dict[str, Any] | None = None,
 ) -> MeasurementRecord:
     if not project_id.strip() or not board_id.strip() or not component_id.strip():
         raise ValueError("프로젝트, 보드, 부품 정보가 필요합니다.")
@@ -83,6 +118,8 @@ def create_measurement_record(
         raise ValueError("측정 종류와 단위가 일치하지 않습니다.")
     if source not in SOURCE_LABELS:
         raise ValueError("측정 출처를 확인해 주세요.")
+    if reference_verification_status not in {"UNVERIFIED", "DATASHEET_VERIFIED", "BOARD_SPEC_VERIFIED"}:
+        raise ValueError("정상 기준 출처 검증 상태를 확인해 주세요.")
     entered = parse_finite_number(value)
     multiplier = MEASUREMENT_UNITS[measurement_type][unit]
     converted = entered * multiplier
@@ -96,6 +133,14 @@ def create_measurement_record(
         sigma = entered_sigma * multiplier
         if not math.isfinite(sigma) or sigma <= 0:
             raise ValueError("불확실도 단위 변환 결과가 유효하지 않습니다.")
+    parsed_min = (parse_finite_number(reference_min, label="정상 범위 하한") * multiplier
+                  if reference_min is not None and str(reference_min).strip() else None)
+    parsed_max = (parse_finite_number(reference_max, label="정상 범위 상한") * multiplier
+                  if reference_max is not None and str(reference_max).strip() else None)
+    if (parsed_min is None) != (parsed_max is None):
+        raise ValueError("정상 범위의 하한과 상한을 모두 입력하거나 둘 다 비워 주세요.")
+    if parsed_min is not None and parsed_max is not None and parsed_min > parsed_max:
+        raise ValueError("정상 범위 하한은 상한보다 클 수 없습니다.")
     verification = {
         "user_measurement": "USER_REPORTED",
         "simulation": "MODEL_OUTPUT",
@@ -110,10 +155,30 @@ def create_measurement_record(
         component_identity_status=component_identity_status or "UNKNOWN",
         probe_id=None, node_id=None, mapping_status="NODE_MAPPING_UNAVAILABLE",
         measurement_type=measurement_type, value=converted, unit=BASE_UNITS[measurement_type],
+        test_id=(test_id or "").strip() or None,
         entered_value=entered, entered_unit=unit, uncertainty=sigma,
         source=source, verification_status=verification,
         timestamp=timestamp or datetime.now(timezone.utc).isoformat(),
         analysis_context_id=analysis_context_id,
+        measurement_target=(measurement_target or "").strip() or None,
+        fault_hypothesis=(fault_hypothesis or "").strip() or None,
+        reference_min=parsed_min, reference_max=parsed_max,
+        reference_source=(reference_source or "").strip() or None,
+        reference_source_id=(reference_source_id or "").strip() or None,
+        reference_verification_status=str(reference_verification_status or "UNVERIFIED"),
+        operating_conditions=(operating_conditions or "").strip() or None,
+        reference_conditions=(reference_conditions or "").strip() or None,
+        location_verified=bool(location_verified),
+        uncertainty_source=(uncertainty_source or "").strip() or None,
+        component_type=str(component_type or "unknown"),
+        board_component_id=(board_component_id or "").strip() or None,
+        source_photo_id=(source_photo_id or "").strip() or None,
+        source_photo_fingerprint=(source_photo_fingerprint or "").strip() or None,
+        source_observation_fingerprint=(source_observation_fingerprint or "").strip() or None,
+        source_component_id=(source_component_id or component_id).strip() or None,
+        measurement_location=(measurement_location or measurement_target or "").strip() or None,
+        identity_resolution_status=str(identity_resolution_status or "UNRESOLVED"),
+        measurement_conditions=(dict(measurement_conditions) if isinstance(measurement_conditions, dict) else None),
     )
 
 

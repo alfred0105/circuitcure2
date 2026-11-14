@@ -5,11 +5,19 @@
     <button type="button" data-action="zoom-out" aria-label="축소">−</button>
     <button type="button" data-action="reset">초기화</button>
     <button type="button" data-action="clear-selection">선택 해제</button>
+    <span data-multiselect-hint>⌘/Ctrl+클릭으로 박스 여러 개 선택</span>
     <button type="button" data-action="draw-box">박스 그리기</button>
     <span data-zoom-label>100%</span>
-    <span data-status-label>검출 후보 · 고장 판정 아님</span>
+    <span data-status-label>PCB 박스를 클릭해 선택하세요</span>
+  </div>
+  <div class="cc-pcb-legend" aria-label="진단 결과 범례">
+    <span><i class="suspected"></i>노랑 · 우선 검사</span>
+    <span><i class="supported"></i>빨강 · 고장 가설 지지</span>
+    <span><i class="refuted"></i>초록 · 고장 가설 반박</span>
+    <span><i class="inconclusive"></i>회색 · 판정 불가</span>
   </div>
   <div class="cc-pcb-viewport" data-viewport data-dragging="false">
+    <div class="cc-pcb-loading" data-loading hidden role="status" aria-live="polite"><span class="cc-pcb-loading-spinner"></span><strong>PCB 소자 분석 중 · OCR/Qwen 검수 진행</strong></div>
     <svg class="cc-pcb-canvas" data-canvas preserveAspectRatio="xMidYMid meet" role="img" aria-label="PCB 이미지와 검출된 부품 후보">
       <g data-camera>
         <image data-board-image preserveAspectRatio="none" pointer-events="none"></image>

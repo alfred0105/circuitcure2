@@ -2,6 +2,8 @@ from pathlib import Path
 
 import pytest
 
+pytestmark = pytest.mark.optional_circuit
+
 from circuitcare.graph import direct_candidates
 from circuitcare.netlist import load_netlist
 

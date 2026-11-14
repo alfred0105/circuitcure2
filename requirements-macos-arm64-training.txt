@@ -1,0 +1,7 @@
+# Optional training toolchain for Apple Silicon; inference users should omit this file.
+# Install the runtime first: python -m pip install -r requirements-macos-arm64.txt
+torch>=2.3
+torchvision>=0.18
+ultralytics>=8.3
+numpy>=1.26,<3
+opencv-python-headless>=4.10,<5

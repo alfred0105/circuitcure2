@@ -1,0 +1,60 @@
+schema_version: 2
+description: >-
+  검사 정의는 대상·조건과 가설 관계만 제공한다. 수치 기준은 해당 부품의
+  데이터시트 또는 보드 사양을 확인해 측정 기록별로 인용해야 한다.
+profiles:
+  resistor:
+    tests:
+      isolated_resistance:
+        measurement_type: resistance
+        target_keywords: [양단, 단자, terminal]
+        required_conditions: {power_state: POWER_OFF_CONFIRMED, stored_energy_status: SAFE_CONFIRMED, component_isolation_status: ISOLATED_CONFIRMED, measurement_location_verified: true, reference_source_verified: true}
+        safety_protocol: DEENERGIZED_ISOLATED_PASSIVE
+        risk_level: low
+        requires_reference_verification: true
+        fault_relations:
+          RESISTOR_FAILURE: {TEST_NORMAL: refutes, TEST_ABNORMAL: supports}
+  fuse:
+    tests:
+      continuity:
+        measurement_type: resistance
+        target_keywords: [양단, 단자, continuity, terminal]
+        required_conditions: {power_state: POWER_OFF_CONFIRMED, stored_energy_status: SAFE_CONFIRMED, component_isolation_status: ISOLATED_CONFIRMED, measurement_location_verified: true, reference_source_verified: true}
+        safety_protocol: DEENERGIZED_ISOLATED_PASSIVE
+        risk_level: low
+        requires_reference_verification: true
+        fault_relations:
+          FUSE_OPEN: {TEST_NORMAL: refutes, TEST_ABNORMAL: supports}
+  switch:
+    tests:
+      contact_resistance:
+        measurement_type: resistance
+        target_keywords: [접점, 단자, contact, terminal]
+        required_conditions: {power_state: POWER_OFF_CONFIRMED, stored_energy_status: SAFE_CONFIRMED, component_isolation_status: ISOLATED_CONFIRMED, measurement_location_verified: true, reference_source_verified: true}
+        safety_protocol: DEENERGIZED_ISOLATED_PASSIVE
+        risk_level: low
+        requires_reference_verification: true
+        fault_relations:
+          SWITCH_CONTACT_FAILURE: {TEST_NORMAL: refutes, TEST_ABNORMAL: supports}
+          SWITCH_STUCK: {TEST_NORMAL: non_diagnostic, TEST_ABNORMAL: supports}
+  diode:
+    tests:
+      forward_drop:
+        measurement_type: voltage
+        target_keywords: [순방향, forward, 애노드, anode, 캐소드, cathode]
+        required_conditions: {power_state: POWER_OFF_CONFIRMED, stored_energy_status: SAFE_CONFIRMED, component_isolation_status: ISOLATED_CONFIRMED, measurement_location_verified: true, reference_source_verified: true}
+        safety_protocol: DEENERGIZED_ISOLATED_PASSIVE
+        risk_level: low
+        requires_reference_verification: true
+        fault_relations:
+          DIODE_SHORT_FAILURE: {TEST_NORMAL: refutes, TEST_ABNORMAL: supports}
+          DIODE_OPEN_FAILURE: {TEST_NORMAL: refutes, TEST_ABNORMAL: supports}
+      reverse_leakage:
+        measurement_type: current
+        target_keywords: [역방향 누설, reverse leakage, 역누설]
+        required_conditions: {power_state: POWER_OFF_CONFIRMED, stored_energy_status: SAFE_CONFIRMED, component_isolation_status: ISOLATED_CONFIRMED, measurement_location_verified: true, reference_source_verified: true}
+        safety_protocol: DEENERGIZED_ISOLATED_PASSIVE
+        risk_level: low
+        requires_reference_verification: true
+        fault_relations:
+          DIODE_LEAKAGE_FAILURE: {TEST_NORMAL: refutes, TEST_ABNORMAL: supports}

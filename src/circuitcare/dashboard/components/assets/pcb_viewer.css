@@ -1,19 +1,43 @@
-.cc-pcb-viewer { width:100%; color:var(--st-text-color); font-family:var(--st-font); }
+body { margin:0; }
+.cc-pcb-viewer { width:100%; color:var(--st-text-color); font-family:var(--st-font); user-select:none; -webkit-user-select:none; -webkit-user-drag:none; }
 .cc-pcb-toolbar { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; padding:.25rem 0 .5rem; }
 .cc-pcb-toolbar button { border:1px solid var(--st-border-color); border-radius:.4rem; padding:.35rem .65rem; color:var(--st-text-color); background:var(--st-secondary-background-color); cursor:pointer; }
 .cc-pcb-toolbar button:hover, .cc-pcb-toolbar button:focus-visible { border-color:var(--st-primary-color); outline-color:var(--st-primary-color); }
 .cc-pcb-toolbar [data-zoom-label] { min-width:3.5rem; text-align:center; font-size:.85rem; }
 .cc-pcb-toolbar [data-status-label] { margin-left:auto; font-size:.78rem; color:var(--st-secondary-text-color); }
-.cc-pcb-viewport { width:100%; height:min(68vh,680px); min-height:300px; overflow:hidden; position:relative; border:1px solid var(--st-border-color); border-radius:.5rem; background:#111a22; touch-action:none; }
+.cc-pcb-toolbar [data-multiselect-hint] { font-size:.78rem; color:var(--st-secondary-text-color); }
+.cc-pcb-legend { display:flex; flex-wrap:wrap; gap:.35rem .8rem; padding:.15rem 0 .45rem; color:var(--st-secondary-text-color); font-size:.72rem; }
+.cc-pcb-legend span { display:inline-flex; align-items:center; gap:.3rem; }
+.cc-pcb-legend i { display:inline-block; width:.65rem; height:.65rem; border:2px solid currentColor; border-radius:2px; }
+.cc-pcb-legend .suspected { color:#ffbd55; }
+.cc-pcb-legend .supported { color:#ff626b; }
+.cc-pcb-legend .refuted { color:#54d69a; }
+.cc-pcb-legend .inconclusive { color:#a3adb7; }
+.cc-pcb-viewport { width:100%; height:min(68vh,560px); min-height:360px; overflow:hidden; position:relative; border:1px solid var(--st-border-color); border-radius:.5rem; background:#111a22; touch-action:none; user-select:none; -webkit-user-select:none; -webkit-user-drag:none; }
 .cc-pcb-canvas { position:absolute; inset:0; width:100%; height:100%; user-select:none; }
 .cc-pcb-component { fill:#61a9c51a; stroke:#a7c0ca; stroke-width:1.5; vector-effect:non-scaling-stroke; cursor:pointer; }
 .cc-pcb-component:hover, .cc-pcb-component.cc-hover { fill:#55bbdf30; stroke:#8ee7ff; stroke-width:2.5; }
-.cc-pcb-component.cc-selected { fill:#ffcf4d30; stroke:#ffd25a; stroke-width:3; }
+.cc-pcb-component.cc-selected { fill:#ffbd5530; stroke:#ffbd55; stroke-width:3; }
 .cc-pcb-component.cc-excluded { fill:#ef58671a; stroke:#ef5867; stroke-dasharray:5 3; }
+.cc-pcb-component.cc-ai-suggested { fill:#ff9d2e1c; stroke:#ff9d2e; stroke-dasharray:3 3; stroke-width:2.2; }
+.cc-pcb-component.cc-second-pass { fill:#55bbdf14; stroke:#75d9ff; stroke-dasharray:6 3; stroke-width:2; }
+.cc-pcb-component.cc-manual-box { fill:#60dfa022; stroke:#60dfa0; stroke-dasharray:6 3; stroke-width:2; }
+.cc-pcb-component.cc-block-power { fill:#f4b94220; stroke:#f4b942; }
+.cc-pcb-component.cc-block-control { fill:#9b8cff20; stroke:#a997ff; }
+.cc-pcb-component.cc-block-input { fill:#4db6ac20; stroke:#4db6ac; }
+.cc-pcb-component.cc-block-output { fill:#f078a020; stroke:#f078a0; }
+.cc-pcb-component.cc-block-driver { fill:#60a5fa20; stroke:#60a5fa; }
+.cc-pcb-component.cc-block-protection { fill:#fb923c20; stroke:#fb923c; }
 .cc-pcb-component.cc-draw-preview { fill:#60dfa033; stroke:#60dfa0; stroke-width:2; stroke-dasharray:6 4; pointer-events:none; }
-.cc-pcb-component.cc-fault-suspected { fill:#ff9f4330; stroke:#ffb55e; stroke-width:3; }
+.cc-pcb-component.cc-bulk-selected { fill:#b68cff48; stroke:#c8a9ff; stroke-width:3; }
+.cc-pcb-component.cc-fault-suspected { fill:#ffbd5530; stroke:#ffbd55; stroke-width:3; }
 .cc-pcb-component.cc-fault-related { fill:#71b7ff24; stroke:#80c3ff; stroke-width:2.5; stroke-dasharray:5 3; }
 .cc-pcb-component.cc-fault-confirmed { fill:#e1784540; stroke:#f29a6b; stroke-width:3; }
+.cc-pcb-component.cc-fault-supported { fill:#ff626b48; stroke:#ff626b; stroke-width:3; }
+.cc-pcb-component.cc-fault-refuted { fill:#54d69a38; stroke:#54d69a; stroke-width:3; }
+.cc-pcb-component.cc-fault-inconclusive { fill:#a3adb722; stroke:#a3adb7; stroke-width:2.5; stroke-dasharray:5 3; }
+.cc-pcb-component.cc-fault-conflicted { fill:#a3adb722; stroke:#a3adb7; stroke-width:2.5; stroke-dasharray:5 3; }
+.cc-pcb-conflict-icon { fill:#a3adb7; font-size:13px; font-weight:800; paint-order:stroke; stroke:#222b34; stroke-width:2px; pointer-events:none; }
 .cc-pcb-component:focus { stroke:#fff; stroke-width:3; outline:none; }
 .cc-pcb-label { fill:#f7fafc; font-size:12px; font-weight:700; text-anchor:middle; paint-order:stroke; stroke:#17212b; stroke-width:3px; stroke-linejoin:round; pointer-events:none; }
 .cc-pcb-tooltip { position:absolute; z-index:3; max-width:240px; pointer-events:none; white-space:pre-line; border:1px solid #657788; border-radius:.4rem; padding:.45rem .6rem; color:#f5f8fa; background:#17212bf2; box-shadow:0 4px 14px #0006; font-size:.78rem; }
@@ -22,3 +46,11 @@
 .cc-pcb-viewport[data-dragging="true"] { cursor:grabbing; }
 .cc-pcb-viewport[data-dragging="false"] { cursor:grab; }
 .cc-pcb-viewport[data-drawing="true"] { cursor:crosshair; }
+@media (max-width:700px) { .cc-pcb-viewport { height:min(58vh,480px); min-height:320px; } }
+.cc-pcb-loading { position:absolute; inset:0; z-index:5; display:flex; flex-direction:row; align-items:center; justify-content:center; gap:.7rem; background:#111a22; color:#dce9f4; pointer-events:auto; white-space:nowrap; overflow:hidden; }
+.cc-pcb-loading[hidden] { display:none; }
+.cc-pcb-loading-spinner { flex:0 0 26px; width:26px; height:26px; border:3px solid #344b60; border-top-color:#68b3ff; border-radius:50%; animation:cc-pcb-spin 1s linear infinite; }
+.cc-pcb-viewer[data-loading="true"] .cc-pcb-canvas { visibility:hidden; }
+.cc-pcb-viewer[data-loading="true"] .cc-pcb-toolbar { visibility:hidden; }
+@keyframes cc-pcb-spin { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .cc-pcb-loading-spinner { animation:none; } }

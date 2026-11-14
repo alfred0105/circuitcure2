@@ -18,11 +18,11 @@ def render_report_panel(st: Any, *, snapshot: dict, root: Path, workspace_id: st
                         expected_circuit_hash: str | None) -> None:
     errors = validate_report(snapshot, expected_circuit_hash=expected_circuit_hash)
     st.markdown("### 근거 보고서")
-    st.caption("현재 분석 Snapshot을 내보냅니다. 다운로드 과정에서 SPICE, LLM 또는 다른 분석을 재실행하지 않습니다.")
+    st.caption("검증된 현재 Snapshot만 내보냅니다. 다운로드 과정에서 모델이나 진단 엔진을 재실행하지 않습니다.")
     if errors:
         st.error("보고서 검증 실패: " + ", ".join(errors))
         return
-    st.success("보고서 근거 참조 및 현재 회로 Hash 검증 완료 · 실제 물리 손상은 확인하지 않았습니다.")
+    st.success("보고서 Snapshot과 내부 참조를 검증했습니다 · 제안된 고장 후보는 확정 판정이 아닙니다.")
     try:
         report_json = export_json(snapshot)
         report_markdown = export_markdown(snapshot)

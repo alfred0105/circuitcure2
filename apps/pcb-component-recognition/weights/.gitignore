@@ -1,8 +1,0 @@
-*.pt
-*.pth
-*.onnx
-*.engine
-*.plan
-!any_best.pt
-!external/pcb-ai-doctor/best_v12n.pt
-!external/pcb-yolov8s-detection/best.pt

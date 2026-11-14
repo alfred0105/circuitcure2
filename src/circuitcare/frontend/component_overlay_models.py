@@ -28,6 +28,29 @@ class ComponentOverlayViewModel:
     overlay_status: str
     fault_candidate_status: str | None = None
     diagnosis_display_status: str | None = None
+    fault_hypothesis: str | None = None
+    fault_role_status: str | None = None
+    measurement_status: str | None = None
+    solder_status: str | None = None
+    fault_score: float | None = None
+    fault_evidence: tuple[str, ...] = ()
+    recommended_tests: tuple[str, ...] = ()
+    fault_history: tuple[dict, ...] = ()
+    component_info: str | None = None
+    ocr_status: str | None = None
+    ocr_candidates: tuple[str, ...] = ()
+    presence_status: str = "UNCONFIRMED"
+    confirmed_functional_roles: tuple[str, ...] = ()
+    location_confidence: float | None = None
+    type_confidence: float | None = None
+    match_score: float | None = None
+    component_type_status: str = "UNCONFIRMED"
+    part_identity_status: str = "UNCONFIRMED"
+    overlay_source: str | None = None
+    ocr_class_hints: tuple[str, ...] = ()
+    reference_designators: tuple[str, ...] = ()
+    board_component_id: str | None = None
+    functional_block_roles: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -56,6 +79,9 @@ IDENTITY_STATUS_LABELS = {
     "suggested": "미확인 후보",
     "unmatched": "미확인",
     "class_candidate": "종류 후보",
+    "OCR_VALUE_CANDIDATE": "각인 기반 값 후보 · 미확인",
+    "OCR_TEXT_CANDIDATE": "각인 문자 후보 · 미확인",
+    "NO_MARKING_READ": "각인 판독 없음",
 }
 
 

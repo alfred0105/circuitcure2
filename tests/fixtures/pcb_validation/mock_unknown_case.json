@@ -1,0 +1,21 @@
+{
+  "case_id": "mock-unknown-no-power-001",
+  "board_id": "mock-board-001",
+  "case_kind": "MOCK",
+  "photo_paths": [],
+  "inference_input": {
+    "project_id": "mock-project",
+    "symptoms": ["NO_POWER"],
+    "observations": [],
+    "components": [],
+    "measurements": [],
+    "inventory_complete": false
+  },
+  "reference": {
+    "adjudication_status": "UNKNOWN",
+    "root_cause_ids": [],
+    "faulty_board_component_ids": [],
+    "evidence_sources": [],
+    "repair_outcome": null
+  }
+}

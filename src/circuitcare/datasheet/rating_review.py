@@ -11,6 +11,11 @@ from typing import Any
 from circuitcare.workspace.atomic_json import write_json_atomic
 
 
+def clear_failed_rating_application(session_state: Any, applied_key: str) -> None:
+    """Remove only the context-scoped cache that failed reassessment."""
+    session_state.pop(applied_key, None)
+
+
 def applied_rating_session_key(context_key: str, stress_signature: str | None) -> str:
     """Return the one session cache key for a circuit/scenario/stress rating application."""
     payload = json.dumps({"context": context_key, "stress_signature": stress_signature},

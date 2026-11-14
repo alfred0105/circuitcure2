@@ -8,7 +8,7 @@ import io
 import streamlit as st
 from PIL import Image, ImageDraw
 
-from circuitcare.dashboard.components.pcb_workspace import render_component_viewer
+from circuitcare.dashboard.components.pcb_workspace import OVERLAPPING_SELECTION_KEY, render_component_viewer
 from circuitcare.dashboard.views.inspection_panel import MAP_VERSION_KEY, render_inspection_panel
 from circuitcare.frontend.component_overlay_models import ComponentOverlayViewModel
 from circuitcare.frontend.models import ImageRecord, ProjectContext, SelectionState
@@ -45,6 +45,7 @@ image = Image.new("RGB", (640, 420), "#263745")
 draw = ImageDraw.Draw(image)
 draw.rectangle((80, 60, 560, 360), outline="#68a080", width=8)
 draw.rectangle((140, 145, 250, 245), fill="#ded8bd", outline="#d5a629", width=4)
+draw.rectangle((174, 166, 222, 222), fill="#976c4e", outline="#e7c28f", width=3)
 draw.rectangle((390, 160, 500, 270), fill="#465a89", outline="#a8bfcc", width=4)
 image.save(buffer, format="PNG")
 image_b64 = base64.b64encode(buffer.getvalue()).decode("ascii")
@@ -71,17 +72,34 @@ components = (
         evidence=("SYNTHETIC_TEST_FIXTURE",), overlay_status="DETECTION_CANDIDATE",
         diagnosis_display_status="DIAGNOSIS_NOT_RUN",
     ),
+    ComponentOverlayViewModel(
+        project_id=project.project_id, board_id=project.board_id, board_side="TOP",
+        component_id="f5-fixture-nested", component_type="diode", display_label=None,
+        canonical_frame_id="f5-fixture-frame", coordinate_frame="MOSAIC_PIXEL",
+        bbox_xyxy=(174, 166, 222, 222), polygon_xy=((174,166),(222,166),(222,222),(174,222)),
+        source_backend_photo_ids=("f5-photo",), observation_ids=("f5-observation-nested",),
+        detection_confidence=.79, identification_status="SUGGESTED_UNCONFIRMED",
+        identity_match_status="NEW_COMPONENT", ocr_marking=None, possible_part_number=None,
+        evidence=("SYNTHETIC_TEST_FIXTURE_OVERLAP",), overlay_status="DETECTION_CANDIDATE",
+        diagnosis_display_status="DIAGNOSIS_NOT_RUN",
+    ),
 )
 
 with left:
     selection = st.session_state.get(SELECTION_KEY)
     selected_id = getattr(selection, "selected_component", None)
-    render_component_viewer(
+    def record_drawn_box(bbox):
+        st.session_state["f5_fixture_last_drawn_box"] = bbox
+    _available, viewer_key, _coordinate_status = render_component_viewer(
         st, image=image, source_image_bytes=buffer.getvalue(), canonical_png_bytes=buffer.getvalue(),
         image_size_px=(640, 420), components=components, project=project, board_side="TOP",
         frame_id="f5-fixture-frame", selected_component_id=selected_id,
         map_cache_key="f5-fixture-map-v1", image_mode="통합 이미지",
+        on_box_draw=record_drawn_box,
     )
+    st.session_state["cc_active_component_overlap_key"] = f"{OVERLAPPING_SELECTION_KEY}_{viewer_key}"
+    if st.session_state.get("f5_fixture_last_drawn_box"):
+        st.caption(f"TEST DRAW BOX · {st.session_state['f5_fixture_last_drawn_box']}")
 
 with right:
     selected = next((item for item in components if item.component_id == selected_id), None)

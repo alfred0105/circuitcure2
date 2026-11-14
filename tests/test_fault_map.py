@@ -7,9 +7,14 @@ import pytest
 
 from circuitcare.netlist import load_netlist
 from circuitcare.models import Circuit, Component, Connection
-from circuitcare.ui import ROOT, _run_diagnosis
+from circuitcare.dashboard.context import ROOT
+from circuitcare.services.diagnosis_service import run_diagnosis_for_measurements
 from circuitcare.vision.overlay import render_detection_risk_overlay
 from circuitcare.visualization.fault_map import build_fault_map, fault_map_json, render_fault_map_dot
+
+
+def _run_diagnosis(measurements):
+    return run_diagnosis_for_measurements(measurements)
 
 
 def test_fault_map_keeps_connectivity_and_stress_evidence_separate() -> None:

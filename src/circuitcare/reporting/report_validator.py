@@ -37,9 +37,18 @@ def validate_report(report: dict[str, Any], *, expected_circuit_hash: str | None
     measurement_hash = report.get("measurement_context", {}).get("measurement_set_sha256")
     if "measurement_context" in report:
         try:
-            observed_hash = measurement_set_sha256(report.get("fault_or_symptom", {}).get("observations", []))
+            observed_rows = report.get("fault_or_symptom", {}).get("observations", [])
+            observed_hash = measurement_set_sha256(observed_rows)
             if measurement_hash != observed_hash:
                 errors.append("MEASUREMENT_DIAGNOSIS_MISMATCH")
+            pcb_context = report.get("pcb_context")
+            if isinstance(pcb_context, dict) and "measurements" in pcb_context:
+                pcb_measurements = pcb_context.get("measurements", [])
+                pcb_hash = measurement_set_sha256(pcb_measurements)
+                if pcb_hash != measurement_hash or pcb_measurements != observed_rows:
+                    errors.append("MEASUREMENT_PCB_CONTEXT_MISMATCH")
+                if report.get("measurement_context", {}).get("measurement_count") != len(pcb_measurements):
+                    errors.append("MEASUREMENT_PCB_CONTEXT_MISMATCH")
         except (TypeError, ValueError):
             errors.append("MEASUREMENT_DIAGNOSIS_MISMATCH")
     diagnosis_context = report.get("diagnosis_context", {})

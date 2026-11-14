@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CircuitCare PCB diagnosis validation case",
+  "type": "object",
+  "required": ["case_id", "board_id", "case_kind", "inference_input", "reference"],
+  "properties": {
+    "case_id": {"type": "string", "minLength": 1},
+    "board_id": {"type": "string", "minLength": 1},
+    "case_kind": {"enum": ["REAL_CONFIRMED", "REAL_HEALTHY", "REAL_UNKNOWN", "REAL_MULTIPLE_FAULTS", "REAL_NON_COMPONENT", "SYNTHETIC", "SIMULATED", "MOCK"]},
+    "photo_paths": {"type": "array", "items": {"type": "string"}},
+    "inference_input": {"type": "object", "not": {"anyOf": [{"required": ["fault_type"]}, {"required": ["fault_parameter"]}, {"required": ["injected_fault"]}, {"required": ["reference"]}]}},
+    "reference": {"type": "object", "properties": {"adjudication_status": {"enum": ["CONFIRMED", "UNCONFIRMED", "UNKNOWN"]}, "root_cause_ids": {"type": "array", "items": {"type": "string"}}, "faulty_board_component_ids": {"type": "array", "items": {"type": "string"}}, "evidence_sources": {"type": "array"}, "repair_outcome": {"type": ["object", "null"]}}}
+  }
+}

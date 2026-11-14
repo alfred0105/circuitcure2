@@ -8,7 +8,7 @@ import json
 import copy
 import zipfile
 from io import BytesIO
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 from circuitcare.reporting.report_validator import validate_report, verify_bundle
@@ -18,7 +18,11 @@ def export_json(report: dict[str, Any]) -> str:
     errors = validate_report(report)
     if errors:
         raise ValueError("Report validation failed: " + ", ".join(errors))
-    return json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True)
+    serializable = copy.deepcopy(report)
+    pcb = serializable.get("pcb_context")
+    if isinstance(pcb, dict):
+        pcb.pop("photo_artifacts", None)
+    return json.dumps(serializable, ensure_ascii=False, indent=2, sort_keys=True, default=str)
 
 
 def export_markdown(report: dict[str, Any]) -> str:
@@ -84,6 +88,25 @@ def export_markdown(report: dict[str, Any]) -> str:
     lines.extend(["", "## 한계", ""])
     lines.extend(f"- {item}" for item in report.get("limitations", []))
     lines.extend(["", "## 재현 정보", "", f"- Git SHA: `{report.get('reproducibility', {}).get('git_sha') or 'NOT_EVALUATED'}`", ""])
+    pcb = report.get("pcb_context")
+    if isinstance(pcb, dict):
+        lines.extend(["## PCB 진단 Snapshot", "",
+                      f"- 보드: {pcb.get('board_id') or '미지정'}",
+                      f"- Registry: {pcb.get('registry_version') or '미구성'}",
+                      f"- 분석 상태: {pcb.get('analysis_status', 'NOT_RUN')}",
+                      f"- 소자 / 사진: {len(pcb.get('components', []))} / {len(pcb.get('photos', []))}",
+                      f"- 선택 소자: {pcb.get('selected_board_component_id') or '없음'}", "",
+                      "### 사진 참조", "", "| 사진 ID | 면 | 촬영 유형 | 파일 | SHA-256 |",
+                      "|---|---|---|---|---|"])
+        lines.extend(f"| {row.get('photo_id', '—')} | {row.get('side', '—')} | {row.get('capture_type', '—')} | {row.get('filename') or '—'} | {row.get('sha256') or 'NOT_EVALUATED'} |"
+                     for row in pcb.get("photos", []))
+        lines.extend(["", "### 현재 Top 3 후보", "", "| 순위 | 보드 소자 ID | 고장 가설 | 검증 상태 |",
+                      "|---:|---|---|---|"])
+        lines.extend(f"| {index} | {row.get('board_component_id') or row.get('component_id') or '미특정'} | {row.get('fault_title') or row.get('fault_hypothesis') or row.get('fault_id') or '미확정'} | {row.get('visual_status') or row.get('status') or '미확정'} |"
+                     for index, row in enumerate(pcb.get("top3_candidates", []), start=1))
+        lines.extend(["", "### PCB 증상·측정 Snapshot", "", "```json",
+                      json.dumps({"symptoms": pcb.get("symptoms", []), "measurements": pcb.get("measurements", [])},
+                                 ensure_ascii=False, indent=2, default=str), "```", ""])
     return "\n".join(lines)
 
 
@@ -103,6 +126,20 @@ def export_html(report: dict[str, Any]) -> str:
     risk_rows = [[row.get("component_ref", "—"), row.get("risk_level", row.get("status", "—")),
                   row.get("stress_description", "—"), row.get("utilization_ratio", "—"), row.get("rating_source", "—")]
                  for row in risk.get("secondary_candidates", [])]
+    pcb = report.get("pcb_context") if isinstance(report.get("pcb_context"), dict) else None
+    pcb_html = ""
+    if pcb:
+        photo_rows = [[row.get("photo_id"), row.get("side"), row.get("capture_type"),
+                       row.get("filename"), row.get("sha256")] for row in pcb.get("photos", [])]
+        candidate_rows = [[index, row.get("board_component_id") or row.get("component_id"),
+                           row.get("fault_title") or row.get("fault_hypothesis") or row.get("fault_id"),
+                           row.get("visual_status") or row.get("status")] for index, row in enumerate(pcb.get("top3_candidates", []), start=1)]
+        pcb_html = (f"<section><h2>PCB 진단 Snapshot</h2><p>보드 {html.escape(str(pcb.get('board_id') or '미지정'))} · "
+                    f"Registry {html.escape(str(pcb.get('registry_version') or '미구성'))} · "
+                    f"분석 {html.escape(str(pcb.get('analysis_status', 'NOT_RUN')))}</p>"
+                    f"{table(['사진 ID','면','촬영 유형','파일','SHA-256'], photo_rows)}"
+                    f"{table(['순위','보드 소자 ID','고장 가설','검증 상태'], candidate_rows)}"
+                    f"<h3>증상·측정 Snapshot</h3><pre>{html.escape(json.dumps({'symptoms': pcb.get('symptoms', []), 'measurements': pcb.get('measurements', [])}, ensure_ascii=False, indent=2, default=str))}</pre></section>")
     return ("<!doctype html><html lang=\"ko\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">"
             "<title>CircuitCare AI 진단 보고서</title><style>body{font:15px/1.55 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#17212b;background:#f8fafc}"
             "section{background:white;border:1px solid #d8e0e8;border-radius:10px;padding:1rem 1.25rem;margin:1rem 0}table{border-collapse:collapse;width:100%;font-size:.9rem}th,td{text-align:left;border-bottom:1px solid #e2e8f0;padding:.45rem;overflow-wrap:anywhere}"
@@ -114,7 +151,7 @@ def export_html(report: dict[str, Any]) -> str:
             f"<section><h2>SPICE 비교</h2><p>상태: {html.escape(str(spice.get('status', 'NOT_EVALUATED')))} · 출처: {html.escape(str(spice.get('source', 'NOT_EVALUATED')))}</p></section>"
             f"<section><h2>위험 평가</h2><p>손상 확정은 보고하지 않습니다.</p>{table(['부품','등급','스트레스/정격','이용률','정격 근거'], risk_rows)}</section>"
             f"<section><h2>점검 우선순위</h2>{html.escape(json.dumps(report.get('recommended_inspection', {}), ensure_ascii=False, indent=2))}</section>"
-            f"<section><h2>근거 및 한계</h2>{table(['ID','Evidence Type','검증 상태','출처','ZIP 포함'], [[e.get('evidence_id'),e.get('evidence_type'),e.get('verification_status'),e.get('source_artifact'),e.get('included_in_bundle',False)] for e in report.get('evidence', [])])}"
+            f"{pcb_html}<section><h2>근거 및 한계</h2>{table(['ID','Evidence Type','검증 상태','출처','ZIP 포함'], [[e.get('evidence_id'),e.get('evidence_type'),e.get('verification_status'),e.get('source_artifact'),e.get('included_in_bundle',False)] for e in report.get('evidence', [])])}"
             f"<ul>{''.join('<li>'+html.escape(str(x))+'</li>' for x in report.get('limitations', []))}</ul></section></body></html>")
 
 
@@ -123,6 +160,29 @@ def export_bundle(report: dict[str, Any], *, root: Path,
     """Bundle report outputs and only explicitly selected, in-root artifacts."""
     bundled_report = copy.deepcopy(report)
     files: dict[str, bytes] = {}
+    photo_artifacts = (bundled_report.get("pcb_context", {}).pop("photo_artifacts", [])
+                       if isinstance(bundled_report.get("pcb_context"), dict) else [])
+    photo_count = 0
+    total_photo_bytes = 0
+    for item in photo_artifacts:
+        archive_path = str(item.get("archive_path", ""))
+        safe_path = PurePosixPath(archive_path)
+        data = item.get("data")
+        if (not archive_path.startswith("photos/") or safe_path.is_absolute()
+                or ".." in safe_path.parts or "\\" in archive_path or not isinstance(data, bytes)):
+            raise ValueError("Invalid PCB photo evidence reference.")
+        if len(data) > 25 * 1024 * 1024:
+            raise ValueError("PCB photo evidence exceeds the 25 MiB item limit.")
+        photo_count += 1
+        total_photo_bytes += len(data)
+        if photo_count > 32 or total_photo_bytes > 50 * 1024 * 1024:
+            raise ValueError("PCB photo evidence exceeds the bundle size limit.")
+        files[archive_path] = data
+        pcb = bundled_report.get("pcb_context", {})
+        for row in pcb.get("photos", []):
+            if row.get("photo_id") == item.get("photo_id"):
+                row["bundle_included"] = True
+                row["bundle_sha256"] = hashlib.sha256(data).hexdigest()
     allowed = {"measurements.json", "fault_hypotheses.json", "spice_results.json",
                "risk_assessment.json", "rating_evidence.json"}
     root = root.resolve()
@@ -174,7 +234,8 @@ def export_bundle(report: dict[str, Any], *, root: Path,
                 "scenario_id": report.get("spice_verification", {}).get("scenario_id"),
                 "analysis_timestamp": report.get("generated_at"),
                 "evidence_sources": bundled_report.get("evidence", []),
-                "missing_artifacts": ["measurement raw file not selected", "PCB original image excluded by default"],
+                "missing_artifacts": (["measurement raw file not selected"]
+                                      + ([] if photo_count else ["PCB original image unavailable"])),
                 "model_versions": report.get("reproducibility", {}),
                 "artifacts": {name: hashlib.sha256(value).hexdigest() for name, value in sorted(files.items())}}
     files["manifest.json"] = json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True).encode("utf-8")

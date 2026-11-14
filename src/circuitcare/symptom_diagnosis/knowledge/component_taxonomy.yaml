@@ -1,0 +1,37 @@
+component_types:
+  battery: [power, protection]
+  switch: [control]
+  buzzer: [output]
+  capacitor: [power, protection]
+  clock: [control]
+  connector: [power, input_output]
+  diode: [power, protection]
+  display: [output]
+  emi_filter: [power, protection]
+  ferrite_bead: [power, protection]
+  fuse: [power, protection]
+  heatsink: [protection]
+  ic: [power, control, driver, output]
+  inductor: [power]
+  jumper: [input_output]
+  led: [output]
+  ldr: [input]
+  mov: [power, protection]
+  oscillator: [control]
+  potentiometer: [control, input]
+  relay: [driver, output]
+  resistor: [control, protection, driver]
+  speaker: [output]
+  thermistor: [protection, input]
+  transformer: [power]
+  transistor: [driver, power]
+  voltage_regulator: [power]
+system_faults:
+  - EXTERNAL_SUPPLY_FAILURE
+  - LOAD_FAILURE
+  - SOLDER_JOINT_FAILURE
+  - PCB_TRACE_OPEN
+  - PCB_TRACE_SHORT
+  - SOFTWARE_OR_CONFIGURATION_FAILURE
+  - COMPOUND_FAILURE
+  - UNKNOWN_UNREGISTERED_FAILURE

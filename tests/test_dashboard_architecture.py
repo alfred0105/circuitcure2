@@ -225,7 +225,7 @@ def test_analysis_loader_verifies_cached_csv_and_preserves_json_only_cache(tmp_p
 
 def test_datasheet_failed_reassessment_clears_only_exact_scoped_key() -> None:
     from circuitcare.datasheet.rating_adapter import RatingApplicationError
-    from circuitcare.ui import _clear_failed_datasheet_cache
+    from circuitcare.datasheet.rating_review import clear_failed_rating_application
 
     key = "rating_review_applied_context-a_stress-a"
     state = {key: ["approved"], "rating_review_applied_context-b_stress-b": ["keep"],
@@ -234,7 +234,7 @@ def test_datasheet_failed_reassessment_clears_only_exact_scoped_key() -> None:
         try:
             raise error
         except (RatingApplicationError, ValueError, KeyError, TypeError):
-            _clear_failed_datasheet_cache(state, key)
+            clear_failed_rating_application(state, key)
     assert key not in state
     assert state["rating_review_applied_context-b_stress-b"] == ["keep"]
     assert state["analysis_context_key"] == "context-a"
@@ -250,9 +250,9 @@ def test_datasheet_application_cache_identity_is_shared_and_scoped() -> None:
     assert first != applied_rating_session_key("other-context", "stress-a")
 
     # Exercise the same token + signature passed through ui.py and the datasheet UI.
-    from circuitcare.ui import hashlib as ui_hashlib
+    import hashlib
     raw_analysis_context = ("case-a", "R1", "resistance_drift", "13k")
-    token = ui_hashlib.sha256(repr(raw_analysis_context).encode()).hexdigest()[:16]
+    token = hashlib.sha256(repr(raw_analysis_context).encode()).hexdigest()[:16]
     ui_cache_key = applied_rating_session_key(token, "stress-a")
     application_cache_key = applied_rating_session_key(token, "stress-a")
     assert ui_cache_key == application_cache_key

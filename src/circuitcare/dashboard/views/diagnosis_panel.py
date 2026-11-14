@@ -53,7 +53,13 @@ def render_diagnosis_panel(
     )
     st.markdown(f"**상태** · {STATUS_LABELS.get(status, status)}")
     if status == DiagnosisStatus.STALE_RESULT:
-        st.warning("분석 조건이 변경되어 기존 진단 결과를 사용할 수 없습니다.")
+        if stored.get("measurement_set_sha256") and stored.get("measurement_set_sha256") != current_set:
+            reason = "측정 기록이 변경되었습니다. 기존 결과는 이력으로 보존되며 새 조건으로 재검증해야 합니다."
+        elif stored.get("context") != context:
+            reason = "보드 또는 부품 검수 조건이 변경되었습니다. 새 조건으로 다시 분석해야 합니다."
+        else:
+            reason = "분석 입력이 변경되었습니다. 최신 조건으로 다시 분석해야 합니다."
+        st.warning(reason)
     for blocker in readiness.blockers:
         st.caption(f"· {blocker}")
     if result_is_current and status in {DiagnosisStatus.DIAGNOSIS_COMPLETE, DiagnosisStatus.MODEL_MISMATCH}:
@@ -67,12 +73,14 @@ def render_diagnosis_panel(
                 st.caption(f"가설 모델 내 상대 우선도 · {candidate.get('ranking', '미제공')}")
                 st.caption(f"가설 · {candidate.get('hypothesis_id', '미제공')}")
             st.caption("Bayesian 값은 설정된 가설 집합에 조건부이며 실제 고장 확률이 아닙니다.")
-    submitted = st.button("진단 갱신", key=f"cc_v5_refresh_{project.project_id}_{board_id}",
+    refresh_label = "다시 시도" if status == DiagnosisStatus.DIAGNOSIS_FAILED else "진단 실행"
+    submitted = st.button(refresh_label, key=f"cc_v5_refresh_{project.project_id}_{board_id}",
                            disabled=readiness.status != DiagnosisStatus.DIAGNOSIS_READY)
     if submitted and provider is not None:
-        result, updated_readiness, error = refresh_diagnosis(
-            provider, context=context, measurements=measurements,
-        )
+        with st.spinner("측정 정보와 회로 모델을 비교하고 있습니다…"):
+            result, updated_readiness, error = refresh_diagnosis(
+                provider, context=context, measurements=measurements,
+            )
         scoped = dict(st.session_state.get(DIAGNOSIS_STATE_KEY, {}))
         scoped[owner_key(project.project_id, board_id)] = {
             "status": updated_readiness.status, "result": result,
@@ -81,5 +89,5 @@ def render_diagnosis_panel(
         }
         st.session_state[DIAGNOSIS_STATE_KEY] = scoped
         if error:
-            st.error("진단 Provider 실행 중 오류가 발생했습니다.")
+            st.error(f"진단 실행 실패 · {error} · 입력은 보존했습니다. 조건을 확인한 뒤 다시 시도할 수 있습니다.")
         st.rerun()

@@ -56,22 +56,25 @@ class ComponentMapAdapterResult:
 
 def normalize_photo_metadata(value: ImageRecord | Mapping[str, Any]) -> tuple[ImageRecord, bool]:
     """Normalize current and legacy intake records without guessing unspecified values."""
-    if isinstance(value, ImageRecord):
-        raw: Mapping[str, Any] = {
-            "image_id": value.image_id,
-            "side": value.side,
-            "capture_type": value.capture_type,
-            "filename": value.filename,
-            "content_sha256": value.content_sha256,
-            "media_type": value.media_type,
-            "image_dimensions": value.image_dimensions,
-            "image_format": value.image_format,
-        }
-        legacy_side_detail = value.side == "detail" and value.capture_type == "unknown"
-    else:
-        raw = value
+    if isinstance(value, Mapping):
+        raw: Mapping[str, Any] = value
         side_value = raw.get("side", raw.get("role", "unknown"))
         legacy_side_detail = side_value == "detail" and "capture_type" not in raw
+    else:
+        # Streamlit reruns can leave an ImageRecord instance from an earlier
+        # module generation in session state. Accept its stable data attributes
+        # instead of relying on class identity from the current import.
+        required = ("image_id", "side", "capture_type")
+        if not all(hasattr(value, name) for name in required):
+            raise TypeError("사진 메타데이터는 매핑 또는 ImageRecord 형식이어야 합니다.")
+        raw = {
+            name: getattr(value, name, None)
+            for name in (
+                "image_id", "side", "capture_type", "filename", "content_sha256",
+                "media_type", "image_dimensions", "image_format",
+            )
+        }
+        legacy_side_detail = raw["side"] == "detail" and raw["capture_type"] == "unknown"
 
     side = raw.get("side", raw.get("role", "unknown"))
     capture_type = raw.get("capture_type", "unknown")
