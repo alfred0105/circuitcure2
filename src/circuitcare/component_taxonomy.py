@@ -121,10 +121,10 @@ def normalize_qwen_subtype(base_class: object, subtype: object) -> str | None:
 def review_taxonomy(row: dict) -> dict[str, str | None]:
     """Resolve detector, Qwen, user-confirmed, and safe effective labels once.
 
-    ``effective_class`` is suitable for display/Registry storage. A confirmed
-    board feature or extension that the diagnosis engine cannot reason about
-    maps to ``unknown`` for diagnosis while its original taxonomy remains in
-    the returned fields.
+    ``effective_class`` reflects a valid Qwen class proposal in the UI and
+    Registry while retaining its unverified status. A confirmed board feature
+    or extension that the diagnosis engine cannot reason about maps to
+    ``unknown`` for diagnosis while its original taxonomy remains available.
     """
     detector = normalize_component_class(
         row.get("detector_class") or row.get("소자 종류") or "unknown", allow_not_component=False
@@ -147,7 +147,8 @@ def review_taxonomy(row: dict) -> dict[str, str | None]:
         # extension meaning and never reinterpret the old detector class.
         confirmed_base, confirmed_subtype = qwen_base, qwen_subtype
 
-    effective = confirmed_base or detector
+    proposed_base = qwen_base if row.get("qwen_component_type_status") == "AI_PROPOSED_UNVERIFIED" else None
+    effective = confirmed_base or proposed_base or detector
     if effective in {"other_component", "board_feature", "not_component"}:
         diagnosis_class = "unknown"
     else:

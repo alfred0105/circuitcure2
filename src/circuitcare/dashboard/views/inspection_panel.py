@@ -294,6 +294,8 @@ def render_inspection_panel(
         active_records_key = review_keys(active_scope)[1] if active_scope else None
         records_key = review_keys(review_scope)[1] if review_scope else None
         active_rows = list(st.session_state.get(active_records_key, [])) if active_records_key else []
+        target_ids: list[str] = []
+        bulk_selection_active = False
         if active_scope:
             undo_key = f"{LAST_EXCLUDED_KEY}_{active_scope}"
             last_excluded = st.session_state.get(undo_key)
@@ -336,6 +338,7 @@ def render_inspection_panel(
             row_by_id = {str(row.get("component_id")): row for row in active_rows if row.get("component_id")}
             target_ids = [component_id for component_id in selected_ids
                           if component_id in row_by_id and row_by_id[component_id].get("상태") != "제외"]
+            bulk_selection_active = len(target_ids) > 1
             if selected_ids:
                 st.markdown(f"**PCB에서 드래그 선택 · {len(target_ids)}개**")
                 st.caption(" · ".join(target_ids[:8]) + (f" 외 {len(target_ids) - 8}개" if len(target_ids) > 8 else ""))
@@ -401,10 +404,16 @@ def render_inspection_panel(
                 if clear_col.button("영역 선택 해제", key=f"cc_bulk_clear_{active_scope}", use_container_width=True):
                     st.session_state[bulk_key] = []
                     st.rerun()
+            if bulk_selection_active:
+                selected_component = None
         st.markdown("### 선택 부품")
         if compact:
             if selected_component is None:
-                st.caption("PCB에서 박스를 누르면 소자 정보가 여기에 표시됩니다. 소자를 선택하지 않아도 진단할 수 있습니다.")
+                st.caption(
+                    f"복수 박스 {len(target_ids)}개 선택됨 · 일괄 수정/제외를 사용하세요."
+                    if bulk_selection_active else
+                    "PCB에서 박스를 누르면 소자 정보가 여기에 표시됩니다. 소자를 선택하지 않아도 진단할 수 있습니다."
+                )
             else:
                 component_id = selected_component.component_id
                 board_component_id = str(selected_component.board_component_id or component_id)
@@ -619,7 +628,11 @@ def render_inspection_panel(
                 )
             return
         if selected_component is None:
-            st.caption("PCB에서 박스를 누르면 이곳에 인식 정보가 표시됩니다.")
+            st.caption(
+                f"복수 박스 {len(target_ids)}개 선택됨 · 일괄 수정/제외를 사용하세요."
+                if bulk_selection_active else
+                "PCB에서 박스를 누르면 이곳에 인식 정보가 표시됩니다."
+            )
         else:
             edits = st.session_state.setdefault(COMPONENT_EDIT_KEY, {})
             edit = edits.get(selected_component.component_id, {})

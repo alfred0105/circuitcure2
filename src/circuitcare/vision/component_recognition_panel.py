@@ -1134,8 +1134,10 @@ def render_component_recognition_panel(st_api: Any, *, image_bytes: bytes, proje
                     title += f" / {proposal['proposed_subtype']}"
                 st_api.markdown(f"**{title}** · {proposal.get('confidence', 0) * 100:.0f}/100 · 사용자 확인 필요")
                 st_api.caption(proposal.get("visual_evidence") or proposal.get("evidence") or "시각 근거 없음")
-                if target.get("상태") == "확인" or target.get("user_edited"):
-                    st_api.info("사용자가 확정하거나 수정한 박스는 AI 결과가 덮어쓰지 않습니다.")
+                if (target.get("상태") == "확인" or target.get("user_confirmed_class")
+                        or target.get("training_label_user_confirmed") or target.get("confirmed_base_class")
+                        or target.get("user_component_type_id")):
+                    st_api.info("사용자가 소자 종류를 확정한 박스는 Qwen 결과가 덮어쓰지 않습니다.")
                     continue
                 proposed_class = proposal.get("proposed_class")
                 if proposed_class in {"not_component", "unknown"}:
