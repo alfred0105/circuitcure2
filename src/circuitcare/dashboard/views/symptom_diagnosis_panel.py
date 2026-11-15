@@ -209,6 +209,7 @@ def _render_symptom_target_controls(
     if not targets:
         return
     selections = state.setdefault("symptom_target_selections", {})
+    target_context = str(parsed.get("target_selection_fingerprint") or "")
     changed = False
     st.markdown("#### 증상에 언급된 소자 연결")
     for target in targets:
@@ -225,7 +226,8 @@ def _render_symptom_target_controls(
             labels[board_id] = label
         options = [""] + list(labels)
         stored = str(selections.get(reference_id) or "")
-        widget_key = f"cc_symptom_target_{project.project_id}_{hashlib.sha256(reference_id.encode()).hexdigest()[:10]}"
+        widget_key = (f"cc_symptom_target_{project.project_id}_"
+                      f"{hashlib.sha256((target_context + '|' + reference_id).encode()).hexdigest()[:16]}")
         if st.session_state.get(widget_key) not in options:
             st.session_state[widget_key] = stored if stored in options else ""
         st.caption(
@@ -1255,6 +1257,26 @@ def render_symptom_diagnosis_panel(
         selected_codes = [selected_code] if selected_code else []
     component_inventory = component_inventory or {}
     component_rows = _component_rows(components, component_inventory)
+    target_context_payload = {
+        "symptom_text": " ".join(str(symptom_text or "").casefold().split()),
+        "simple_symptom": str(simple_choice) if simple_ui else None,
+        "parser_model": st.session_state.get(f"{key}_model") or state.get("auto_qwen_model"),
+        "photo_id": st.session_state.get(ACTIVE_PHOTO_KEY),
+        "visible_registry_rows": sorted((
+            str(row.get("board_component_id") or row.get("component_id") or ""),
+            str(row.get("component_type") or "unknown"),
+            str(row.get("presence_status") or ""),
+            str(row.get("component_type_status") or ""),
+            tuple(row.get("reference_designators") or ()),
+        ) for row in component_rows if isinstance(row, dict)),
+    }
+    target_context_fingerprint = hashlib.sha256(json.dumps(
+        target_context_payload, sort_keys=True, ensure_ascii=False, default=str,
+        separators=(",", ":")).encode()).hexdigest()
+    if state.get("symptom_target_selection_fingerprint") != target_context_fingerprint:
+        state["symptom_target_selections"] = {}
+        state["symptom_target_selection_fingerprint"] = target_context_fingerprint
+        st.session_state[key] = state
     active_component_ids: set[str] = set()
     excluded_component_ids: set[str] = set()
     for component_row in component_rows:
@@ -1629,10 +1651,12 @@ def render_symptom_diagnosis_panel(
                        "uncertain_facts": [], "parser_status": "SKIPPED"})
             parsed["cache_reused"] = cache_matches
             analysis_progress.write("측정 변경 · 증상 구조화 결과 재사용 · Qwen 호출 생략")
+        parsed["target_selection_fingerprint"] = target_context_fingerprint
         resolved_targets = resolve_symptom_targets(
             parsed.get("targets", []), registry=board_registry, component_rows=component_rows,
             selected_board_component_ids=state.get("symptom_target_selections", {}),
         )
+        parsed["reported_group_observations"] = list(parsed.get("peer_observations", []))
         parsed_observations, peer_observations = bind_target_observations(parsed, resolved_targets)
         parsed["targets"] = resolved_targets
         parsed["observations"] = [*parsed_observations, *peer_observations]

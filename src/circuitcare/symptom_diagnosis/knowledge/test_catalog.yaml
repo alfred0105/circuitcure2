@@ -122,3 +122,17 @@ tests:
     results:
       damage_found: {observations: {VISIBLE_SOLDER_DAMAGE: true}}
       no_visible_damage: {observations: {VISIBLE_SOLDER_DAMAGE: false}}
+  isolated_forward_drop:
+    name: LED 분리 후 순방향 전압 확인
+    type: measurement
+    risk_level: low
+    component_types: [led]
+    target_scope: component
+    fault_ids: [LED_FAILURE]
+    symptom_codes: [LED_NOT_LIT]
+    requires_power_off: true
+    requires_stored_energy_safe: true
+    safety_conditions:
+      - "전원을 분리하고 잔류 에너지가 안전한지 확인하세요. 측정 위치와 LED 극성을 확인하고 LED 한쪽 단자를 회로에서 분리한 뒤, 측정기 다이오드 모드와 기준값이 해당 부품에 맞는지 확인할 수 없다면 측정하지 마세요."
+    question: "전원 차단·잔류 에너지 안전·LED 한쪽 단자 분리와 애노드/캐소드를 확인한 뒤, 데이터시트 또는 보드 사양의 기준과 비교 가능한 순방향 전압을 기록하세요."
+    results: {}

@@ -58,3 +58,14 @@ profiles:
         requires_reference_verification: true
         fault_relations:
           DIODE_LEAKAGE_FAILURE: {TEST_NORMAL: refutes, TEST_ABNORMAL: supports}
+  led:
+    tests:
+      isolated_forward_drop:
+        measurement_type: voltage
+        target_keywords: [양단, 애노드, anode, 캐소드, cathode]
+        required_conditions: {power_state: POWER_OFF_CONFIRMED, stored_energy_status: SAFE_CONFIRMED, component_isolation_status: ISOLATED_CONFIRMED, measurement_location_verified: true, reference_source_verified: true}
+        safety_protocol: DEENERGIZED_ISOLATED_PASSIVE
+        risk_level: low
+        requires_reference_verification: true
+        fault_relations:
+          LED_FAILURE: {TEST_NORMAL: refutes, TEST_ABNORMAL: supports}

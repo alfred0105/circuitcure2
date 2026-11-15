@@ -1,9 +1,11 @@
-from circuitcare.symptom_diagnosis import diagnose, load_knowledge
+from circuitcare.symptom_diagnosis import diagnose, infer_symptom_codes, load_knowledge
 from circuitcare.symptom_diagnosis.component_fault_ranker import rank_component_candidates
 from circuitcare.symptom_diagnosis.measurement_evaluator import (
     evaluate_component_measurements, measurement_assessment_key,
 )
-from circuitcare.symptom_diagnosis.symptom_target_resolver import resolve_symptom_targets
+from circuitcare.symptom_diagnosis.symptom_target_resolver import (
+    bind_target_observations, resolve_symptom_targets,
+)
 
 
 class ParserClient:
@@ -15,6 +17,14 @@ class ParserClient:
         self.schema = output_schema
         assert output_budget == 480
         return {"content": self.payload, "model": "test-model"}
+
+
+class ProposalClient:
+    def __init__(self, proposal):
+        self.proposal = proposal
+
+    def chat_json(self, *_args, **_kwargs):
+        return {"content": {"proposals": [self.proposal]}, "model": "test-model"}
 
 
 def _reviewed_registry(component_count=4):
@@ -78,6 +88,86 @@ def test_target_resolver_auto_resolves_only_a_single_confirmed_non_group_compone
     )[0]
     assert resolved["resolution_status"] == "RESOLVED_UNIQUE"
     assert resolved["board_component_id"] == "BC-LED-1"
+
+
+def test_target_resolver_does_not_auto_resolve_when_reported_color_is_unverified_or_conflicts():
+    registry, visible = _reviewed_registry(1)
+    target = {"reference_id": "red-led", "component_type": "led", "color": "빨간"}
+    unresolved = resolve_symptom_targets([target], registry=registry, component_rows=visible)[0]
+    assert unresolved["resolution_status"] == "NEEDS_ATTRIBUTE_CONFIRMATION"
+    assert unresolved["board_component_id"] is None
+
+    registry["components"][0]["confirmed_color"] = "blue"
+    conflict = resolve_symptom_targets([target], registry=registry, component_rows=visible)[0]
+    assert conflict["resolution_status"] == "UNRESOLVED"
+    assert conflict["candidate_components"] == []
+
+
+def test_led_working_observation_is_not_copied_to_same_type_parts_without_verified_group():
+    registry, visible = _reviewed_registry(4)
+    target = {"reference_id": "leds", "component_type": "led", "group_size": 4}
+    resolved = resolve_symptom_targets(
+        [target], registry=registry, component_rows=visible,
+        selected_board_component_ids={"leds": "BC-LED-3"},
+    )
+    parsed = {"observations": [], "peer_observations": [{
+        "code": "LED_WORKING", "value": True, "target_reference": "leds",
+        "evidence_quote": "나머지는 정상입니다.",
+    }]}
+    _, peers = bind_target_observations(parsed, resolved)
+    assert peers == []
+
+
+def test_led_symptom_requires_led_context_and_board_power_failure_is_not_led_failure():
+    assert "LED_NOT_LIT" in infer_symptom_codes("빨간 LED 4개 중 세 번째만 켜지지 않습니다.")
+    assert "LED_NOT_LIT" not in infer_symptom_codes("기판 전원이 켜지지 않습니다.")
+    assert "NO_POWER" in infer_symptom_codes("기판 전원이 켜지지 않습니다.")
+
+
+def test_led_fault_has_a_dedicated_measurement_but_planner_blocks_it_until_safety_details():
+    result = diagnose(
+        symptoms=["LED_NOT_LIT"],
+        components=[{"component_id": "D3", "component_type": "led",
+                     "component_type_status": "USER_CONFIRMED", "presence_status": "CONFIRMED"}],
+        confirmed_component_ids={"D3"},
+    )
+    plan = result["active_inspection_plan"]
+    led_test = next(row for row in plan["blocked"] if row["test_id"] == "isolated_forward_drop")
+    assert led_test["status"] == "NEEDS_SAFETY_OR_TEST_DETAILS"
+    assert "측정 대상 분리 확인" in " ".join(led_test["prerequisites"])
+
+
+def test_qwen_fault_proposal_must_match_a_reported_symptom_or_observation():
+    from circuitcare.symptom_diagnosis.llm_assist import suggest_pcb_fault_candidates
+
+    knowledge = load_knowledge()
+    proposal = {
+        "component_id": "BC-LED-1", "suspected_fault_id": "LED_FAILURE",
+        "functional_block": "output", "functional_block_id": "__none__",
+        "reason": "unverified suggestion", "supporting_evidence_ids": [],
+        "opposing_evidence_ids": [], "missing_information": [],
+        "recommended_next_action": "inspect", "uncertainty_status": "UNVERIFIED",
+    }
+    context = {"focus_components": [{
+        "component_id": "BC-LED-1", "board_component_id": "BC-LED-1",
+        "type": "led", "presence_status": "CONFIRMED", "review_status": "USER_CONFIRMED",
+        "component_type_status": "USER_CONFIRMED", "candidate_component_types": ["led"],
+        "identity_status": "VERIFIED",
+    }], "functional_block_groups": [], "observations": {},
+        "measurement_evidence": [], "evidence_ledger": []}
+
+    irrelevant = suggest_pcb_fault_candidates(
+        ProposalClient(proposal), "qwen", pcb_context=context,
+        diagnosis={"symptom_codes": ["NO_POWER"], "observations": {}}, knowledge=knowledge,
+    )
+    assert irrelevant["proposals"] == []
+    assert irrelevant["rejected_proposal_count"] == 1
+
+    relevant = suggest_pcb_fault_candidates(
+        ProposalClient(proposal), "qwen", pcb_context=context,
+        diagnosis={"symptom_codes": ["LED_NOT_LIT"], "observations": {}}, knowledge=knowledge,
+    )
+    assert len(relevant["proposals"]) == 1
 
 
 def test_component_symptom_evidence_targets_only_the_reported_component():

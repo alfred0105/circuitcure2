@@ -100,6 +100,11 @@ def suggest_pcb_fault_candidates(
     rows = response_content["proposals"]
     validated = []
     rejected = 0
+    active_symptoms = {str(value) for value in diagnosis.get("symptom_codes", [])
+                       if isinstance(value, str)}
+    active_observations = diagnosis.get("observations", {})
+    active_observations = active_observations if isinstance(active_observations, dict) else {}
+    measurement_evidence = diagnosis.get("measurement_evidence", [])
     for row in rows[:3] if isinstance(rows, list) else []:
         if not isinstance(row, dict):
             rejected += 1
@@ -133,6 +138,28 @@ def suggest_pcb_fault_candidates(
         aliases = {"integrated_circuit": "ic", "ic": "integrated_circuit"}
         if not accepted_types or not any(kind in accepted_types or aliases.get(kind) in accepted_types
                                          for kind in actual_types):
+            rejected += 1
+            continue
+        symptom_match = bool(set(mode.get("supported_symptoms", {})) & active_symptoms)
+        supporting = mode.get("supporting_evidence", {})
+        opposing = mode.get("opposing_evidence", {})
+        supporting_false = mode.get("supporting_evidence_when_false", {})
+        opposing_false = mode.get("opposing_evidence_when_false", {})
+        observation_match = any(
+            (value is True and code in (supporting.keys() | opposing.keys()))
+            or (value is False and code in (supporting_false.keys() | opposing_false.keys()))
+            for code, value in active_observations.items() if type(value) is bool
+        )
+        aliases_for_component = {cid, str(component.get("board_component_id") or cid)}
+        measurement_match = any(
+            isinstance(measurement, dict)
+            and str(measurement.get("component_id") or measurement.get("board_component_id") or "")
+                in aliases_for_component
+            and str(measurement.get("fault_hypothesis") or "") == fault_id
+            and measurement.get("assessment_status") in {"TEST_NORMAL", "TEST_ABNORMAL", "CONFLICTED"}
+            for measurement in measurement_evidence if isinstance(measurement_evidence, list)
+        )
+        if not (symptom_match or observation_match or measurement_match):
             rejected += 1
             continue
         raw_supports = row.get("supporting_evidence_ids", [])

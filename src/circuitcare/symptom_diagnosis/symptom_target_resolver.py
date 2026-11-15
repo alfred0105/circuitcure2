@@ -45,12 +45,45 @@ def resolve_symptom_targets(
                     or normalize_component_class(row.get("component_type"), allow_not_component=False) != target_type
                     or board_id not in visible_by_board):
                 continue
+            attrs = row.get("visual_attributes") if isinstance(row.get("visual_attributes"), dict) else {}
+            color = str(row.get("confirmed_color") or attrs.get("confirmed_color")
+                        or attrs.get("color") or "").strip().casefold()
+            region = str(row.get("confirmed_region") or attrs.get("confirmed_region")
+                         or attrs.get("region") or "").strip().upper()
+            confirmed_ref = str(row.get("user_reference_designator") or "").strip().upper()
+            refs = [str(value).strip().upper() for value in row.get("reference_designators", [])]
+            requested_color = str(raw.get("color") or "").strip().casefold()
+            requested_region = str(raw.get("region") or "UNSPECIFIED").upper()
+            requested_ref = str(raw.get("reference_designator") or "").strip().upper()
+            if requested_color and color and requested_color not in color:
+                continue
+            if requested_region not in {"", "UNSPECIFIED"} and region and requested_region != region:
+                continue
+            if requested_ref and confirmed_ref and requested_ref != confirmed_ref:
+                continue
+            verified_attrs = []
+            if requested_color and color:
+                verified_attrs.append("color")
+            if requested_region not in {"", "UNSPECIFIED"} and region:
+                verified_attrs.append("region")
+            if requested_ref and confirmed_ref == requested_ref:
+                verified_attrs.append("reference_designator")
+            unverified_attrs = [name for name, requested, actual in (
+                ("color", requested_color, color),
+                ("region", requested_region if requested_region != "UNSPECIFIED" else "", region),
+                ("reference_designator", requested_ref, confirmed_ref),
+            ) if requested and not actual]
+            verified_group_id = str(row.get("verified_group_id") or "")
+            group_status = str(row.get("group_membership_status") or "").upper()
             eligible.append({
                 "board_component_id": board_id,
                 "component_id": str(visible_by_board[board_id].get("component_id") or ""),
                 "component_type": target_type,
-                "reference_designators": list(row.get("reference_designators", [])),
+                "reference_designators": refs,
                 "ocr_markings": list(row.get("ocr_markings", [])),
+                "verified_attributes": verified_attrs,
+                "unverified_attributes": unverified_attrs,
+                "verified_group_id": verified_group_id if group_status == "USER_CONFIRMED" else None,
             })
         eligible.sort(key=lambda row: (row["reference_designators"][:1], row["board_component_id"]))
         chosen_id = str(selected.get(reference_id) or "")
@@ -61,8 +94,11 @@ def resolve_symptom_targets(
         if chosen:
             status = "RESOLVED_USER_CONFIRMED"
         elif len(eligible) == 1 and not has_group_reference:
-            chosen = eligible[0]
-            status = "RESOLVED_UNIQUE"
+            if not eligible[0].get("unverified_attributes"):
+                chosen = eligible[0]
+                status = "RESOLVED_UNIQUE"
+            else:
+                status = "NEEDS_ATTRIBUTE_CONFIRMATION"
         elif eligible:
             status = "AMBIGUOUS"
         elif excluded_ids:
@@ -80,6 +116,7 @@ def resolve_symptom_targets(
                 "사용자가 증상 대상을 Registry 소자와 연결했습니다." if status == "RESOLVED_USER_CONFIRMED" else
                 "현재 사진에서 확인된 해당 종류의 소자가 하나뿐입니다." if status == "RESOLVED_UNIQUE" else
                 "같은 종류의 확인 소자가 여러 개여서 박스 ID를 선택해야 합니다." if status == "AMBIGUOUS" else
+                "증상에 언급된 색상·위치·실크스크린을 Registry에서 확인할 수 없어 사용자가 박스를 선택해야 합니다." if status == "NEEDS_ATTRIBUTE_CONFIRMATION" else
                 "일치하는 소자가 제외 상태입니다." if status == "EXCLUDED" else
                 "현재 사진에서 확인된 해당 종류의 소자를 찾지 못했습니다."
             ),
@@ -115,8 +152,11 @@ def bind_target_observations(
             continue
         candidate_rows = target.get("candidate_components", [])
         expected_size = target.get("group_size")
+        verified_group_ids = {str(row.get("verified_group_id") or "") for row in candidate_rows
+                              if row.get("verified_group_id")}
         if (not isinstance(expected_size, int) or expected_size < 2
-                or len(candidate_rows) != expected_size):
+                or len(candidate_rows) != expected_size or len(verified_group_ids) != 1
+                or any(not row.get("verified_group_id") for row in candidate_rows)):
             continue
         chosen_id = str(target.get("board_component_id") or "")
         for candidate in candidate_rows:

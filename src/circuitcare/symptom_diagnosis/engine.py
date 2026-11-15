@@ -153,9 +153,21 @@ def infer_symptom_codes(text: str, knowledge: dict[str, Any] | None = None) -> l
     """Fallback parser for reviewed symptom keywords when the local LLM is unavailable."""
     ontology = (knowledge or load_knowledge())["symptom_ontology"]["symptoms"]
     folded = (text or "").casefold()
-    return [code for code, item in ontology.items()
-            if any(_keyword_is_asserted(folded, str(word).casefold())
-                   for word in item.get("keywords", []))]
+    result = [code for code, item in ontology.items()
+              if code != "LED_NOT_LIT" and any(_keyword_is_asserted(folded, str(word).casefold())
+                                                for word in item.get("keywords", []))]
+    # A generic Korean "does not turn on" phrase may describe the whole board
+    # or a display. LED failure requires an LED/indicator noun and the dark
+    # state in the same clause.
+    indicator_terms = ("led", "발광 다이오드", "표시등", "램프")
+    dark_terms = ("켜지지", "점등하지", "불이 안 들어", "불이 들어오지", "점등이 안", "안 켜")
+    clauses = re.split(r"[.!?;\n,]", folded)
+    if any(any(term in clause for term in indicator_terms)
+           and any(term in clause for term in dark_terms)
+           and not re.search(r"(?:않는\s*건|않는\s*것은|아닌\s*건)\s*(?:아니|아님)", clause)
+           for clause in clauses):
+        result.append("LED_NOT_LIT")
+    return result
 
 
 def _keyword_is_asserted(text: str, keyword: str) -> bool:
