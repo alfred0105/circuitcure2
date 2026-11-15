@@ -14,7 +14,9 @@ import yaml
 from circuitcare.symptom_diagnosis.schemas import EvidenceStatus, Observation
 from circuitcare.component_taxonomy import normalize_component_class
 from circuitcare.symptom_diagnosis.functional_blocks import analyze_functional_blocks
-from circuitcare.symptom_diagnosis.functional_blocks import build_functional_block_groups
+from circuitcare.symptom_diagnosis.functional_blocks import (
+    build_functional_block_groups, evaluate_functional_block_states,
+)
 from circuitcare.symptom_diagnosis.evidence_ledger import build_evidence_ledger
 from circuitcare.symptom_diagnosis.evidence_gaps import analyze_evidence_gaps
 from circuitcare.symptom_diagnosis.component_fault_ranker import rank_component_candidates, rank_joint_candidates
@@ -213,7 +215,7 @@ def _normalized_type(value: Any) -> str:
 def _normalize_observations(
     rows: dict[str, Any] | list[dict[str, Any]] | None,
 ) -> tuple[dict[str, Any], dict[str, Observation], list[dict[str, Any]]]:
-    grouped: dict[tuple[str, str | None], list[Observation]] = defaultdict(list)
+    grouped: dict[tuple[str, str, str], list[Observation]] = defaultdict(list)
     if isinstance(rows, dict):
         items = [Observation(code=str(code), value=value, status=EvidenceStatus.OBSERVED,
                              source="user_report") for code, value in rows.items() if value is not None]
@@ -221,16 +223,19 @@ def _normalize_observations(
         items = [Observation.from_dict(row) for row in (rows or []) if isinstance(row, dict)]
     for observation in items:
         if observation.code:
-            grouped[(observation.code, observation.component_id)].append(observation)
+            grouped[(observation.scope, str(observation.subject_id or observation.component_id or ""),
+                     observation.code)].append(observation)
 
     facts: dict[str, Any] = {}
     provenance: dict[str, Observation] = {}
     conflicts: list[dict[str, Any]] = []
     usable_statuses = {EvidenceStatus.MEASURED, EvidenceStatus.OBSERVED}
-    for (code, component_id), observations in grouped.items():
+    for (scope, subject_id, code), observations in grouped.items():
+        component_id = subject_id if scope == "component" else None
         contradicted = [row for row in observations if row.status == EvidenceStatus.CONTRADICTED]
         if contradicted:
             conflicts.append({"code": code, "component_id": component_id,
+                              "scope": scope, "subject_id": subject_id or None,
                               "values": list({repr(row.value): row.value for row in contradicted}.values()),
                               "evidence": [{"value": row.value, "status": row.status.value,
                                             "source": row.source} for row in observations],
@@ -242,7 +247,9 @@ def _normalize_observations(
             continue
         values = {repr(row.value): row.value for row in usable}
         if len(values) > 1:
-            conflicts.append({"code": code, "component_id": component_id, "values": list(values.values()),
+            conflicts.append({"code": code, "component_id": component_id,
+                              "scope": scope, "subject_id": subject_id or None,
+                              "values": list(values.values()),
                               "evidence": [{"value": row.value, "status": row.status.value,
                                             "source": row.source} for row in usable],
                               "sources": list(dict.fromkeys(row.source for row in usable)),
@@ -251,7 +258,7 @@ def _normalize_observations(
         chosen = usable[-1]
         # Component-specific evidence remains scoped for the component ranker;
         # it must not silently become a board-wide fact.
-        if component_id:
+        if scope != "system" or component_id:
             continue
         facts[code] = chosen.value
         provenance[code] = chosen
@@ -344,7 +351,7 @@ def diagnose(
     selected = []
     considered: set[str] = set()
     conflicted_codes = {str(row.get("code")) for row in evidence_conflicts
-                        if not row.get("component_id")}
+                        if row.get("scope", "system") == "system" and not row.get("component_id")}
     for code in [*requested_symptoms, *(code for code in observed_facts if code in ontology)]:
         if code not in ontology or code in considered:
             continue
@@ -393,6 +400,11 @@ def diagnose(
     confirmed_functional_blocks = [row for row in functional_blocks
                                    if str(row.get("component_id") or "") in confirmed_ids]
     functional_block_groups = build_functional_block_groups(detected_parts, functional_blocks)
+    functional_block_groups = evaluate_functional_block_states(
+        functional_block_groups,
+        observations=observations if isinstance(observations, list) else [],
+        measurements=measurements or [],
+    )
     blocks_by_component = {str(row.get("component_id")): row for row in confirmed_functional_blocks}
 
     matched_rules = [rule for rule in kb["symptom_rules"]["rules"]
@@ -718,6 +730,7 @@ def diagnose(
             "measurement_id": row.get("measurement_id"),
             "component_id": row.get("component_id"),
             "board_component_id": row.get("board_component_id"),
+            "functional_block_id": row.get("functional_block_id"),
             "test_id": row.get("test_id"),
             "observed_at": (row.get("measured_at") or row.get("created_at") or row.get("timestamp")),
             "measurement_type": row.get("measurement_type"),
@@ -758,16 +771,96 @@ def diagnose(
         if mode.get("level") != "functional_block":
             continue
         required_roles = set(mode.get("functional_roles", []))
+        candidate_types = {_normalized_type(value) for value in mode.get("candidate_component_types", [])}
+        required_types = {_normalized_type(value) for value in mode.get("required_component_types", [])}
         for block in functional_block_groups:
             if required_roles and block.get("role") not in required_roles:
                 continue
-            functional_hypotheses.append({**hypothesis,
-                "hypothesis_id": f"{hypothesis['fault_id']}:{block['block_id']}",
-                "level": "functional_block", "functional_block_id": block["block_id"],
-                "functional_block": block["role"], "related_component_ids": list(block["component_ids"]),
-                "supporting_evidence": list(dict.fromkeys([
-                    *hypothesis.get("supporting_evidence", []), *block.get("supporting_evidence", [])])),
-                "status": "UNVERIFIED_CANDIDATE", "score_is_probability": False})
+            member_types = {_normalized_type(member.get("component_type"))
+                            for member in block.get("members", []) if isinstance(member, dict)}
+            if candidate_types and not (member_types & candidate_types):
+                continue
+            if required_types and not required_types.issubset(detected_types):
+                continue
+            block_id = str(block["block_id"])
+            scoped_support, scoped_opposition, scoped_details = [], [], []
+            scoped_score = 0.0
+            # Only observations explicitly assigned to this block can change
+            # its score. Board-wide symptoms remain context, not copied score.
+            for observation in observations if isinstance(observations, list) else []:
+                if (not isinstance(observation, dict)
+                        or str(observation.get("scope") or "").casefold() != "functional_block"
+                        or str(observation.get("subject_id") or "") != block_id
+                        or str(observation.get("status") or "observed").casefold() not in {"observed", "measured"}):
+                    continue
+                code, value = str(observation.get("code") or ""), observation.get("value")
+                support = (mode.get("supporting_evidence", {}) if value is True else
+                           mode.get("supporting_evidence_when_false", {}))
+                oppose = (mode.get("opposing_evidence", {}) if value is True else
+                          mode.get("opposing_evidence_when_false", {}))
+                if code in support:
+                    weight = float(support[code]) * (1.0 if str(observation.get("status")).casefold() == "measured" else 0.7)
+                    scoped_score += weight
+                    scoped_support.append(code if value is True else f"{code}=false")
+                    scoped_details.append({"code": code, "source": observation.get("source"),
+                                           "status": observation.get("status"), "weight": weight,
+                                           "operating_condition": observation.get("operating_condition")})
+                elif code in oppose:
+                    weight = float(oppose[code]) * (1.0 if str(observation.get("status")).casefold() == "measured" else 0.7)
+                    scoped_score -= weight
+                    scoped_opposition.append(code if value is True else f"{code}=false")
+                    scoped_details.append({"code": code, "source": observation.get("source"),
+                                           "status": observation.get("status"), "weight": -weight,
+                                           "operating_condition": observation.get("operating_condition")})
+            for measurement in measurement_evidence:
+                measurement_target = str(measurement.get("board_component_id") or measurement.get("component_id") or "")
+                directly_scoped = str(measurement.get("functional_block_id") or "") == block_id
+                confirmed_member_measurement = (
+                    block.get("membership_status") == "USER_CONFIRMED"
+                    and measurement_target in {str(value) for value in block.get("component_ids", [])}
+                )
+                if (not (directly_scoped or confirmed_member_measurement)
+                        or str(measurement.get("fault_hypothesis") or "") != str(hypothesis["fault_id"])
+                        or measurement.get("used_for_ranking") is not True):
+                    continue
+                verdict = str(measurement.get("verdict") or "").casefold()
+                if verdict in {"supports", "refutes"}:
+                    weight = 2.0 if verdict == "supports" else -2.0
+                    scoped_score += weight
+                    target = scoped_support if weight > 0 else scoped_opposition
+                    target.append(f"측정 {measurement.get('test_id') or measurement.get('measurement_id')} · {verdict}")
+                    scoped_details.append({"measurement_id": measurement.get("measurement_id"),
+                                           "source": measurement.get("source"), "status": measurement.get("assessment_status"),
+                                           "weight": weight})
+            behavior_status = str(block.get("behavior_status") or "UNKNOWN")
+            if behavior_status == "CONFLICTED":
+                scoped_status = "CONFLICTED"
+            elif scoped_support and scoped_opposition:
+                scoped_status = "CONFLICTED"
+            elif scoped_support:
+                scoped_status = "SUPPORTED"
+            elif scoped_opposition:
+                scoped_status = "REFUTED"
+            else:
+                scoped_status = "INCONCLUSIVE"
+            functional_hypotheses.append({
+                "hypothesis_id": f"functional_block:{block_id}:{hypothesis['fault_id']}",
+                "scope": "functional_block", "subject_id": block_id,
+                "fault_id": hypothesis["fault_id"], "title": hypothesis.get("title", hypothesis["fault_id"]),
+                "level": "functional_block", "functional_block_id": block_id,
+                "functional_block": block["role"], "functional_block_status": behavior_status,
+                "role_status": block.get("role_status", "UNKNOWN"),
+                "membership_status": block.get("membership_status", "UNKNOWN"),
+                "connectivity_status": block.get("connectivity_status", "UNKNOWN"),
+                "related_component_ids": list(block["component_ids"]),
+                "score": round(scoped_score, 2), "score_is_probability": False,
+                "supporting_evidence": scoped_support, "opposing_evidence": scoped_opposition,
+                "evidence_details": scoped_details, "global_context": hypothesis.get("supporting_evidence", []),
+                "status": scoped_status,
+            })
+    planner_hypotheses = [row for row in ranked
+                          if modes.get(str(row.get("fault_id") or ""), {}).get("level") != "functional_block"]
+    planner_hypotheses.extend(functional_hypotheses)
     hierarchical_hypotheses = {
         "system": sorted([row for row in ranked if row.get("level") == "system"],
                           key=lambda row: (-row.get("score", 0), row.get("fault_id", ""))),
@@ -780,15 +873,23 @@ def diagnose(
                             for row in joint_candidates]],
                         key=lambda row: (-row.get("score", 0), row.get("fault_id", ""))),
     }
+    functional_block_relationships = [
+        {"source_block_id": left.get("block_id"), "target_block_id": right.get("block_id"),
+         "relationship": None, "status": "UNKNOWN", "evidence_source": None,
+         "candidate_relationship_types": ["SUPPLIES_POWER_TO", "CONTROLS", "DRIVES", "SHARES_SUPPLY_WITH"]}
+        for left_index, left in enumerate(functional_block_groups)
+        for right in functional_block_groups[left_index + 1:]
+        if left.get("block_id") and right.get("block_id") and left.get("block_id") != right.get("block_id")
+    ]
     evidence_gaps = analyze_evidence_gaps(
-        hypotheses=ranked, knowledge=kb, confirmed_types=detected_types,
+        hypotheses=planner_hypotheses, knowledge=kb, confirmed_types=detected_types,
         functional_blocks=functional_block_groups, component_roles=confirmed_functional_blocks,
         component_candidates=all_component_candidates,
         measurement_evidence=measurement_evidence, evidence_ledger=evidence_ledger,
         connectivity_status=connectivity_status,
     )
     active_inspection_plan = plan_active_inspections(
-        hypotheses=ranked, component_candidates=all_component_candidates,
+        hypotheses=planner_hypotheses, component_candidates=all_component_candidates,
         functional_block_groups=functional_block_groups, evidence_gaps=evidence_gaps,
         measurements=[
             {**row,
@@ -812,6 +913,7 @@ def diagnose(
                               for rule in sorted(matched_rules, key=lambda item: -item.get("priority", 0))],
             "hypotheses": ranked, "functional_blocks": functional_blocks,
             "functional_block_groups": functional_block_groups,
+            "functional_block_relationships": functional_block_relationships,
             "hierarchical_hypotheses": hierarchical_hypotheses,
             "component_candidate_groups": list(candidate_groups_by_id.values()),
             "evidence_ledger": evidence_ledger, "evidence_gaps": evidence_gaps,

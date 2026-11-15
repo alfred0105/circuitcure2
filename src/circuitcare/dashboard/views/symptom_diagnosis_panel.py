@@ -823,6 +823,15 @@ def _component_rows(components: tuple[Any, ...],
              "component_type_status": type_status,
              "part_identity_status": inventory.get(item.component_id, {}).get("part_identity_status", "UNCONFIRMED"),
              "confirmed_functional_roles": roles,
+             "ai_suggested_functional_roles": list(getattr(item, "ai_suggested_functional_roles", ()) or ())
+                 or list(inventory.get(item.component_id, {}).get("ai_suggested_functional_roles", []) or []),
+             "functional_instance_id": (getattr(item, "functional_instance_id", None)
+                 or inventory.get(item.component_id, {}).get("functional_instance_id")),
+             "verified_group_id": (getattr(item, "verified_group_id", None)
+                 or inventory.get(item.component_id, {}).get("verified_group_id")),
+             "group_confirmation_status": (getattr(item, "group_confirmation_status", "UNKNOWN")
+                 or inventory.get(item.component_id, {}).get("group_confirmation_status", "UNKNOWN")),
+             "reference_designators": list(getattr(item, "reference_designators", ()) or ()),
              "candidate_component_types": list(getattr(item, "candidate_component_types", ()) or ()),
              "ai_review_evidence": list(getattr(item, "ai_review_evidence", ()) or ()),
              "ocr_marking_candidates": list(getattr(item, "ocr_marking_candidates", ()) or ()),

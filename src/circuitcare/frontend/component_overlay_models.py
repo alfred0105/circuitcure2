@@ -51,6 +51,10 @@ class ComponentOverlayViewModel:
     reference_designators: tuple[str, ...] = ()
     board_component_id: str | None = None
     functional_block_roles: tuple[str, ...] = ()
+    functional_instance_id: str | None = None
+    verified_group_id: str | None = None
+    group_confirmation_status: str = "UNKNOWN"
+    ai_suggested_functional_roles: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)

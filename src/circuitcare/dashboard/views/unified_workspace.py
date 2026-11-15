@@ -465,6 +465,7 @@ def _prepare_photo_component_snapshot(
         ocr_class_hints=tuple(row.get("ocr_class_hints", [])),
         reference_designators=tuple(row.get("reference_designators", [])),
         overlay_source=row.get("source", "yolo"),
+        ai_suggested_functional_roles=tuple(row.get("qwen_functional_role_candidates", []) or []),
     ) for index, row in enumerate(visible_rows))
     edits = st.session_state.get(COMPONENT_EDIT_KEY, {})
     if edits:
@@ -478,6 +479,10 @@ def _prepare_photo_component_snapshot(
     review_models = tuple(replace(model,
         confirmed_functional_roles=tuple(inventory.get(model.component_id, {}).get("confirmed_functional_roles", [])),
         part_identity_status=inventory.get(model.component_id, {}).get("part_identity_status", "UNCONFIRMED"),
+        functional_instance_id=inventory.get(model.component_id, {}).get("functional_instance_id"),
+        verified_group_id=(inventory.get(model.component_id, {}).get("verified_group_id")
+                           if inventory.get(model.component_id, {}).get("group_confirmation_status") == "USER_CONFIRMED" else None),
+        group_confirmation_status=inventory.get(model.component_id, {}).get("group_confirmation_status", "UNKNOWN"),
     ) for model in review_models)
     scope = AnalysisScope(project.project_id, project.board_id or "", str(photo_id))
     image_fingerprint = hashlib.sha256(image_data).hexdigest()
@@ -486,7 +491,11 @@ def _prepare_photo_component_snapshot(
                        "marking": item.ocr_marking, "info": item.component_info,
                        "presence": item.presence_status, "type_status": item.component_type_status,
                        "identity": item.part_identity_status,
-                       "roles": item.confirmed_functional_roles} for item in review_models]
+                       "roles": item.confirmed_functional_roles,
+                       "functional_instance_id": item.functional_instance_id,
+                       "verified_group_id": item.verified_group_id,
+                       "group_confirmation_status": item.group_confirmation_status,
+                       "ai_suggested_functional_roles": item.ai_suggested_functional_roles} for item in review_models]
     review_version = hashlib.sha256(json.dumps(review_payload, sort_keys=True, default=str).encode()).hexdigest()
     by_scope = dict(st.session_state.get("circuitcare_v6_photo_component_snapshots", {}))
     previous_snapshot = by_scope.get(scope.key, {})
@@ -569,6 +578,15 @@ def _prepare_photo_component_snapshot(
                         str(row.get("component_id")), {}).get("functional_role_candidates", []),
                     "confirmed_functional_roles": inventory.get(str(row.get("component_id")), {}).get(
                         "confirmed_functional_roles", []),
+                    "reference_designators": row.get("reference_designators", []),
+                    "functional_instance_id": inventory.get(str(row.get("component_id")), {}).get(
+                        "functional_instance_id"),
+                    "verified_group_id": inventory.get(str(row.get("component_id")), {}).get(
+                        "verified_group_id") if inventory.get(str(row.get("component_id")), {}).get(
+                            "group_confirmation_status") == "USER_CONFIRMED" else None,
+                    "group_confirmation_status": inventory.get(str(row.get("component_id")), {}).get(
+                        "group_confirmation_status", "UNKNOWN"),
+                    "ai_suggested_functional_roles": row.get("qwen_functional_role_candidates", []),
                     "evidence": ("사용자 제외 기록",) if row.get("상태") == "제외" else
                                 ("사용자 검수 확인",) if row.get("상태") == "확인" else
                                 ("사진별 탐지 후보",),

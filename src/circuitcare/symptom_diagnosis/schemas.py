@@ -32,6 +32,12 @@ class Observation:
     confidence: float | None = None
     measurement_conditions: dict[str, Any] | None = None
     evidence_quote: str | None = None
+    # Explicit evidence scope prevents a local symptom being treated as a
+    # board-wide fact. Legacy rows without scope retain their old semantics.
+    scope: str = "system"
+    subject_id: str | None = None
+    behavior: str | None = None
+    operating_condition: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         row = asdict(self)
@@ -58,6 +64,10 @@ class Observation:
             component_id=row.get("component_id"), target_reference=row.get("target_reference"), confidence=confidence,
             measurement_conditions=row.get("measurement_conditions"),
             evidence_quote=row.get("evidence_quote"),
+            scope=str(row.get("scope") or ("component" if row.get("component_id") else "system")),
+            subject_id=(str(row.get("subject_id")) if row.get("subject_id") is not None else None),
+            behavior=(str(row.get("behavior") or row.get("behavior_status") or "") or None),
+            operating_condition=(str(row.get("operating_condition") or "") or None),
         )
 
 

@@ -48,6 +48,11 @@ class BoardDiagnosisComponent:
     detector_classes: tuple[str, ...] = ()
     confirmed_subtypes: tuple[str, ...] = ()
     possible_part_numbers: tuple[str, ...] = ()
+    functional_instance_id: str | None = None
+    verified_group_id: str | None = None
+    group_confirmation_status: str = "UNKNOWN"
+    ai_suggested_functional_roles: tuple[str, ...] = ()
+    reference_designators: tuple[str, ...] = ()
 
 
 def diagnosis_components(registry: dict[str, Any]) -> tuple[BoardDiagnosisComponent, ...]:
@@ -129,6 +134,27 @@ def diagnosis_components(registry: dict[str, Any]) -> tuple[BoardDiagnosisCompon
             possible_part_numbers=tuple(dict.fromkeys(
                 str(source.get("confirmed_part_number") or source.get("possible_part_number"))
                 for source in source_rows if source.get("confirmed_part_number") or source.get("possible_part_number"))),
+            ai_suggested_functional_roles=tuple(dict.fromkeys(
+                str(role) for source in source_rows
+                for role in [*source.get("ai_suggested_functional_roles", ()),
+                             *source.get("qwen_functional_role_candidates", ())]
+            )),
+            reference_designators=tuple(dict.fromkeys(
+                str(value) for source in source_rows for value in source.get("reference_designators", ())
+            )),
+            # Keep a group identifier only when source rows agree on exactly
+            # one value; conflicting photo-local labels remain unresolved.
+            functional_instance_id=(next(iter({str(source.get("functional_instance_id")) for source in source_rows
+                                               if source.get("functional_instance_id")}))
+                                    if len({str(source.get("functional_instance_id")) for source in source_rows
+                                            if source.get("functional_instance_id")}) == 1 else None),
+            verified_group_id=(next(iter({str(source.get("verified_group_id")) for source in source_rows
+                                          if source.get("verified_group_id")}))
+                               if len({str(source.get("verified_group_id")) for source in source_rows
+                                       if source.get("verified_group_id")}) == 1 else None),
+            group_confirmation_status=("USER_CONFIRMED" if len({str(source.get("verified_group_id"))
+                for source in source_rows if source.get("verified_group_id")
+                and source.get("group_confirmation_status") == "USER_CONFIRMED"}) == 1 else "UNKNOWN"),
         ))
     return tuple(result)
 
@@ -222,7 +248,8 @@ def source_observation_fingerprint(source: dict[str, Any]) -> str:
         "detection_confidence", "location_confidence", "type_confidence", "source",
         "component_type", "review_status", "presence_status", "type_status",
         "ocr_marking", "ocr_candidates", "marking_candidates", "part_identity_status", "ic_identity_candidate",
-        "possible_part_number", "functional_roles", "evidence",
+        "possible_part_number", "functional_roles", "functional_instance_id", "verified_group_id",
+        "group_confirmation_status", "ai_suggested_functional_roles", "reference_designators", "evidence",
         "qwen_component_type_candidate", "qwen_component_type_evidence", "qwen_component_type_status",
         "qwen_component_type_confidence", "qwen_component_type_decision",
         "qwen_component_subtype_candidate", "qwen_component_type_alternatives", "qwen_review_status",
@@ -399,6 +426,11 @@ def _source_rows(photo_snapshots: dict[str, dict[str, Any]]) -> dict[str, dict[s
                 "part_identity_status": get("part_identity_status"),
                 "ic_identity_candidate": get("ic_identity_candidate"),
                 "functional_roles": list(get("confirmed_functional_roles", ()) or ()),
+                "reference_designators": list(get("reference_designators", ()) or ()),
+                "functional_instance_id": get("functional_instance_id"),
+                "verified_group_id": get("verified_group_id"),
+                "group_confirmation_status": get("group_confirmation_status", "UNKNOWN"),
+                "ai_suggested_functional_roles": list(get("ai_suggested_functional_roles", ()) or ()),
                 "evidence": list(get("evidence", ()) or ()),
                 "source": get("overlay_source"),
                 "qwen_component_type_candidate": get("qwen_component_type_candidate"),

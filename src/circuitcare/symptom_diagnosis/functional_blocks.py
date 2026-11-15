@@ -33,15 +33,17 @@ def analyze_functional_blocks(
         component_id = component.get("component_id")
         kind = str(component.get("component_type", "unknown"))
         own_roles = set(taxonomy.get(kind, []))
-        own_roles.update(str(role) for role in component.get("confirmed_functional_roles", [])
-                         if str(role).strip())
-        own_roles.update(str(role) for role in component.get("ai_suggested_functional_roles", [])
-                         if str(role).strip())
+        confirmed_roles = {str(role) for role in component.get("confirmed_functional_roles", []) if str(role).strip()}
+        ai_roles = {str(role) for role in component.get("ai_suggested_functional_roles", []) if str(role).strip()}
         identity = None
         if kind == "ic" and component.get("ocr_marking"):
             identity = resolve_ic_identity(str(component["ocr_marking"]), ic_catalog)
             own_roles.update(identity["role_candidates"])
-        identities[str(component_id)] = {"roles": own_roles, "identity": identity}
+        identities[str(component_id)] = {"roles": own_roles | confirmed_roles | ai_roles,
+                                          "taxonomy_roles": own_roles,
+                                          "confirmed_roles": confirmed_roles,
+                                          "ai_roles": ai_roles,
+                                          "identity": identity}
 
     for component in components:
         component_id = component.get("component_id")
@@ -64,9 +66,22 @@ def analyze_functional_blocks(
         votes: dict[str, float] = {}
         evidence_by_role: dict[str, list[str]] = {}
         own = identities.get(str(component_id), {})
-        for role in own.get("roles", set()):
-            votes[role] = votes.get(role, 0.0) + 1.0
-            evidence_by_role.setdefault(role, []).append("부품 종류 또는 IC 각인 힌트")
+        for role in own.get("taxonomy_roles", set()):
+            votes[role] = votes.get(role, 0.0) + 0.5
+            evidence_by_role.setdefault(role, []).append("소자 종류 기반 역할 후보")
+        for role in own.get("ai_roles", set()):
+            votes[role] = votes.get(role, 0.0) + 0.5
+            evidence_by_role.setdefault(role, []).append("Qwen 기능 역할 제안 · 미확정")
+        for role in own.get("confirmed_roles", set()):
+            votes[role] = votes.get(role, 0.0) + 2.0
+            evidence_by_role.setdefault(role, []).append("사용자 확인 기능 역할")
+        if own.get("identity"):
+            for role in own["identity"].get("role_candidates", []):
+                verified_identity = own["identity"].get("verified") is True
+                votes[role] = votes.get(role, 0.0) + (1.0 if verified_identity else 0.35)
+                evidence_by_role.setdefault(role, []).append(
+                    "검증된 IC 카탈로그 역할 후보 · 실제 회로 기능 미확정" if verified_identity
+                    else "IC 각인 문자열 힌트 · 미확정")
         related_ids = []
         for other, distance in nearby:
             other_id = str(other.get("component_id"))
@@ -119,6 +134,9 @@ def analyze_functional_blocks(
             "candidate_blocks": roles, "nearby_component_ids": [str(row.get("component_id")) for row, _ in nearby],
             "related_component_ids": related_ids, "nearby_silkscreen": nearby_text,
             "role_evidence": {role: list(dict.fromkeys(evidence_by_role[role])) for role in roles},
+            "role_status_by_candidate": {role: ("USER_CONFIRMED" if role in own.get("confirmed_roles", set())
+                                                else "AI_SUGGESTED" if role in own.get("ai_roles", set())
+                                                else "INFERRED") for role in roles},
             "ic_identity": identity, "status": "INFERRED", "verified": False,
         })
     return result
@@ -191,7 +209,10 @@ def build_functional_block_groups(
                             "ocr_marking": component.get("ocr_marking"),
                             "reference_designators": list(component.get("reference_designators", [])),
                             "role_evidence": list(role_row.get("role_evidence", {}).get(role, [])),
-                            "functional_instance_id": component.get("functional_instance_id")})
+                            "ai_suggested_functional_roles": list(component.get("ai_suggested_functional_roles", [])),
+                            "functional_instance_id": component.get("functional_instance_id"),
+                            "verified_group_id": component.get("verified_group_id"),
+                            "group_confirmation_status": str(component.get("group_confirmation_status") or "UNKNOWN")})
         if not members:
             continue
         # Use explicit instance labels first. Otherwise, cluster only with a
@@ -201,11 +222,14 @@ def build_functional_block_groups(
         diagonal = board_diagonal
         explicit_clusters: list[list[dict[str, Any]]] = []
         unlabelled_clusters: list[list[dict[str, Any]]] = []
-        named_clusters: dict[str, list[dict[str, Any]]] = {}
+        named_clusters: dict[tuple[str, str], list[dict[str, Any]]] = {}
         for member in members:
+            group_id = str(member.get("verified_group_id") or "").strip()
             instance_id = str(member.get("functional_instance_id") or "").strip()
-            if instance_id:
-                named_clusters.setdefault(instance_id, []).append(member)
+            explicit_id = group_id or instance_id
+            explicit_kind = "verified_group" if group_id else "instance"
+            if explicit_id:
+                named_clusters.setdefault((explicit_kind, explicit_id), []).append(member)
             else:
                 unlabelled_clusters.append([member])
         explicit_clusters = [named_clusters[key] for key in sorted(named_clusters)]
@@ -232,23 +256,115 @@ def build_functional_block_groups(
             block_id = f"block-{hashlib.sha256(seed.encode()).hexdigest()[:12]}"
             evidence = list(dict.fromkeys(text for member in cluster for text in member["role_evidence"]))
             role_verified = bool(cluster) and all(member["role_verified"] for member in cluster)
-            partition_status = ("EXPLICIT_INSTANCE" if all(member.get("functional_instance_id") for member in cluster)
+            verified_membership = bool(cluster) and all(
+                member.get("verified_group_id")
+                and member.get("group_confirmation_status") == "USER_CONFIRMED"
+                for member in cluster
+            )
+            explicit_instance = bool(cluster) and all(member.get("functional_instance_id") for member in cluster)
+            partition_status = ("USER_CONFIRMED_GROUP" if verified_membership else
+                                "EXPLICIT_INSTANCE" if explicit_instance
                                 else "LAYOUT_CLUSTER" if all(member.get("center_xy") for member in cluster)
                                 else "UNRESOLVED_NO_POSITION")
             version_seed = json.dumps([role, partition_status, member_ids,
-                                       [(member["component_id"], member["role_status"], member["role_evidence"])
+                                       [(member["component_id"], member["role_status"], member["role_evidence"],
+                                         member.get("functional_instance_id"), member.get("verified_group_id"),
+                                         member.get("group_confirmation_status"))
                                         for member in cluster]], ensure_ascii=False, separators=(",", ":"))
             block_version = hashlib.sha256(version_seed.encode()).hexdigest()[:16]
+            membership_status = ("USER_CONFIRMED" if verified_membership else
+                                 "INFERRED" if partition_status in {"EXPLICIT_INSTANCE", "LAYOUT_CLUSTER"}
+                                 else "UNKNOWN")
+            role_status = "USER_CONFIRMED" if role_verified else "INFERRED"
             groups.append({"block_id": block_id, "functional_block_id": block_id, "role": role,
                            "version": block_version,
                            "title": role.replace("_", " ").title(), "component_ids": member_ids,
                            "board_component_ids": member_ids, "members": cluster,
                            "supporting_evidence": evidence, "opposing_evidence": [],
+                           # Legacy fields describe role only; membership and
+                           # electrical connectivity have independent status.
                            "verification_status": "VERIFIED" if role_verified else "INFERRED",
                            "status": "VERIFIED" if role_verified else "INFERRED",
+                           "role_status": role_status,
+                           "membership_status": membership_status,
                            "verified": role_verified, "partition_status": partition_status,
-                           "connectivity_status": "NOT_INFERRED",
+                           "connectivity_status": "UNKNOWN",
                            "unknown_connectivity_component_ids": member_ids,
                            "unverified_relations": [],
                            "connectivity_note": "역할 그룹은 전기적 연결 관계를 의미하지 않습니다."})
     return groups
+
+
+def evaluate_functional_block_states(
+    functional_blocks: list[dict[str, Any]], observations: list[dict[str, Any]] | None = None,
+    measurements: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
+    """Attach independent, scoped behavior states to existing block groups.
+
+    Only explicit functional-block observations and verified measurements
+    directly scoped to a block contribute. Member proximity never propagates
+    a behavior or electrical relationship.
+    """
+    by_subject: dict[str, list[dict[str, Any]]] = {}
+    for row in observations or []:
+        if not isinstance(row, dict) or str(row.get("scope") or "").casefold() != "functional_block":
+            continue
+        subject = str(row.get("subject_id") or "")
+        if subject and str(row.get("status") or "observed").casefold() in {"observed", "measured"}:
+            by_subject.setdefault(subject, []).append(row)
+    for row in measurements or []:
+        if not isinstance(row, dict) or not row.get("functional_block_id"):
+            continue
+        if str(row.get("verification_status") or "").upper() not in {"VERIFIED", "VALIDATED"}:
+            continue
+        by_subject.setdefault(str(row["functional_block_id"]), []).append({
+            "id": row.get("measurement_id"), "scope": "functional_block",
+            "subject_id": row["functional_block_id"], "behavior": row.get("behavior_status"),
+            "value": row.get("value"), "status": "measured", "source": row.get("source"),
+            "operating_condition": row.get("operating_conditions"),
+        })
+
+    result = []
+    for block in functional_blocks:
+        block_id = str(block.get("block_id") or "")
+        evidence = by_subject.get(block_id, [])
+        directions: dict[str, set[str]] = {}
+        values_by_fact: dict[tuple[str, str], set[str]] = {}
+        abnormal_measured = False
+        for row in evidence:
+            condition = str(row.get("operating_condition") or "unspecified")
+            code = str(row.get("code") or row.get("test_id") or "")
+            if code:
+                values_by_fact.setdefault((condition, code), set()).add(json.dumps(
+                    row.get("value", row.get("behavior_status")), sort_keys=True, default=str))
+            behavior = str(row.get("behavior") or row.get("behavior_status") or "").upper()
+            if not behavior:
+                code_upper = str(row.get("code") or "").upper()
+                if code_upper.endswith(("_WORKING", "_VERIFIED_NORMAL")):
+                    behavior = "WORKING"
+                elif code_upper.endswith(("_FAILED", "_ABNORMAL", "_NO_OUTPUT")):
+                    behavior = "ABNORMAL"
+            if behavior in {"REPORTED_WORKING", "WORKING", "NORMAL"}:
+                directions.setdefault(condition, set()).add("WORKING")
+            elif behavior in {"REPORTED_ABNORMAL", "ABNORMAL", "FAILED", "NO_OUTPUT"}:
+                directions.setdefault(condition, set()).add("ABNORMAL")
+                abnormal_measured = abnormal_measured or str(row.get("status")).casefold() == "measured"
+        if (any(len(values) > 1 for values in directions.values())
+                or any(len(values) > 1 for values in values_by_fact.values())):
+            status = "CONFLICTED"
+        elif {direction for values in directions.values() for direction in values} == {"WORKING", "ABNORMAL"}:
+            status = "PARTIAL_FAILURE"
+        elif any("WORKING" in values for values in directions.values()):
+            status = "REPORTED_WORKING"
+        elif any("ABNORMAL" in values for values in directions.values()):
+            status = "MEASUREMENT_SUPPORTED_ABNORMAL" if abnormal_measured else "REPORTED_ABNORMAL"
+        else:
+            status = "UNKNOWN"
+        operating_conditions = list(dict.fromkeys(
+            str(row.get("operating_condition") or row.get("measurement_conditions") or "")
+            for row in evidence if row.get("operating_condition") or row.get("measurement_conditions")
+        ))
+        result.append({**block, "behavior_status": status,
+                       "behavior_scope": "functional_block", "behavior_evidence": evidence,
+                       "operating_conditions": operating_conditions})
+    return result

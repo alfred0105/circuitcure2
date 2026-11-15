@@ -206,6 +206,33 @@ def test_missing_hypotheses_abstain_from_planning():
     assert result["candidates"] == []
 
 
+def test_planner_keeps_same_fault_hypotheses_scoped_to_independent_blocks():
+    result = _plan(
+        hypotheses=[
+            {"hypothesis_id": "functional_block:block-a:F1", "fault_id": "F1",
+             "functional_block_id": "block-a", "related_component_ids": ["BC-Q1"]},
+            {"hypothesis_id": "functional_block:block-b:F1", "fault_id": "F1",
+             "functional_block_id": "block-b", "related_component_ids": ["BC-Q2"]},
+        ],
+        functional_block_groups=[
+            {"block_id": "block-a", "role": "driver", "members": [
+                {"board_component_id": "BC-Q1", "component_type": "transistor"}]},
+            {"block_id": "block-b", "role": "driver", "members": [
+                {"board_component_id": "BC-Q2", "component_type": "transistor"}]},
+        ],
+        component_candidates=[
+            {"component_id": "BC-Q1", "component_type": "transistor", "fault_hypothesis": "F1"},
+            {"component_id": "BC-Q2", "component_type": "transistor", "fault_hypothesis": "F1"},
+        ],
+    )
+    item = next(row for row in result["candidates"] if row["test_id"] == "ASK_SPLIT")
+    assert item["hypothesis_ids"] == ["functional_block:block-a:F1", "functional_block:block-b:F1"]
+    assert item["target_component_ids"] == ["BC-Q1", "BC-Q2"]
+    # The declared test has identical outcomes for these two instances, so it
+    # must not claim to isolate one block from the other.
+    assert item["separated_hypothesis_pairs"] == []
+
+
 def test_production_diagnose_returns_inspection_plan_alongside_existing_rule_candidates():
     result = diagnose(symptoms=["NO_POWER"], observations={"POWER_SOURCE_VERIFIED": False})
     assert "active_inspection_plan" in result

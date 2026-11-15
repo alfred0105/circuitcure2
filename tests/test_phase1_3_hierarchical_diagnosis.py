@@ -1,6 +1,9 @@
 from circuitcare.symptom_diagnosis import diagnose
 from circuitcare.symptom_diagnosis.evidence_ledger import build_evidence_ledger
-from circuitcare.symptom_diagnosis.functional_blocks import build_functional_block_groups
+from circuitcare.symptom_diagnosis.functional_blocks import (
+    build_functional_block_groups, evaluate_functional_block_states,
+)
+from circuitcare.symptom_diagnosis.component_fault_ranker import rank_component_candidates
 
 
 def test_role_groups_keep_separate_instances_without_positions_and_never_claim_connectivity():
@@ -18,7 +21,7 @@ def test_role_groups_keep_separate_instances_without_positions_and_never_claim_c
     power = [row for row in groups if row["role"] == "power"]
     assert {tuple(row["component_ids"]) for row in power} == {("U1",), ("C1",)}
     assert all(row["verification_status"] == "INFERRED" for row in power)
-    assert all(row["connectivity_status"] == "NOT_INFERRED" for row in power)
+    assert all(row["connectivity_status"] == "UNKNOWN" for row in power)
     assert all(row["partition_status"] == "UNRESOLVED_NO_POSITION" for row in power)
     assert all(row["block_id"].startswith("block-") for row in power)
 
@@ -178,4 +181,95 @@ def test_unconfirmed_parts_can_hint_blocks_but_never_become_component_fault_cand
     q1_member = next(row for row in driver["members"] if row["component_id"] == "Q1")
     assert q1_member["evidence_status"] == "UNKNOWN"
     assert all(row["component_id"] != "Q1" for row in result["all_component_candidates"])
+
+
+def test_block_role_membership_and_connectivity_have_independent_statuses():
+    components = [{"component_id": "Q1", "board_component_id": "BC-Q1",
+                   "component_type": "transistor", "presence_status": "CONFIRMED",
+                   "component_type_status": "USER_CONFIRMED", "functional_instance_id": "drv-a",
+                   "verified_group_id": "group-a", "group_confirmation_status": "USER_CONFIRMED",
+                   "confirmed_functional_roles": ["driver"],
+                   "ai_suggested_functional_roles": ["power"]}]
+    roles = [{"component_id": "Q1", "candidate_blocks": ["driver", "power"],
+              "role_evidence": {"driver": ["user role"],
+                                "power": ["Qwen 기능 역할 제안 · 미확정"]}}]
+    groups = build_functional_block_groups(components, roles)
+    driver = next(row for row in groups if row["role"] == "driver")
+    assert driver["role_status"] == "USER_CONFIRMED"
+    assert driver["membership_status"] == "USER_CONFIRMED"
+    assert driver["connectivity_status"] == "UNKNOWN"
+    power = next(row for row in groups if row["role"] == "power")
+    assert power["role_status"] == "INFERRED"
+    assert "Qwen 기능 역할 제안 · 미확정" in power["supporting_evidence"]
+
+
+def test_explicit_block_behavior_is_independent_and_condition_aware():
+    groups = [{"block_id": "out-a", "role": "output", "component_ids": ["LED1"]},
+              {"block_id": "out-b", "role": "output", "component_ids": ["LED2"]}]
+    observations = [
+        {"id": "a1", "code": "LED_NOT_LIT", "value": True, "scope": "functional_block",
+         "subject_id": "out-a", "behavior": "ABNORMAL", "operating_condition": "powered", "status": "observed"},
+        {"id": "b1", "code": "LED_WORKING", "value": True, "scope": "functional_block",
+         "subject_id": "out-b", "behavior": "WORKING", "operating_condition": "powered", "status": "observed"},
+    ]
+    result = {row["block_id"]: row["behavior_status"]
+              for row in evaluate_functional_block_states(groups, observations)}
+    assert result == {"out-a": "REPORTED_ABNORMAL", "out-b": "REPORTED_WORKING"}
+
+    conflicted = evaluate_functional_block_states([groups[0]], observations=[
+        observations[0], {**observations[0], "id": "a2", "value": False,
+                          "behavior": "WORKING"},
+    ])
+    assert conflicted[0]["behavior_status"] == "CONFLICTED"
+
+
+def test_block_hypothesis_scores_use_only_its_scoped_observations():
+    parts = [
+        {"component_id": "Q1", "component_type": "transistor", "component_type_status": "USER_CONFIRMED",
+         "presence_status": "CONFIRMED", "functional_instance_id": "driver-a"},
+        {"component_id": "Q2", "component_type": "transistor", "component_type_status": "USER_CONFIRMED",
+         "presence_status": "CONFIRMED", "functional_instance_id": "driver-b"},
+        {"component_id": "K1", "component_type": "relay", "component_type_status": "USER_CONFIRMED",
+         "presence_status": "CONFIRMED"},
+    ]
+    base = diagnose(symptoms=["RELAY_NO_ACTUATION"], components=parts,
+                    confirmed_component_ids={"Q1", "Q2", "K1"})
+    drivers = [row for row in base["functional_block_groups"] if row["role"] == "driver"]
+    drivers = [row for row in drivers if "Q1" in row["component_ids"] or "Q2" in row["component_ids"]]
+    assert len(drivers) == 2
+    target = next(row for row in drivers if "Q1" in row["component_ids"])
+    result = diagnose(symptoms=["RELAY_NO_ACTUATION"], components=parts,
+                      confirmed_component_ids={"Q1", "Q2", "K1"}, observations=[{
+                          "id": "block-evidence", "code": "RELAY_EXPECTED_TO_ACTUATE", "value": True,
+                          "scope": "functional_block", "subject_id": target["block_id"],
+                          "status": "observed", "source": "user_report",
+                          "operating_condition": "commanded_on",
+                      }])
+    scoped = [row for row in result["hierarchical_hypotheses"]["functional_blocks"]
+              if row["fault_id"] == "RELAY_DRIVER_FAILURE"]
+    by_id = {row["functional_block_id"]: row for row in scoped}
+    assert len(by_id) == 2
+    assert by_id[target["block_id"]]["score"] > 0
+    other_id = next(row["block_id"] for row in drivers if row["block_id"] != target["block_id"])
+    assert by_id[other_id]["score"] == 0
+    assert by_id[target["block_id"]]["status"] == "SUPPORTED"
+
+
+def test_symptom_target_is_not_used_to_drop_other_compatible_root_cause_parts():
+    knowledge = {"fault_modes": {"fault_modes": {"LED_PATH_FAILURE": {
+        "title": "표시 경로 이상", "level": "component",
+        "candidate_component_types": ["led", "transistor"],
+        "supported_symptoms": {"LED_NOT_LIT": 2},
+    }}}, "test_catalog": {"tests": {}}, "component_test_profiles": {"profiles": {}}}
+    result = rank_component_candidates(
+        hypotheses=[{"fault_id": "LED_PATH_FAILURE", "score": 2, "title": "표시 경로 이상"}],
+        components=[{"component_id": "D3", "component_type": "led", "component_type_status": "USER_CONFIRMED"},
+                    {"component_id": "Q3", "component_type": "transistor", "component_type_status": "USER_CONFIRMED"}],
+        functional_blocks=[], observations=[{"component_id": "D3", "code": "LED_NOT_LIT",
+                                             "value": True, "status": "observed"}],
+        measurements=[], knowledge=knowledge, confirmed_component_ids={"D3", "Q3"},
+        limit=5, distinct_components=False,
+    )
+    assert {row["component_id"] for row in result} == {"D3", "Q3"}
+    assert {row["candidate_group_status"] for row in result} == {"UNRESOLVED_AMBIGUITY"}
 

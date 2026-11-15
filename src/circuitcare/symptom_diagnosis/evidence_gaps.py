@@ -19,16 +19,22 @@ def analyze_evidence_gaps(
     output = []
     for hypothesis in hypotheses:
         fault_id = str(hypothesis.get("fault_id") or "")
+        hypothesis_id = str(hypothesis.get("hypothesis_id") or fault_id)
+        scoped_block_id = str(hypothesis.get("functional_block_id") or "")
         mode = modes.get(fault_id, {})
         related_ids = [str(value) for value in hypothesis.get("related_component_ids", []) if value]
         related_candidates = [row for row in component_candidates
-                              if str(row.get("fault_hypothesis") or row.get("fault_id") or "") == fault_id]
+                              if str(row.get("fault_hypothesis") or row.get("fault_id") or "") == fault_id
+                              and (not scoped_block_id or
+                                   str(row.get("board_component_id") or row.get("component_id") or "") in related_ids)]
         related_ids = list(dict.fromkeys([*related_ids, *[
             str(row.get("board_component_id") or row.get("component_id") or "")
             for row in related_candidates if row.get("board_component_id") or row.get("component_id")
         ]]))
         relevant_ledger = [item for item in evidence_ledger
-                           if not item.get("component_id") or item.get("component_id") in related_ids]
+                           if (not item.get("component_id") or item.get("component_id") in related_ids)
+                           and (not scoped_block_id or item.get("scope") != "functional_block"
+                                or str(item.get("subject_id") or "") == scoped_block_id)]
         missing = []
         required_types = {str(value) for value in mode.get("required_component_types", [])}
         missing_types = sorted(required_types - confirmed)
@@ -53,7 +59,10 @@ def analyze_evidence_gaps(
                             "verification_methods": ["각인·실크스크린·부품 정보 확인"]})
         required_tests = {str(value) for value in mode.get("required_measurement_tests", [])}
         completed_tests = {str(row.get("test_id")) for row in measurement_evidence
-                           if row.get("test_id") and row.get("used_for_ranking")}
+                           if row.get("test_id") and row.get("used_for_ranking")
+                           and row.get("fault_hypothesis") == fault_id
+                           and (not related_ids or str(row.get("board_component_id") or row.get("component_id") or "")
+                                in related_ids)}
         for test_id in sorted(required_tests - completed_tests):
             test = tests.get(test_id, {})
             missing.append({"kind": "measurement", "status": "UNKNOWN",
@@ -100,6 +109,7 @@ def analyze_evidence_gaps(
                                     "question": test.get("question")})
         scoped_gaps = []
         matching_blocks = [row for row in functional_blocks if isinstance(row, dict)
+                           and (not scoped_block_id or str(row.get("block_id")) == scoped_block_id)
                            and (not required_roles or row.get("role") in required_roles)]
         for block in matching_blocks:
             block_ids = {str(value) for value in block.get("component_ids", []) if value}
@@ -107,6 +117,7 @@ def analyze_evidence_gaps(
                             if item.get("component_id") in block_ids]
             scoped_gaps.append({"scope_id": str(block.get("block_id") or ""),
                                 "level": "functional_block", "fault_id": fault_id,
+                                "hypothesis_id": hypothesis_id,
                                 "confirmed_facts": [item for item in block_ledger
                                                     if item.get("status") in {"VERIFIED", "USER_REPORTED"}],
                                 "inferred_facts": [item for item in block_ledger
@@ -115,13 +126,16 @@ def analyze_evidence_gaps(
                                 "missing_evidence": ([{"kind": "functional_role", "status": "INCONCLUSIVE",
                                     "description": f"{block.get('role')} 역할은 추정 그룹이며 사용자 확인이 필요합니다.",
                                     "verification_methods": ["기능 역할 확인"]}]
-                                    if block.get("verification_status") != "VERIFIED" else []) +
+                                    if block.get("role_status") != "USER_CONFIRMED" else []) +
                                     ([{"kind": "electrical_relation", "status": "UNKNOWN",
                                       "description": "기능 블록 소속은 전기적 연결을 의미하지 않습니다.",
                                       "verification_methods": ["검증된 회로 정보 또는 안전한 측정"]}]
                                      if block.get("connectivity_status") not in {"VERIFIED", "PARTIAL_VERIFIED"} else []),
                                 "candidate_component_ids": sorted(block_ids),
-                                "status": "INCONCLUSIVE" if block.get("verification_status") != "VERIFIED" else "UNVERIFIED_HYPOTHESIS"})
+                                "behavior_status": block.get("behavior_status", "UNKNOWN"),
+                                "membership_status": block.get("membership_status", "UNKNOWN"),
+                                "role_status": block.get("role_status", "UNKNOWN"),
+                                "status": "INCONCLUSIVE" if block.get("role_status") != "USER_CONFIRMED" else "UNVERIFIED_HYPOTHESIS"})
         for candidate in related_candidates:
             component_id = str(candidate.get("board_component_id") or candidate.get("component_id") or "")
             if not component_id:
@@ -146,6 +160,7 @@ def analyze_evidence_gaps(
                     "description": "실제 측정 단자·위치와 검사 조건을 확인해야 합니다.",
                     "verification_methods": ["검사 프로파일에 지정된 단자 확인", "측정 위치 직접 확인"]})
             scoped_gaps.append({"scope_id": component_id, "level": "component", "fault_id": fault_id,
+                                "hypothesis_id": hypothesis_id,
                                 "confirmed_facts": [item for item in component_ledger
                                                     if item.get("status") in {"VERIFIED", "USER_REPORTED"}],
                                 "inferred_facts": [item for item in component_ledger
@@ -155,7 +170,9 @@ def analyze_evidence_gaps(
                                 "candidate_component_ids": [component_id],
                                 "candidate_group_id": candidate.get("candidate_group_id"),
                                 "status": "INCONCLUSIVE" if candidate_gaps else "UNVERIFIED_HYPOTHESIS"})
-        output.append({"fault_id": fault_id, "level": hypothesis.get("level"),
+        output.append({"fault_id": fault_id, "hypothesis_id": hypothesis_id,
+                       "functional_block_id": scoped_block_id or None,
+                       "level": hypothesis.get("level"),
                        "confirmed_facts": known, "inferred_facts": inferred,
                        "opposing_evidence": opposed, "missing_evidence": missing,
                        "verification_methods": list(dict.fromkeys(method for item in missing

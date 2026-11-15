@@ -784,6 +784,38 @@ def render_inspection_panel(
                         str(st.session_state.get(ACTIVE_PHOTO_KEY) or "target:default")),
                 )
                 inventory_item["confirmed_functional_roles"] = list(confirmed_roles)
+                instance_key = f"cc_functional_instance_{hash(owner)}_{selected_component.component_id}"
+                if instance_key not in st.session_state:
+                    st.session_state[instance_key] = str(inventory_item.get("functional_instance_id") or "")
+                instance_id = st.text_input(
+                    "기능 블록 인스턴스 ID (선택)", key=instance_key,
+                    help="같은 문자열을 입력한 소자는 한 기능 블록 후보로 묶입니다. 배선 연결을 뜻하지 않습니다.",
+                    on_change=_sync_inventory_widget, args=(st, owner, selected_component.component_id,
+                        "functional_instance_id", instance_key, project.project_id, project.board_id,
+                        str(st.session_state.get(ACTIVE_PHOTO_KEY) or "target:default")),
+                )
+                inventory_item["functional_instance_id"] = instance_id.strip() or None
+                group_key = f"cc_verified_group_{hash(owner)}_{selected_component.component_id}"
+                confirm_group_key = f"cc_verified_group_confirm_{hash(owner)}_{selected_component.component_id}"
+                if group_key not in st.session_state:
+                    st.session_state[group_key] = str(inventory_item.get("verified_group_id") or "")
+                if confirm_group_key not in st.session_state:
+                    st.session_state[confirm_group_key] = inventory_item.get("group_confirmation_status") == "USER_CONFIRMED"
+                verified_group_id = st.text_input(
+                    "사용자가 확인한 공통 그룹 ID (선택)", key=group_key,
+                    help="그룹 ID와 확인을 함께 저장한 경우에만 그룹 소속 확인 근거가 됩니다.",
+                    on_change=_sync_inventory_widget, args=(st, owner, selected_component.component_id,
+                        "verified_group_id", group_key, project.project_id, project.board_id,
+                        str(st.session_state.get(ACTIVE_PHOTO_KEY) or "target:default")),
+                )
+                group_confirmed = st.checkbox(
+                    "이 소자의 그룹 소속 확인", key=confirm_group_key,
+                    on_change=_sync_inventory_widget, args=(st, owner, selected_component.component_id,
+                        "group_confirmation_status", confirm_group_key, project.project_id, project.board_id,
+                        str(st.session_state.get(ACTIVE_PHOTO_KEY) or "target:default")),
+                )
+                inventory_item["verified_group_id"] = verified_group_id.strip() if group_confirmed and verified_group_id.strip() else None
+                inventory_item["group_confirmation_status"] = "USER_CONFIRMED" if inventory_item["verified_group_id"] else "UNKNOWN"
             board_component_id = str(selected_component.board_component_id or selected_component.component_id)
             active_suspect = board_component_id in suspects
             if st.button("의심 소자 해제" if active_suspect else "의심 소자로 지정",

@@ -83,32 +83,33 @@ def rank_component_candidates(
         if not eligible:
             continue
 
-        targeted_ids: set[str] = set()
         direct_symptom_codes: dict[str, set[str]] = {}
         for row in observed:
             component_id = str(row.get("component_id") or "")
             code, value = str(row.get("code") or ""), row.get("value")
             if component_id and value is True and code in mode.get("supported_symptoms", {}):
-                targeted_ids.add(component_id)
                 direct_symptom_codes.setdefault(component_id, set()).add(code)
-            supports = code in (mode.get("supporting_evidence", {}) if value is True
-                                else mode.get("supporting_evidence_when_false", {}))
-            opposes = code in (mode.get("opposing_evidence", {}) if value is True
-                               else mode.get("opposing_evidence_when_false", {}))
-            if component_id and (supports or opposes):
-                targeted_ids.add(component_id)
-        targeted_ids.update(
-            component_id for (component_id, measured_fault, *_), assessment in assessments.items()
-            if measured_fault == fault_id and assessment.get("verdict") in {"supports", "refutes"}
-        )
-        # Keep indistinguishable instances as an explicit unresolved group. Do
-        # not silently drop every candidate or imply that the first ID is best.
-        if targeted_ids:
+            # A symptom target is the affected part, not necessarily the root
+            # cause. Keep it as evidence while retaining compatible driver,
+            # control, and power components as possible causes.
+        if direct_symptom_codes:
+            targeted_ids = set(direct_symptom_codes)
+            targeted_types = {
+                str(part.get("component_type", part.get("label", "unknown"))).casefold()
+                for part, _validation in eligible
+                if str(part.get("component_id") or "") in targeted_ids
+            }
+            # Narrow same-type affected parts to the actual reported target,
+            # while retaining other-type upstream cause candidates.
             eligible = [(part, validation) for part, validation in eligible
-                        if str(part.get("component_id")) in targeted_ids]
+                        if str(part.get("component_id") or "") in targeted_ids
+                        or str(part.get("component_type", part.get("label", "unknown"))).casefold()
+                        not in targeted_types]
         ambiguous_ids = sorted(str(part.get("component_id") or "") for part, _ in eligible)
         candidate_group_id = None
-        if len(eligible) > 1 and not targeted_ids:
+        # Multiple compatible cause parts remain visible as unresolved even
+        # when the user reported the symptom on one particular component.
+        if len(eligible) > 1:
             candidate_group_id = "candidate-group-" + hashlib.sha256(
                 f"{fault_id}|{'|'.join(ambiguous_ids)}".encode()).hexdigest()[:12]
 

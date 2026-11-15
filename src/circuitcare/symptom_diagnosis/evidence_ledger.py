@@ -24,15 +24,18 @@ def build_evidence_ledger(
     rows: list[dict[str, Any]] = []
 
     def append(kind: str, subject_id: str | None, value: Any, source: str,
-               status: str, record_id: str | None = None, version: str | None = None) -> None:
+               status: str, record_id: str | None = None, version: str | None = None,
+               scope: str | None = None) -> None:
         status = status if status in _LEDGER_STATUSES else "UNKNOWN"
-        stable = {"kind": kind, "subject_id": subject_id, "value": value,
+        stable = {"kind": kind, "subject_id": subject_id, "scope": scope,
+                  "value": value,
                   "source": source, "record_id": record_id, "version": version or source_version}
         evidence_id = hashlib.sha256(json.dumps(stable, sort_keys=True, ensure_ascii=False,
                                                   default=str).encode()).hexdigest()[:20]
         rows.append({"evidence_id": f"ev-{evidence_id}", "kind": kind,
                      "subject_id": subject_id, "component_id": subject_id,
-                     "value": value, "source": source, "source_version": version or source_version,
+                     "scope": scope, "value": value, "source": source,
+                     "source_version": version or source_version,
                      "status": status, "record_id": record_id})
 
     for item in observations or []:
@@ -46,9 +49,13 @@ def build_evidence_ledger(
                  or raw_status == "observed" else
                  "INFERRED" if raw_status == "inferred" else "UNKNOWN")
         append("observation", str(item.get("component_id") or "") or None,
-               {"code": item.get("code"), "value": item.get("value")}, source, status,
+               {"code": item.get("code"), "value": item.get("value"),
+                "behavior": item.get("behavior") or item.get("behavior_status"),
+                "operating_condition": item.get("operating_condition"),
+                "measurement_conditions": item.get("measurement_conditions")}, source, status,
                str(item.get("id") or item.get("observation_id") or "") or None,
-               str(item.get("version") or item.get("timestamp") or "") or None)
+               str(item.get("version") or item.get("timestamp") or "") or None,
+               str(item.get("scope") or ("component" if item.get("component_id") else "system")))
 
     for item in measurements or []:
         if not isinstance(item, dict):
@@ -104,24 +111,28 @@ def build_evidence_ledger(
                     "evidence": list(evidence_by_role.get(role, [])) if isinstance(evidence_by_role, dict) else []},
                    "user" if status == "VERIFIED" else "qwen" if status == "AI_SUGGESTED" else "rule_and_layout_inference",
                    status, str(item.get("role_observation_id") or component_id) or None,
-                   str(item.get("role_version") or item.get("observation_version") or "") or None)
+                   str(item.get("role_version") or item.get("observation_version") or "") or None,
+                   "component")
 
     for item in functional_blocks or []:
         if not isinstance(item, dict):
             continue
         block_id = str(item.get("block_id") or item.get("functional_block_id") or "")
         if item.get("component_ids"):
-            membership_status = ("VERIFIED" if item.get("verified") is True else
+            membership_status = ("VERIFIED" if item.get("membership_status") == "USER_CONFIRMED" else
                                  "AI_SUGGESTED" if item.get("verification_status") == "AI_SUGGESTED"
                                  or item.get("status") == "AI_SUGGESTED" else "INFERRED")
             for component_id in item.get("component_ids", []):
                 append("functional_block_membership", str(component_id),
                        {"block_id": block_id, "role": item.get("role"),
                         "partition_status": item.get("partition_status"),
-                        "connectivity_status": "NOT_INFERRED"},
+                        "membership_status": membership_status,
+                        "role_status": item.get("role_status"),
+                        "connectivity_status": item.get("connectivity_status", "UNKNOWN")},
                        "qwen" if membership_status == "AI_SUGGESTED" else "functional_block_builder",
                        membership_status,
-                       block_id or None, str(item.get("version") or "") or None)
+                       block_id or None, str(item.get("version") or "") or None,
+                       "functional_block")
 
     for item in ai_suggestions or []:
         if isinstance(item, dict):

@@ -23,8 +23,9 @@ def plan_active_inspections(
     tests = knowledge.get("test_catalog", {}).get("tests", {})
     profiles = knowledge.get("component_test_profiles", {}).get("profiles", {})
     inspection_conditions = inspection_conditions or {}
-    active_hypotheses = [row for row in hypotheses if isinstance(row, dict) and row.get("fault_id")]
-    fault_ids = list(dict.fromkeys(str(row["fault_id"]) for row in active_hypotheses))
+    active_hypotheses = [dict(row) for row in hypotheses if isinstance(row, dict) and row.get("fault_id")]
+    hypothesis_by_id = {str(row.get("hypothesis_id") or row["fault_id"]): row for row in active_hypotheses}
+    hypothesis_ids = list(hypothesis_by_id)
     if not active_hypotheses:
         return {"status": "NO_HYPOTHESES", "strategy": "deterministic_pair_separation_v1",
                 "candidates": [], "blocked": [], "score_is_probability": False}
@@ -34,22 +35,26 @@ def plan_active_inspections(
     functional_blocks_by_fault: dict[str, list[dict[str, Any]]] = {}
     for hypothesis in active_hypotheses:
         fault_id = str(hypothesis.get("fault_id") or "")
+        hypothesis_id = str(hypothesis.get("hypothesis_id") or fault_id)
         required_roles = set(modes.get(fault_id, {}).get("functional_roles", []))
-        if not required_roles:
-            continue
+        scoped_block_id = str(hypothesis.get("functional_block_id") or "")
         for block in functional_block_groups:
-            if not isinstance(block, dict) or block.get("role") not in required_roles:
+            if not isinstance(block, dict) or (required_roles and block.get("role") not in required_roles):
                 continue
-            functional_blocks_by_fault.setdefault(fault_id, []).append(block)
+            if scoped_block_id and str(block.get("block_id")) != scoped_block_id:
+                continue
+            if not required_roles and not scoped_block_id:
+                continue
+            functional_blocks_by_fault.setdefault(hypothesis_id, []).append(block)
             for member in block.get("members", []):
-                if not isinstance(member, dict) or member.get("evidence_status") != "VERIFIED":
+                if not isinstance(member, dict):
                     continue
-                component_id = str(member.get("component_id") or "")
+                component_id = str(member.get("board_component_id") or member.get("component_id") or "")
                 component_type = str(member.get("component_type") or "unknown").casefold()
                 if component_id:
-                    components_by_fault.setdefault(fault_id, set()).add(component_id)
+                    components_by_fault.setdefault(hypothesis_id, set()).add(component_id)
                 if component_type != "unknown":
-                    component_types_by_fault.setdefault(fault_id, set()).add(component_type)
+                    component_types_by_fault.setdefault(hypothesis_id, set()).add(component_type)
     for row in component_candidates:
         if not isinstance(row, dict):
             continue
@@ -57,9 +62,15 @@ def plan_active_inspections(
         component_id = str(row.get("board_component_id") or row.get("component_id") or "")
         component_type = str(row.get("component_type") or "unknown").casefold()
         if fault_id:
-            component_types_by_fault.setdefault(fault_id, set()).add(component_type)
-            if component_id:
-                components_by_fault.setdefault(fault_id, set()).add(component_id)
+            for hypothesis_id, hypothesis in hypothesis_by_id.items():
+                if str(hypothesis.get("fault_id") or "") != fault_id:
+                    continue
+                scoped_ids = {str(value) for value in hypothesis.get("related_component_ids", [])}
+                if hypothesis.get("functional_block_id") and component_id not in scoped_ids:
+                    continue
+                component_types_by_fault.setdefault(hypothesis_id, set()).add(component_type)
+                if component_id:
+                    components_by_fault.setdefault(hypothesis_id, set()).add(component_id)
 
     completed: set[tuple[str, str, str]] = set()
     conflicts: set[tuple[str, str, str]] = set()
@@ -99,7 +110,8 @@ def plan_active_inspections(
         for test_id, test in tests.items() if isinstance(test, dict)
     }
 
-    def outcome_relation(fault_id: str, outcome: dict[str, Any]) -> str:
+    def outcome_relation(hypothesis_id: str, outcome: dict[str, Any]) -> str:
+        fault_id = str(hypothesis_by_id.get(hypothesis_id, {}).get("fault_id") or hypothesis_id)
         mode = modes.get(fault_id, {})
         supports = set(mode.get("supporting_evidence", {})) | set(mode.get("supporting_evidence_when_false", {}))
         opposes = set(mode.get("opposing_evidence", {})) | set(mode.get("opposing_evidence_when_false", {}))
@@ -120,25 +132,28 @@ def plan_active_inspections(
         return "NO_DIAGNOSTIC_RELATION"
 
     test_faults: dict[str, set[str]] = {}
-    for fault_id in fault_ids:
+    for hypothesis_id, hypothesis in hypothesis_by_id.items():
+        fault_id = str(hypothesis.get("fault_id") or "")
         mode = modes.get(fault_id, {})
         for test_id in mode.get("recommended_tests", []):
-            test_faults.setdefault(str(test_id), set()).add(fault_id)
-        for component_type in component_types_by_fault.get(fault_id, set()):
+            test_faults.setdefault(str(test_id), set()).add(hypothesis_id)
+        for component_type in component_types_by_fault.get(hypothesis_id, set()):
             for test_id, profile in (profiles.get(component_type, {}).get("tests", {}) or {}).items():
                 if fault_id in (profile.get("fault_relations", {}) if isinstance(profile, dict) else {}):
-                    test_faults.setdefault(str(test_id), set()).add(fault_id)
+                    test_faults.setdefault(str(test_id), set()).add(hypothesis_id)
 
-    gaps_by_fault = {str(row.get("fault_id")): row for row in evidence_gaps if isinstance(row, dict)}
+    gaps_by_fault = {str(row.get("hypothesis_id") or row.get("fault_id")): row
+                     for row in evidence_gaps if isinstance(row, dict)}
     candidates, blocked = [], []
     for test_id, applies_to in test_faults.items():
         test = tests.get(test_id, {})
         profile_defs = []
-        for fault_id in applies_to:
-            for component_type in component_types_by_fault.get(fault_id, set()):
+        for hypothesis_id in applies_to:
+            fault_id = str(hypothesis_by_id[hypothesis_id].get("fault_id") or hypothesis_id)
+            for component_type in component_types_by_fault.get(hypothesis_id, set()):
                 candidate_profile = (profiles.get(component_type, {}).get("tests", {}) or {}).get(test_id)
                 if isinstance(candidate_profile, dict) and fault_id in candidate_profile.get("fault_relations", {}):
-                    profile_defs.append((fault_id, component_type, candidate_profile))
+                    profile_defs.append((hypothesis_id, component_type, candidate_profile))
         scope = str(test.get("target_scope") or ("component" if profile_defs else "board"))
         target_type_set = {value for fault_id in applies_to for value in component_types_by_fault.get(fault_id, set())}
         if test.get("type") == "visual_inspection" and test.get("target_scope") != "board":
@@ -154,28 +169,29 @@ def plan_active_inspections(
         separated_pairs = []
         declared_outcomes = answer_signatures.get(test_id, {})
         test_signatures: dict[str, tuple[Any, ...]] = {}
-        for fault_id in applies_to:
+        for hypothesis_id in applies_to:
             if declared_outcomes:
-                test_signatures[fault_id] = tuple(
-                    outcome_relation(fault_id, outcome) for _answer, outcome in declared_outcomes.items()
+                test_signatures[hypothesis_id] = tuple(
+                    outcome_relation(hypothesis_id, outcome) for _answer, outcome in declared_outcomes.items()
                 )
                 continue
             relations_by_status: dict[str, set[str]] = {"TEST_NORMAL": set(), "TEST_ABNORMAL": set()}
             for profile_fault, component_type, profile in profile_defs:
-                if profile_fault != fault_id:
+                if profile_fault != hypothesis_id:
                     continue
+                fault_id = str(hypothesis_by_id[hypothesis_id].get("fault_id") or hypothesis_id)
                 relation_map = profile.get("fault_relations", {}).get(fault_id, {})
                 for result_status in relations_by_status:
                     relation = relation_map.get(result_status)
                     if relation:
                         relations_by_status[result_status].add(str(relation).casefold())
             if all(relations_by_status.values()):
-                test_signatures[fault_id] = tuple(
+                test_signatures[hypothesis_id] = tuple(
                     tuple(sorted(relations_by_status[result_status]))
                     for result_status in ("TEST_NORMAL", "TEST_ABNORMAL")
                 )
-        for left_index, left_fault in enumerate(fault_ids):
-            for right_fault in fault_ids[left_index + 1:]:
+        for left_index, left_fault in enumerate(hypothesis_ids):
+            for right_fault in hypothesis_ids[left_index + 1:]:
                 if left_fault not in applies_to or right_fault not in applies_to:
                     continue
                 left_signature = test_signatures.get(left_fault)
@@ -197,8 +213,10 @@ def plan_active_inspections(
             energy_ok = True
             safety_targets = ["board"] if test.get("target_scope") == "board" else (scoped_ids or ["board"])
             for target_id in safety_targets:
-                for fault_id in applies_to:
-                    actual = inspection_conditions.get(f"{target_id}|{fault_id}|{test_id}", {})
+                for hypothesis_id in applies_to:
+                    actual_fault = str(hypothesis_by_id[hypothesis_id].get("fault_id") or hypothesis_id)
+                    actual = (inspection_conditions.get(f"{target_id}|{hypothesis_id}|{test_id}")
+                              or inspection_conditions.get(f"{target_id}|{actual_fault}|{test_id}", {}))
                     if test.get("requires_power_off") and actual.get("power_state") != "POWER_OFF_CONFIRMED":
                         power_ok = False
                     if test.get("requires_stored_energy_safe") and actual.get("stored_energy_status") != "SAFE_CONFIRMED":
@@ -226,9 +244,11 @@ def plan_active_inspections(
                 missing_reference = False
                 for target_id in scoped_ids:
                     target_ready = False
-                    for fault_id in applies_to:
-                        condition_key = f"{target_id}|{fault_id}"
-                        actual = inspection_conditions.get(condition_key, {})
+                    for hypothesis_id in applies_to:
+                        actual_fault = str(hypothesis_by_id[hypothesis_id].get("fault_id") or hypothesis_id)
+                        condition_key = f"{target_id}|{hypothesis_id}"
+                        actual = (inspection_conditions.get(condition_key)
+                                  or inspection_conditions.get(f"{target_id}|{actual_fault}", {}))
                         if (all(actual.get(field) == expected for field, expected in required.items())
                                 and actual.get("measurement_location_verified") is True
                                 and actual.get("reference_source_verified") is True):
@@ -237,8 +257,10 @@ def plan_active_inspections(
                     if not target_ready:
                         safety_blocked = True
                         missing_by_target.append(target_id)
-                        target_conditions = [inspection_conditions.get(f"{target_id}|{fault_id}", {})
-                                             for fault_id in applies_to]
+                        target_conditions = [inspection_conditions.get(f"{target_id}|{hypothesis_id}")
+                                             or inspection_conditions.get(
+                                                 f"{target_id}|{hypothesis_by_id[hypothesis_id].get('fault_id')}", {})
+                                             for hypothesis_id in applies_to]
                         missing_required_conditions.update(
                             field for field, expected in required.items()
                             if not any(row.get(field) == expected for row in target_conditions)
@@ -263,8 +285,8 @@ def plan_active_inspections(
         else:
             safety_blocked = risk not in {"none", "low"}
 
-        completed_keys = {(target, fault, test_id) for target in (scoped_ids or [""])
-                          for fault in applies_to}
+        completed_keys = {(target, str(hypothesis_by_id[hypothesis_id].get("fault_id") or hypothesis_id), test_id)
+                          for target in (scoped_ids or [""]) for hypothesis_id in applies_to}
         already_done = bool(completed_keys) and completed_keys.issubset(completed)
         has_conflict = bool(completed_keys & conflicts)
         if already_done and not allow_retest and not has_conflict:
@@ -273,8 +295,8 @@ def plan_active_inspections(
         expected_outcomes = {}
         for answer, outcome in answer_signatures.get(test_id, {}).items():
             expected_outcomes[answer] = {
-                fault_id: outcome_relation(fault_id, outcome)
-                for fault_id in sorted(applies_to)
+                hypothesis_id: outcome_relation(hypothesis_id, outcome)
+                for hypothesis_id in sorted(applies_to)
             }
         if not expected_outcomes:
             for result_status in ("TEST_NORMAL", "TEST_ABNORMAL"):
@@ -282,7 +304,8 @@ def plan_active_inspections(
                 for profile_fault, _component_type, profile in profile_defs:
                     if profile_fault not in applies_to:
                         continue
-                    relation = profile.get("fault_relations", {}).get(profile_fault, {}).get(result_status)
+                    base_fault = str(hypothesis_by_id[profile_fault].get("fault_id") or profile_fault)
+                    relation = profile.get("fault_relations", {}).get(base_fault, {}).get(result_status)
                     if relation:
                         relations.setdefault(profile_fault, set()).add(str(relation).casefold())
                 if relations:
@@ -301,7 +324,9 @@ def plan_active_inspections(
         item = {
             "test_id": test_id, "name": test.get("name", test_id), "type": test.get("type", "measurement"),
             "target_scope": scope, "component_types": sorted(target_type_set),
-            "target_component_ids": scoped_ids, "fault_ids": sorted(applies_to),
+            "target_component_ids": scoped_ids,
+            "fault_ids": sorted({str(hypothesis_by_id[key].get("fault_id") or key) for key in applies_to}),
+            "hypothesis_ids": sorted(applies_to),
             "target_functional_block_ids": sorted({
                 str(block.get("block_id"))
                 for fault_id in applies_to
