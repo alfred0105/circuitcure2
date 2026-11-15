@@ -16,6 +16,20 @@ def _fold(value: Any) -> str:
     return " ".join(str(value or "").casefold().split())
 
 
+def measurement_assessment_key(row: dict[str, Any]) -> AssessmentKey:
+    """Build the one canonical lookup key used by evaluation and consumers."""
+    condition = row.get("measurement_conditions") or row.get("operating_conditions") or ""
+    condition_key = (json.dumps(condition, sort_keys=True, ensure_ascii=False, default=str)
+                     if isinstance(condition, dict) else _fold(condition))
+    return (
+        str(row.get("component_id") or ""),
+        str(row.get("fault_hypothesis") or ""),
+        str(row.get("test_id") or ""),
+        _fold(row.get("measurement_target")),
+        condition_key,
+    )
+
+
 def evaluate_component_measurements(
     measurements: list[dict[str, Any]] | None, *, profiles: dict[str, Any] | None = None,
     current_context: dict[str, Any] | None = None,
@@ -32,9 +46,7 @@ def evaluate_component_measurements(
         test_id = str(row.get("test_id") or "")
         target = str(row.get("measurement_target") or "").strip()
         condition = row.get("measurement_conditions") or row.get("operating_conditions") or ""
-        condition_key = (json.dumps(condition, sort_keys=True, ensure_ascii=False)
-                         if isinstance(condition, dict) else _fold(condition))
-        key: AssessmentKey = (component_id, fault_id, test_id, _fold(target), condition_key)
+        key = measurement_assessment_key(row)
         measurement_id = str(row.get("measurement_id") or "")
         reasons = measurement_verification_gaps(row, profiles=profiles, current_context=context)
         reason = " ".join(reasons) if reasons else None

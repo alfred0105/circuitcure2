@@ -42,6 +42,20 @@ def test_changed_inputs_stale_result_and_preserve_history():
     assert record["history"][-1]["results"]["symptom"] == {"status": "OK"}
 
 
+def test_pre_run_fingerprint_change_does_not_report_stale_diagnosis():
+    state = {}
+    scope = AnalysisScope("p1", "b1", "photo-1")
+    first = _fingerprints()
+    get_current_state(state, scope, first)
+
+    changed = _fingerprints(symptoms="no_led")
+    record = get_current_state(state, scope, changed)
+
+    assert record["status"] == AnalysisStatus.NOT_RUN
+    assert not record["results"]
+    assert not record["history"]
+
+
 def test_analysis_changed_while_running_cannot_commit_old_result():
     state = {}
     scope = AnalysisScope("p1", "b1", "photo-1")

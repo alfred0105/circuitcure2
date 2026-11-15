@@ -28,6 +28,7 @@ class Observation:
     source: str = "user_report"
     timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     component_id: str | None = None
+    target_reference: str | None = None
     confidence: float | None = None
     measurement_conditions: dict[str, Any] | None = None
     evidence_quote: str | None = None
@@ -54,7 +55,7 @@ class Observation:
             code=str(row.get("code", "")), value=row.get("value"), status=status,
             source=str(row.get("source", "unknown")),
             timestamp=str(row.get("timestamp") or datetime.now(timezone.utc).isoformat()),
-            component_id=row.get("component_id"), confidence=confidence,
+            component_id=row.get("component_id"), target_reference=row.get("target_reference"), confidence=confidence,
             measurement_conditions=row.get("measurement_conditions"),
             evidence_quote=row.get("evidence_quote"),
         )

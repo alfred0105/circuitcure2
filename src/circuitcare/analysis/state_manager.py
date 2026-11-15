@@ -59,11 +59,18 @@ def get_current_state(
         expected = fingerprints.to_dict() if isinstance(fingerprints, AnalysisFingerprints) else dict(fingerprints)
         current = record.get("fingerprints")
         if current and current.get("final_sha256") != expected.get("final_sha256"):
-            _archive_results(record, reason="analysis fingerprint changed")
-            record["status"] = AnalysisStatus.STALE.value
-            record["generation"] = int(record.get("generation", 0)) + 1
-            record["run_id"] = None
-            record["reason"] = "분석 입력 또는 규칙이 변경되었습니다."
+            status = record.get("status")
+            has_result = bool(record.get("results"))
+            # The first UI render may refine registry/symptom inputs after a
+            # fingerprint was captured. That is not a stale diagnosis if this
+            # scope has never produced a result; it must remain NOT_RUN.
+            if has_result:
+                _archive_results(record, reason="analysis fingerprint changed")
+            if status == AnalysisStatus.RUNNING.value or has_result or status == AnalysisStatus.CURRENT.value:
+                record["status"] = AnalysisStatus.STALE.value
+                record["generation"] = int(record.get("generation", 0)) + 1
+                record["run_id"] = None
+                record["reason"] = "분석 입력 또는 규칙이 변경되었습니다."
         if record.get("status") != AnalysisStatus.RUNNING.value:
             record["fingerprints"] = expected
         record["updated_at"] = _now()

@@ -666,16 +666,33 @@ def test_identical_visual_observation_is_not_saved_again_without_explicit_retest
     assert len(workflow["inspection_history"]) == 1
 
 
-def test_inspection_target_count_tracks_only_real_active_components():
+def test_inspection_targets_are_empty_without_candidate_or_user_suspicion():
     project = ProjectContext("target-count", "target-count-board")
     registry = build_board_component_registry(
         {}, project_id=project.project_id, board_id=project.board_id,
         photo_snapshots=_snapshots(),
     )
     active = [row for row in registry["components"] if row.get("presence_status") != "EXCLUDED"]
-    assert len(workspace._inspection_targets({**registry, "components": active[:1]}, [], [])) == 1
-    assert len(workspace._inspection_targets({**registry, "components": active[:2]}, [], [])) == 2
-    assert len(workspace._inspection_targets(registry, [], [])) == min(3, len(active))
+    assert active
+    assert workspace._inspection_targets({**registry, "components": active[:1]}, [], []) == []
+    assert workspace._inspection_targets({**registry, "components": active[:2]}, [], []) == []
+    assert workspace._inspection_targets(registry, [], []) == []
+
+
+def test_inspection_targets_do_not_fill_top_three_with_unrelated_registry_parts():
+    project = ProjectContext("no-forced-targets", "no-forced-targets-board")
+    registry = build_board_component_registry(
+        {}, project_id=project.project_id, board_id=project.board_id,
+        photo_snapshots=_snapshots(),
+    )
+    active = [row for row in registry["components"] if row.get("presence_status") != "EXCLUDED"]
+    chosen = active[0]
+    targets = workspace._inspection_targets(registry, [{
+        "board_component_id": chosen["board_component_id"],
+        "component_type": chosen["component_type"],
+        "fault_id": "NO_POWER",
+    }], [])
+    assert [row["board_component_id"] for row in targets] == [chosen["board_component_id"]]
 
 
 def test_auto_qwen_prefers_installed_qwen35_9b_and_caches_lookup(monkeypatch):

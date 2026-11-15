@@ -30,6 +30,9 @@ from circuitcare.symptom_diagnosis.observation_store import ObservationStore
 from circuitcare.symptom_diagnosis.diagnosis_state import build_overlay_state
 from circuitcare.symptom_diagnosis.schemas import ComponentRecord, Observation
 from circuitcare.symptom_diagnosis.symptom_parser import parse_user_report
+from circuitcare.symptom_diagnosis.symptom_target_resolver import (
+    bind_target_observations, resolve_symptom_targets,
+)
 from circuitcare.frontend.workbench_state import ACTIVE_PHOTO_KEY, update_selection
 from circuitcare.analysis.models import AnalysisScope
 from circuitcare.analysis.fingerprints import (
@@ -94,6 +97,11 @@ def _diagnosis_fingerprint(
              for row in (suspected_components or []) if isinstance(row, dict)],
             key=lambda row: str(row.get("component_id")),
         ), "answered_test_ids": sorted(state.get("answered_test_ids", [])),
+        "symptom_target_selections": {
+            str(key): str(value) for key, value in sorted(
+                state.get("symptom_target_selections", {}).items())
+            if value
+        } if isinstance(state.get("symptom_target_selections"), dict) else {},
         "question_answers": [
             {"test_id": str(test_id), "answer": row.get("answer"),
              "observation_codes": sorted((row.get("observations") or {}).keys())}
@@ -190,6 +198,56 @@ def _simple_candidate_rows(result: dict[str, Any], *, limit: int = 3) -> list[di
         else:
             current["fault_hypotheses"].append(hypothesis)
     return list(grouped.values())[:max(0, int(limit))]
+
+
+def _render_symptom_target_controls(
+    st: Any, project: ProjectContext, state: dict[str, Any],
+    parsed: dict[str, Any], *, preview: bool,
+) -> None:
+    targets = parsed.get("targets", []) if isinstance(parsed, dict) else []
+    targets = [row for row in targets if isinstance(row, dict)] if isinstance(targets, list) else []
+    if not targets:
+        return
+    selections = state.setdefault("symptom_target_selections", {})
+    changed = False
+    st.markdown("#### 증상에 언급된 소자 연결")
+    for target in targets:
+        reference_id = str(target.get("reference_id") or "")
+        candidates = target.get("candidate_components", [])
+        if not reference_id or not isinstance(candidates, list) or not candidates:
+            st.caption(f"{target.get('component_type', '소자')} 대상 · {target.get('resolution_reason', '박스를 찾지 못했습니다.')}")
+            continue
+        labels = {}
+        for candidate in candidates:
+            board_id = str(candidate.get("board_component_id") or "")
+            refs = candidate.get("reference_designators") or []
+            label = f"{refs[0]} · {board_id}" if refs else board_id
+            labels[board_id] = label
+        options = [""] + list(labels)
+        stored = str(selections.get(reference_id) or "")
+        widget_key = f"cc_symptom_target_{project.project_id}_{hashlib.sha256(reference_id.encode()).hexdigest()[:10]}"
+        if st.session_state.get(widget_key) not in options:
+            st.session_state[widget_key] = stored if stored in options else ""
+        st.caption(
+            f"{target.get('evidence_quote', '')} · {target.get('component_type', '소자')} · "
+            f"{target.get('resolution_reason', '대상 확인 필요')}"
+        )
+        selected = st.selectbox(
+            f"증상 대상 박스 · {reference_id}", options, key=widget_key,
+            format_func=lambda value: "박스 선택 필요" if not value else labels.get(value, value),
+            disabled=preview,
+        )
+        if selected != stored:
+            if selected:
+                selections[reference_id] = selected
+            else:
+                selections.pop(reference_id, None)
+            changed = True
+    if changed:
+        state["symptom_target_selections"] = selections
+        state["symptom_target_selection_changed"] = True
+        st.session_state[_project_key(project)] = state
+        st.caption("대상 연결을 바꿨습니다. AI 진단을 다시 실행하면 선택한 박스의 관측에만 연결됩니다.")
 
 
 def _question_plan_fingerprint(
@@ -442,6 +500,9 @@ def _render_simple_diagnosis_result(
 ) -> None:
     if state.get("ollama_error"):
         st.caption("로컬 AI에 연결할 수 없어 규칙 기반 기본 진단으로 진행합니다.")
+    _render_symptom_target_controls(
+        st, project, state, result.get("llm_parser", {}), preview=preview,
+    )
     pending = state.pop("followup_pending_comparison", None)
     if isinstance(pending, dict):
         previous_information = pending.get("candidate_information", {})
@@ -1532,26 +1593,52 @@ def render_symptom_diagnosis_panel(
         )
         component_rows = _component_rows(components, component_inventory)
         parsed = {"observations": [], "uncertain_facts": [], "parser_status": "SKIPPED"}
+        parse_fingerprint = hashlib.sha256(json.dumps({
+            "schema": "symptom-target-v1",
+            "text": " ".join(str(symptom_text or "").casefold().split()),
+            "model": selected_model if llm_enabled else None,
+        }, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
+        cached_parse = state.get("parsed_structured_result")
+        cache_matches = (state.get("parsed_structured_input_fingerprint") == parse_fingerprint
+                         and isinstance(cached_parse, dict))
         if (llm_enabled and selected_model and symptom_text.strip()
                 and not reuse_qwen_for_measurement_change):
-            try:
-                analysis_progress.write("증상 구조화 · 진행 중")
-                with st.spinner("AI가 증상을 정리하는 중…" if simple_ui else f"{selected_model}이 증상을 구조화하는 중…"):
-                    parsed = parse_user_report(OllamaClient(auto_start=True, timeout_seconds=120), selected_model, symptom_text)
-                analysis_progress.write("증상 구조화 · 완료")
-            except (LocalLLMError, ValueError, TypeError, OSError) as exc:
-                parsed = {"observations": [], "uncertain_facts": [], "parser_status": "FAILED", "error": str(exc)}
-                LOGGER.warning("diagnosis symptom_structuring_failed project=%s model=%s error=%s",
-                               project.project_id, selected_model, str(exc)[:500])
-                analysis_progress.write("증상 구조화 · 실패 · 규칙 진단 계속")
+            if cache_matches:
+                parsed = dict(cached_parse)
+                parsed["cache_reused"] = True
+                analysis_progress.write("증상 구조화 결과 재사용 · Qwen 호출 생략")
+            else:
+                if state.get("parsed_structured_input_fingerprint") != parse_fingerprint:
+                    state["symptom_target_selections"] = {}
+                try:
+                    analysis_progress.write("증상 구조화 · 진행 중")
+                    with st.spinner("AI가 증상을 정리하는 중…" if simple_ui else f"{selected_model}이 증상을 구조화하는 중…"):
+                        parsed = parse_user_report(OllamaClient(auto_start=True, timeout_seconds=120), selected_model, symptom_text)
+                    state["parsed_structured_result"] = dict(parsed)
+                    state["parsed_structured_input_fingerprint"] = parse_fingerprint
+                    analysis_progress.write("증상 구조화 · 완료")
+                except (LocalLLMError, ValueError, TypeError, OSError) as exc:
+                    parsed = {"observations": [], "targets": [], "peer_observations": [],
+                              "uncertain_facts": [], "parser_status": "FAILED", "error": str(exc)}
+                    LOGGER.warning("diagnosis symptom_structuring_failed project=%s model=%s error=%s",
+                                   project.project_id, selected_model, str(exc)[:500])
+                    analysis_progress.write("증상 구조화 · 실패 · 규칙 진단 계속")
         elif reuse_qwen_for_measurement_change:
-            cached_parsed = state.get("parsed_observations")
-            parsed = ({"observations": cached_parsed, "uncertain_facts": [],
-                       "parser_status": "REUSED_SYMPTOM_INPUT"}
-                      if isinstance(cached_parsed, list) else
-                      {"observations": [], "uncertain_facts": [], "parser_status": "SKIPPED"})
+            parsed = (dict(cached_parse) if cache_matches else
+                      {"observations": [], "targets": [], "peer_observations": [],
+                       "uncertain_facts": [], "parser_status": "SKIPPED"})
+            parsed["cache_reused"] = cache_matches
             analysis_progress.write("측정 변경 · 증상 구조화 결과 재사용 · Qwen 호출 생략")
-        state["parsed_observations"] = parsed.get("observations", [])
+        resolved_targets = resolve_symptom_targets(
+            parsed.get("targets", []), registry=board_registry, component_rows=component_rows,
+            selected_board_component_ids=state.get("symptom_target_selections", {}),
+        )
+        parsed_observations, peer_observations = bind_target_observations(parsed, resolved_targets)
+        parsed["targets"] = resolved_targets
+        parsed["observations"] = [*parsed_observations, *peer_observations]
+        parsed["peer_observations"] = peer_observations
+        state["parsed_observations"] = parsed["observations"]
+        state["parsed_targets"] = resolved_targets
         combined_observations = _combined_observations(state)
         parsed_symptoms = [row["code"] for row in state["parsed_observations"]
                            if row.get("status") in {"observed", "measured"} and row.get("value") is True

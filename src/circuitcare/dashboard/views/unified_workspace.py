@@ -1354,10 +1354,10 @@ def _inspection_targets(
                            "fault_hypotheses": ([{"fault_id": suspected_fault}]
                                                 if suspected_fault else [])},
                 "사용자가 의심 소자로 지정")
-    for row in active_rows:
-        board_id = str(row["board_component_id"])
-        add(board_id, {"component_type": row.get("component_type", "unknown")},
-            "추가 확인 대상 · 원인 미확정")
+    # Do not fill empty diagnostic slots with arbitrary active Registry rows.
+    # General board checks belong in the board-level inspection path; a
+    # component target here must come from a ranked candidate or an explicit
+    # user suspicion.
     ordered.sort(key=lambda item: (item[1].get("inspection_kind") != "MEASUREMENT", item[3]))
     return [{"board_component_id": board_id,
              "component_type": str(details.get("component_type") or
@@ -2495,6 +2495,7 @@ def _render_workbench_shell_body(st: Any, project: ProjectContext) -> None:
                 st.error(f"단계 준비 실패 · {workflow['transition_error']} · 기존 검수·측정 기록은 보존됩니다.")
             with st.container(key="cc_workbench_brand_and_steps"):
                 st.markdown('<div class="cc-wb-header">CircuitCare AI</div>', unsafe_allow_html=True)
+                st.caption(_diagnosis_status_label(st, project))
                 _render_workflow_stepper(st, workflow)
             stage = workflow.get("stage", WORKFLOW_REVIEW)
             if stage == WORKFLOW_REVIEW:

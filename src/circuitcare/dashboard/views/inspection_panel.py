@@ -252,8 +252,10 @@ def render_inspection_panel(
     suspects = all_suspects.setdefault(suspect_owner, {})
     with st.container(border=True):
         st.markdown('<span class="cc-inspection-marker"></span>', unsafe_allow_html=True)
-        visible_components = [item for item in components if item.presence_status != "EXCLUDED"]
-        confirmed_components = sum(item.presence_status == "CONFIRMED" for item in visible_components)
+        visible_components = [item for item in components
+                              if getattr(item, "presence_status", "UNCONFIRMED") != "EXCLUDED"]
+        confirmed_components = sum(getattr(item, "presence_status", "UNCONFIRMED") == "CONFIRMED"
+                                   for item in visible_components)
         st.caption(
             f"탐지·검수 대상 {len(visible_components)}개 · 확인 {confirmed_components}개 · "
             f"미확인 {len(visible_components) - confirmed_components}개"
@@ -419,8 +421,9 @@ def render_inspection_panel(
                 board_component_id = str(selected_component.board_component_id or component_id)
                 box_index = next((index + 1 for index, item in enumerate(components)
                                   if item.component_id == component_id), None)
-                box_label = (selected_component.display_label.split(" · ", 1)[0]
-                             if selected_component.display_label and selected_component.display_label.startswith("박스 ")
+                display_label = getattr(selected_component, "display_label", "")
+                box_label = (display_label.split(" · ", 1)[0]
+                             if display_label and display_label.startswith("박스 ")
                              else f"박스 {box_index}" if box_index is not None else "선택 박스")
                 compact_rows_key = review_keys(review_scope)[1] if review_scope else None
                 compact_review_row = next((row for row in st.session_state.get(compact_rows_key, [])
@@ -655,7 +658,8 @@ def render_inspection_panel(
                 review_row = next((row for row in st.session_state.get(records_key, [])
                                    if row.get("component_id") == selected_component.component_id), None)
             current_status = review_row.get("상태", "검수 필요") if review_row else (
-                "확인" if selected_component.presence_status == "CONFIRMED" else "검수 필요")
+                "확인" if getattr(selected_component, "presence_status", "UNCONFIRMED") == "CONFIRMED"
+                else "검수 필요")
             inventory_item["presence_status"] = (
                 "CONFIRMED" if current_status == "확인" else "EXCLUDED" if current_status == "제외" else "UNCONFIRMED")
             inventory_item["component_type_status"] = "USER_CONFIRMED" if current_status == "확인" else "UNCONFIRMED"

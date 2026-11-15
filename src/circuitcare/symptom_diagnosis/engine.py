@@ -21,7 +21,9 @@ from circuitcare.symptom_diagnosis.component_fault_ranker import rank_component_
 from circuitcare.symptom_diagnosis.fault_hypothesis_validator import (
     summarize_measurement_verdict, validate_component_hypothesis,
 )
-from circuitcare.symptom_diagnosis.measurement_evaluator import evaluate_component_measurements
+from circuitcare.symptom_diagnosis.measurement_evaluator import (
+    evaluate_component_measurements, measurement_assessment_key,
+)
 from circuitcare.symptom_diagnosis.measurement_validation import verified_measurements_for_inference
 from circuitcare.symptom_diagnosis.active_inspection_planner import plan_active_inspections
 
@@ -437,7 +439,6 @@ def diagnose(
             continue
         for part in normalized_parts:
             component_id = str(part.get("component_id") or "")
-            assessment = scoped_measurements.get((component_id, fault_id), {})
             validation = validate_component_hypothesis(
                 mode=mode, component=part, confirmed_component_ids=confirmed_ids,
                 confirmed_component_types=detected_types,
@@ -560,7 +561,6 @@ def diagnose(
         applicable_parts = []
         for part in normalized_parts:
             component_id = str(part.get("component_id") or "")
-            assessment = scoped_measurements.get((component_id, fault_id), {})
             validation = validate_component_hypothesis(
                 mode=mode, component=part, confirmed_component_ids=confirmed_ids,
                 confirmed_component_types=detected_types,
@@ -697,53 +697,39 @@ def diagnose(
     # this first rule-engine version deliberately does not consume arbitrary nets.
     verified_edges = connectivity.get("verified_edges", []) if isinstance(connectivity, dict) else []
     measurement_assessments = scoped_measurements
-    measurement_evidence = [{
-        "measurement_id": row.get("measurement_id"),
-        "component_id": row.get("component_id"),
-        "board_component_id": row.get("board_component_id"),
-        "test_id": row.get("test_id"),
-        "observed_at": (row.get("measured_at") or row.get("created_at") or row.get("timestamp")),
-        "measurement_type": row.get("measurement_type"),
-        "value": row.get("value"), "unit": row.get("unit"),
-        "source": row.get("source"),
-        "verification_status": row.get("verification_status"),
-        "reference_min": row.get("reference_min"), "reference_max": row.get("reference_max"),
-        "reference_source": row.get("reference_source"),
-        "reference_source_id": row.get("reference_source_id"),
-        "reference_verification_status": row.get("reference_verification_status"),
-        "measurement_conditions": row.get("measurement_conditions"),
-        "fault_hypothesis": row.get("fault_hypothesis"),
-        "assessment": (measurement_assessments.get((str(row.get("component_id") or ""),
-                                                    str(row.get("fault_hypothesis") or ""),
-                                                    str(row.get("test_id") or ""),
-                                                    " ".join(str(row.get("measurement_target") or "").casefold().split()),
-                                                    " ".join(str(row.get("operating_conditions") or "").casefold().split())), {})
-                       .get("status", "INCONCLUSIVE")),
-        "verdict": (measurement_assessments.get((str(row.get("component_id") or ""),
-                                                 str(row.get("fault_hypothesis") or ""),
-                                                 str(row.get("test_id") or ""),
-                                                 " ".join(str(row.get("measurement_target") or "").casefold().split()),
-                                                 " ".join(str(row.get("operating_conditions") or "").casefold().split())), {})
-                    .get("verdict", "non_diagnostic")),
-        "assessment_status": (measurement_assessments.get((str(row.get("component_id") or ""),
-                                                            str(row.get("fault_hypothesis") or ""),
-                                                            str(row.get("test_id") or ""),
-                                                            " ".join(str(row.get("measurement_target") or "").casefold().split()),
-                                                            " ".join(str(row.get("operating_conditions") or "").casefold().split())), {})
-                              .get("assessment_status", "INCONCLUSIVE")),
-        "decision_scope": "FAULT_HYPOTHESIS_ONLY",
-        "used_for_ranking": any(candidate.get("component_id") == row.get("component_id")
-                                 and candidate.get("fault_hypothesis") == row.get("fault_hypothesis")
-                                 and candidate.get("measurement_verdict") in {"supports", "refutes"}
-                                 for candidate in [*component_candidates, *verified_component_history]),
-        "reason": measurement_assessments.get((str(row.get("component_id") or ""),
-                                                 str(row.get("fault_hypothesis") or ""),
-                                                 str(row.get("test_id") or ""),
-                                                 " ".join(str(row.get("measurement_target") or "").casefold().split()),
-                                                 " ".join(str(row.get("operating_conditions") or "").casefold().split())), {}).get(
-                                                     "reason", "검사 프로파일·기준 출처·조건이 검증되지 않아 판정에 사용하지 않았습니다."),
-    } for row in measurements or [] if isinstance(row, dict)
-        and str(row.get("component_id") or "") in confirmed_ids]
+    measurement_evidence = []
+    for row in measurements or []:
+        if not isinstance(row, dict) or str(row.get("component_id") or "") not in confirmed_ids:
+            continue
+        assessment = measurement_assessments.get(measurement_assessment_key(row), {})
+        measurement_evidence.append({
+            "measurement_id": row.get("measurement_id"),
+            "component_id": row.get("component_id"),
+            "board_component_id": row.get("board_component_id"),
+            "test_id": row.get("test_id"),
+            "observed_at": (row.get("measured_at") or row.get("created_at") or row.get("timestamp")),
+            "measurement_type": row.get("measurement_type"),
+            "value": row.get("value"), "unit": row.get("unit"),
+            "source": row.get("source"),
+            "verification_status": row.get("verification_status"),
+            "reference_min": row.get("reference_min"), "reference_max": row.get("reference_max"),
+            "reference_source": row.get("reference_source"),
+            "reference_source_id": row.get("reference_source_id"),
+            "reference_verification_status": row.get("reference_verification_status"),
+            "measurement_conditions": row.get("measurement_conditions"),
+            "fault_hypothesis": row.get("fault_hypothesis"),
+            "assessment": assessment.get("status", "INCONCLUSIVE"),
+            "verdict": assessment.get("verdict", "non_diagnostic"),
+            "assessment_status": assessment.get("assessment_status", "INCONCLUSIVE"),
+            "decision_scope": "FAULT_HYPOTHESIS_ONLY",
+            "used_for_ranking": any(candidate.get("component_id") == row.get("component_id")
+                                     and candidate.get("fault_hypothesis") == row.get("fault_hypothesis")
+                                     and candidate.get("measurement_verdict") in {"supports", "refutes"}
+                                     for candidate in [*component_candidates, *verified_component_history]),
+            "reason": assessment.get(
+                "reason", "검사 프로파일·기준 출처·조건이 검증되지 않아 판정에 사용하지 않았습니다."),
+            "evidence_ids": assessment.get("evidence_ids", []),
+        })
     evidence_ledger = build_evidence_ledger(
         observations=ledger_observations,
         conflicts=evidence_conflicts,

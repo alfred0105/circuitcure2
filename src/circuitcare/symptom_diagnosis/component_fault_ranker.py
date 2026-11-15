@@ -84,9 +84,13 @@ def rank_component_candidates(
             continue
 
         targeted_ids: set[str] = set()
+        direct_symptom_codes: dict[str, set[str]] = {}
         for row in observed:
             component_id = str(row.get("component_id") or "")
             code, value = str(row.get("code") or ""), row.get("value")
+            if component_id and value is True and code in mode.get("supported_symptoms", {}):
+                targeted_ids.add(component_id)
+                direct_symptom_codes.setdefault(component_id, set()).add(code)
             supports = code in (mode.get("supporting_evidence", {}) if value is True
                                 else mode.get("supporting_evidence_when_false", {}))
             opposes = code in (mode.get("opposing_evidence", {}) if value is True
@@ -99,14 +103,14 @@ def rank_component_candidates(
         )
         # Keep indistinguishable instances as an explicit unresolved group. Do
         # not silently drop every candidate or imply that the first ID is best.
+        if targeted_ids:
+            eligible = [(part, validation) for part, validation in eligible
+                        if str(part.get("component_id")) in targeted_ids]
         ambiguous_ids = sorted(str(part.get("component_id") or "") for part, _ in eligible)
         candidate_group_id = None
         if len(eligible) > 1 and not targeted_ids:
             candidate_group_id = "candidate-group-" + hashlib.sha256(
                 f"{fault_id}|{'|'.join(ambiguous_ids)}".encode()).hexdigest()[:12]
-        if targeted_ids:
-            eligible = [(part, validation) for part, validation in eligible
-                        if str(part.get("component_id")) in targeted_ids]
 
         for part, validation in eligible:
             component_id = str(part.get("component_id") or "")
@@ -118,6 +122,7 @@ def rank_component_candidates(
             required_roles = set(mode.get("functional_roles", []))
             role_match = bool(required_roles & set(part.get("confirmed_functional_roles", [])))
             specific = [row for row in observed if str(row.get("component_id") or "") == component_id]
+            direct_symptoms = sorted(direct_symptom_codes.get(component_id, set()))
             supporting: list[str] = []
             opposing: list[str] = []
             observation_score = 0.0
@@ -161,6 +166,7 @@ def rank_component_candidates(
             role_evidence = block.get("role_evidence", {})
             evidence = list(dict.fromkeys([
                 *hypothesis.get("supporting_evidence", []),
+                *(f"사용자 보고 증상 대상 · {code}" for code in direct_symptoms),
                 *(f"부품별 지지 근거: {code}" for code in sorted(supporting)),
                 *(f"부품별 반대 근거: {code}" for code in sorted(opposing)),
                 *(text for role in sorted(candidate_roles & required_roles
@@ -197,7 +203,10 @@ def rank_component_candidates(
                 "role_status": validation.get("role_status", "UNKNOWN"),
                 "observation_conflicts_omitted": observation_conflicts,
                 "solder_status": "NOT_ASSESSED", "evidence": evidence,
-                "supporting_evidence": list(hypothesis.get("supporting_evidence", [])) + supporting,
+                "supporting_evidence": list(hypothesis.get("supporting_evidence", []))
+                                        + [f"사용자 보고 증상 대상 · {code}" for code in direct_symptoms]
+                                        + supporting,
+                "direct_symptom_evidence": direct_symptoms,
                 "opposing_evidence": list(hypothesis.get("opposing_evidence", [])) + opposing,
                 "requires_measurement": verdict["verdict"] in {"non_diagnostic", "conflicted"},
                 "recommended_tests": [tests[test_id].get("question", tests[test_id].get("name", test_id))
