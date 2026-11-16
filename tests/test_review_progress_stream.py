@@ -20,19 +20,20 @@ def test_stream_sends_only_progress_changes_and_terminal_event(monkeypatch):
              'progress':{'stage':'OCR_BOARD','message':'OCR'}, 'state':{'private':'secret'}}
     monkeypatch.setattr(stream, 'get_ai_review_job', lambda **_kw: dict(state))
     server = stream.ProgressServer()
+    server.allow_streamlit_port(7777)
     token = server.bind('owner1','j1')
     assert server.bind('owner1','j1') == token
     assert server.bind('owner2','j1') != token
     url=f'http://127.0.0.1:{server.http.server_port}/events/{token}'
     try:
-        with urlopen(Request(url,headers={'Origin':'http://localhost:8765'}),timeout=3) as response:
+        with urlopen(Request(url,headers={'Origin':'http://localhost:7777'}),timeout=3) as response:
             first=read_event(response)
             assert first['status']=='RUNNING' and 'state' not in first
             state.update(status='COMPLETE',progress={'stage':'COMPLETE','message':'done'})
             _notify_progress()
             assert read_event(response)['status']=='COMPLETE'
         for target, origin, code in [(url,'http://evil.example',403),
-                                    (url+'wrong','http://localhost:8765',404)]:
+                                    (url+'wrong','http://localhost:7777',404)]:
             with pytest.raises(HTTPError) as exc:
                 urlopen(Request(target,headers={'Origin':origin}),timeout=2)
             assert exc.value.code == code

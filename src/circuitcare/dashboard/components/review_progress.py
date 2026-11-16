@@ -15,6 +15,11 @@ def render_review_progress(st, *, owner, job_id, job, on_completed):
             css='\nbody{margin:0}[data-review-progress]{box-sizing:border-box;height:36px;font:13px var(--st-font);color:var(--st-text-color);display:flex;align-items:center;gap:9px;padding:0;overflow:hidden;white-space:nowrap}\n[data-review-progress]>strong,[data-stage],[data-elapsed]{flex:0 0 auto}[data-stage]{max-width:34%;overflow:hidden;text-overflow:ellipsis}progress{display:block;box-sizing:border-box;flex:0 0 76px;width:76px;height:7px;accent-color:#68b3ff}[data-detail]{flex:1;min-width:0;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
             js=(Path(__file__).with_name('assets') / 'review_progress.js').read_text())
     server = progress_server()
+    try:
+        server.allow_streamlit_port(st.get_option('server.port'))
+    except (AttributeError, RuntimeError):
+        # Keep lightweight callers and older Streamlit test doubles compatible.
+        pass
     token = server.bind(owner, job_id)
     key = 'cc_review_stream_' + hashlib.sha256(f'{owner}|{job_id}'.encode()).hexdigest()[:20]
     def callback(result_override=None):

@@ -23,12 +23,16 @@ class ProgressServer:
     def __init__(self):
         self.lock = threading.RLock()
         self.tokens = OrderedDict()
+        # The Streamlit page and this job-scoped SSE endpoint use different
+        # loopback ports. Keep the browser origin allowlist tied to the active
+        # Streamlit port instead of silently assuming the production port 8765.
+        self.allowed_origins = set(_ORIGINS)
         registry = self
         class Handler(BaseHTTPRequestHandler):
             def log_message(self, *_args): pass
             def do_GET(self):
                 origin = self.headers.get('Origin')
-                if origin is not None and origin not in _ORIGINS:
+                if origin is not None and origin not in registry.allowed_origins:
                     self.send_error(403)
                     return
                 path = urlsplit(self.path).path
@@ -69,6 +73,20 @@ class ProgressServer:
         self.http.daemon_threads = True
         threading.Thread(target=self.http.serve_forever, daemon=True,
                          name='pcb-review-progress-stream').start()
+
+    def allow_streamlit_port(self, port):
+        """Allow same-machine Streamlit origins for the configured UI port."""
+        try:
+            port = int(port)
+        except (TypeError, ValueError):
+            return
+        if not 1 <= port <= 65535:
+            return
+        with self.lock:
+            self.allowed_origins.update({
+                f'http://localhost:{port}',
+                f'http://127.0.0.1:{port}',
+            })
 
     def bind(self, owner, job_id):
         with self.lock:
