@@ -565,7 +565,10 @@ def production_yolo_detector(inference_input: dict[str, Any]) -> dict[str, Any]:
         project_id=str(inference_input.get("project_id", "validation")),
         photo_id=str(inference_input.get("photo_id", Path(photo_path).stem)),
         review_image_size=size,
-        queue_ai_review=not bool(inference_input.get("skip_qwen_review")),
+        # The validation Harness has an explicit OCR/Qwen reviewer stage in
+        # run_case(). Do not also queue the UI's background whole-photo review
+        # here: that duplicates model calls and can race the measured result.
+        queue_ai_review=False,
     )
     if error or result is None:
         raise RuntimeError(error or "Production YOLO returned no result.")

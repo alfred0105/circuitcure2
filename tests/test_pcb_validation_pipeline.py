@@ -242,6 +242,33 @@ def test_mock_model_stages_are_separate_and_llm_failure_keeps_rule_diagnosis():
     assert [step["stage"].split(":", 1)[0] for step in run["stage_trace"]][:2] == ["yolo_detection", "component_review"]
 
 
+def test_production_detector_does_not_queue_duplicate_background_qwen_review(tmp_path, monkeypatch):
+    from PIL import Image
+    import circuitcare.vision.component_recognition_panel as review_panel
+    from circuitcare.benchmark.pcb_validation import production_yolo_detector
+
+    photo = tmp_path / "board.png"
+    Image.new("RGB", (24, 18), "white").save(photo)
+    observed = {}
+    scope = review_panel.review_scope(photo.read_bytes(), "validation", "board")
+    result_key, rows_key, _error_key = review_panel.review_keys(scope)
+
+    def fake_ensure(st_api, **kwargs):
+        observed.update(kwargs)
+        st_api.session_state[result_key] = {"detections": [{"component_id": "box-1"}]}
+        st_api.session_state[rows_key] = [{"component_id": "box-1", "상태": "검수 필요"}]
+        return {"detections": [{"component_id": "box-1"}],
+                "model_provenance": {"locator": {"fine_tuned": False}}}, None
+
+    monkeypatch.setattr(review_panel, "ensure_component_detection", fake_ensure)
+    detection = production_yolo_detector({"photo_path": str(photo), "project_id": "validation",
+                                          "photo_id": "board"})
+
+    assert observed["queue_ai_review"] is False
+    assert detection["model_provenance"] == {"locator": {"fine_tuned": False}}
+    assert detection["detections"] == [{"component_id": "box-1", "상태": "검수 필요"}]
+
+
 def test_block_recall_at_three_uses_only_adjudicated_block_ids_and_reports_fraction():
     case = _case()
     case["reference"] = {
