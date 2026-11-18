@@ -371,9 +371,16 @@ def run_case(case: dict[str, Any], *, detector: Callable[[dict[str, Any]], dict[
             for row in components})
     diagnosis_inputs.update(measurements=current_measurements, current_context=current_context)
     diagnosis_inputs.update(components=components, confirmed_component_ids=confirmed)
-    baseline_result = stage("production_rule_diagnosis", lambda: diagnose(**diagnosis_inputs), input_summary={
+    # Synthetic fault sweeps often run many symptom variants against the same
+    # photo/Registry snapshot. They evaluate fault and component ranking, not
+    # the expensive answer-by-answer question utility simulation. Keep that
+    # optimization explicit and opt-in; production/default behavior is intact.
+    simulate_question_values = not bool(inputs.get("skip_question_value_simulation", False))
+    baseline_result = stage("production_rule_diagnosis", lambda: diagnose(
+        **diagnosis_inputs, _simulate_questions=simulate_question_values), input_summary={
         "symptoms": diagnosis_inputs.get("symptoms"), "component_count": len(components),
-        "confirmed_component_count": len(confirmed), "measurement_count": len(diagnosis_inputs.get("measurements") or [])})
+        "confirmed_component_count": len(confirmed), "measurement_count": len(diagnosis_inputs.get("measurements") or []),
+        "question_value_simulation": simulate_question_values})
     if baseline_result.get("_stage_error"):
         return {"run_id": str(uuid.uuid4()), "case_id": case["case_id"], "case_kind": case["case_kind"],
                 "status": "PIPELINE_FAILED", "error": baseline_result["_stage_error"], "stage_trace": stages,
@@ -433,7 +440,8 @@ def run_case(case: dict[str, Any], *, detector: Callable[[dict[str, Any]], dict[
                 inputs.get("measurements_before") or [], registry)
         else:
             before_inputs["measurements"] = inputs.get("measurements_before") or []
-        before_result = stage("pre_measurement_rule_diagnosis", lambda: diagnose(**before_inputs), input_summary={
+        before_result = stage("pre_measurement_rule_diagnosis", lambda: diagnose(
+            **before_inputs, _simulate_questions=simulate_question_values), input_summary={
             "measurement_count": len(before_inputs["measurements"]), "component_count": len(components)})
         if not before_result.get("_stage_error"):
             before_rank = [item.get("fault_id") for item in before_result.get("hypotheses", [])]
@@ -452,6 +460,8 @@ def run_case(case: dict[str, Any], *, detector: Callable[[dict[str, Any]], dict[
     return {
         "run_id": str(uuid.uuid4()), "case_id": case["case_id"], "case_kind": case["case_kind"],
         "execution_mode": execution_mode, "detections": detections,
+        "model_provenance": {photo["photo_id"] if photo else "photo-1": detection.get("model_provenance", {})
+                             for photo, detection in detection_results if detection.get("model_provenance")},
         "reviewed_components": reviewed_components,
         "ocr_evidence": ocr_results,
         "qwen_review": qwen_results,
@@ -488,6 +498,8 @@ def _summarize(value: Any) -> dict[str, Any]:
     for key in ("status", "verification_status", "component_count", "image_width", "image_height"):
         if key in value and isinstance(value[key], (str, int, float, bool, type(None))):
             summary[key] = value[key]
+    if isinstance(value.get("model_provenance"), dict):
+        summary["model_provenance"] = value["model_provenance"]
     for key in ("detections", "components", "class_reviews", "duplicate_reviews", "group_reviews",
                 "missed_component_candidates", "hypotheses", "component_candidates", "next_tests", "measurement_evidence"):
         if isinstance(value.get(key), (list, tuple)):
@@ -553,6 +565,7 @@ def production_yolo_detector(inference_input: dict[str, Any]) -> dict[str, Any]:
         project_id=str(inference_input.get("project_id", "validation")),
         photo_id=str(inference_input.get("photo_id", Path(photo_path).stem)),
         review_image_size=size,
+        queue_ai_review=not bool(inference_input.get("skip_qwen_review")),
     )
     if error or result is None:
         raise RuntimeError(error or "Production YOLO returned no result.")
@@ -658,6 +671,8 @@ def score_run(case: dict[str, Any], run: dict[str, Any]) -> dict[str, Any]:
     evaluation_components = run.get("all_component_candidates", run.get("top_candidates", []))
     fault_top1, fault_top3 = _topk_ranked_ids(evaluation_hypotheses, "fault_id", 1), _topk_ranked_ids(evaluation_hypotheses, "fault_id", 3)
     comp_top1, comp_top3 = _topk_ranked_ids(evaluation_components, "component_id", 1), _topk_ranked_ids(evaluation_components, "component_id", 3)
+    unique_fault_top1, fault_top1_tie_size = _unique_top1(evaluation_hypotheses, "fault_id")
+    unique_component_top1, component_top1_tie_size = _unique_top1(evaluation_components, "component_id")
     joint_top1 = _topk_pairs(evaluation_components, 1)
     joint_top3 = _topk_pairs(evaluation_components, 3)
     block_truth = {str(value) for value in truth.get("faulty_functional_block_ids", []) if value}
@@ -685,9 +700,19 @@ def score_run(case: dict[str, Any], run: dict[str, Any]) -> dict[str, Any]:
     return {"case_id": case["case_id"], "status": "SCORED", "failure_category": truth.get("failure_category", "UNCLASSIFIED"),
             "fault_type_count": len(fault_truth), "fault_component_count": len(component_truth),
             "fault_type_top1_hit": (bool(fault_top1 & fault_truth) if fault_evaluable else None),
+            # Tie-inclusive Hit@K is useful for recall, but cannot show whether
+            # the engine actually distinguished a single first-place candidate.
+            "fault_type_top1_unique_hit": (
+                None if not fault_evaluable or fault_top1_tie_size > 1 else
+                bool(unique_fault_top1 and unique_fault_top1 in fault_truth)),
+            "fault_type_top1_tie_size": fault_top1_tie_size if fault_evaluable else None,
             "fault_type_top3_hit": (bool(fault_top3 & fault_truth) if fault_evaluable else None),
             "fault_type_all_top3_hit": (fault_truth.issubset(fault_top3) if fault_evaluable else None),
             "component_top1_hit": (bool(comp_top1 & component_truth) if component_evaluable else None),
+            "component_top1_unique_hit": (
+                None if not component_evaluable or component_top1_tie_size > 1 else
+                bool(unique_component_top1 and unique_component_top1 in component_truth)),
+            "component_top1_tie_size": component_top1_tie_size if component_evaluable else None,
             "component_top3_hit": (bool(comp_top3 & component_truth) if component_evaluable else None),
             "component_all_top3_hit": (component_truth.issubset(comp_top3) if component_evaluable else None),
             "joint_top1_hit": (bool(joint_top1 & pair_truth) if pair_evaluable else None),
@@ -755,6 +780,16 @@ def _topk_ranked_ids(rows: list[dict[str, Any]], id_key: str, k: int) -> set[str
         return set()
     cutoff = ranked[min(k, len(ranked)) - 1][1]
     return {identifier for identifier, score in ranked if score >= cutoff}
+
+
+def _unique_top1(rows: list[dict[str, Any]], id_key: str) -> tuple[str | None, int]:
+    """Return the sole top-ranked ID, if any, and the number tied at rank one."""
+    ranked = _ranked_unique(rows, id_key)
+    if not ranked:
+        return None, 0
+    top_score = ranked[0][1]
+    tied = [identifier for identifier, score in ranked if score == top_score]
+    return (tied[0] if len(tied) == 1 else None), len(tied)
 
 
 def _ranked_unique_pairs(rows: list[dict[str, Any]]) -> list[tuple[tuple[str, str], float]]:
@@ -883,6 +918,8 @@ def evaluate_runs(cases: list[dict[str, Any]], runs: list[dict[str, Any]], *,
     qwen_call_rows = [item for item in scored if item.get("qwen_call_count") is not None]
     block_recall_rows = [item["block_recall_at_3"] for item in scored
                          if item.get("block_recall_status") == "EVALUATED"]
+    fault_tie_rows = [item for item in root_scored if item.get("fault_type_top1_tie_size") is not None]
+    component_tie_rows = [item for item in root_scored if item.get("component_top1_tie_size") is not None]
     attribution_rows = [item for item in root_scored if "unsupported_specific_attribution" in item]
     tp = sum(item["tp"] for item in detection_scored)
     fp = sum(item["fp"] for item in detection_scored)
@@ -954,8 +991,26 @@ def evaluate_runs(cases: list[dict[str, Any]], runs: list[dict[str, Any]], *,
         model_modes[mode] = model_modes.get(mode, 0) + 1
     report = {
         "fault_type_top1": ratio("fault_type_top1_hit"),
+        "fault_type_top1_unique": ratio("fault_type_top1_unique_hit"),
+        "fault_type_top1_tie_rate": {
+            "status": "EVALUATED" if fault_tie_rows else "NOT_EVALUATED",
+            "value": (sum(item["fault_type_top1_tie_size"] > 1 for item in fault_tie_rows) /
+                      len(fault_tie_rows)) if fault_tie_rows else None,
+            "n": len(fault_tie_rows),
+            "mean_top1_tie_size": (sum(item["fault_type_top1_tie_size"] for item in fault_tie_rows) /
+                                   len(fault_tie_rows)) if fault_tie_rows else None,
+        },
         "fault_type_top3": ratio("fault_type_top3_hit"),
         "component_top1": ratio("component_top1_hit"),
+        "component_top1_unique": ratio("component_top1_unique_hit"),
+        "component_top1_tie_rate": {
+            "status": "EVALUATED" if component_tie_rows else "NOT_EVALUATED",
+            "value": (sum(item["component_top1_tie_size"] > 1 for item in component_tie_rows) /
+                      len(component_tie_rows)) if component_tie_rows else None,
+            "n": len(component_tie_rows),
+            "mean_top1_tie_size": (sum(item["component_top1_tie_size"] for item in component_tie_rows) /
+                                   len(component_tie_rows)) if component_tie_rows else None,
+        },
         "component_top3": ratio("component_top3_hit"),
         "block_recall_at_3": {
             "status": "EVALUATED" if block_recall_rows else "NOT_EVALUATED",

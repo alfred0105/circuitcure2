@@ -162,13 +162,21 @@ def infer_symptom_codes(text: str, knowledge: dict[str, Any] | None = None) -> l
     # or a display. LED failure requires an LED/indicator noun and the dark
     # state in the same clause.
     indicator_terms = ("led", "발광 다이오드", "표시등", "램프")
-    dark_terms = ("켜지지", "점등하지", "불이 안 들어", "불이 들어오지", "점등이 안", "안 켜")
+    dark_terms = ("켜지지", "점등하지", "불이 안 들어", "불이 들어오지", "점등이 안",
+                  "안 들어오", "안들어오", "안들어옴", "안 켜")
     clauses = re.split(r"[.!?;\n,]", folded)
-    if any(any(term in clause for term in indicator_terms)
-           and any(term in clause for term in dark_terms)
-           and not re.search(r"(?:않는\s*건|않는\s*것은|아닌\s*건)\s*(?:아니|아님)", clause)
-           for clause in clauses):
+    indicator_dark_clauses = [clause for clause in clauses
+                              if any(term in clause for term in indicator_terms)
+                              and any(term in clause for term in dark_terms)
+                              and not re.search(r"(?:않는\s*건|않는\s*것은|아닌\s*건)\s*(?:아니|아님)", clause)]
+    if indicator_dark_clauses:
         result.append("LED_NOT_LIT")
+        # Generic "안 켜" also matches a single dark LED. Do not upgrade that
+        # local indicator symptom to whole-board NO_POWER without an explicit
+        # board/system power subject.
+        board_power_subject = ("기판", "보드", "pcb", "장치", "제품", "전체", "전원 입력", "전원 공급")
+        if not any(any(term in clause for term in board_power_subject) for clause in indicator_dark_clauses):
+            result = [code for code in result if code != "NO_POWER"]
     return result
 
 
@@ -427,6 +435,39 @@ def diagnose(
         current_context=current_context,
     )
     measurement_validation_ms = (time.perf_counter() - measurement_started) * 1000
+    # Keep saved readings visible even when the user has not supplied a
+    # structured symptom yet. They remain INCONCLUSIVE unless every profile,
+    # identity, safety, reference, and condition requirement is satisfied.
+    measurement_evidence = []
+    for row in measurements or []:
+        if not isinstance(row, dict) or str(row.get("component_id") or "") not in confirmed_ids:
+            continue
+        assessment = scoped_measurements.get(measurement_assessment_key(row), {})
+        measurement_evidence.append({
+            "measurement_id": row.get("measurement_id"),
+            "component_id": row.get("component_id"),
+            "board_component_id": row.get("board_component_id"),
+            "functional_block_id": row.get("functional_block_id"),
+            "test_id": row.get("test_id"),
+            "observed_at": (row.get("measured_at") or row.get("created_at") or row.get("timestamp")),
+            "measurement_type": row.get("measurement_type"),
+            "value": row.get("value"), "unit": row.get("unit"),
+            "source": row.get("source"),
+            "verification_status": row.get("verification_status"),
+            "reference_min": row.get("reference_min"), "reference_max": row.get("reference_max"),
+            "reference_source": row.get("reference_source"),
+            "reference_source_id": row.get("reference_source_id"),
+            "reference_verification_status": row.get("reference_verification_status"),
+            "measurement_conditions": row.get("measurement_conditions"),
+            "fault_hypothesis": row.get("fault_hypothesis"),
+            "assessment": assessment.get("status", "INCONCLUSIVE"),
+            "verdict": assessment.get("verdict", "non_diagnostic"),
+            "assessment_status": assessment.get("assessment_status", "INCONCLUSIVE"),
+            "decision_scope": "FAULT_HYPOTHESIS_ONLY", "used_for_ranking": False,
+            "reason": assessment.get(
+                "reason", "검사 프로파일·기준 출처·조건이 검증되지 않아 판정에 사용하지 않았습니다."),
+            "evidence_ids": assessment.get("evidence_ids", []),
+        })
     generated.update(fault_id for (_component_id, fault_id, _test, _target, _condition), assessment in scoped_measurements.items()
                      if assessment.get("status") in {"TEST_NORMAL", "TEST_ABNORMAL"}
                      and fault_id in modes)
@@ -497,6 +538,7 @@ def diagnose(
                 "matched_rules": [], "hypotheses": [], "functional_blocks": functional_blocks,
                 "functional_block_groups": functional_block_groups,
                 "evidence_ledger": evidence_ledger, "evidence_gaps": [], "next_tests": [],
+                "measurement_evidence": measurement_evidence,
                 "active_inspection_plan": {"status": "NO_HYPOTHESES", "candidates": [],
                                             "blocked": [], "score_is_probability": False},
                 "processing_timings_ms": {"measurement_validation": round(measurement_validation_ms, 3),
@@ -721,40 +763,13 @@ def diagnose(
     # this first rule-engine version deliberately does not consume arbitrary nets.
     verified_edges = connectivity.get("verified_edges", []) if isinstance(connectivity, dict) else []
     measurement_assessments = scoped_measurements
-    measurement_evidence = []
-    for row in measurements or []:
-        if not isinstance(row, dict) or str(row.get("component_id") or "") not in confirmed_ids:
-            continue
-        assessment = measurement_assessments.get(measurement_assessment_key(row), {})
-        measurement_evidence.append({
-            "measurement_id": row.get("measurement_id"),
-            "component_id": row.get("component_id"),
-            "board_component_id": row.get("board_component_id"),
-            "functional_block_id": row.get("functional_block_id"),
-            "test_id": row.get("test_id"),
-            "observed_at": (row.get("measured_at") or row.get("created_at") or row.get("timestamp")),
-            "measurement_type": row.get("measurement_type"),
-            "value": row.get("value"), "unit": row.get("unit"),
-            "source": row.get("source"),
-            "verification_status": row.get("verification_status"),
-            "reference_min": row.get("reference_min"), "reference_max": row.get("reference_max"),
-            "reference_source": row.get("reference_source"),
-            "reference_source_id": row.get("reference_source_id"),
-            "reference_verification_status": row.get("reference_verification_status"),
-            "measurement_conditions": row.get("measurement_conditions"),
-            "fault_hypothesis": row.get("fault_hypothesis"),
-            "assessment": assessment.get("status", "INCONCLUSIVE"),
-            "verdict": assessment.get("verdict", "non_diagnostic"),
-            "assessment_status": assessment.get("assessment_status", "INCONCLUSIVE"),
-            "decision_scope": "FAULT_HYPOTHESIS_ONLY",
-            "used_for_ranking": any(candidate.get("component_id") == row.get("component_id")
-                                     and candidate.get("fault_hypothesis") == row.get("fault_hypothesis")
-                                     and candidate.get("measurement_verdict") in {"supports", "refutes"}
-                                     for candidate in [*component_candidates, *verified_component_history]),
-            "reason": assessment.get(
-                "reason", "검사 프로파일·기준 출처·조건이 검증되지 않아 판정에 사용하지 않았습니다."),
-            "evidence_ids": assessment.get("evidence_ids", []),
-        })
+    for measurement in measurement_evidence:
+        measurement["used_for_ranking"] = any(
+            candidate.get("component_id") == measurement.get("component_id")
+            and candidate.get("fault_hypothesis") == measurement.get("fault_hypothesis")
+            and candidate.get("measurement_verdict") in {"supports", "refutes"}
+            for candidate in [*component_candidates, *verified_component_history]
+        )
     evidence_ledger = build_evidence_ledger(
         observations=ledger_observations,
         conflicts=evidence_conflicts,

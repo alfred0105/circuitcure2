@@ -264,7 +264,10 @@ def build_pcb_context(
             "connectivity_status": "UNKNOWN",
             "measurements": measures.get(component_id, []),
             "user_suspicion": ({"fault_id": suspect.get("suspected_fault_mode"),
-                                "source": "USER", "evidence_status": "UNVERIFIED"} if suspect else None),
+                                "reported_fault_description": str(
+                                    suspect.get("user_reported_fault_description") or "")[:1000],
+                                "is_user_suspected": suspect.get("is_user_suspected", True),
+                                "source": "USER_REPORTED", "evidence_status": "UNVERIFIED"} if suspect else None),
         })
 
     spatial = _spatial_relations(details, photos)
@@ -317,7 +320,11 @@ def build_pcb_context(
         "symptom_text": str(diagnosis.get("symptom_text", ""))[:1200],
         "observations": diagnosis.get("observations", {}),
         "user_suspicions": [{"component_id": cid, "fault_id": row.get("suspected_fault_mode"),
-                             "evidence_status": "UNVERIFIED"} for cid, row in suspect_by_id.items()
+                             "reported_fault_description": str(
+                                 row.get("user_reported_fault_description") or "")[:1000],
+                             "is_user_suspected": row.get("is_user_suspected", True),
+                             "source": "USER_REPORTED", "evidence_status": "UNVERIFIED"}
+                            for cid, row in suspect_by_id.items()
                             if cid in by_id],
         "hypotheses": [{"fault_id": row.get("fault_id"), "title": row.get("title"),
                         "supporting_evidence": row.get("supporting_evidence", [])[:4],

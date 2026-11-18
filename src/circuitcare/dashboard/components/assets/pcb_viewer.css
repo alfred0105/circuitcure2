@@ -17,11 +17,10 @@ body { margin:0; }
 .cc-pcb-canvas { position:absolute; inset:0; width:100%; height:100%; user-select:none; }
 .cc-pcb-component { fill:#61a9c51a; stroke:#a7c0ca; stroke-width:1.5; vector-effect:non-scaling-stroke; cursor:pointer; }
 .cc-pcb-component:hover, .cc-pcb-component.cc-hover { fill:#55bbdf30; stroke:#8ee7ff; stroke-width:2.5; }
-.cc-pcb-component.cc-selected { fill:#ffbd5530; stroke:#ffbd55; stroke-width:3; }
+.cc-pcb-component.cc-selected { fill:#60a5fa30; stroke:#60a5fa; stroke-width:3; }
 .cc-pcb-component.cc-excluded { fill:#ef58671a; stroke:#ef5867; stroke-dasharray:5 3; }
 .cc-pcb-component.cc-ai-suggested { fill:#ff9d2e1c; stroke:#ff9d2e; stroke-dasharray:3 3; stroke-width:2.2; }
 .cc-pcb-component.cc-second-pass { fill:#55bbdf14; stroke:#75d9ff; stroke-dasharray:6 3; stroke-width:2; }
-.cc-pcb-component.cc-manual-box { fill:#60dfa022; stroke:#60dfa0; stroke-dasharray:6 3; stroke-width:2; }
 .cc-pcb-component.cc-block-power { fill:#f4b94220; stroke:#f4b942; }
 .cc-pcb-component.cc-block-control { fill:#9b8cff20; stroke:#a997ff; }
 .cc-pcb-component.cc-block-input { fill:#4db6ac20; stroke:#4db6ac; }

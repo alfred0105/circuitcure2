@@ -80,6 +80,8 @@ def suggest_pcb_fault_candidates(
             "PCB 진단 보조자다. 확인된 소자는 진단 후보로, DETECTED_UNVERIFIED 소자는 검수 필요 검사 후보로만 제안한다. "
             "type_evidence_status와 ocr_evidence_status가 CONFIRMED인 정보만 확인 사실로 사용한다. TENTATIVE 표시는 검수 단서일 뿐이다. "
             "미검수 소자의 종류는 잠정값이므로 확정 사실처럼 말하지 않는다. 입력 JSON의 허용 고장 유형과 증거만 사용한다. "
+            "user_suspicions의 reported_fault_description은 사용자가 해당 소자에서 관찰했다고 보고한 내용이며 USER_REPORTED 미검증 단서다. "
+            "이를 측정값·확정 고장으로 취급하지 말고, 다른 증거와 구분해 후보 검토에만 활용한다. "
             "사용자 의심은 미검증 단서다. 존재하지 않는 측정·배선·핀·연결·소자·증거를 만들지 않는다. "
             "기능 블록 ID는 supplied functional_block_groups에 있는 ID만 선택하고, 없으면 __none__으로 둔다. "
             "근거가 부족하면 후보를 생략하거나 INCONCLUSIVE로 제안한다. Qwen 제안만으로 고장을 확정하거나 "
@@ -87,7 +89,7 @@ def suggest_pcb_fault_candidates(
             "JSON 스키마에 맞는 제안 최대 3개를 반환한다."
         )},
         {"role": "user", "content": json.dumps(payload, ensure_ascii=False, default=str)},
-    ], output_schema=schema)
+    ], output_schema=schema, think=False)
     if not isinstance(response, dict):
         raise LocalLLMError("Qwen candidate response must be an object")
     if response.get("done_reason") in {"length", "max_tokens"}:
@@ -202,6 +204,7 @@ def suggest_pcb_fault_candidates(
         unique.setdefault((row["component_id"], row["suspected_fault_id"]), row)
     return {"proposals": list(unique.values()), "model": response.get("model", model),
             "model_info": response.get("model_info", {}),
+            "thinking_enabled": response.get("thinking_enabled", False),
             "usage": {key: response.get(key) for key in (
                 "prompt_eval_count", "eval_count", "total_duration_ns", "load_duration_ns",
                 "prompt_eval_duration_ns", "eval_duration_ns")},

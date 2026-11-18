@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextlib import nullcontext
 from dataclasses import replace
 from datetime import datetime, timezone
 from typing import Any
@@ -157,12 +158,14 @@ def render_measurement_panel(
                    or row.source_component_id == selected_component.component_id
                    or str(resolution).endswith("RECONFIRMATION_REQUIRED"))):
             stale_records.append(row)
-    st.caption(f"측정 대상 · {board_component_id or selected_component.component_id} · {selected_component.component_type}")
-    st.caption("측정값을 먼저 기록하세요. 검증 조건이 부족한 기록은 보존되지만 검증 결과로 판정하지 않습니다.")
+    if not compact:
+        st.caption(f"측정 대상 · {board_component_id or selected_component.component_id} · {selected_component.component_type}")
+        st.caption("측정값을 먼저 기록하세요. 검증 조건이 부족한 기록은 보존되지만 검증 결과로 판정하지 않습니다.")
     if compact:
         suggested = list(selected_component.recommended_tests or ())
         if suggested:
             st.info("확인할 내용 · " + " · ".join(str(item) for item in suggested[:2]))
+    else:
         st.caption("저항·도통은 전원을 차단한 뒤 측정하세요. 통전 전압 측정은 안전한 측정 조건과 숙련이 확인되지 않으면 진행하지 마세요.")
     if stale_records:
         st.warning(f"이전 Component Map의 측정 기록 {len(stale_records)}개는 현재 부품에 자동 연결하지 않았습니다. 부품 연결을 확인해 주세요.")
@@ -248,22 +251,25 @@ def render_measurement_panel(
         st.session_state[f"cc_v5_isolation_{owner}"] = "UNKNOWN"
         st.session_state[f"cc_v5_location_verified_{owner}"] = False
         st.session_state[f"cc_v5_reference_verified_{owner}"] = False
-    st.caption("검사 전 확인 · 선택한 검사 조건을 저장 전에 확인합니다. 이 확인은 현장 측정의 안전을 보증하지 않습니다.")
-    measurement_conditions = {
-        "power_state": st.selectbox("전원 상태 확인", ("UNKNOWN", "POWER_OFF_CONFIRMED", "POWER_ON_CONFIRMED"),
-            format_func=lambda value: {"UNKNOWN": "미확인", "POWER_OFF_CONFIRMED": "전원 분리 확인", "POWER_ON_CONFIRMED": "전원 연결됨"}[value],
-            key=f"cc_v5_power_state_{owner}"),
-        "stored_energy_status": st.selectbox("잔류 에너지 확인", ("UNKNOWN", "SAFE_CONFIRMED", "NOT_SAFE_OR_UNKNOWN"),
-            format_func=lambda value: {"UNKNOWN": "미확인", "SAFE_CONFIRMED": "안전 여부 확인", "NOT_SAFE_OR_UNKNOWN": "안전 확인 불가/위험"}[value],
-            key=f"cc_v5_stored_energy_{owner}"),
-        "component_isolation_status": st.selectbox("소자 분리 상태 확인", ("UNKNOWN", "ISOLATED_CONFIRMED", "NOT_ISOLATED"),
-            format_func=lambda value: {"UNKNOWN": "미확인", "ISOLATED_CONFIRMED": "측정 대상 분리 확인", "NOT_ISOLATED": "회로에 연결됨"}[value],
-            key=f"cc_v5_isolation_{owner}"),
-    }
-    location_verified = st.checkbox("측정 위치와 지정 단자를 확인함",
-                                    key=f"cc_v5_location_verified_{owner}")
-    reference_source_verified = st.checkbox("정상 기준과 출처를 확인함",
-                                             key=f"cc_v5_reference_verified_{owner}")
+    safety_settings = st.expander("측정 안전·검증 조건", expanded=False) if compact else nullcontext()
+    with safety_settings:
+        if not compact:
+            st.caption("검사 전 확인 · 선택한 검사 조건을 저장 전에 확인합니다. 이 확인은 현장 측정의 안전을 보증하지 않습니다.")
+        measurement_conditions = {
+            "power_state": st.selectbox("전원 상태 확인", ("UNKNOWN", "POWER_OFF_CONFIRMED", "POWER_ON_CONFIRMED"),
+                format_func=lambda value: {"UNKNOWN": "미확인", "POWER_OFF_CONFIRMED": "전원 분리 확인", "POWER_ON_CONFIRMED": "전원 연결됨"}[value],
+                key=f"cc_v5_power_state_{owner}"),
+            "stored_energy_status": st.selectbox("잔류 에너지 확인", ("UNKNOWN", "SAFE_CONFIRMED", "NOT_SAFE_OR_UNKNOWN"),
+                format_func=lambda value: {"UNKNOWN": "미확인", "SAFE_CONFIRMED": "안전 여부 확인", "NOT_SAFE_OR_UNKNOWN": "안전 확인 불가/위험"}[value],
+                key=f"cc_v5_stored_energy_{owner}"),
+            "component_isolation_status": st.selectbox("소자 분리 상태 확인", ("UNKNOWN", "ISOLATED_CONFIRMED", "NOT_ISOLATED"),
+                format_func=lambda value: {"UNKNOWN": "미확인", "ISOLATED_CONFIRMED": "측정 대상 분리 확인", "NOT_ISOLATED": "회로에 연결됨"}[value],
+                key=f"cc_v5_isolation_{owner}"),
+        }
+        location_verified = st.checkbox("측정 위치와 지정 단자를 확인함",
+                                        key=f"cc_v5_location_verified_{owner}")
+        reference_source_verified = st.checkbox("정상 기준과 출처를 확인함",
+                                                 key=f"cc_v5_reference_verified_{owner}")
     measurement_conditions.update({
         "measurement_location_verified": bool(location_verified),
         "reference_source_verified": bool(reference_source_verified),
@@ -277,7 +283,7 @@ def render_measurement_panel(
         measurement_conditions.get(field) == expected for field, expected in required_conditions.items())
         and location_verified and reference_source_verified) if selected_test_id else True
     if selected_test_id and not safety_confirmed:
-        st.warning("검사 조건이 모두 확인되기 전에는 이 프로파일의 측정 기록을 저장할 수 없습니다.")
+        st.caption("측정 조건 미확인 · ‘측정 안전·검증 조건’을 열어 확인하세요.")
     measurement_type = st.selectbox(
         "측정 종류", TYPE_OPTIONS, format_func=MEASUREMENT_TYPE_LABELS.get,
         key=type_key,

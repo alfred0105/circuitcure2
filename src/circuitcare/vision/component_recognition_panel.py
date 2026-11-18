@@ -8,6 +8,7 @@ from functools import lru_cache
 import importlib.util
 import io
 import os
+import sqlite3
 import sys
 import time
 from pathlib import Path
@@ -53,6 +54,18 @@ def _model_cache_fingerprint() -> str:
             parts.append(f"{path.name}:{info.st_size}:{info.st_mtime_ns}")
         except OSError:
             parts.append(f"{path.name}:missing")
+    # A completed private YOLO fine-tune is used by the next inference. Include
+    # its identity in the review scope so old per-photo detections cannot mask it.
+    try:
+        from circuitcare.vision.review_learning import active_training_checkpoint
+        for model_key in ("parsa_locator", "pcb_ai_doctor_v12n_locator", "arshia_pcb_yolov8s_type"):
+            active = active_training_checkpoint(model_key)
+            if active:
+                checkpoint = Path(active["checkpoint"])
+                info = checkpoint.stat()
+                parts.append(f"trained:{model_key}:{active['job_id']}:{info.st_size}:{info.st_mtime_ns}")
+    except (OSError, sqlite3.Error, ImportError, AttributeError):
+        pass
     return hashlib.sha256("|".join(parts).encode()).hexdigest()[:12]
 
 
@@ -511,7 +524,7 @@ def _queue_initial_ai_review(st_api: Any, *, image_bytes: bytes, scope: str,
 def ensure_component_detection(st_api: Any, *, image_bytes: bytes, project_id: str,
                                photo_id: str, review_image_bytes: bytes | None = None,
                                review_image_size: tuple[int, int] | None = None,
-                               progress: Any = None) -> tuple[dict | None, str | None]:
+                               progress: Any = None, queue_ai_review: bool = True) -> tuple[dict | None, str | None]:
     """Automatically detect a newly selected photo once per Streamlit session."""
     review_bytes = review_image_bytes or image_bytes
     scope = review_scope(review_bytes, project_id, photo_id)
@@ -557,9 +570,10 @@ def ensure_component_detection(st_api: Any, *, image_bytes: bytes, project_id: s
                                     x2 * scale_x, y2 * scale_y]
         st_api.session_state[result_key] = result
         _store_predictions(st_api.session_state, records_key, result)
-        _queue_initial_ai_review(st_api, image_bytes=review_bytes, scope=scope,
-                                 rows=st_api.session_state.get(records_key, []),
-                                 records_key=records_key, project_id=project_id)
+        if queue_ai_review:
+            _queue_initial_ai_review(st_api, image_bytes=review_bytes, scope=scope,
+                                     rows=st_api.session_state.get(records_key, []),
+                                     records_key=records_key, project_id=project_id)
         _record_vision_metric(st_api.session_state, "yolo_detection",
                               (time.perf_counter() - started) * 1000, "complete")
         _write_analysis_status(progress, f"YOLO 소자 탐지 · 완료 · {len(result.get('detections', []))}개")
@@ -719,6 +733,19 @@ def _selected_classification_fingerprint(image_bytes: bytes, detections: list[di
 def _selected_classification_detections(rows: list[dict], selected_ids: set[str] | list[str],
                                        *, include_excluded: bool = False) -> list[dict]:
     selected = {str(value) for value in selected_ids}
+    visible_box_numbers = {
+        str(row.get("component_id")): index + 1
+        for index, row in enumerate(row for row in rows if row.get("상태") != "제외")
+        if row.get("component_id")
+    }
+    board_box_context = [
+        {"screen_box_number": visible_box_numbers[str(row["component_id"])],
+         "class_name": str(row.get("detector_class") or row.get("소자 종류") or "unknown"),
+         "bbox_xyxy": [row.get("x1"), row.get("y1"), row.get("x2"), row.get("y2")]}
+        for row in rows if row.get("상태") != "제외" and row.get("component_id")
+        and str(row.get("component_id")) in visible_box_numbers
+        and all(isinstance(row.get(key), (int, float)) for key in ("x1", "y1", "x2", "y2"))
+    ]
     return [{"component_id": str(row["component_id"]),
              # Keep the original detector class stable after an AI suggestion
              # is applied, so the cached Qwen review does not invalidate itself.
@@ -732,7 +759,9 @@ def _selected_classification_detections(rows: list[dict], selected_ids: set[str]
                  row.get("marking_ocr", {}).get("marking")
                  if isinstance(row.get("marking_ocr"), dict) else None),
              "marking_candidates": row.get("marking_candidates", row.get("body_marking_candidates", [])),
-             "possible_part_number": row.get("possible_part_number")}
+             "possible_part_number": row.get("possible_part_number"),
+             "display_box_number": visible_box_numbers.get(str(row.get("component_id"))),
+             "board_box_context": board_box_context}
             for row in rows if str(row.get("component_id")) in selected
             and (include_excluded or row.get("상태") != "제외")]
 
@@ -1086,8 +1115,8 @@ def render_component_recognition_panel(st_api: Any, *, image_bytes: bytes, proje
         if isinstance(qwen_review, dict):
             selected_ids = set(map(str, qwen_review.get("selected_component_ids", [])))
             # Apply valid AI output as soon as the job is committed.  The row
-            # remains unconfirmed; explicit NOT_COMPONENT and geometrically
-            # verified same-component pairs are reversible exclusions.
+            # remains unconfirmed; explicit NOT_COMPONENT suggestions become
+            # reversible exclusions through the shared review-history path.
             changed = False
             by_id = {str(row.get("component_id")): row for row in rows}
             for proposal in qwen_review.get("class_reviews", []):

@@ -37,9 +37,12 @@ SAMPLE_FILES = sorted(p.name for p in SAMPLES.glob("*") if p.suffix.lower() in {
 MAX_UPLOAD_BYTES = 40 * 1024 * 1024
 DEVICE = "0" if torch.cuda.is_available() else ("mps" if getattr(torch.backends, "mps", None) and torch.backends.mps.is_available() else "cpu")
 ANY_MODEL: YOLO | None = None
+ANY_MODEL_SIGNATURE: tuple[str, int, int] | None = None
 FINE_MODEL: YOLO | None = None
 FINE_NAMES: list[str] = []
 EXTERNAL_MODELS: dict[str, YOLO] = {}
+EXTERNAL_MODEL_SIGNATURES: dict[str, tuple[str, int, int]] = {}
+ACTIVE_MODEL_PROVENANCE: dict[str, dict] = {}
 EVAL_MODEL_SPECS = {
     "pcb_ai_doctor_v8n": ("PCB AI Doctor YOLOv8n", "pcb-ai-doctor/best_v8n.pt"),
     "pcb_ai_doctor_v12n": ("PCB AI Doctor YOLOv12n", "pcb-ai-doctor/best_v12n.pt"),
@@ -90,13 +93,77 @@ def detect(model, image, conf, imgsz, tile, overlap, iou, device, max_det=1000):
 
 def load_component_locator() -> YOLO:
     """Load the locator used by the component-recognition pipeline on demand."""
-    global ANY_MODEL
-    if ANY_MODEL is None:
-        weight_path = WEIGHTS / "any_best.pt"
-        if not weight_path.is_file():
-            raise FileNotFoundError(f"YOLO26s locator weight not found: {weight_path}")
-        ANY_MODEL = YOLO(str(weight_path))
+    global ANY_MODEL, ANY_MODEL_SIGNATURE
+    weight_path = _active_training_weight("parsa_locator", WEIGHTS / "any_best.pt")
+    if not weight_path.is_file():
+        raise FileNotFoundError(f"YOLO26s locator weight not found: {weight_path}")
+    signature = _weight_signature(weight_path)
+    if ANY_MODEL is None or ANY_MODEL_SIGNATURE != signature:
+        model = YOLO(str(weight_path))
+        if _ordered_model_names(model) != ["component"]:
+            if weight_path != WEIGHTS / "any_best.pt":
+                weight_path = WEIGHTS / "any_best.pt"
+                model = YOLO(str(weight_path))
+                signature = _weight_signature(weight_path)
+            if _ordered_model_names(model) != ["component"]:
+                raise ValueError("위치 탐지 가중치 클래스가 component와 일치하지 않습니다.")
+        ANY_MODEL = model
+        ANY_MODEL_SIGNATURE = signature
+        ACTIVE_MODEL_PROVENANCE["parsa_locator"] = {
+            "weights": str(weight_path.resolve()), "fine_tuned": "candidate_weights" in weight_path.parts,
+        }
     return ANY_MODEL
+
+
+def _ordered_model_names(model) -> list[str]:
+    names = getattr(model, "names", {})
+    return [str(names[index]) for index in sorted(names)] if isinstance(names, dict) else list(map(str, names))
+
+
+def _weight_signature(path: Path) -> tuple[str, int, int]:
+    info = path.stat()
+    return (str(path.resolve()), int(info.st_size), int(info.st_mtime_ns))
+
+
+def _active_training_weight(model_key: str, baseline: Path) -> Path:
+    """Use a successfully trained private checkpoint for the next inference."""
+    try:
+        from circuitcare.vision.review_learning import active_training_checkpoint
+        training_key = {
+            "arshia_pcb_yolov8s": "arshia_pcb_yolov8s_type",
+            "pcb_ai_doctor_v12n": "pcb_ai_doctor_v12n_locator",
+        }.get(model_key, model_key)
+        active = active_training_checkpoint(training_key)
+        return Path(active["checkpoint"]) if active else baseline
+    except Exception:
+        # Training storage is optional; keep the original pretrained path working.
+        return baseline
+
+
+def _load_external_model(model_key: str, baseline: Path, expected_names: list[str] | None = None):
+    weight_path = _active_training_weight(model_key, baseline)
+    if not weight_path.is_file():
+        raise FileNotFoundError(f"PCB model weight not found: {weight_path}")
+    signature = _weight_signature(weight_path)
+    if model_key not in EXTERNAL_MODELS or EXTERNAL_MODEL_SIGNATURES.get(model_key) != signature:
+        model = YOLO(str(weight_path))
+        if expected_names is not None and _ordered_model_names(model) != expected_names:
+            if weight_path != baseline:
+                weight_path = baseline
+                model = YOLO(str(weight_path))
+                signature = _weight_signature(weight_path)
+            if _ordered_model_names(model) != expected_names:
+                raise ValueError(f"{model_key} 가중치 클래스가 기존 분류 체계와 일치하지 않습니다.")
+        EXTERNAL_MODELS[model_key] = model
+        EXTERNAL_MODEL_SIGNATURES[model_key] = signature
+        training_key = {
+            "arshia_pcb_yolov8s": "arshia_pcb_yolov8s_type",
+            "pcb_ai_doctor_v12n": "pcb_ai_doctor_v12n_locator",
+        }.get(model_key, model_key)
+        ACTIVE_MODEL_PROVENANCE[training_key] = {
+            "weights": str(weight_path.resolve()), "fine_tuned": "candidate_weights" in weight_path.parts,
+        }
+    return EXTERNAL_MODELS[model_key]
 
 
 def classify_component_crop(image_bytes: bytes, bbox_xyxy: list[float], confidence: float = 0.10) -> dict:
@@ -115,9 +182,7 @@ def classify_component_crop(image_bytes: bytes, bbox_xyxy: list[float], confiden
     if not weight_path.is_file():
         raise FileNotFoundError(f"소자 종류 모델을 찾을 수 없습니다: {weight_path}")
     model_key = "arshia_pcb_yolov8s"
-    if model_key not in EXTERNAL_MODELS:
-        EXTERNAL_MODELS[model_key] = YOLO(str(weight_path))
-    model = EXTERNAL_MODELS[model_key]
+    model = _load_external_model(model_key, weight_path)
     boxes, scores, classes = detect(
         model, crop, min(0.95, max(0.01, float(confidence))), 640, 0, 0.0, 0.5, DEVICE,
     )
@@ -269,9 +334,7 @@ def run_body_only_prediction(image_bytes: bytes, options: dict) -> dict:
             weight_path = EVAL_WEIGHT_ROOT / relative_weight
             if not weight_path.is_file():
                 raise ValueError(f"평가 가중치 파일을 찾지 못했습니다: {weight_path.name}")
-            if member not in EXTERNAL_MODELS:
-                EXTERNAL_MODELS[member] = YOLO(str(weight_path))
-            model = EXTERNAL_MODELS[member]
+            model = _load_external_model(member, weight_path, ["component"])
         boxes, scores, classes = detect(model, image, conf, 640, tile, overlap, 0.5, DEVICE)
         for i, _class_id in enumerate(classes.tolist()):
             key = "component_body"
@@ -305,6 +368,7 @@ def run_body_only_prediction(image_bytes: bytes, options: dict) -> dict:
     return {"image_width": int(image.shape[1]), "image_height": int(image.shape[0]),
             "mode": "ensemble_body",
             "model_name": "YOLO26s Locator + AI Doctor (component body only; pins excluded)",
+            "model_provenance": {key: ACTIVE_MODEL_PROVENANCE.get(key) for key in ("parsa_locator", "pcb_ai_doctor_v12n_locator")},
             "tile": tile, "overlap": overlap, "confidence": conf, "device": DEVICE,
             "total": len(items), "counts": counts, "detections": detections,
             "duplicate_suppressed_count": len(suppressed_details),
@@ -332,9 +396,7 @@ def run_pcb_component_types_prediction(image_bytes: bytes, options: dict) -> dic
     if not weight_path.is_file():
         raise ValueError("PCB 분류 가중치 best.pt를 찾지 못했습니다.")
     model_key = "arshia_pcb_yolov8s"
-    if model_key not in EXTERNAL_MODELS:
-        EXTERNAL_MODELS[model_key] = YOLO(str(weight_path))
-    model = EXTERNAL_MODELS[model_key]
+    model = _load_external_model(model_key, weight_path, None)
     boxes, scores, classes = detect(model, image, conf, 640, tile, overlap, 0.5, DEVICE)
 
     # pads/pins are deliberately omitted from the component classifier output.
@@ -389,6 +451,7 @@ def run_pcb_component_types_prediction(image_bytes: bytes, options: dict) -> dic
     return {"image_width": int(image.shape[1]), "image_height": int(image.shape[0]),
             "mode": "pcb_component_types",
             "model_name": "YOLO26s Locator + AI Doctor + Arshia YOLOv8s types (pins excluded)",
+            "model_provenance": {key: ACTIVE_MODEL_PROVENANCE.get(key) for key in ("parsa_locator", "pcb_ai_doctor_v12n_locator", "arshia_pcb_yolov8s_type")},
             "tile": tile, "overlap": overlap, "confidence": conf, "device": DEVICE,
             "total": len(detections), "counts": counts, "detections": detections,
             "seconds": round(time.perf_counter() - started, 2),
@@ -444,8 +507,7 @@ def run_external_prediction(image_bytes: bytes, options: dict, model_id: str) ->
             _, relative_weight = EVAL_MODEL_SPECS[member]
             weight_path = EVAL_WEIGHT_ROOT / relative_weight
             if not weight_path.is_file(): raise ValueError(f"평가 가중치 파일을 찾지 못했습니다: {weight_path.name}")
-            if member not in EXTERNAL_MODELS: EXTERNAL_MODELS[member] = YOLO(str(weight_path))
-            model = EXTERNAL_MODELS[member]
+            model = _load_external_model(member, weight_path, None)
         boxes, scores, classes = detect(model, image, conf, imgsz, tile, overlap, 0.5, DEVICE)
         for i, cid in enumerate(classes.tolist()):
             raw = model.names.get(int(cid), str(cid)) if isinstance(model.names, dict) else model.names[int(cid)]

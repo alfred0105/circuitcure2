@@ -6,7 +6,7 @@ import unicodedata
 import re
 from typing import Any
 
-from circuitcare.local_llm import LocalLLMError, OllamaClient
+from circuitcare.local_llm import OllamaClient
 from circuitcare.symptom_diagnosis.engine import infer_symptom_codes, load_knowledge
 from circuitcare.symptom_diagnosis.schemas import EvidenceStatus, Observation
 from circuitcare.component_taxonomy import COMPONENT_CLASSES, normalize_component_class
@@ -16,31 +16,6 @@ def _contains_quote(source: str, quote: str) -> bool:
     source = unicodedata.normalize("NFC", source).casefold()
     quote = unicodedata.normalize("NFC", quote).casefold().strip()
     return bool(quote) and quote in source
-
-
-def _quote_context(source: str, quote: str) -> str:
-    """Return the complete sentence containing a quote so trailing negation is checked."""
-    normalized_source = unicodedata.normalize("NFC", source)
-    normalized_quote = unicodedata.normalize("NFC", quote).strip()
-    start = normalized_source.casefold().find(normalized_quote.casefold())
-    if start < 0:
-        return ""
-    end = start + len(normalized_quote)
-    left_marks = [normalized_source.rfind(mark, 0, start) for mark in (".", "!", "?", "\n", ";")]
-    right_marks = [position for mark in (".", "!", "?", "\n", ";")
-                   if (position := normalized_source.find(mark, end)) >= 0]
-    return normalized_source[max(left_marks, default=-1) + 1:min(right_marks, default=len(normalized_source))]
-
-
-def _explicitly_denies_symptom(context: str, code: str, knowledge: dict[str, Any]) -> bool:
-    """Accept a symptom=false only when its complete sentence explicitly denies it."""
-    folded = context.casefold()
-    keywords = knowledge["symptom_ontology"]["symptoms"].get(code, {}).get("keywords", [])
-    has_keyword = any(str(keyword).casefold() in folded for keyword in keywords)
-    return has_keyword and bool(re.search(
-        r"(?:것은|건|게|것이|건은)?\s*(?:아님|아니(?:다|고|라|야)|아닙니다|않(?:다|고|음)|없(?:다|음))",
-        folded,
-    ))
 
 
 def _quoted_number(value: int, quote: str, *, ordinal: bool = False) -> bool:
@@ -103,6 +78,85 @@ def _validated_target(row: Any, source: str, known_refs: set[str]) -> tuple[dict
              "resolution_status": "UNRESOLVED"}, None)
 
 
+def _rule_target_fallback(text: str, existing_targets: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[Observation]]:
+    """Recover only literal component group, count, and ordinal facts omitted by the LLM."""
+    component_terms = {
+        "integrated_circuit": r"(?:집적\s*회로|통합\s*회로|IC)",
+        "switch": r"(?:스위치|버튼|switch)", "buzzer": r"(?:버저|부저|buzzer)",
+        "capacitor": r"(?:커패시터|콘덴서|capacitor)", "clock": r"(?:클록|크리스털|오실레이터|crystal|oscillator)",
+        "connector": r"(?:커넥터|단자|connector)", "diode": r"(?:다이오드|diode)",
+        "display": r"(?:디스플레이|화면|display)", "fuse": r"(?:퓨즈|fuse)",
+        "heatsink": r"(?:방열판|heatsink)", "inductor": r"(?:인덕터|inductor)",
+        "led": r"(?:LED|발광\s*다이오드|표시등|램프)",
+        "potentiometer": r"(?:가변\s*저항|포텐셔미터|potentiometer)",
+        "relay": r"(?:릴레이|relay)", "resistor": r"(?:저항|resistor)",
+        "transformer": r"(?:변압기|transformer)", "transistor": r"(?:트랜지스터|transistor)",
+    }
+    korean_numbers = {"한": 1, "하나": 1, "첫": 1, "첫째": 1, "두": 2, "둘": 2, "둘째": 2,
+                      "세": 3, "셋": 3, "셋째": 3, "네": 4, "넷": 4, "넷째": 4,
+                      "다섯": 5, "다섯째": 5}
+    targets: list[dict[str, Any]] = []
+    observations: list[Observation] = []
+    known_refs = {str(row.get("reference_id") or "") for row in existing_targets}
+    for clause in (part.strip() for part in re.split(r"[.!?;\n]+", text) if part.strip()):
+        matched = None
+        component_type = ""
+        for kind, term in component_terms.items():
+            pattern = re.compile(
+                rf"(?P<component>{term})\s*(?P<count>\d+|하나|한|두|둘|세|셋|네|넷|다섯)\s*개\s*중\s*"
+                rf"(?P<direction>왼쪽에서|왼쪽부터|좌측부터|위에서|위쪽부터|상단부터)?\s*"
+                rf"(?P<ordinal>\d+|첫|첫째|두|둘째|세|셋째|네|넷째|다섯|다섯째)\s*(?:번째|째)", re.IGNORECASE,
+            )
+            matched = pattern.search(clause)
+            if matched:
+                component_type = kind
+                break
+        if not matched:
+            continue
+        count_raw, ordinal_raw = matched.group("count"), matched.group("ordinal")
+        group_size = int(count_raw) if count_raw.isdigit() else korean_numbers.get(count_raw)
+        ordinal = int(ordinal_raw) if ordinal_raw.isdigit() else korean_numbers.get(ordinal_raw)
+        if not group_size or not ordinal or ordinal > group_size:
+            continue
+        existing_match = next((row for row in existing_targets
+                               if row.get("component_type") == component_type
+                               and row.get("group_size") == group_size and row.get("ordinal") == ordinal
+                               and isinstance(row.get("evidence_quote"), str)
+                               and (row["evidence_quote"] in clause or clause in row["evidence_quote"])), None)
+        reference_id = str(existing_match.get("reference_id")) if existing_match else (
+            f"rule-target-{len(existing_targets) + len(targets) + 1}")
+        if not existing_match and reference_id in known_refs:
+            continue
+        region = next((value for terms, value in (
+            (("위쪽", "상단", "위에", "위의"), "UPPER"), (("아래쪽", "하단", "아래에"), "LOWER"),
+            (("왼쪽", "좌측"), "LEFT"), (("오른쪽", "우측"), "RIGHT"), (("중앙", "가운데"), "CENTER"),
+        ) if any(term in clause for term in terms)), "UNSPECIFIED")
+        color = next((value for terms, value in (
+            (("빨간", "빨강", "적색", "red"), "빨간"), (("파란", "파랑", "청색", "blue"), "파란"),
+            (("초록", "녹색", "green"), "초록"), (("노란", "황색", "yellow"), "노란"),
+        ) if any(term in clause.casefold() for term in terms)), "")
+        direction = matched.group("direction") or ""
+        ordering = "LEFT_TO_RIGHT" if direction in {"왼쪽에서", "왼쪽부터", "좌측부터"} else (
+            "TOP_TO_BOTTOM" if direction else "UNSPECIFIED")
+        raw_target = {"reference_id": reference_id, "component_type": component_type,
+                      "color": color, "region": region, "group_size": group_size,
+                      "ordinal": ordinal, "ordering": ordering, "reference_designator": "",
+                      "evidence_quote": clause[:160]}
+        if not existing_match:
+            target, _error = _validated_target(raw_target, text, known_refs)
+            if not target:
+                continue
+            target["source"] = "rule_fallback_from_explicit_text"
+            targets.append(target)
+            known_refs.add(reference_id)
+        observations.extend(Observation(
+            code=code, value=True, status=EvidenceStatus.OBSERVED,
+            source="user_report_rule_fallback", evidence_quote=clause[:160],
+            target_reference=reference_id,
+        ) for code in infer_symptom_codes(clause))
+    return targets, observations
+
+
 def parse_user_report(client: OllamaClient, model: str, text: str) -> dict[str, Any]:
     """Extract only allowlisted facts with a verbatim quote from user input."""
     if not text.strip():
@@ -156,12 +210,28 @@ def parse_user_report(client: OllamaClient, model: str, text: str) -> dict[str, 
     }
     response = client.chat_json(model, [
         {"role": "system", "content": (
-            "너는 PCB 증상 문장을 관측값으로 구조화한다. 고장 원인은 추론하지 않는다. "
+            "너는 PCB 증상 문장을 한국어 의미로 해석해 관측값으로 구조화한다. 단어가 등록 키워드와 글자 그대로 일치하는지로 판단하지 않는다. "
+            "예: '세 번째 LED만 켜지지 않습니다'는 LED_NOT_LIT=true이고, '나머지 LED는 정상입니다'는 해당 peer observation이다. "
+            "고장 원인은 추론하지 않는다. "
             "명시적 근거가 있는 관측만 최대 4개 반환하고, 증상 추측·누락된 사실의 부정 추론은 하지 않는다. "
             "불명확하면 observations와 uncertain_facts를 비워 둔다. "
             "입력에 명시된 사실만 추출하고, 각 항목의 evidence_quote는 원문에서 그대로 복사한다. "
+            "원인 추측과 관측 증상을 분리한다: '커패시터가 나간 것 같다'는 원인 추측이므로 관측 코드로 만들지 않지만, "
+            "같은 문장에 '제어 기능이 가끔 멈춘다'가 있으면 그 관측은 별도로 기록한다. "
+            "구어체·축약·띄어쓰기 누락도 의미가 분명하면 허용 코드로 정규화한다: '보드 안켜짐'은 NO_POWER, "
+            "'특정 기능 먹통/영 안 됨'은 PARTIAL_FUNCTION_FAILURE, 'LED 안들어옴'은 LED_NOT_LIT, "
+            "'가끔 됐다 안됐다'는 INTERMITTENT_OPERATION, '연결된 장치가 반응하지 않음'은 OUTPUT_FAILURE다. "
+            "'전원은 들어오는데 LED 하나만 안 켜짐'은 NO_POWER가 아니라 LED_NOT_LIT이다. "
+            "예: '전원은 들어오는데 제어 쪽 몇 개가 먹통'은 PARTIAL_FUNCTION_FAILURE만 기록한다. "
+            "이 문장으로 NO_POWER=false를 만들거나 전원 규격이 정상이라고 단정하지 않는다. "
+            "'기판은 도는 것 같은데'는 작동 중이라는 표현이지 INTERMITTENT_OPERATION이 아니다. "
+            "간헐 동작은 '가끔 멈춤/됐다 안 됨/켜졌다 꺼짐/움직일 때 변함'처럼 반복 또는 변화가 명시된 경우에만 기록한다. "
+            "'연결된 장치가 반응하지 않는다'는 OUTPUT_FAILURE이며, 장치 고장이라고 사용자가 추측해도 원인 확정이 아니다. "
+            "'전압이 떨어지는 것 같기도 하고 아닐지도'처럼 서로 반대 가능성을 함께 말하면 관측으로 확정하지 말고 clarification을 요청한다. "
+            "'커넥터가 끊겼다더라'처럼 직접 관찰하지 않은 전언이나 '커패시터 고장' 같은 추측은 확인된 관측으로 승격하지 않는다. "
+            "'기판이 돈다/돌아간다'는 구어체로 기판이 동작한다는 뜻일 수 있으므로 물리 회전으로 해석하지 않는다. "
             "가정·조건 표현(예: ~면, ~라면, ~할 경우)은 발생한 증상으로 기록하지 않는다. "
-            "이중 부정이나 정정(예: 안 켜지는 것은 아님)은 증상 발생으로 기록하지 않는다. "
+            "이중 부정이나 정정(예: 안 켜지는 것은 아님)은 증상 발생으로 기록하지 않는다. 긍정/부정은 문장 전체의 의미로 판단한다. "
             "전원 표시등이 켜졌다는 말은 표시등만 확인된 것이며 보드 전체 전원이 정상이라는 뜻이 아니다. "
             "어떤 소자/기능이 언급되지 않은 것은 false가 아니라 unknown이다. "
             "목록에 없는 코드는 만들지 않고 uncertain_facts에 자연어로 남긴다. "
@@ -193,6 +263,8 @@ def parse_user_report(client: OllamaClient, model: str, text: str) -> dict[str, 
             targets.append(target)
         elif error:
             uncertain.append(error)
+    fallback_targets, fallback_observations = _rule_target_fallback(text, targets)
+    targets.extend(fallback_targets[:max(0, 4 - len(targets))])
     target_ids = {str(item["reference_id"]) for item in targets}
     observation_rows = data.get("observations", [])
     if not isinstance(observation_rows, list):
@@ -205,6 +277,16 @@ def parse_user_report(client: OllamaClient, model: str, text: str) -> dict[str, 
         if code not in allowed or type(value) is not bool:
             uncertain.append(str(row.get("code", "분류할 수 없는 관측"))[:300])
             continue
+        folded_quote = str(quote or "").casefold()
+        if code == "NO_POWER" and value is False and not re.search(
+                r"(?:안\s*켜|무전원|전원\s*반응이\s*없).{0,16}(?:아니|아님|않)", text.casefold()):
+            uncertain.append("전체 무전원이 아니라고 확인할 명시적 정정은 없습니다.")
+            continue
+        if code == "INTERMITTENT_OPERATION" and value is True and not any(term in folded_quote for term in (
+                "간헐", "가끔", "때때로", "왔다 갔다", "왔다갔다", "됐다 안", "되다 안", "켜졌다 꺼",
+                "불안정", "움직이면", "흔들면", "건드리면", "만지면", "깜빡")):
+            uncertain.append("반복·변화가 명시되지 않아 간헐 동작으로 분류하지 않았습니다.")
+            continue
         verified_quote = quote if isinstance(quote, str) and _contains_quote(text, quote) else None
         if verified_quote is None:
             verified_quote = next((str(keyword) for keyword in allowed[code].get("keywords", [])
@@ -216,17 +298,45 @@ def parse_user_report(client: OllamaClient, model: str, text: str) -> dict[str, 
         if target_reference and target_reference not in target_ids:
             uncertain.append(f"관측 대상 참조를 확인하지 못함: {target_reference[:40]}")
             target_reference = ""
-        if code in kb["symptom_ontology"]["symptoms"]:
-            context = _quote_context(text, verified_quote)
-            if value is True and code not in infer_symptom_codes(context, kb):
-                uncertain.append(f"원문 전체 문장에서 증상 긍정이 확인되지 않음: {allowed[code]['label']}")
-                continue
-            if value is False and not _explicitly_denies_symptom(context, code, kb):
-                uncertain.append(f"원문 전체 문장에서 증상 부정이 확인되지 않음: {allowed[code]['label']}")
-                continue
+        # Qwen has already interpreted the sentence. Rechecking its chosen code
+        # against keyword rules discarded valid semantic parses such as
+        # “세 번째 LED만 켜지지 않습니다”. Keep strict source-quote, enum,
+        # target-reference, and contradiction validation instead.
         accepted.append(Observation(code=code, value=value, status=EvidenceStatus.OBSERVED,
                                     source="user_report", evidence_quote=verified_quote,
                                     target_reference=target_reference or None))
+    accepted_codes = {(item.code, item.target_reference) for item in accepted}
+    for observation in fallback_observations:
+        # Qwen can recognize a symptom but attach a missing reference (or attach
+        # the reference for “the other LEDs”) while the literal fallback finds
+        # the positional target. Merge those two pieces of evidence so the
+        # accepted symptom is bound to the rule-resolved target instead of
+        # persisting as a duplicate system-level observation.
+        matching_index = next((index for index, item in enumerate(accepted)
+                               if item.code == observation.code and item.evidence_quote
+                               and observation.evidence_quote
+                               and (item.evidence_quote in observation.evidence_quote
+                                    or observation.evidence_quote in item.evidence_quote)), None)
+        if matching_index is not None:
+            item = accepted[matching_index]
+            target_by_reference = {str(target.get("reference_id")): target for target in targets}
+            matched_target = target_by_reference.get(str(item.target_reference or ""))
+            evidence_matches_target = bool(
+                matched_target and isinstance(matched_target.get("evidence_quote"), str)
+                and (item.evidence_quote in matched_target["evidence_quote"]
+                     or matched_target["evidence_quote"] in item.evidence_quote)
+            )
+            if not item.target_reference or not evidence_matches_target:
+                accepted[matching_index] = Observation(
+                    code=item.code, value=item.value, status=item.status, source=item.source,
+                    evidence_quote=item.evidence_quote, target_reference=observation.target_reference,
+                )
+                accepted_codes.discard((item.code, item.target_reference))
+                accepted_codes.add((item.code, observation.target_reference))
+                continue
+        if (observation.code, observation.target_reference) not in accepted_codes:
+            accepted.append(observation)
+            accepted_codes.add((observation.code, observation.target_reference))
     values_by_code: dict[str, set[bool]] = {}
     for item in accepted:
         values_by_code.setdefault(item.code, set()).add(bool(item.value))

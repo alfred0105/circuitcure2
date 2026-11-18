@@ -91,7 +91,8 @@ class OllamaClient:
     def chat_json(self, model_name: str, messages: list[dict], *,
                   output_schema: dict | None = None,
                   images: list[bytes | str] | None = None,
-                  output_budget: int | None = None) -> dict:
+                  output_budget: int | None = None,
+                  think: bool | str | None = False) -> dict:
         model_info = self.model_info(model_name)
         request_messages = [dict(message) for message in messages]
         if images:
@@ -122,7 +123,7 @@ class OllamaClient:
             "model": model_name,
             "messages": request_messages,
             "stream": False,
-            "think": False,
+            "think": think,
             "keep_alive": self.keep_alive,
             "format": output_schema or "json",
             "options": {"temperature": 0.1,
@@ -213,6 +214,7 @@ class OllamaClient:
             "prompt_eval_duration_ns": response.get("prompt_eval_duration"),
             "eval_count": response.get("eval_count"),
             "eval_duration_ns": response.get("eval_duration"),
+            "thinking_enabled": think is True,
         }
 
     def _request(self, method: str, path: str, payload: dict | None = None) -> dict:

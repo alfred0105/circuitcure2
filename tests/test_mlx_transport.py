@@ -23,7 +23,8 @@ def test_native_chat_keeps_images_schema_and_disables_thinking():
 
 
 def test_native_metadata_requires_configured_model_loaded():
+    model = 'mlx-community/Qwen3.5-9B-MLX-4bit'
     with pytest.raises(OSError):
         request_mlx(lambda *_a: {'data': [{'id': 'wrong-model'}]}, 'GET', '/api/tags')
-    tags = request_mlx(lambda *_a: {'data': [{'id': 'mlx-community/Qwen3.5-9B-4bit'}]}, 'GET', '/api/tags')
+    tags = request_mlx(lambda *_a: {'data': [{'id': model}]}, 'GET', '/api/tags')
     assert tags['models'][0]['name'] == 'qwen3.5:9b'

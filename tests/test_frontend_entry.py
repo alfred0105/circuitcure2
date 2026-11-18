@@ -57,7 +57,7 @@ def test_default_entry_uses_latest_v2_ui_when_flag_is_unset(monkeypatch):
     assert any(button.label == "분석 시작" for button in app.button)
 
 
-def test_existing_project_routes_directly_to_workbench_without_claiming_analysis(monkeypatch):
+def test_existing_project_routes_directly_to_workbench_without_legacy_controls(monkeypatch):
     pytest.importorskip("streamlit")
     from streamlit.testing.v1 import AppTest
 
@@ -82,8 +82,8 @@ def test_existing_project_routes_directly_to_workbench_without_claiming_analysis
     app.run()
 
     assert not app.exception
-    assert any(button.label == "입력 수정" for button in app.button)
-    assert any(button.label == "새 프로젝트" for button in app.button)
+    assert not any(button.label in {"입력 수정", "새 프로젝트"} for button in app.button)
+    assert app.session_state["circuitcare_v2_photo_choice"] == project.image_records[0].image_id
     assert not any("PCB 사진으로 고장 원인 찾기" in item.value for item in app.markdown)
     assert app.session_state["circuitcare_v2_screen"] == "workbench"
 
@@ -146,7 +146,7 @@ def test_photo_removal_preserves_symptom_input(monkeypatch):
     assert next(button for button in app.button if button.label == "분석 시작").disabled
 
 
-def test_edit_preserves_inputs_and_new_project_clears_inputs_and_widget_state(monkeypatch):
+def test_existing_workbench_rerun_preserves_symptoms_and_project(monkeypatch):
     pytest.importorskip("streamlit")
     from streamlit.testing.v1 import AppTest
 
@@ -170,30 +170,17 @@ def test_edit_preserves_inputs_and_new_project_clears_inputs_and_widget_state(mo
     app.session_state[INTAKE_PROJECT_KEY] = project
     app.session_state["circuitcare_v2_symptom_category"] = "overheating"
     app.session_state["circuitcare_v2_symptom_description"] = "뜨거움"
-    app.session_state["circuitcare_v2_analysis_status"] = "STALE"
     app.run()
-
-    next(button for button in app.button if button.label == "입력 수정").click().run()
-    assert len(app.session_state[INTAKE_IMAGES_KEY]) == 1
+    app.run()
+    assert not app.exception
+    assert app.session_state[INTAKE_PROJECT_KEY].project_id == project.project_id
+    assert app.session_state[INTAKE_PROJECT_KEY].symptom_category == "overheating"
+    assert app.session_state[INTAKE_PROJECT_KEY].symptom_description == "뜨거움"
     assert app.session_state["circuitcare_v2_symptom_category"] == "overheating"
-    assert "circuitcare_v2_analysis_status" not in app.session_state
-
-    # Recreate a completed draft and perform a clean new-project transition.
-    project = create_project_context(
-        images=app.session_state[INTAKE_IMAGES_KEY], symptom_category="overheating",
-        symptom_description="뜨거움",
-    )
-    app.session_state[INTAKE_PROJECT_KEY] = project
-    app.run()
-    app.session_state["cc_v2_photo_upload_0"] = "old-upload-widget-state"
-    next(button for button in app.button if button.label == "새 프로젝트").click().run()
-    assert app.session_state[INTAKE_IMAGES_KEY] == []
-    assert "circuitcare_v2_symptom_category" not in app.session_state
-    assert "circuitcare_v2_symptom_description" not in app.session_state
-    assert "cc_v2_photo_upload_0" not in app.session_state
+    assert app.session_state["circuitcare_v2_symptom_description"] == "뜨거움"
 
 
-def test_f2_start_enters_pcb_workbench_and_keeps_photo_across_tab_switch(monkeypatch):
+def test_photo_upload_enters_pcb_workbench_and_keeps_photo_across_rerun(monkeypatch):
     pytest.importorskip("streamlit")
     from streamlit.testing.v1 import AppTest
 
@@ -223,19 +210,20 @@ def test_f2_start_enters_pcb_workbench_and_keeps_photo_across_tab_switch(monkeyp
     assert len(app.session_state[INTAKE_IMAGES_KEY]) == 2
     assert "circuitcare_v2_active_tab" not in app.session_state
     assert not any("회로 데이터셋" in item.label for item in app.selectbox)
-    assert any(button.label == "입력 수정" for button in app.button)
-    assert any(button.label == "새 프로젝트" for button in app.button)
+    assert not any(button.label in {"입력 수정", "새 프로젝트"} for button in app.button)
     assert any("진단 미실행" in item.value for item in app.caption)
-    assert any("64×48 px" in item.value for item in app.caption)
+    # File metadata was intentionally removed from above the viewer. Verify the
+    # actual source frame dimensions in the viewer state instead.
+    assert app.session_state["circuitcare_v2_view_transform"]["source_dimensions"] == [64, 48]
 
     photo_id = app.session_state["circuitcare_v2_active_photo_id"]
     app.run()
     assert not app.exception
     assert app.session_state["circuitcare_v2_active_photo_id"] == photo_id
-    assert any("64×48 px" in item.value for item in app.caption)
+    assert app.session_state["circuitcare_v2_view_transform"]["source_dimensions"] == [64, 48]
 
 
-def test_workbench_edit_preserves_project_identity_and_new_project_clears_state(monkeypatch):
+def test_workbench_rerun_keeps_project_identity_and_uploaded_photo(monkeypatch):
     pytest.importorskip("streamlit")
     from streamlit.testing.v1 import AppTest
 
@@ -247,21 +235,12 @@ def test_workbench_edit_preserves_project_identity_and_new_project_clears_state(
     app.file_uploader[0].set_value(("board.png", stream.getvalue(), "image/png")).run()
     next(button for button in app.button if button.label == "분석 시작").click().run()
     first = app.session_state[INTAKE_PROJECT_KEY]
-    next(button for button in app.button if button.label == "입력 수정").click().run()
-    assert INTAKE_PROJECT_KEY not in app.session_state
-    assert app.session_state[INTAKE_IMAGES_KEY]
-    app.session_state["circuitcare_v2_symptom_description"] = "전원 LED 꺼짐"
-    next(button for button in app.button if button.label == "분석 시작").click().run()
-    revised = app.session_state[INTAKE_PROJECT_KEY]
-    assert revised.project_id == first.project_id
-    assert revised.board_id == first.board_id
-    assert revised.symptom_description == "전원 LED 꺼짐"
-
-    next(button for button in app.button if button.label == "새 프로젝트").click().run()
-    assert not app.session_state[INTAKE_IMAGES_KEY]
-    assert INTAKE_PROJECT_KEY not in app.session_state
-    assert "circuitcare_v2_selected_component" not in app.session_state
-    assert app.session_state["circuitcare_v2_screen"] == "entry"
+    app.run()
+    assert not app.exception
+    assert app.session_state[INTAKE_PROJECT_KEY].project_id == first.project_id
+    assert app.session_state[INTAKE_PROJECT_KEY].board_id == first.board_id
+    assert app.session_state[INTAKE_IMAGES_KEY][0]["image_id"] == first.image_records[0].image_id
+    assert app.session_state["circuitcare_v2_screen"] == "workbench"
 
 
 def test_photo_free_preview_route_is_removed(monkeypatch):
@@ -326,8 +305,8 @@ def test_workbench_exposes_originals_for_every_present_side(monkeypatch, sides, 
     app.run()
 
     assert not app.exception
-    original_widget = next(widget for widget in app.selectbox if widget.label == "원본 사진")
-    assert len(original_widget.options) == len(sides)
+    assert len(app.session_state[INTAKE_IMAGES_KEY]) == len(sides)
+    assert tuple(item.side for item in app.session_state[INTAKE_PROJECT_KEY].image_records) == tuple(sides)
 
 
 def test_workbench_forces_source_photo_view_mode(monkeypatch):
@@ -368,7 +347,9 @@ def test_workbench_forces_source_photo_view_mode(monkeypatch):
 
     assert not app.exception
     assert "circuitcare_v3_view_mode" not in app.session_state
-    assert any(item.label == "원본 사진" for item in app.selectbox)
+    assert not any(widget.label in {"원본 사진", "통합 이미지"} for widget in app.selectbox)
+    # The viewer is source-photo-only and no longer renders a mode selector.
+    assert app.session_state["circuitcare_v2_active_photo_id"] == record.image_id
     assert app.session_state["circuitcare_v2_view_transform"]["source_frame_id"] == record.image_id
     app.run()
     assert not app.exception

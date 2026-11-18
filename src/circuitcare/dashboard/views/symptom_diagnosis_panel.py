@@ -81,10 +81,30 @@ def _diagnosis_fingerprint(
     analysis_scope = AnalysisScope(project.project_id, project.board_id or "", target_id)
     photo_snapshots = state.get("circuitcare_v6_photo_component_snapshots", {})
     photo_snapshot = photo_snapshots.get(analysis_scope.key) if isinstance(photo_snapshots, dict) else None
+    # The Registry version also changes for OCR/Qwen proposal metadata and
+    # other display-only updates. Diagnosis-relevant IDs, confirmed types,
+    # review state, evidence and measurements are fingerprinted below; using
+    # the opaque Registry version here made a viewer selection/rerun hide
+    # otherwise-current inspection candidates when an AI job merely finished.
+    fingerprint_inventory = {
+        key: value for key, value in (component_inventory or {}).items()
+        if key != "__board_registry__"
+    }
+    registry_meta = (component_inventory or {}).get("__board_registry__", {})
+    analysis_version = (registry_meta.get("analysis_version")
+                        if isinstance(registry_meta, dict) else None)
+    if not analysis_version:
+        stored_registry = state.get("circuitcare_v7_active_board_registry")
+        if isinstance(stored_registry, dict):
+            analysis_version = stored_registry.get("analysis_version")
+    if analysis_version:
+        fingerprint_inventory["__board_registry__"] = {
+            "analysis_version": str(analysis_version),
+        }
     return build_symptom_input_fingerprint(
         project=project, components=components, symptoms=symptoms, symptom_text=symptom_text,
         observations=observations, answers=answers, silkscreen_labels=silkscreen_labels,
-        component_inventory=component_inventory, confirmed_component_ids=confirmed_component_ids,
+        component_inventory=fingerprint_inventory, confirmed_component_ids=confirmed_component_ids,
         inventory_complete=inventory_complete,
         target_id=target_id,
         target_photo_sha256=(photo_snapshot.get("image_fingerprint")
@@ -92,6 +112,8 @@ def _diagnosis_fingerprint(
         additional_inputs={"user_suspicions": sorted(
             [{"component_id": row.get("board_component_id") or row.get("component_id"),
               "fault_id": row.get("suspected_fault_mode"),
+              "reported_fault_description": row.get("user_reported_fault_description"),
+              "is_user_suspected": row.get("is_user_suspected", True),
               "observation_fingerprint": row.get("observation_fingerprint"),
               "evidence_status": row.get("evidence_status", "UNVERIFIED")}
              for row in (suspected_components or []) if isinstance(row, dict)],
@@ -215,6 +237,14 @@ def _render_symptom_target_controls(
     for target in targets:
         reference_id = str(target.get("reference_id") or "")
         candidates = target.get("candidate_components", [])
+        if target.get("resolution_status") == "RESOLVED_POSITIONAL" and target.get("board_component_id"):
+            suggested_id = str(target["board_component_id"])
+            selected_row = next((row for row in candidates if isinstance(row, dict)
+                                 and str(row.get("board_component_id") or "") == suggested_id), {})
+            refs = selected_row.get("reference_designators") or []
+            box_label = refs[0] if refs else str(selected_row.get("component_id") or suggested_id)
+            st.caption(f"{target.get('evidence_quote', '')} · 위치 일치 · {box_label} · {suggested_id}")
+            continue
         if not reference_id or not isinstance(candidates, list) or not candidates:
             st.caption(f"{target.get('component_type', '소자')} 대상 · {target.get('resolution_reason', '박스를 찾지 못했습니다.')}")
             continue
@@ -275,6 +305,7 @@ def _question_plan_fingerprint(
     suspicions = sorted({(
         str(row.get("board_component_id") or row.get("component_id") or ""),
         str(row.get("suspected_fault_mode") or ""),
+        " ".join(str(row.get("user_reported_fault_description") or "").casefold().split()),
     ) for row in (suspected_components or []) if isinstance(row, dict)}, key=lambda row: row)
     payload = {
         "policy_version": "question-plan-v2",
@@ -1224,7 +1255,7 @@ def render_symptom_diagnosis_panel(
         st.warning(f"입력이 변경되어 이전 분석 결과를 무효화했습니다 · {state['invalidated_reason']} · 다시 분석해 주세요.")
     reassessment_view = simple_ui and workflow_stage == "REASSESSMENT"
     if simple_ui:
-        st.markdown("#### AI 진단")
+        st.markdown("#### 고장 입력")
         initial_key = f"{key}_simple_initial_symptom"
         initial_options = tuple(INITIAL_SYMPTOM_OPTIONS)
         previous_answer = state.get("initial_symptom_answer")
@@ -1234,7 +1265,7 @@ def render_symptom_diagnosis_panel(
             simple_choice = previous_answer if previous_answer in initial_options else initial_options[-1]
             st.caption(f"기록된 증상 · {simple_choice}")
         else:
-            st.caption("증상을 고르거나 짧게 적어 주세요. 소자를 선택하지 않아도 시작할 수 있습니다.")
+            st.caption("자연어로 고장 증상과 관측 내용을 입력하세요. 소자 검수 단계의 박스·확정 상태를 함께 사용합니다.")
             simple_choice = st.radio("어떤 문제가 발생하나요?", initial_options, key=initial_key,
                                      horizontal=True)
     else:
@@ -1630,8 +1661,12 @@ def render_symptom_diagnosis_panel(
             "model": selected_model if llm_enabled else None,
         }, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
         cached_parse = state.get("parsed_structured_result")
+        cached_parse_has_semantics = (isinstance(cached_parse, dict) and any(
+            isinstance(cached_parse.get(field), list) and bool(cached_parse.get(field))
+            for field in ("observations", "targets", "peer_observations")
+        ))
         cache_matches = (state.get("parsed_structured_input_fingerprint") == parse_fingerprint
-                         and isinstance(cached_parse, dict))
+                         and cached_parse_has_semantics)
         if (llm_enabled and selected_model and symptom_text.strip()
                 and not reuse_qwen_for_measurement_change):
             if cache_matches:
@@ -1664,6 +1699,7 @@ def render_symptom_diagnosis_panel(
         resolved_targets = resolve_symptom_targets(
             parsed.get("targets", []), registry=board_registry, component_rows=component_rows,
             selected_board_component_ids=state.get("symptom_target_selections", {}),
+            selected_photo_id=st.session_state.get("circuitcare_v2_photo_choice"),
         )
         parsed["reported_group_observations"] = list(parsed.get("peer_observations", []))
         parsed_observations, peer_observations = bind_target_observations(parsed, resolved_targets)
@@ -1676,10 +1712,15 @@ def render_symptom_diagnosis_panel(
         parsed_symptoms = [row["code"] for row in state["parsed_observations"]
                            if row.get("status") in {"observed", "measured"} and row.get("value") is True
                            and row.get("code") in symptom_items]
+        parsed_symptom_facts = [row for row in state["parsed_observations"]
+                                if isinstance(row, dict) and row.get("code") in symptom_items]
         try:
             analysis_progress.write("규칙 기반 고장 후보 분석 · 진행 중")
             result = diagnose(
                 symptoms=list(dict.fromkeys([*selected_codes, *parsed_symptoms])),
+                # Always keep the original report in the deterministic rule
+                # path. A partial Qwen parse (for example, “other LEDs work”)
+                # must not suppress a separately stated failure symptom.
                 symptom_text=symptom_text,
                 observations=combined_observations, components=component_rows,
                 confirmed_component_ids=confirmed_component_ids,
@@ -1750,8 +1791,12 @@ def render_symptom_diagnosis_panel(
                     )
             except (LocalLLMError, ValueError, TypeError, OSError) as exc:
                 result["llm_error"] = str(exc)
+        # The active photo-first workflow already displays the Qwen PCB
+        # proposal reason together with deterministic rule evidence. Per-
+        # component prose is only consumed by the advanced renderer, so avoid
+        # a second explanation call during the normal four-step workflow.
         if (llm_enabled and selected_model and result.get("component_candidates")
-                and not reuse_qwen_for_measurement_change):
+                and not simple_ui and not reuse_qwen_for_measurement_change):
             try:
                 with st.spinner("AI가 소자별 검사 이유를 정리하는 중…" if simple_ui else f"{selected_model}이 소자별 검사 이유를 짧게 정리하는 중…"):
                     result["llm_component_explanations"] = explain_component_candidates(
@@ -1895,7 +1940,7 @@ def render_symptom_diagnosis_panel(
                  help="전략별 후보 목록을 따로 표시합니다. 점수는 고장 확률이 아닙니다.")
     selected_strategy = st.session_state.get(strategy_key, "baseline")
     component_candidates = candidate_rows_for_strategy(result, selected_strategy)
-    st.caption(f"표시 전략 · {strategy_labels.get(selected_strategy, selected_strategy)} · 후보 순위는 검사 검토 순서입니다.")
+    st.caption(f"표시 전략 · {strategy_labels.get(selected_strategy, selected_strategy)}")
     status_labels = {
         "SUSPECTED": "검사 후보 · 아직 미확정",
         "FAULT_SUPPORTED": "검증된 검사 · 해당 고장 가설 지지",
@@ -1909,9 +1954,8 @@ def render_symptom_diagnosis_panel(
                         if isinstance(result.get("llm_component_explanations"), dict) else {})
         for candidate in component_candidates:
             label = status_labels.get(candidate.get("visual_status"), "판정 불가")
-            display_rank = candidate.get("candidate_rank", candidate.get("rank", 0))
             display_id = candidate.get("board_component_id") or candidate.get("component_id", "?")
-            st.markdown(f"**{display_rank}. {display_id}** · "
+            st.markdown(f"**{display_id}** · "
                         f"{candidate.get('component_type', '종류 미확정')} · "
                         f"{candidate.get('fault_title', candidate.get('fault_id', '원인 후보'))} · {label}")
             reason = explanations.get(candidate["component_id"])

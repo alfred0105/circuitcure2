@@ -10,7 +10,6 @@ import time
 from functools import lru_cache
 from dataclasses import replace
 from pathlib import Path
-import tempfile
 from typing import Any
 
 from circuitcare.frontend.models import ProjectContext
@@ -44,21 +43,20 @@ from circuitcare.dashboard.components.pcb_workspace import (
 )
 from circuitcare.dashboard.views.inspection_panel import (
     COMPONENT_EDIT_KEY, COMPONENT_INVENTORY_KEY, MAP_VERSION_KEY,
-    board_suspects, render_inspection_panel, render_retraining_workspace,
+    board_suspects, render_inspection_panel, render_selected_component_fault_note,
     _diagnosis_status_label,
 )
 from circuitcare.dashboard.views.symptom_diagnosis_panel import (
-    candidate_rows_for_strategy, candidate_focus_widget_key, current_analysis_snapshot,
+    candidate_rows_for_strategy, current_analysis_snapshot,
     render_symptom_diagnosis_panel, _simple_candidate_rows,
 )
 from circuitcare.dashboard.views.measurement_panel import render_measurement_panel
 from circuitcare.symptom_diagnosis import load_knowledge
-from circuitcare.dashboard.views.diagnosis_panel import render_diagnosis_panel
 from circuitcare.dashboard.views.report_panel import render_report_panel
 from circuitcare.reporting.report_builder import build_pcb_diagnostic_snapshot
 from circuitcare.frontend.component_overlay_models import ComponentOverlayViewModel
 from circuitcare.vision.component_recognition_panel import (
-    _observation_fingerprint,
+    APP_DIR, _observation_fingerprint,
     _review_fingerprint, _review_user_version, ensure_component_detection,
     invalidate_component_review_state, record_box_exclusion,
     merge_ai_review_rows, render_component_recognition_panel,
@@ -76,11 +74,9 @@ from circuitcare.frontend.workbench_state import (
     enter_workbench, update_component_selection, update_selection,
 )
 from circuitcare.frontend.viewer_geometry import requested_view_transform
-from circuitcare.schematic.exporter import export_schematic
-from circuitcare.schematic.geometry import read_svg_view_box
-from circuitcare.schematic.viewer import render_interactive_viewer
 from circuitcare.vision.image_loader import ImageLoadError, load_board_image
 from circuitcare.vision.ai_review_jobs import get_ai_review_job
+from circuitcare.vision.weight_paths import resolve_pcb_weights_root
 
 PENDING_PHOTO_FOCUS_KEY = "cc_pending_board_component_photo_focus"
 
@@ -956,7 +952,9 @@ def _render_pcb(st: Any, project: ProjectContext, photos: list[dict[str, Any]]) 
     review_scope = (scoped_snapshot.get("review_scope") if isinstance(scoped_snapshot, dict) else review_scope)
     inventory_owner = f"{project.project_id}|{project.board_id or ''}|{review_scope or ''}"
     inventory_rows = st.session_state.get(COMPONENT_INVENTORY_KEY, {})
-    analysis_inventory = ({"__board_registry__": {"registry_version": board_registry.get("version")}}
+    analysis_inventory = ({"__board_registry__": {
+        "registry_version": board_registry.get("version"),
+        "analysis_version": board_registry.get("analysis_version")}}
                           if board_mode else
                           inventory_rows.get(inventory_owner, {}) if isinstance(inventory_rows, dict) else {})
     aliases = measurement_component_aliases(board_registry) if board_mode else None
@@ -1218,10 +1216,6 @@ def _render_pcb(st: Any, project: ProjectContext, photos: list[dict[str, Any]]) 
             st.session_state[BOARD_COMPONENT_SELECTION_KEY] = board_component_id
         else:
             st.session_state.pop(BOARD_COMPONENT_SELECTION_KEY, None)
-    if candidate_state:
-        st.caption("진단 표시 · 노랑 SUSPECTED: 미확정 후보 · 빨강 FAULT_SUPPORTED: 측정이 특정 가설을 지지 · "
-                   "초록 FAULT_REFUTED: 특정 가설 반박 · 회색 INCONCLUSIVE: 판정 불가 · "
-                   "충돌 CONFLICTED: 증거 상충. 소자 전체의 고장·정상을 확정하지 않습니다.")
     if not interactive:
         with st.container(key="cc_viewer_canvas"):
             st.image(image, width=720)
@@ -1246,7 +1240,7 @@ def _render_pcb(st: Any, project: ProjectContext, photos: list[dict[str, Any]]) 
 def _workflow_stage_title(stage: str) -> str:
     return {
         WORKFLOW_REVIEW: "1 · 소자 검수",
-        WORKFLOW_QUESTIONS: "2 · 고장 증상 질문",
+        WORKFLOW_QUESTIONS: "2 · 고장 입력",
         WORKFLOW_INSPECTION: "3 · 검사 후보 및 측정",
         WORKFLOW_REASSESSMENT: "4 · 측정 결과 재판단",
         WORKFLOW_COMPLETE: "결과 보고",
@@ -1635,7 +1629,9 @@ def _current_board_snapshot(
 ) -> dict[str, Any]:
     return current_analysis_snapshot(
         st, project, components=components,
-        component_inventory={"__board_registry__": {"registry_version": registry.get("version")}},
+        component_inventory={"__board_registry__": {
+            "registry_version": registry.get("version"),
+            "analysis_version": registry.get("analysis_version")}},
         analysis_target_id="board:registry:v1", component_id_aliases=aliases,
         board_registry=registry, suspected_components=suspected, auto_qwen=True,
     )
@@ -1671,12 +1667,11 @@ def _render_workflow_candidates(
     retest_key = f"cc_wf_allow_retest_{project.project_id}"
     allow_retest = st.checkbox("완료된 검사도 조건을 바꿔 재검사", key=retest_key,
                                help="검사 조건 변경 또는 명시적인 재검사 시에만 같은 검사를 다시 선택할 수 있습니다.")
-    targets = _inspection_targets(
+    targets = (_inspection_targets(
         registry, candidates, suspects, inspection_history=workflow.get("inspection_history", []),
         measurements=all_measurements, allow_retest=allow_retest,
-        symptoms=(current_result.get("symptom_codes", []) if isinstance(current_result, dict) else []),
-        limit=None,
-    )
+        symptoms=current_result.get("symptom_codes", []), limit=None,
+    ) if current_result is not None else list(workflow.get("inspection_targets", [])))
     from circuitcare.symptom_diagnosis.active_inspection_planner import plan_active_inspections
     knowledge = load_knowledge()
     measurement_status_by_id = {
@@ -1787,10 +1782,12 @@ def _render_workflow_candidates(
             str(item.get("test_id") or ""),
         ))
     targets = targets[:3]
-    workflow["candidate_ids"] = [str(row.get("board_component_id") or row.get("component_id"))
-                                  for row in candidates]
+    if current_result is not None:
+        workflow["candidate_ids"] = [str(row.get("board_component_id") or row.get("component_id"))
+                                      for row in candidates]
     workflow["inspection_targets"] = targets
-    workflow["analysis_fingerprint"] = analysis_snapshot.get("input_fingerprint")
+    if current_result is not None:
+        workflow["analysis_fingerprint"] = analysis_snapshot.get("input_fingerprint")
     unlocated_count = sum(
         1 for row in registry.get("components", []) if isinstance(row, dict)
         and row.get("presence_status") != "EXCLUDED"
@@ -1802,7 +1799,57 @@ def _render_workflow_candidates(
         ) is None
     )
     if not targets:
-        st.warning("사진 좌표를 검증할 수 있는 활성 소자 박스가 없습니다. Registry의 내부 ID만으로는 검사 위치를 만들지 않습니다.")
+        if current_result is None:
+            st.info("최신 진단 결과를 갱신 중입니다. 저장된 측정과 검수 이력은 유지됩니다.")
+            if st.button("증상 질문으로 돌아가 진단 갱신", key=f"cc_wf_stale_candidates_{project.project_id}"):
+                _advance_workflow(st, project, WORKFLOW_QUESTIONS,
+                                  "최신 증상·소자 정보로 진단 갱신 중", "stale_inspection_candidates")
+            return
+        registry_rows = [row for row in registry.get("components", []) if isinstance(row, dict)]
+        registry_by_id = {str(row.get("board_component_id") or ""): row for row in registry_rows
+                          if row.get("board_component_id")}
+        requested_board_ids = {
+            str(row.get("board_component_id") or "") for row in [*candidates, *suspects]
+            if isinstance(row, dict) and row.get("board_component_id")
+        }
+        matched_rows = [registry_by_id[value] for value in requested_board_ids if value in registry_by_id]
+        rows_with_photo_boxes = [
+            row for row in matched_rows
+            if any(isinstance(source, dict)
+                   and source.get("review_status") != "EXCLUDED"
+                   and source.get("coordinate_frame") == "SOURCE_PHOTO_PIXEL"
+                   for source in (row.get("source_components")
+                                  if isinstance(row.get("source_components"), list) else []))
+        ]
+        located_requested_ids = [value for value in requested_board_ids if value in registry_by_id
+                                  and measurement_view_model_for_board_component(
+                                      registry, board_component_id=value,
+                                      preferred_photo_id=st.session_state.get(ACTIVE_PHOTO_KEY),
+                                  ) is not None]
+        if not candidates and not suspects:
+            reason = ("현재 분석 결과가 CURRENT가 아니어서 고장 후보를 검사 대상으로 쓸 수 없습니다."
+                      if current_result is None else
+                      "현재 분석에 실행 가능한 고장 후보가 없습니다. 의심 소자를 지정하거나 증상 분석을 완료해 주세요.")
+        elif not requested_board_ids:
+            reason = "분석 후보·의심 소자에 보드 소자 ID가 없어 실제 PCB 박스와 연결할 수 없습니다."
+        elif not matched_rows:
+            reason = "분석/의심 소자의 Registry ID가 현재 보드 Registry의 소자 ID와 일치하지 않습니다."
+        elif not rows_with_photo_boxes:
+            reason = "후보 ID는 Registry에 있지만 활성 사진 박스 연결이 없습니다. 1단계에서 박스를 확인하거나 복원해 주세요."
+        elif not located_requested_ids:
+            reason = "사진 박스의 좌표가 원본 사진의 유효 범위 검증을 통과하지 못했습니다. 해당 박스를 다시 확인해 주세요."
+        else:
+            reason = "검사 대상을 만들 수 있는 활성 사진 박스는 있으나 현재 단계의 후보 조건과 일치하지 않습니다."
+        LOGGER.warning(
+            "INSPECTION_TARGETS_EMPTY project=%s analysis_status=%s ranked_candidates=%d suspects=%d "
+            "requested_board_ids=%d registry_components=%d registry_matches=%d linked_photo_rows=%d "
+            "located_requested_ids=%d active_unlocated=%d reason=%s",
+            project.project_id,
+            analysis_snapshot.get("record", {}).get("status", "NOT_RUN"),
+            len(candidates), len(suspects), len(requested_board_ids), len(registry_rows),
+            len(matched_rows), len(rows_with_photo_boxes), len(located_requested_ids), unlocated_count, reason,
+        )
+        st.warning(reason)
         if unlocated_count:
             st.info(f"활성 Registry 소자 {unlocated_count}개는 사진·박스 좌표 연결이 확인되지 않아 검사 대상에서 제외했습니다. 1단계에서 실제 박스 위치를 확인하거나 수동 박스를 추가해 주세요.")
         if st.button("소자 검수로 돌아가기", key=f"cc_wf_no_targets_{project.project_id}"):
@@ -1816,85 +1863,24 @@ def _render_workflow_candidates(
     st.caption(f"측정 가능 {measurable}개 · 추가 확인 대상 {len(targets) - measurable}개")
     if unlocated_count:
         st.caption(f"위치 미확인 Registry 소자 {unlocated_count}개는 실제 검사 위치가 없어 후보에서 제외했습니다.")
-    for index, target in enumerate(targets, start=1):
-        candidate = target.get("candidate", {})
-        hypotheses = candidate.get("fault_hypotheses", []) if isinstance(candidate, dict) else []
-        hypothesis = hypotheses[0] if hypotheses else {}
-        ref = target.get("reference_designators") or []
-        label_parts = [f"{index}순위"]
-        if ref:
-            label_parts.append(str(ref[0]))
-        if target.get("component_type_confirmed") and target.get("component_type") not in {None, "", "unknown"}:
-            label_parts.append(str(target["component_type"]))
-        label = " · ".join(label_parts)
-        selected_target_id = st.session_state.get(
-            f"cc_wf_inspection_target_{project.project_id}", workflow.get("selected_target_id")
-        )
-        is_selected = str(selected_target_id or "") == str(target["board_component_id"])
-        st.markdown(f"**{label}**" + (" · 측정 대상" if is_selected else ""))
-        cause_status = ("측정 근거로 지지" if hypothesis.get("visual_status") == "FAULT_SUPPORTED"
-                        else "측정 근거로 반박" if hypothesis.get("visual_status") == "FAULT_REFUTED"
-                        else "근거 충돌" if hypothesis.get("visual_status") == "CONFLICTED"
-                        else "판단 보류" if hypothesis.get("visual_status") == "INCONCLUSIVE"
-                        else "미확정")
-        if hypothesis:
-            fault_title = hypothesis.get("fault_title") or hypothesis.get("fault_id")
-            if target.get("reason") == "사용자가 의심 소자로 지정":
-                why_selected = "사용자가 의심 소자로 지정해 확인 대상으로 올렸습니다."
-            elif fault_title:
-                why_selected = f"{fault_title} 가능성을 확인하기 위해 선정됐습니다. 고장 확정은 아닙니다."
-            else:
-                why_selected = "증상·측정·규칙 분석과 관련된 확인 대상입니다. 고장 확정은 아닙니다."
-            supporting = hypothesis.get("supporting_evidence") or []
-            opposing = hypothesis.get("opposing_evidence") or []
-            if isinstance(supporting, str):
-                supporting = [supporting]
-            if isinstance(opposing, str):
-                opposing = [opposing]
-        elif target.get("reason") == "사용자가 의심 소자로 지정":
-            why_selected = "사용자가 의심 소자로 지정해 확인 대상으로 올렸습니다."
-            supporting = opposing = []
-        elif target.get("reason") == "증상·측정·규칙 분석 후보":
-            why_selected = "증상·측정·규칙 분석에서 관련 확인 대상으로 선정됐습니다. 고장 확정은 아닙니다."
-            supporting = opposing = []
-        else:
-            why_selected = "현재 근거만으로 원인이 특정되지 않아 추가 확인 대상으로 유지 중입니다."
-            supporting = opposing = []
-        st.caption(f"확인 이유 · {why_selected}")
-        if supporting:
-            st.caption("관련 근거 · " + " · ".join(str(item) for item in supporting[:3]))
-        if opposing:
-            st.caption("반대 근거 · " + " · ".join(str(item) for item in opposing[:2]))
-        st.caption(f"검증 상태 · {cause_status}")
-        for blocked_item in blocked_plan_by_target.get(str(target.get("board_component_id") or ""), []):
-            prerequisites = [str(value) for value in blocked_item.get("prerequisites", []) if value]
-            st.warning(f"검사 대기 · {blocked_item.get('name', blocked_item.get('test_id', '검사'))} · "
-                       + (" · ".join(prerequisites) if prerequisites else "필수 검사 조건 미확인"))
-        focus_col, measure_col = st.columns([1, 1])
-        with focus_col:
-            if target.get("measurement_available") and st.button(
-                    "PCB에서 위치 보기", key=f"cc_wf_target_focus_{project.project_id}_{target['board_component_id']}"):
-                if _focus_board_registry_component(st, project, registry, target["board_component_id"]):
-                    workflow["viewer_focus_id"] = target["board_component_id"]
-                    st.rerun()
-        with measure_col:
-            if st.button(
-                    "이 소자 측정", key=f"cc_wf_target_measure_{project.project_id}_{target['board_component_id']}",
-                    disabled=not target.get("measurement_available"),
-                    help=None if target.get("measurement_available") else "검증된 PCB 위치가 없어 측정 입력을 열 수 없습니다."):
-                st.session_state[f"cc_wf_inspection_target_{project.project_id}"] = target["board_component_id"]
-                st.session_state[MEASUREMENT_TARGET_BOARD_COMPONENT_KEY] = target["board_component_id"]
-                workflow["selected_target_id"] = target["board_component_id"]
-
+    overlay_box_labels = {
+        str(model.component_id): str(model.display_label).split(" · ", 1)[0]
+        for model in st.session_state.get("circuitcare_v4_current_components", ())
+        if getattr(model, "component_id", None) and getattr(model, "display_label", None)
+        and str(model.display_label).startswith("박스 ")
+    }
+    for target_row in targets:
+        target_row["photo_box_label"] = overlay_box_labels.get(str(target_row.get("source_component_id") or ""))
     target_ids = [row["board_component_id"] for row in targets]
-    select_key = f"cc_wf_inspection_target_{project.project_id}"
-    selected_id = st.session_state.get(select_key)
-    if selected_id not in target_ids:
-        selected_id = workflow.get("selected_target_id")
-    if selected_id not in target_ids:
-        selected_id = None
+    viewer_selected_id = str(st.session_state.get(BOARD_COMPONENT_SELECTION_KEY) or "")
+    selected_target = next((row for row in targets
+                            if str(row.get("board_component_id") or "") == viewer_selected_id), None)
+    selected_id = (viewer_selected_id if selected_target and selected_target.get("measurement_available")
+                   else None)
+    workflow["selected_target_id"] = selected_id
+    st.session_state[MEASUREMENT_TARGET_BOARD_COMPONENT_KEY] = selected_id
     if selected_id is None:
-        st.info("측정할 소자 카드의 ‘이 소자 측정’을 누르면 해당 소자 전용 측정 입력이 열립니다.")
+        st.info("PCB Viewer에서 고장 의심 소자 박스를 클릭하면 해당 소자의 측정 입력이 열립니다.")
     else:
         target = next(row for row in targets if row["board_component_id"] == selected_id)
         workflow["selected_target_id"] = selected_id
@@ -1941,7 +1927,11 @@ def _render_workflow_candidates(
         measurement_component = measurement_view_model_for_board_component(
             registry, board_component_id=selected_id, preferred_photo_id=st.session_state.get(ACTIVE_PHOTO_KEY),
         )
-        st.markdown(f"##### 측정 입력 · {target.get('display_label') or target.get('component_type') or '선택 소자'}")
+        measurement_label = " · ".join(str(value) for value in (
+            target.get("photo_box_label"),
+            target.get("display_label") or target.get("component_type") or "선택 소자",
+        ) if value)
+        st.markdown(f"##### 측정 입력 · {measurement_label}")
         if measurement_component is None:
             st.warning("소자의 사진 위치를 확인할 수 없어 측정 연결을 중단했습니다.")
         else:
@@ -1965,6 +1955,86 @@ def _render_workflow_candidates(
                 analysis_fingerprint=analysis_snapshot.get("input_fingerprint"), preview=preview,
                 widget_suffix=f"{project.project_id}_{selected_id}", fault_id=fault_id,
             )
+    for target in targets:
+        candidate = target.get("candidate", {})
+        hypotheses = candidate.get("fault_hypotheses", []) if isinstance(candidate, dict) else []
+        hypothesis = hypotheses[0] if hypotheses else {}
+        ref = target.get("reference_designators") or []
+        label_parts = []
+        if target.get("photo_box_label"):
+            label_parts.append(str(target["photo_box_label"]))
+        if ref:
+            label_parts.append(str(ref[0]))
+        if target.get("component_type_confirmed") and target.get("component_type") not in {None, "", "unknown"}:
+            label_parts.append(str(target["component_type"]))
+        label = " · ".join(label_parts)
+        selected_target_id = st.session_state.get(BOARD_COMPONENT_SELECTION_KEY)
+        is_selected = str(selected_target_id or "") == str(target["board_component_id"])
+        st.markdown(f"**{label or target.get('board_component_id', '소자')}**"
+                    + (" · PCB에서 선택됨" if is_selected else ""))
+        cause_status = ("측정 근거로 지지" if hypothesis.get("visual_status") == "FAULT_SUPPORTED"
+                        else "측정 근거로 반박" if hypothesis.get("visual_status") == "FAULT_REFUTED"
+                        else "근거 충돌" if hypothesis.get("visual_status") == "CONFLICTED"
+                        else "판단 보류" if hypothesis.get("visual_status") == "INCONCLUSIVE"
+                        else "미확정")
+        if hypothesis:
+            fault_title = hypothesis.get("fault_title") or hypothesis.get("fault_id")
+            if target.get("reason") == "사용자가 의심 소자로 지정":
+                why_selected = "사용자가 의심 소자로 지정해 확인 대상으로 올렸습니다."
+            elif fault_title:
+                why_selected = f"{fault_title} 가능성을 확인하기 위해 선정됐습니다. 고장 확정은 아닙니다."
+            else:
+                why_selected = "증상·측정·규칙 분석과 관련된 확인 대상입니다. 고장 확정은 아닙니다."
+            supporting = hypothesis.get("supporting_evidence") or []
+            opposing = hypothesis.get("opposing_evidence") or []
+            if isinstance(supporting, str):
+                supporting = [supporting]
+            if isinstance(opposing, str):
+                opposing = [opposing]
+        elif target.get("reason") == "사용자가 의심 소자로 지정":
+            why_selected = "사용자가 의심 소자로 지정해 확인 대상으로 올렸습니다."
+            supporting = opposing = []
+        elif target.get("reason") == "증상·측정·규칙 분석 후보":
+            why_selected = "증상·측정·규칙 분석에서 관련 확인 대상으로 선정됐습니다. 고장 확정은 아닙니다."
+            supporting = opposing = []
+        else:
+            why_selected = "현재 근거만으로 원인이 특정되지 않아 추가 확인 대상으로 유지 중입니다."
+            supporting = opposing = []
+        short_reason = (str(fault_title) if hypothesis and fault_title else
+                        "사용자 지정 의심 소자" if target.get("reason") == "사용자가 의심 소자로 지정"
+                        else "증상 관련 확인 대상")
+        evidence_line = " · ".join(str(item) for item in supporting[:2]) if supporting else "근거 추가 확인 필요"
+        st.caption(f"원인 후보 · {short_reason} · 근거 · {evidence_line} · 상태 · {cause_status}")
+        if supporting or opposing or why_selected:
+            with st.expander("상세 근거", expanded=False):
+                if why_selected:
+                    st.caption("선정 이유 · " + why_selected)
+                if supporting:
+                    st.caption("지지 근거 · " + " · ".join(str(item) for item in supporting[:3]))
+                if opposing:
+                    st.caption("반대 근거 · " + " · ".join(str(item) for item in opposing[:2]))
+        blocked_for_target = blocked_plan_by_target.get(str(target.get("board_component_id") or ""), [])
+        if blocked_for_target:
+            compact_prerequisites = {
+                "전원 분리 확인": "전원 차단", "전원 분리 상태 확인": "전원 차단",
+                "잔류 에너지 안전 확인": "잔류 에너지", "측정 대상 분리 확인": "소자 분리",
+                "측정 위치·단자를 먼저 확인해야 함": "측정 위치", "정상 기준·출처를 먼저 확인해야 함": "정상 기준",
+                "해당 소자별 안전 상태가 아직 확인되지 않음": "안전 상태",
+            }
+            required = list(dict.fromkeys(
+                compact_prerequisites.get(str(value), str(value))
+                for item in blocked_for_target for value in item.get("prerequisites", []) if value
+            ))
+            st.caption(f"검사 대기 {len(blocked_for_target)}개 · 확인 필요 · "
+                       + (" · ".join(required[:4]) if required else "필수 조건 미확인"))
+            with st.expander("대기 중인 검사 조건", expanded=False):
+                for blocked_item in blocked_for_target:
+                    prerequisites = [str(value) for value in blocked_item.get("prerequisites", []) if value]
+                    st.caption(f"{blocked_item.get('name', blocked_item.get('test_id', '검사'))} · "
+                               + (" · ".join(prerequisites) if prerequisites else "필수 검사 조건 미확인"))
+        if not target.get("measurement_available"):
+            st.caption("사진 좌표가 검증되지 않아 측정 입력을 열 수 없습니다.")
+
     # Board-wide checks are never attached to an arbitrary component candidate.
     board_symptoms = set(current_result.get("symptom_codes", [])) if isinstance(current_result, dict) else set()
     catalog = load_knowledge().get("test_catalog", {}).get("tests", {})
@@ -2069,7 +2139,9 @@ def _render_workflow_reassessment(
         )
     render_symptom_diagnosis_panel(
         st, project, components=components, preview=preview,
-        component_inventory={"__board_registry__": {"registry_version": registry.get("version")}},
+        component_inventory={"__board_registry__": {
+            "registry_version": registry.get("version"),
+            "analysis_version": registry.get("analysis_version")}},
         analysis_target_id="board:registry:v1", component_id_aliases=aliases,
         board_registry=registry, suspected_components=suspected, simple_ui=True,
         workflow_stage=WORKFLOW_REASSESSMENT, left_progress_slot=left_progress_slot,
@@ -2102,6 +2174,16 @@ def _render_workflow_reassessment(
     candidates = _simple_candidate_rows(result, limit=1000)
     if not candidates:
         st.info("현재 근거로 소자 고장 후보를 특정하지 못했습니다. 임의의 소자 판정을 만들지 않았습니다.")
+        measurement_evidence = [row for row in result.get("measurement_evidence", [])
+                                if isinstance(row, dict)]
+        for reading in measurement_evidence:
+            if reading.get("used_for_ranking"):
+                continue
+            st.caption(
+                f"저장된 측정 · {reading.get('measurement_type') or '측정'} "
+                f"{reading.get('value', '값 없음')} {reading.get('unit') or ''} · "
+                f"판정 보류 · {reading.get('reason') or '검증 조건이 부족해 후보 순위에 반영되지 않았습니다.'}"
+            )
         missing_symptoms = not result.get("symptom_codes")
         confirmed_component_count = sum(
             getattr(component, "presence_status", None) == "CONFIRMED" for component in components
@@ -2111,9 +2193,6 @@ def _render_workflow_reassessment(
             reason_cols = st.columns(2 if missing_symptoms and needs_component_review else 1)
             if missing_symptoms:
                 reason_cols[0].warning("실제 증상이 구조화되지 않았습니다. ‘기타·모르겠음’만으로는 고장 유형을 좁힐 수 없습니다.")
-                if reason_cols[0].button("증상 질문으로 돌아가기", key=f"cc_wf_reassess_symptoms_{project.project_id}"):
-                    _advance_workflow(st, project, WORKFLOW_QUESTIONS,
-                                      "증상 답변 확인 중 · 측정 기록 유지", "reassessment_needs_symptoms")
             if needs_component_review:
                 component_col = reason_cols[-1]
                 component_col.warning("확인된 소자가 0개입니다. 탐지 박스는 존재하지만 사용자 확인 전이라 특정 소자 고장 후보로 연결하지 않았습니다.")
@@ -2138,6 +2217,19 @@ def _render_workflow_reassessment(
             opposing = hypothesis.get("opposing_evidence") or []
             st.caption("지지 근거 · " + (" · ".join(map(str, evidence)) or "없음"))
             st.caption("반대 근거 · " + (" · ".join(map(str, opposing)) or "없음"))
+    inspection_plan = result.get("active_inspection_plan", {})
+    next_tests = [row for row in inspection_plan.get("candidates", []) if isinstance(row, dict)]
+    blocked_tests = [row for row in inspection_plan.get("blocked", []) if isinstance(row, dict)]
+    if next_tests:
+        st.markdown("#### 다음 검사 추천")
+        for row in next_tests[:3]:
+            targets = ", ".join(str(value) for value in row.get("target_component_ids", [])) or "기판 범위"
+            st.caption(f"{row.get('name') or row.get('test_id')} · {targets} · {row.get('reason') or '후보 확인'}")
+    elif blocked_tests:
+        st.markdown("#### 검사 전 확인할 조건")
+        for row in blocked_tests[:3]:
+            prerequisites = " · ".join(str(value) for value in row.get("prerequisites", []) if value)
+            st.caption(f"{row.get('name') or row.get('test_id')} · {prerequisites or '필수 조건 미확인'}")
     measurements = get_measurements(st.session_state, project_id=project.project_id,
                                     board_id=project.board_id or "")
     by_id = {_measurement_record_id(row): row for row in measurements}
@@ -2360,20 +2452,27 @@ def _render_workbench_shell_body(st: Any, project: ProjectContext) -> None:
             st.session_state, project,
             preview=st.session_state.get(MODE_KEY) == "PREVIEW_ONLY",
         )
-    workspace_tab_key = f"cc_workbench_top_tab_{project.project_id}"
+    from circuitcare.vision.review_learning import (
+        auto_training_enabled, latest_training_job, set_auto_training_enabled,
+    )
+
+    auto_training_key = f"cc_yolo_auto_training_{project.project_id}"
+    saved_auto_training = auto_training_enabled()
+    st.session_state.setdefault(auto_training_key, saved_auto_training)
     with st.container(key="cc_workbench_top_navigation"):
-        if callable(getattr(st, "segmented_control", None)):
-            workspace_tab = st.segmented_control(
-                "작업 탭", ["PCB 검수·진단", "별도 재학습"], default="PCB 검수·진단",
-                key=workspace_tab_key, label_visibility="collapsed",
-            )
-        else:
-            workspace_tab = st.radio("작업 탭", ["PCB 검수·진단", "별도 재학습"],
-                                     horizontal=True, key=workspace_tab_key,
-                                     label_visibility="collapsed")
-    if workspace_tab == "별도 재학습":
-        render_retraining_workspace(st, project)
-        return
+        enabled = st.toggle(
+            "검수 완료 후 YOLO 자동 학습", key=auto_training_key,
+            help="켜면 사용자 확정 검수 박스로 YOLO 위치·종류 모델을 순차 미세조정합니다. "
+                 "학습이 끝나면 새 검수 결과부터 새 가중치를 자동 적용하고 이전 가중치는 보존합니다.",
+        )
+        if bool(enabled) != saved_auto_training:
+            set_auto_training_enabled(bool(enabled))
+        last_training = latest_training_job()
+        if last_training:
+            status_label = {"RUNNING": "진행 중", "QUEUED": "대기 중",
+                            "SUCCEEDED": "완료 · 다음 추론부터 자동 적용",
+                            "FAILED": "실패"}.get(last_training.get("status"), last_training.get("status"))
+            st.caption(f"최근 YOLO 학습 · {last_training.get('model_key')} · {status_label}")
     photos = st.session_state.get(INTAKE_IMAGES_KEY, [])
     pending_photo_focus = st.session_state.pop(PENDING_PHOTO_FOCUS_KEY, None)
     valid_photo_ids = {str(item.get("image_id") or "") for item in photos if isinstance(item, dict)}
@@ -2417,7 +2516,9 @@ def _render_workbench_shell_body(st: Any, project: ProjectContext) -> None:
             measurement_aliases = measurement_component_aliases(board_registry)
             analysis_target_id = "board:registry:v1"
             st.session_state["circuitcare_v7_analysis_target_id"] = analysis_target_id
-            component_inventory = {"__board_registry__": {"registry_version": board_registry.get("version")}}
+            component_inventory = {"__board_registry__": {
+                "registry_version": board_registry.get("version"),
+                "analysis_version": board_registry.get("analysis_version")}}
             suspected_components = board_suspects(st.session_state, project)
             live_analysis_snapshot = current_analysis_snapshot(
                 st, project, components=snapshot_components, component_inventory=component_inventory,
@@ -2430,16 +2531,19 @@ def _render_workbench_shell_body(st: Any, project: ProjectContext) -> None:
                 live_result = (live_analysis_snapshot.get("result")
                                if live_analysis_snapshot.get("record", {}).get("status") == AnalysisStatus.CURRENT.value
                                else None)
-                live_candidates = _inspection_candidate_rows(live_result)
-                workflow["inspection_targets"] = _inspection_targets(
-                    board_registry, live_candidates, suspected_components,
-                    inspection_history=workflow.get("inspection_history", []),
-                    measurements=get_measurements(st.session_state, project_id=project.project_id,
-                                                  board_id=project.board_id or ""),
-                    symptoms=(live_result.get("symptom_codes", []) if isinstance(live_result, dict) else []),
-                )
-                workflow["candidate_ids"] = [str(row.get("board_component_id") or row.get("component_id"))
-                                              for row in live_candidates]
+                if live_result is not None:
+                    live_candidates = _inspection_candidate_rows(live_result)
+                    workflow["inspection_targets"] = _inspection_targets(
+                        board_registry, live_candidates, suspected_components,
+                        inspection_history=workflow.get("inspection_history", []),
+                        measurements=get_measurements(st.session_state, project_id=project.project_id,
+                                                      board_id=project.board_id or ""),
+                        symptoms=live_result.get("symptom_codes", []),
+                    )
+                    workflow["candidate_ids"] = [str(row.get("board_component_id") or row.get("component_id"))
+                                                  for row in live_candidates]
+                # A stale analysis must not erase the last visible measurement
+                # target; its recorded measurement still needs a reassessment path.
             preview = st.session_state.get(MODE_KEY) == "PREVIEW_ONLY"
             st.session_state[f"cc_candidate_strategy_{project.project_id}"] = (
                 "candidate_fusion_v1" if isinstance(live_analysis_snapshot.get("result"), dict)
@@ -2534,26 +2638,114 @@ def _render_workbench_shell_body(st: Any, project: ProjectContext) -> None:
                         rows = st.session_state.get(state_key, [])
                         changed = False
                         for review_row in rows:
-                            if (review_row.get("소자 종류", "unknown") == "unknown"
-                                    and review_row.get("상태") != "제외"
-                                    and review_row.get("component_type_status") != "USER_CONFIRMED_EXTENSION"):
-                                record_box_exclusion(st.session_state, scope=scope, row=review_row,
-                                                     reason="unconfirmed_component_not_assigned")
+                            if not isinstance(review_row, dict) or review_row.get("상태") == "제외":
+                                continue
+                            resolved_type = review_taxonomy(review_row)
+                            assigned_class = str(resolved_type.get("effective_class") or "unknown")
+                            is_extension = (
+                                resolved_type.get("component_type_status") == "USER_CONFIRMED_EXTENSION"
+                                or bool(review_row.get("user_component_type_id"))
+                            )
+                            if assigned_class in {"unknown", "not_component"} and not is_extension:
+                                record_box_exclusion(
+                                    st.session_state, scope=scope, row=review_row,
+                                    reason="unconfirmed_component_not_assigned",
+                                )
+                                changed = True
+                                continue
+
+                            # This explicit workflow action accepts the visible assigned
+                            # component labels. The diagnosis engine requires confirmed
+                            # presence and type before it will create component candidates.
+                            confirmation = {
+                                "상태": "확인",
+                                "presence_status": "CONFIRMED",
+                                "user_confirmed": True,
+                                "user_confirmed_class": True,
+                                "type_confirmation_source": "WORKFLOW_REVIEW_COMPLETE",
+                            }
+                            if is_extension:
+                                confirmation["component_type_status"] = "USER_CONFIRMED_EXTENSION"
+                                confirmation["qwen_component_type_status"] = "USER_CONFIRMED_EXTENSION"
+                            else:
+                                confirmation.update({
+                                    "소자 종류": assigned_class,
+                                    "effective_class": assigned_class,
+                                    "diagnosis_class": assigned_class,
+                                    "confirmed_base_class": assigned_class,
+                                    "component_type_status": "USER_CONFIRMED",
+                                    "qwen_component_type_status": "USER_CONFIRMED",
+                                })
+                                if resolved_type.get("qwen_subtype"):
+                                    confirmation["confirmed_subtype"] = resolved_type["qwen_subtype"]
+                            if any(review_row.get(key) != value for key, value in confirmation.items()):
+                                review_row.update(confirmation)
                                 changed = True
                         if changed:
                             st.session_state[state_key] = rows
                             invalidate_component_review_state(st.session_state, scope=scope,
                                                               project_id=project.project_id,
                                                               board_id=project.board_id)
+                    if auto_training_enabled():
+                        from circuitcare.vision.review_learning import (
+                            queue_auto_retraining, queue_reviewed_boxes, user_component_types,
+                            yolo_training_targets,
+                        )
+                        from circuitcare.component_taxonomy import COMPONENT_CLASSES, normalize_component_class
+
+                        review_image = st.session_state.get("cc_active_component_review_image")
+                        review_scope = st.session_state.get("cc_active_component_review_scope")
+                        if isinstance(review_image, bytes) and review_scope:
+                            _detection_key, rows_key, _error_key = review_keys(review_scope)
+                            review_rows = list(st.session_state.get(rows_key, []))
+                            custom_type_ids = {str(item["type_id"]) for item in user_component_types()}
+                            for review_row in review_rows:
+                                if not isinstance(review_row, dict) or review_row.get("상태") == "제외":
+                                    continue
+                                custom_type_id = str(review_row.get("user_component_type_id") or "")
+                                confirmed_class = normalize_component_class(
+                                    review_row.get("confirmed_base_class") or review_row.get("소자 종류") or "unknown",
+                                    allow_not_component=False,
+                                )
+                                if confirmed_class in COMPONENT_CLASSES or custom_type_id in custom_type_ids:
+                                    # Pressing the explicit review-complete action accepts the
+                                    # visible, assigned labels for the isolated training set.
+                                    review_row["training_label_user_confirmed"] = True
+                            st.session_state[rows_key] = review_rows
+                            queue_reviewed_boxes(
+                                review_image, project_id=project.project_id,
+                                photo_id=str(st.session_state.get(ACTIVE_PHOTO_KEY) or "unknown"),
+                                rows=review_rows,
+                            )
+                        training_targets = yolo_training_targets(resolve_pcb_weights_root(APP_DIR))
+                        queued_training = queue_auto_retraining(training_targets, epochs=10)
+                        LOGGER.info("YOLO_AUTO_TRAIN event=review_complete project=%s status=%s targets=%d",
+                                    project.project_id, queued_training.get("status"), len(training_targets))
                     workflow["stage_completion"][WORKFLOW_REVIEW] = True
                     _advance_workflow(st, project, WORKFLOW_QUESTIONS,
                                       "고장 질문 준비 중 · 검수 결과와 PCB 사진 재사용", "review_complete")
             elif stage == WORKFLOW_QUESTIONS:
-                st.markdown("#### 고장 증상 질문")
-                st.caption("자연어 증상과 안전한 확인 질문을 기록합니다. 질문은 최대 5개이며 ‘모르겠음’은 근거로 계산하지 않습니다.")
+                st.markdown("#### 고장 입력")
+                st.caption("여기에 고장 증상과 관측 내용을 입력합니다. 검수 단계의 소자 목록과 PCB 위치는 그대로 공유합니다.")
                 if st.button("이전 단계", key=f"cc_wf_questions_back_{project.project_id}"):
                     _advance_workflow(st, project, WORKFLOW_REVIEW,
                                       "소자 검수 화면 준비 중 · 기존 검수 기록 재사용", "back")
+                suspect_note_rows = []
+                for suspect in suspected_components:
+                    suspect_board_id = str(suspect.get("board_component_id") or "")
+                    if suspect_board_id:
+                        suspect_component = measurement_view_model_for_board_component(
+                            board_registry, board_component_id=suspect_board_id, preferred_photo_id=None,
+                        )
+                        if suspect_component is not None:
+                            suspect_note_rows.append((suspect_board_id, suspect_component))
+                if suspect_note_rows:
+                    with st.expander("의심 소자별 증상 입력", expanded=True):
+                        for suspect_board_id, suspect_component in suspect_note_rows:
+                            render_selected_component_fault_note(
+                                st, project, suspect_component, suspect_board_id,
+                                key_suffix=f"fault_input_{project.project_id}_{suspect_board_id}",
+                            )
                 render_symptom_diagnosis_panel(
                     st, project, components=snapshot_components, preview=preview,
                     component_inventory=component_inventory, analysis_target_id=analysis_target_id,
@@ -2579,21 +2771,30 @@ def _render_workbench_shell_body(st: Any, project: ProjectContext) -> None:
                                 if isinstance(symptom_state, dict) else None)
                 question_fingerprints = question_snapshot.get("fingerprints")
                 question_fingerprint = getattr(question_fingerprints, "final_sha256", None)
+                submitted_fingerprint = (symptom_state.get("last_analysis_attempt_fingerprint")
+                                         if isinstance(symptom_state, dict) else None)
+                report_submitted = bool(question_fingerprint and submitted_fingerprint == question_fingerprint)
+                restored_result_matches = bool(
+                    question_snapshot.get("record", {}).get(
+                        "restored_from_transient_fingerprint_mismatch")
+                    and report_submitted
+                )
                 auto_advance_matches = (
                     isinstance(auto_advance, dict)
                     and auto_advance.get("scope_key") == question_scope.key
                     and auto_advance.get("fingerprint") == question_fingerprint
                 )
                 question_status = question_snapshot.get("record", {}).get("status", "NOT_RUN")
-                if auto_advance_matches and has_current:
+                if (auto_advance_matches or restored_result_matches) and has_current:
                     symptom_state.pop("workflow_auto_advance", None)
                     st.session_state[f"cc_symptom_diagnosis_{project.project_id}"] = symptom_state
                     LOGGER.info(
                         "workflow_auto_advance project=%s from=QUESTIONS to=INSPECTION "
-                        "scope=%s fingerprint=%s result_status=%s",
+                        "scope=%s fingerprint=%s result_status=%s restored=%s",
                         project.project_id, question_scope.key,
                         str(question_fingerprint or "")[:16],
                         question_snapshot["result"].get("status", "UNKNOWN"),
+                        restored_result_matches,
                     )
                     _advance_workflow(
                         st, project, WORKFLOW_INSPECTION,
@@ -2612,9 +2813,6 @@ def _render_workbench_shell_body(st: Any, project: ProjectContext) -> None:
                         auto_advance.get("fingerprint") == question_fingerprint,
                         question_snapshot.get("record", {}).get("reason"),
                     )
-                submitted_fingerprint = (symptom_state.get("last_analysis_attempt_fingerprint")
-                                         if isinstance(symptom_state, dict) else None)
-                report_submitted = bool(question_fingerprint and submitted_fingerprint == question_fingerprint)
                 LOGGER.info(
                     "workflow_inspection_gate project=%s stage=QUESTIONS diagnosis_status=%s "
                     "has_current=%s submitted_fingerprint_match=%s auto_advance_pending=%s "
@@ -2653,13 +2851,42 @@ def _render_workbench_shell_body(st: Any, project: ProjectContext) -> None:
                 )
                 current = (latest.get("record", {}).get("status") == AnalysisStatus.CURRENT.value
                            and isinstance(latest.get("result"), dict))
+                latest_result = latest.get("result") if current else {}
+                needs_symptom_input = isinstance(latest_result, dict) and (
+                    latest_result.get("status") == "NEEDS_SYMPTOMS"
+                    or not latest_result.get("symptom_codes")
+                )
+                has_next_tests = bool(
+                    isinstance(latest_result, dict)
+                    and latest_result.get("active_inspection_plan", {}).get("candidates")
+                )
                 action_cols = st.columns(2)
-                if action_cols[0].button("추가 검사 진행", type="primary", disabled=preview or not current,
+                if action_cols[0].button("증상 입력 보완" if needs_symptom_input else "추가 측정·검사 진행",
+                                         type="primary", disabled=preview or not current,
                                          key=f"cc_wf_more_tests_{project.project_id}"):
-                    workflow["stage_completion"][WORKFLOW_REASSESSMENT] = True
-                    _advance_workflow(st, project, WORKFLOW_INSPECTION,
-                                      "다음 검사 준비 중 · 기존 측정 결과와 판정 재사용", "additional_test")
-                if action_cols[1].button("검사 종료 및 결과 보고서", disabled=preview or not current,
+                    if needs_symptom_input:
+                        _advance_workflow(st, project, WORKFLOW_QUESTIONS,
+                                          "측정 기록을 보존하고 증상 정보를 보완", "reassessment_needs_symptoms")
+                    else:
+                        next_tests = (latest_result.get("active_inspection_plan", {}).get("candidates", [])
+                                      if isinstance(latest_result, dict) else [])
+                        if next_tests and isinstance(next_tests[0], dict):
+                            first_test = next_tests[0]
+                            next_target_id = next(iter(first_test.get("target_component_ids", [])), None)
+                            if next_target_id:
+                                workflow["selected_target_id"] = str(next_target_id)
+                                st.session_state[f"cc_wf_inspection_target_{project.project_id}"] = str(next_target_id)
+                                workflow.setdefault("selected_test_by_target", {})[str(next_target_id)] = str(
+                                    first_test.get("test_id") or "")
+                        workflow["stage_completion"][WORKFLOW_REASSESSMENT] = True
+                        _advance_workflow(st, project, WORKFLOW_INSPECTION,
+                                          "다음 검사 준비 중 · 기존 측정 결과와 판정 재사용", "additional_test")
+                report_ready = current and not needs_symptom_input and not has_next_tests
+                report_label = ("검사 종료 및 결과 보고서" if report_ready else
+                                "추가 측정 후 결과 보고" if has_next_tests else
+                                "결과 보고 · 증상 입력 필요")
+                if action_cols[1].button(report_label,
+                                         disabled=preview or not report_ready,
                                          key=f"cc_wf_complete_{project.project_id}"):
                     workflow["stage_completion"][WORKFLOW_REASSESSMENT] = True
                     _advance_workflow(st, project, WORKFLOW_COMPLETE,
@@ -2697,25 +2924,6 @@ def _focus_board_registry_component(
         active_photo_id=photo_id, selected_component=component.component_id,
     )
     return True
-
-
-def _handle_measurement_target_change(
-    state: Any, project: ProjectContext, registry: dict[str, Any] | None, widget_key: str,
-) -> None:
-    """Change the measurement target only; Viewer selection is independent."""
-    board_component_id = state.get(widget_key)
-    rows = registry.get("components", []) if isinstance(registry, dict) else []
-    row = next((item for item in rows
-                if item.get("board_component_id") == board_component_id), None)
-    if not row or row.get("presence_status") == "EXCLUDED":
-        return
-    resolved = measurement_view_model_for_board_component(
-        registry, board_component_id=str(board_component_id),
-        preferred_photo_id=state.get(ACTIVE_PHOTO_KEY),
-    )
-    if resolved is None:
-        return
-    state[MEASUREMENT_TARGET_BOARD_COMPONENT_KEY] = str(board_component_id)
 
 
 def _render_component_inspector(st: Any, project: ProjectContext, preview: bool, *, compact: bool = False,
@@ -2834,539 +3042,3 @@ def _render_board_identity_controls(st: Any, project: ProjectContext) -> None:
             st.caption(f"비활성 연결 · {labels.get(left_key, left_key)} ↔ "
                        f"{labels.get(right_key, right_key)} · "
                        f"{reason_labels.get(reason, reason)} · 다시 선택해 확인하세요.")
-
-
-def _render_fault_analysis_workspace(
-    st: Any, project: ProjectContext, preview: bool, *,
-    mode: str = "증상",
-    analysis_snapshot: dict[str, Any] | None = None,
-    photo_snapshot: dict[str, Any] | None = None,
-    board_registry: dict[str, Any] | None = None,
-    board_components: tuple[Any, ...] | None = None,
-    component_id_aliases: dict[str, str | None] | None = None,
-    analysis_target_id: str | None = None,
-    suspected_components: list[dict[str, Any]] | None = None,
-) -> None:
-    if photo_snapshot is None:
-        target_id = str(st.session_state.get(ACTIVE_PHOTO_KEY) or "target:default")
-        scope = AnalysisScope(project.project_id, project.board_id or "", target_id)
-        snapshots = st.session_state.get("circuitcare_v6_photo_component_snapshots", {})
-        photo_snapshot = snapshots.get(scope.key) if isinstance(snapshots, dict) else None
-        if not isinstance(photo_snapshot, dict):
-            photo_snapshot = {"components": tuple(st.session_state.get("circuitcare_v4_current_components", ())),
-                              "review_scope": st.session_state.get("circuitcare_v4_component_inventory_scope")}
-    if board_components is None and isinstance(board_registry, dict):
-        board_components = diagnosis_components(board_registry)
-    if board_components is not None:
-        components = tuple(board_components)
-    else:
-        components = tuple(photo_snapshot.get("components", ()))
-    if analysis_snapshot is None:
-        inventory = ({"__board_registry__": {"registry_version": board_registry.get("version")}}
-                     if isinstance(board_registry, dict) else {})
-        analysis_snapshot = current_analysis_snapshot(
-            st, project, components=components,
-            component_inventory=inventory,
-            analysis_target_id=analysis_target_id, component_id_aliases=component_id_aliases,
-            board_registry=board_registry, suspected_components=suspected_components,
-            auto_qwen=True,
-        )
-    selection = st.session_state.get(SELECTION_KEY)
-    selected = _selected_component(st)
-    review_scope = st.session_state.get("circuitcare_v4_component_inventory_scope")
-    owner = f"{project.project_id}|{project.board_id or ''}|{review_scope or st.session_state.get(MAP_VERSION_KEY) or ''}"
-    inventories = st.session_state.get(COMPONENT_INVENTORY_KEY, {})
-    inventory = inventories.get(owner, {}) if isinstance(inventories, dict) else {}
-    result = analysis_snapshot.get("result")
-    labels = {"증상": "AI 진단", "원인": "AI 진단", "측정": "측정 확인", "통합": "AI 진단"}
-    if mode == "통합":
-        render_symptom_diagnosis_panel(
-            st, project, components=components, preview=preview,
-            component_inventory=({"__board_registry__": {"registry_version": board_registry.get("version")}}
-                                 if isinstance(board_registry, dict) else inventory),
-            analysis_target_id=analysis_target_id, component_id_aliases=component_id_aliases,
-            board_registry=board_registry, suspected_components=suspected_components,
-            simple_ui=True,
-        )
-        current = current_analysis_snapshot(
-            st, project, components=components,
-            component_inventory=({"__board_registry__": {"registry_version": board_registry.get("version")}}
-                                 if isinstance(board_registry, dict) else inventory),
-            analysis_target_id=analysis_target_id, component_id_aliases=component_id_aliases,
-            board_registry=board_registry, suspected_components=suspected_components,
-            auto_qwen=True,
-        )
-        current_result = current.get("result") if current.get("record", {}).get("status") == AnalysisStatus.CURRENT.value else None
-        if not isinstance(current_result, dict):
-            return
-        strategy = "candidate_fusion_v1" if isinstance(current_result.get("candidate_fusion"), dict) else "baseline"
-        candidates = _simple_candidate_rows(current_result)
-        candidate_id = None
-        selected_candidate = None
-        fault_id = None
-        recommended_test_id = None
-        if candidates:
-            candidate_ids = [str(row.get("board_component_id") or row.get("component_id")) for row in candidates]
-            candidate_labels = {
-                str(row.get("board_component_id") or row.get("component_id")): (
-                    f"{row.get('candidate_rank', index + 1)}순위 · {row.get('component_type', '소자')} · "
-                    f"{row.get('fault_hypotheses', [{}])[0].get('fault_title') or '원인 가설'} · "
-                    f"{row.get('board_component_id') or row.get('component_id')}")
-                for index, row in enumerate(candidates)
-            }
-            candidate_widget_key = f"cc_measure_candidate_{project.project_id}"
-            if st.session_state.get(candidate_widget_key) not in candidate_ids:
-                st.session_state[candidate_widget_key] = candidate_ids[0]
-            selected_candidate_id = st.selectbox(
-                "검사할 후보", candidate_ids, key=candidate_widget_key,
-                format_func=lambda value: candidate_labels.get(value, value),
-            )
-            candidate_id = selected_candidate_id if selected_candidate_id in candidate_ids else candidate_ids[0]
-            st.session_state[MEASUREMENT_TARGET_BOARD_COMPONENT_KEY] = candidate_id
-            selected_candidate = next(row for row in candidates
-                                      if str(row.get("board_component_id") or row.get("component_id")) == candidate_id)
-            hypotheses = [row for row in selected_candidate.get("fault_hypotheses", []) if row.get("fault_id")]
-            if hypotheses:
-                hypothesis_ids = list(dict.fromkeys(str(row["fault_id"]) for row in hypotheses))
-                fault_id = hypothesis_ids[0]
-                if len(hypothesis_ids) > 1:
-                    hypothesis_widget_key = f"cc_measure_fault_{project.project_id}_{candidate_id}"
-                    if st.session_state.get(hypothesis_widget_key) not in hypothesis_ids:
-                        st.session_state[hypothesis_widget_key] = hypothesis_ids[0]
-                    fault_id = st.selectbox(
-                        "검증할 고장 가설", hypothesis_ids,
-                        format_func=lambda value: next((row.get("fault_title") or value for row in hypotheses
-                                                        if row.get("fault_id") == value), value),
-                        key=hypothesis_widget_key,
-                    )
-                hypothesis = next((row for row in hypotheses if row.get("fault_id") == fault_id), hypotheses[0])
-            else:
-                hypothesis = {}
-            if isinstance(board_registry, dict):
-                registry_component = next((row for row in board_registry.get("components", [])
-                                           if row.get("board_component_id") == candidate_id), {})
-                component_type = str(registry_component.get("component_type") or selected_candidate.get("component_type") or "unknown")
-            else:
-                component_type = str(selected_candidate.get("component_type") or "unknown")
-            tests = load_knowledge().get("component_test_profiles", {}).get("profiles", {}).get(
-                component_type.casefold(), {}).get("tests", {})
-            recommended_test_id = next((test_id for test_id, profile in tests.items()
-                                        if fault_id in profile.get("fault_relations", {})), None)
-            if not recommended_test_id and hypothesis.get("recommended_tests"):
-                st.caption("권장 확인 · " + " · ".join(str(item) for item in hypothesis["recommended_tests"][:2]))
-        measurement_component = None
-        if candidate_id and isinstance(board_registry, dict):
-            measurement_component = measurement_view_model_for_board_component(
-                board_registry, board_component_id=candidate_id,
-                preferred_photo_id=st.session_state.get(ACTIVE_PHOTO_KEY),
-            )
-        if (measurement_component is None and not isinstance(board_registry, dict)
-                and candidate_id):
-            measurement_component = next((item for item in components
-                if isinstance(item, ComponentOverlayViewModel)
-                and (item.board_component_id == candidate_id or item.component_id == candidate_id)), None)
-        # Top candidate selection changes the measurement target only. The Viewer
-        # remains on the user's clicked component until they explicitly request
-        # a location jump.
-        if candidate_id and measurement_component is not None and st.button(
-            "PCB에서 위치 보기", key=f"cc_measure_candidate_focus_{project.project_id}_{candidate_id}",
-        ):
-            if isinstance(board_registry, dict):
-                _focus_board_registry_component(st, project, board_registry, candidate_id)
-            else:
-                update_selection(st.session_state, project=project,
-                                 active_photo_id=measurement_component.canonical_frame_id,
-                                 selected_component=measurement_component.component_id)
-                st.session_state[ACTIVE_PHOTO_KEY] = measurement_component.canonical_frame_id
-            st.rerun()
-        if candidate_id and measurement_component is None:
-            st.warning("소자 위치 확인 필요 · 선택한 후보를 현재 사진의 유효한 Registry 관측에 연결할 수 없어 측정을 중단했습니다.")
-        if candidates or get_measurements(st.session_state, project_id=project.project_id,
-                                          board_id=project.board_id or ""):
-            st.markdown("#### 다음 확인 · 측정")
-            render_measurement_panel(
-                st, project, selected_component=measurement_component, preview=preview,
-                component_map_version=(board_registry.get("version") if isinstance(board_registry, dict)
-                                       else st.session_state.get(MAP_VERSION_KEY)),
-                board_registry=board_registry, compact=True,
-                fault_hypothesis=fault_id, recommended_test_id=recommended_test_id,
-            )
-        if isinstance(board_registry, dict):
-            with st.popover("진단 보고서 다운로드"):
-                report_snapshot = build_pcb_diagnostic_snapshot(
-                    root=Path(__file__).resolve().parents[4], project=project,
-                    registry=board_registry, analysis_snapshot=current,
-                    photos=st.session_state.get(INTAKE_IMAGES_KEY, []),
-                    selected_board_component_id=st.session_state.get(BOARD_COMPONENT_SELECTION_KEY),
-                    candidate_strategy=strategy,
-                )
-                render_report_panel(
-                    st, snapshot=report_snapshot, root=Path(__file__).resolve().parents[4],
-                    workspace_id=project.project_id, expected_circuit_hash=None,
-                )
-        return
-    with st.container(border=True):
-        st.markdown(f'<div class="cc-analysis-step">{labels.get(mode, "분석")}</div>', unsafe_allow_html=True)
-        st.markdown('<div class="cc-analysis-copy">규칙 기반 결과를 기준으로 표시합니다. 후보는 측정으로 검증되기 전까지 미확정 가설입니다.</div>', unsafe_allow_html=True)
-    record = (analysis_snapshot or {}).get("record", {})
-    state_status = str(record.get("status", "NOT_RUN"))
-    state_labels = {"NOT_RUN": "분석 전", "RUNNING": "분석 중", "CURRENT": "현재 입력 기준 최신",
-                    "STALE": "입력 변경 · 재분석 필요", "FAILED": "분석 실패"}
-    st.caption(f"분석 상태 · {state_labels.get(state_status, state_status)}")
-    if state_status == "STALE" and record.get("reason"):
-        st.warning(f"기존 결과는 현재 입력과 달라 사용하지 않습니다 · {record['reason']}")
-    if mode == "증상":
-        render_symptom_diagnosis_panel(
-            st, project, components=components, preview=preview,
-            component_inventory=({"__board_registry__": {"registry_version": board_registry.get("version")}}
-                                 if isinstance(board_registry, dict) else inventory),
-            analysis_target_id=analysis_target_id, component_id_aliases=component_id_aliases,
-            board_registry=board_registry,
-            suspected_components=suspected_components,
-        )
-    elif mode == "원인":
-        _render_cause_dashboard(st, project, result, analysis_snapshot=analysis_snapshot,
-                                board_registry=board_registry)
-    elif mode == "측정":
-        st.markdown("#### 측정 기록과 가설 검증")
-        if isinstance(board_registry, dict):
-            active_targets = [row for row in board_registry.get("components", [])
-                              if row.get("presence_status") != "EXCLUDED"
-                              and measurement_view_model_for_board_component(
-                                  board_registry,
-                                  board_component_id=str(row.get("board_component_id")),
-                                  preferred_photo_id=st.session_state.get(ACTIVE_PHOTO_KEY),
-                              ) is not None]
-            component_ids = [str(row.get("board_component_id")) for row in active_targets]
-            option_labels = {str(row.get("board_component_id")):
-                             f"{row.get('component_type', 'unknown')} · {row.get('board_component_id')}"
-                             for row in active_targets}
-            viewer_board_id = st.session_state.get(BOARD_COMPONENT_SELECTION_KEY)
-            selected_id = st.session_state.get(MEASUREMENT_TARGET_BOARD_COMPONENT_KEY)
-            if selected_id not in component_ids:
-                selected_id = viewer_board_id if viewer_board_id in component_ids else (component_ids[0] if component_ids else None)
-                if selected_id:
-                    st.session_state[MEASUREMENT_TARGET_BOARD_COMPONENT_KEY] = selected_id
-            target_key = f"cc_measurement_target_{project.project_id}"
-            if component_ids and st.session_state.get(target_key) not in component_ids:
-                st.session_state[target_key] = selected_id
-            if component_ids:
-                st.selectbox(
-                    "측정 대상 소자", component_ids, format_func=option_labels.get,
-                    key=target_key, on_change=_handle_measurement_target_change,
-                    kwargs={"state": st.session_state, "project": project,
-                            "registry": board_registry, "widget_key": target_key},
-                )
-                selected_id = st.session_state.get(target_key)
-                st.session_state[MEASUREMENT_TARGET_BOARD_COMPONENT_KEY] = selected_id
-                measurement_component = measurement_view_model_for_board_component(
-                    board_registry, board_component_id=str(selected_id),
-                    preferred_photo_id=st.session_state.get(ACTIVE_PHOTO_KEY),
-                )
-                if measurement_component and st.button(
-                    "PCB에서 위치 보기", key=f"cc_measurement_target_focus_{project.project_id}_{selected_id}",
-                ):
-                    _focus_board_registry_component(st, project, board_registry, str(selected_id))
-                    st.rerun()
-            else:
-                measurement_component = None
-        else:
-            component_ids = [item.board_component_id or item.component_id for item in components
-                             if item.presence_status != "EXCLUDED"]
-            selected_id = st.session_state.get(MEASUREMENT_TARGET_BOARD_COMPONENT_KEY)
-            if selected_id not in component_ids:
-                selected_id = component_ids[0] if component_ids else None
-                if selected_id:
-                    st.session_state[MEASUREMENT_TARGET_BOARD_COMPONENT_KEY] = selected_id
-            measurement_component = next((item for item in components
-                                          if (item.board_component_id or item.component_id) == selected_id), None)
-        render_measurement_panel(
-            st, project, selected_component=measurement_component, preview=preview,
-            component_map_version=(board_registry.get("version") if isinstance(board_registry, dict)
-                                   else st.session_state.get(MAP_VERSION_KEY)),
-            board_registry=board_registry,
-        )
-        measurements = get_measurements(
-            st.session_state, project_id=project.project_id, board_id=project.board_id or "",
-        )
-        with st.expander("회로 모델 기반 진단 · 고급", expanded=False):
-            render_diagnosis_panel(
-                st, project, measurements=measurements,
-                analysis_context_id=getattr(selection, "analysis_context_id", None),
-                component_map_version=st.session_state.get(MAP_VERSION_KEY),
-            )
-
-        st.caption("PCB Viewer 선택과 측정 대상은 별도로 유지됩니다. ‘PCB에서 위치 보기’로 선택한 측정을 강조할 수 있습니다.")
-
-
-def _render_cause_dashboard(
-    st: Any, project: ProjectContext, result: Any, *,
-    analysis_snapshot: dict[str, Any] | None = None,
-    board_registry: dict[str, Any] | None = None,
-) -> None:
-    """Compact, evidence-aware view of the existing symptom diagnosis result."""
-    if not isinstance(result, dict):
-        reason = (analysis_snapshot or {}).get("record", {}).get("reason")
-        if reason:
-            st.warning(f"현재 입력에 대한 분석 결과가 없습니다 · {reason} · 증상 입력 탭에서 다시 분석하세요.")
-        else:
-            st.info("증상 입력 탭에서 증상을 기록하고 원인 분석을 실행하세요.")
-        return
-    strategy_key = f"cc_candidate_strategy_{project.project_id}"
-    strategy_options = ["baseline", "evidence_v1"]
-    if isinstance(result.get("candidate_fusion"), dict):
-        strategy_options.append("candidate_fusion_v1")
-    strategy_labels = {"baseline": "Baseline 규칙 순위", "evidence_v1": "evidence_v1 실험 순위",
-                       "candidate_fusion_v1": "Qwen 통합 실험 순위"}
-    current_strategy = st.session_state.get(strategy_key, "baseline")
-    if current_strategy not in strategy_options:
-        current_strategy = "baseline"
-    st.selectbox("후보 표시 전략", strategy_options, key=strategy_key,
-                 index=strategy_options.index(current_strategy), format_func=strategy_labels.get,
-                 help="증상 분석 탭과 같은 전략을 사용합니다.")
-    selected_strategy = st.session_state.get(strategy_key, "baseline")
-    candidates = candidate_rows_for_strategy(result, selected_strategy)
-    groups = result.get("hypothesis_groups", {})
-    next_tests = result.get("next_tests", [])
-    next_action = next((row for row in next_tests if row.get("type") != "question"), None)
-    if next_action is None:
-        next_action = next(iter(next_tests), None)
-    with st.container(border=True):
-        st.markdown(f"**소자 검사 후보 · {strategy_labels.get(selected_strategy, selected_strategy)} · Top 3**")
-        if candidates:
-            status_labels = {"SUSPECTED": "검사 전 의심", "FAULT_SUPPORTED": "특정 가설 지지",
-                             "FAULT_REFUTED": "특정 가설 반박", "CONFLICTED": "근거 충돌",
-                             "INCONCLUSIVE": "판정 불가"}
-            for index, candidate in enumerate(candidates[:3], start=1):
-                component_id = str(candidate.get("board_component_id") or candidate.get("component_id") or "")
-                fault_id = str(candidate.get("fault_hypothesis") or candidate.get("fault_id") or "")
-                status = str(candidate.get("visual_status") or candidate.get("status") or "SUSPECTED")
-                st.markdown(f"**{index}. `{component_id or '소자 미특정'}` · {candidate.get('component_type', '종류 미확정')}**")
-                source_labels = candidate.get("candidate_source", [])
-                source_text = ("규칙 기반" if "RULE_BASELINE" in source_labels else
-                               "Qwen 미검증" if "QWEN_UNVERIFIED" in source_labels else
-                               "사용자 의심 단서" if "USER_SUSPICION" in source_labels else
-                               str(candidate.get("verification_status", "미확정")))
-                verification = (" · 소자 확인 필요" if candidate.get("verification_status") == "NEEDS_COMPONENT_REVIEW" else "")
-                st.caption(f"{candidate.get('fault_title', fault_id or '원인 후보')} · {status_labels.get(status, '미확정')} · {source_text}{verification} · 순위는 검사 우선순위이지 고장 확률이 아닙니다.")
-                supporting = candidate.get("supporting_evidence") or candidate.get("evidence", [])
-                if supporting:
-                    st.caption("지지 · " + " · ".join(supporting[:3]))
-                opposing = candidate.get("opposing_evidence", [])
-                if opposing:
-                    st.caption("반대 · " + " · ".join(opposing[:3]))
-                if component_id and board_registry and any(
-                    item.get("board_component_id") == component_id
-                    for item in board_registry.get("components", [])
-                ):
-                    if st.button("PCB에서 위치 보기", key=candidate_focus_widget_key("analysis_dashboard", project.project_id, project.board_id,
-                                                                    component_id, fault_id),
-                                 type="primary" if index == 1 else "secondary", use_container_width=True):
-                        _focus_board_registry_component(st, project, board_registry, component_id)
-                        st.rerun()
-                elif component_id and board_registry is None and any(
-                    item.component_id == component_id
-                    for item in st.session_state.get("circuitcare_v4_current_components", ())
-                ):
-                    if st.button("PCB에서 위치 보기", key=candidate_focus_widget_key("analysis_dashboard", project.project_id, project.board_id,
-                                                                    component_id, fault_id),
-                                 type="primary" if index == 1 else "secondary", use_container_width=True):
-                        update_selection(st.session_state, project=project, selected_component=component_id)
-                        st.rerun()
-        else:
-            st.info("확인된 소자 후보가 없습니다. 증상·검수 결과를 확인하고 기판·납땜 또는 외부 시스템 원인을 살펴보세요.")
-        if selected_strategy == "candidate_fusion_v1":
-            additional = result.get("candidate_fusion", {}).get("additional_qwen_candidates", [])
-            if additional:
-                with st.expander(f"추가 확인 후보 · Qwen 미검증 {len(additional)}개", expanded=False):
-                    for candidate in additional:
-                        cid = str(candidate.get("board_component_id") or candidate.get("component_id") or "")
-                        st.caption(f"{cid} · {candidate.get('fault_title', candidate.get('fault_id'))} · 미검증")
-                        if candidate.get("qwen_reason"):
-                            st.caption(candidate["qwen_reason"])
-                        if cid and st.button("PCB 위치 보기", key=candidate_focus_widget_key("analysis_dashboard_qwen_extra", project.project_id,
-                                                                project.board_id, cid,
-                                                                str(candidate.get("fault_hypothesis") or candidate.get("fault_id") or ""))):
-                            _focus_board_registry_component(st, project, board_registry, cid)
-                            st.rerun()
-        if next_action:
-            st.info("다음 검사 · " + str(next_action.get("label") or next_action.get("name") or next_action.get("question") or next_action.get("test_id") or "추가 확인"))
-
-    block_groups = result.get("functional_block_groups", [])
-    if block_groups:
-        st.markdown("#### 기능 블록 후보 · 미확정")
-        st.caption("색상은 부품 정보·각인·실크스크린·배치에 따른 역할 그룹입니다. 전기적 연결을 뜻하지 않습니다.")
-        for block in block_groups[:8]:
-            members = block.get("board_component_ids", block.get("component_ids", []))
-            with st.expander(f"{block.get('title', block.get('role', '기능 블록'))} · {len(members)}개 소자 · 추정", expanded=False):
-                if block.get("supporting_evidence"):
-                    st.caption("근거 · " + " · ".join(block["supporting_evidence"][:4]))
-                st.caption("소자 · " + (" · ".join(str(value) for value in members[:16]) or "없음"))
-                st.caption("연결 상태 · 확인되지 않음")
-                for component_id in members[:8]:
-                    if st.button(f"{component_id} 위치 보기", key=candidate_focus_widget_key(
-                            "functional_block", project.project_id, project.board_id,
-                            str(component_id), str(block.get("block_id")))):
-                        _focus_board_registry_component(st, project, board_registry, str(component_id))
-                        st.rerun()
-
-    ambiguous_groups = result.get("component_candidate_groups", [])
-    if ambiguous_groups:
-        with st.expander(f"구별되지 않은 소자 후보 그룹 · {len(ambiguous_groups)}개", expanded=False):
-            for group in ambiguous_groups[:8]:
-                st.caption(f"{group.get('fault_id')} · " + " · ".join(group.get("component_ids", [])))
-                st.caption(group.get("reason", "동일한 근거 수준의 후보들입니다."))
-
-    category_labels = (("component", "소자 내부·기능 블록"), ("board", "기판·납땜"), ("system", "외부 시스템"))
-    for group_key, label in category_labels:
-        rows = groups.get(group_key, []) if isinstance(groups, dict) else []
-        if not rows:
-            continue
-        st.markdown(f"#### {label}")
-        for index, row in enumerate(rows[:5], start=1):
-            with st.expander(f"{index}. {row.get('title', '원인 후보')} · 미확정", expanded=index == 1):
-                st.caption("지지 근거 · " + (" · ".join(row.get("supporting_evidence", [])) or "직접 근거 없음"))
-                st.caption("반대 근거 · " + (" · ".join(row.get("opposing_evidence", [])) or "확인된 반대 근거 없음"))
-                if row.get("related_component_ids"):
-                    st.caption("관련 소자 · " + " · ".join(row["related_component_ids"]))
-                st.caption("검증 상태 · 미확정 가설")
-
-    if result.get("llm_assist") or result.get("llm_component_explanations") or result.get("llm_unverified_suggestions") or result.get("matched_rules") or result.get("functional_blocks") or result.get("measurement_evidence") or result.get("evidence_gaps"):
-        with st.expander("상세 근거 · LLM 설명 · 적용 규칙 · 측정", expanded=False):
-            assist = result.get("llm_assist")
-            if assist:
-                st.markdown("**LLM 설명 보조**")
-                st.write(assist.get("summary", ""))
-                st.caption(f"모델 · {assist.get('model', '확인 불가')} · 후보 확정 없음")
-            elif result.get("llm_error"):
-                st.warning(f"LLM 설명을 사용할 수 없습니다 · {result['llm_error']} · 규칙 기반 결과는 유지됩니다.")
-            if result.get("llm_component_explanations"):
-                explanations = result["llm_component_explanations"].get("explanations", {})
-                for component_id, explanation in explanations.items():
-                    st.caption(f"{component_id} · {explanation}")
-            if result.get("matched_rules"):
-                st.caption("적용 규칙 · " + " · ".join(row.get("name", "규칙") for row in result["matched_rules"]))
-            if result.get("functional_blocks"):
-                for block in result["functional_blocks"]:
-                    st.caption(f"기능 역할 추정 · {block.get('component_id')} · {', '.join(block.get('candidate_blocks', [])) or '미분류'} · 미확정")
-            if result.get("measurement_evidence"):
-                for row in result["measurement_evidence"]:
-                    st.caption(f"측정 근거 · {row.get('component_id')} · {row.get('measurement_type')} {row.get('value')} {row.get('unit')} · {row.get('verification_status')}")
-            if result.get("evidence_gaps"):
-                st.markdown("**가설별 부족한 근거와 확인 방법**")
-                for gap in result["evidence_gaps"][:8]:
-                    st.caption(f"{gap.get('fault_id')} · {gap.get('status')} · " +
-                               (" · ".join(item.get("description", "") for item in gap.get("missing_evidence", [])[:3])
-                                or "필수 근거 공백 없음; 고장은 여전히 미확정 가설입니다."))
-            for suggestion in result.get("llm_unverified_suggestions", []):
-                st.caption(f"미등록 원인 제안 · {suggestion.get('title')} · {suggestion.get('reason')}")
-    questions = [row for row in next_tests if row.get("type") == "question"]
-    if questions:
-        st.markdown("#### 추가 확인 질문")
-        st.caption("질문 답변과 검사 추천은 증상 분석 패널에서 입력·반영합니다.")
-        for row in questions[:3]:
-            st.caption("· " + row.get("question", "추가 정보 확인"))
-    if analysis_snapshot is not None and isinstance(board_registry, dict):
-        with st.expander("진단 보고서 · JSON / Markdown / HTML / Evidence Bundle", expanded=False):
-            snapshot = build_pcb_diagnostic_snapshot(
-                root=Path(__file__).resolve().parents[4], project=project,
-                registry=board_registry, analysis_snapshot=analysis_snapshot,
-                photos=st.session_state.get(INTAKE_IMAGES_KEY, []),
-                selected_board_component_id=st.session_state.get(BOARD_COMPONENT_SELECTION_KEY),
-                candidate_strategy=st.session_state.get(f"cc_candidate_strategy_{project.project_id}", "baseline"),
-            )
-            render_report_panel(st, snapshot=snapshot,
-                                root=Path(__file__).resolve().parents[4],
-                                workspace_id=project.project_id,
-                                expected_circuit_hash=None)
-def _render_top_cause(st: Any, project: ProjectContext, result: Any) -> None:
-    selected_strategy = st.session_state.get(f"cc_candidate_strategy_{project.project_id}", "baseline")
-    candidates = candidate_rows_for_strategy(result, selected_strategy) if isinstance(result, dict) else []
-    next_tests = result.get("next_tests", []) if isinstance(result, dict) else []
-    top = candidates[0] if candidates else None
-    next_test = next((item for item in next_tests if item.get("type") != "question"), None)
-    if next_test is None:
-        next_test = next(iter(next_tests), None)
-    with st.container(border=True):
-        st.markdown("**우선 확인할 내용**")
-        if not top:
-            st.info("증상을 입력하고 원인 후보 분석을 실행하면 우선 후보와 다음 검사 항목이 표시됩니다.")
-            return
-        st.markdown(f"**{top.get('component_id', '소자 미특정')} · {top.get('component_type', '종류 미확정')}**  ")
-        st.write(top.get("fault_title", "원인 후보"))
-        st.caption("미확정 검사 가설 · 상대 점수는 실제 고장 확률을 뜻하지 않습니다.")
-        if top.get("evidence"):
-            st.caption("근거 · " + " · ".join(top["evidence"][:3]))
-        if next_test:
-            st.caption("다음 검사 · " + str(next_test.get("label") or next_test.get("name") or next_test.get("question") or next_test.get("test_id") or "추가 확인"))
-        if st.button("PCB에서 후보 위치 보기", key=candidate_focus_widget_key("analysis_summary", project.project_id, project.board_id,
-                                                        str(top.get("board_component_id") or top.get("component_id") or ""),
-                                                        str(top.get("fault_hypothesis") or top.get("fault_id") or "")), use_container_width=True):
-            update_selection(st.session_state, project=project, selected_component=top.get("component_id"))
-            st.rerun()
-
-
-def _render_schematic(st: Any, project: ProjectContext, circuit_bytes: bytes | None = None) -> None:
-    source = project.circuit_source
-    if not source:
-        st.info("회로도 없음")
-        st.caption("설계 자료 추가")
-        return
-    if source.get("source_type") == "kicad_schematic":
-        st.info("KiCad 회로도 자료가 있습니다.")
-        raw = circuit_bytes
-        if not raw:
-            st.warning("회로도 파일 데이터를 찾을 수 없습니다. 입력을 다시 확인하세요.")
-            return
-        try:
-            pages = _export_schematic_pages(raw, source.get("filename") or "uploaded.kicad_sch")
-        except (OSError, ValueError) as exc:
-            st.warning(f"회로도 Viewer를 열 수 없습니다 · {exc}")
-            return
-        if not pages:
-            st.warning("KiCad SVG Export 결과가 없습니다.")
-            return
-        page_names = [page[0] for page in pages]
-        page_name = st.selectbox("회로도 페이지", page_names, key="circuitcare_v2_schematic_page") if len(pages) > 1 else page_names[0]
-        _, svg, view_box = next(page for page in pages if page[0] == page_name)
-        context_key = hashlib.sha256(raw).hexdigest()
-        rendered = render_interactive_viewer(
-            st, svg=svg, asset_key=f"f2-{context_key}-{page_name}", view_box=view_box,
-            geometry_status="UNVERIFIED_GEOMETRY", regions=[], overlay=None,
-            selected_ref="", navigation_id=0, context_key=context_key,
-            event_sequence_seed=0, key=f"cc-v2-schematic-{context_key[:12]}",
-            on_selection_change=lambda *_: None,
-        )
-        if rendered is None:
-            st.html(svg, width="stretch")
-        st.caption("KiCad 원본 SVG · PCB 정합 및 진단 미실행")
-    elif source.get("source_type") == "kicad_xml_netlist":
-        st.info("회로도 레이아웃 없음")
-        st.caption("XML Netlist는 연결 데이터이며 원본 회로도 배치를 포함하지 않습니다.")
-    else:
-        st.info("지원되지 않는 설계 자료")
-
-
-def _export_schematic_pages(raw: bytes, filename: str) -> list[tuple[str, str, tuple[float, float, float, float]]]:
-    """Reuse the bounded existing KiCad SVG exporter inside an ephemeral project root."""
-    if not raw or len(raw) > 20_000_000:
-        raise ValueError("회로도 파일 크기를 확인해 주세요.")
-    project_root = Path(__file__).resolve().parents[4]
-    with tempfile.TemporaryDirectory(prefix="cc-f2-schematic-", dir=project_root) as temporary:
-        temp_root = Path(temporary)
-        source_path = temp_root / Path(filename).name
-        if source_path.suffix != ".kicad_sch":
-            source_path = source_path.with_suffix(".kicad_sch")
-        source_path.write_bytes(raw)
-        result = export_schematic(
-            source_path, project_root=temp_root, cache_root=temp_root / "svg-cache",
-        )
-        if result.status != "EXPORTED":
-            raise ValueError(result.message)
-        pages = []
-        for svg_path in result.svg_paths:
-            view_box = read_svg_view_box(svg_path)
-            if view_box is None:
-                continue
-            pages.append((svg_path.name, svg_path.read_text(encoding="utf-8"), view_box))
-        return pages

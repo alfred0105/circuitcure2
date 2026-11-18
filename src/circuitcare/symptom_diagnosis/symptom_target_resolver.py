@@ -12,18 +12,37 @@ def resolve_symptom_targets(
     registry: dict[str, Any] | None,
     component_rows: list[dict[str, Any]] | None = None,
     selected_board_component_ids: dict[str, str] | None = None,
+    selected_photo_id: str | None = None,
 ) -> list[dict[str, Any]]:
-    """Return explicit resolution states; ambiguous ordinal references need user choice.
+    """Resolve explicit references and unambiguous ordinal positions to Registry boxes.
 
-    Position and ordinal are retained as hints only. The resolver never decides
-    that the third item means left-to-right or top-to-bottom without an explicit
-    user selection or a unique eligible Registry component.
+    Ordinals are used only when the parser provides an explicit direction and
+    every eligible, confirmed component has a valid source-photo box in the same
+    image. Otherwise the target remains ambiguous for user selection.
     """
     registry_rows = registry.get("components", []) if isinstance(registry, dict) else []
     visible_by_board = {
         str(row.get("board_component_id")): row
         for row in (component_rows or []) if isinstance(row, dict) and row.get("board_component_id")
     }
+    # The diagnosis projection intentionally removes photo-local coordinates.
+    # Recover the geometry only from the matching Registry source observation;
+    # never infer a position from the board-level ID alone.
+    source_observations: dict[str, list[dict[str, Any]]] = {}
+    for registry_row in registry_rows:
+        if not isinstance(registry_row, dict) or not registry_row.get("board_component_id"):
+            continue
+        board_id = str(registry_row["board_component_id"])
+        for source in registry_row.get("source_components", []):
+            if not isinstance(source, dict) or source.get("review_status") == "EXCLUDED":
+                continue
+            source_observations.setdefault(board_id, []).append({
+                "board_component_id": board_id,
+                "component_id": str(source.get("component_id") or ""),
+                "photo_id": str(source.get("photo_id") or ""),
+                "coordinate_frame": str(source.get("coordinate_frame") or "").upper(),
+                "bbox_xyxy": source.get("bbox_xyxy"),
+            })
     selected = selected_board_component_ids or {}
     resolved_rows: list[dict[str, Any]] = []
     for raw in targets or []:
@@ -43,8 +62,38 @@ def resolve_symptom_targets(
             if (row.get("presence_status") != "CONFIRMED"
                     or row.get("component_type_status") != "USER_CONFIRMED"
                     or normalize_component_class(row.get("component_type"), allow_not_component=False) != target_type
-                    or board_id not in visible_by_board):
+                    or board_id not in visible_by_board and not source_observations.get(board_id)):
                 continue
+            view_row = visible_by_board.get(board_id, {})
+            view_box = view_row.get("bbox_xyxy")
+            view_photo = str(view_row.get("photo_id") or "")
+            view_frame = str(view_row.get("coordinate_frame") or "").upper()
+            usable_view_box = (isinstance(view_box, (list, tuple)) and len(view_box) == 4
+                               and all(isinstance(value, (int, float)) for value in view_box)
+                               and view_box[2] > view_box[0] and view_box[3] > view_box[1])
+            source_rows = source_observations.get(board_id, [])
+            if selected_photo_id:
+                matching_sources = [source for source in source_rows
+                                    if source["photo_id"] == str(selected_photo_id)]
+            else:
+                matching_sources = source_rows
+            if usable_view_box and (not selected_photo_id or view_photo == str(selected_photo_id)):
+                photo_id, coordinate_frame, bbox = view_photo, view_frame, view_box
+                local_component_id = str(view_row.get("component_id") or "")
+            elif matching_sources:
+                unique_source_photos = {source["photo_id"] for source in matching_sources if source["photo_id"]}
+                if len(unique_source_photos) == 1:
+                    source = next((item for item in matching_sources if item["photo_id"] in unique_source_photos), {})
+                elif selected_photo_id:
+                    source = matching_sources[0]
+                else:
+                    source = {}
+                photo_id = source.get("photo_id", "")
+                coordinate_frame = source.get("coordinate_frame", "")
+                bbox = source.get("bbox_xyxy")
+                local_component_id = source.get("component_id", "")
+            else:
+                photo_id, coordinate_frame, bbox, local_component_id = view_photo, view_frame, view_box, ""
             attrs = row.get("visual_attributes") if isinstance(row.get("visual_attributes"), dict) else {}
             color = str(row.get("confirmed_color") or attrs.get("confirmed_color")
                         or attrs.get("color") or "").strip().casefold()
@@ -77,13 +126,16 @@ def resolve_symptom_targets(
             group_status = str(row.get("group_membership_status") or "").upper()
             eligible.append({
                 "board_component_id": board_id,
-                "component_id": str(visible_by_board[board_id].get("component_id") or ""),
+                "component_id": local_component_id or str(view_row.get("component_id") or ""),
                 "component_type": target_type,
                 "reference_designators": refs,
                 "ocr_markings": list(row.get("ocr_markings", [])),
                 "verified_attributes": verified_attrs,
                 "unverified_attributes": unverified_attrs,
                 "verified_group_id": verified_group_id if group_status == "USER_CONFIRMED" else None,
+                "photo_id": str(photo_id or ""),
+                "coordinate_frame": str(coordinate_frame or "").upper(),
+                "bbox_xyxy": bbox,
             })
         eligible.sort(key=lambda row: (row["reference_designators"][:1], row["board_component_id"]))
         chosen_id = str(selected.get(reference_id) or "")
@@ -91,8 +143,50 @@ def resolve_symptom_targets(
         group_size = raw.get("group_size") if isinstance(raw.get("group_size"), int) else 0
         ordinal = raw.get("ordinal") if isinstance(raw.get("ordinal"), int) else 0
         has_group_reference = bool(group_size or ordinal)
+        positional_choice = None
+        ordering = str(raw.get("ordering") or "UNSPECIFIED").upper()
+        # Natural reports commonly say “the third of four LEDs” without
+        # naming left-to-right. Infer an axis only when the confirmed boxes
+        # themselves form one unambiguous row or column in the same photo.
+        # Mixed/grid layouts and incomplete coordinate sets remain ambiguous.
+        positional_boxes = [row.get("bbox_xyxy") for row in eligible]
+        source_frames = {"SOURCE_PHOTO_PIXEL", "SOURCE_IMAGE_PX", "PHOTO_LOCAL_PX"}
+        valid_boxes = all(
+            isinstance(box, (list, tuple)) and len(box) == 4
+            and all(isinstance(value, (int, float)) for value in box)
+            and float(box[2]) > float(box[0]) and float(box[3]) > float(box[1])
+            for box in positional_boxes
+        )
+        photo_ids = {row["photo_id"] for row in eligible}
+        frames = {row["coordinate_frame"] for row in eligible}
+        if (not chosen and ordinal > 0 and ordering == "UNSPECIFIED"
+                and group_size == len(eligible) and len(eligible) > 1
+                and len(photo_ids) == 1 and "" not in photo_ids
+                and len(frames) == 1 and frames.issubset(source_frames) and valid_boxes):
+            centers_x = [(float(box[0]) + float(box[2])) / 2 for box in positional_boxes]
+            centers_y = [(float(box[1]) + float(box[3])) / 2 for box in positional_boxes]
+            widths = [float(box[2]) - float(box[0]) for box in positional_boxes]
+            heights = [float(box[3]) - float(box[1]) for box in positional_boxes]
+            median_width = sorted(widths)[len(widths) // 2]
+            median_height = sorted(heights)[len(heights) // 2]
+            row_layout = max(centers_y) - min(centers_y) <= median_height * 0.35
+            column_layout = max(centers_x) - min(centers_x) <= median_width * 0.35
+            if row_layout != column_layout:
+                ordering = "LEFT_TO_RIGHT" if row_layout else "TOP_TO_BOTTOM"
+        if (not chosen and ordinal > 0 and ordering in {"LEFT_TO_RIGHT", "TOP_TO_BOTTOM"}
+                and group_size == len(eligible) and len(eligible) > 1):
+            if (len(photo_ids) == 1 and "" not in photo_ids and len(frames) == 1
+                    and frames.issubset(source_frames) and valid_boxes and ordinal <= len(eligible)):
+                axis = 0 if ordering == "LEFT_TO_RIGHT" else 1
+                positioned = sorted(eligible, key=lambda row: (
+                    (float(row["bbox_xyxy"][axis]) + float(row["bbox_xyxy"][axis + 2])) / 2,
+                    row["board_component_id"],
+                ))
+                positional_choice = positioned[ordinal - 1]
+                chosen = positional_choice
         if chosen:
-            status = "RESOLVED_USER_CONFIRMED"
+            status = ("RESOLVED_USER_CONFIRMED" if chosen_id else
+                      "RESOLVED_POSITIONAL" if positional_choice else "RESOLVED_UNIQUE")
         elif len(eligible) == 1 and not has_group_reference:
             if not eligible[0].get("unverified_attributes"):
                 chosen = eligible[0]
@@ -114,6 +208,7 @@ def resolve_symptom_targets(
             "candidate_components": eligible,
             "resolution_reason": (
                 "사용자가 증상 대상을 Registry 소자와 연결했습니다." if status == "RESOLVED_USER_CONFIRMED" else
+                "같은 사진에서 확인된 박스 좌표가 단일 행·열을 이루어 순번 대상을 연결했습니다." if status == "RESOLVED_POSITIONAL" else
                 "현재 사진에서 확인된 해당 종류의 소자가 하나뿐입니다." if status == "RESOLVED_UNIQUE" else
                 "같은 종류의 확인 소자가 여러 개여서 박스 ID를 선택해야 합니다." if status == "AMBIGUOUS" else
                 "증상에 언급된 색상·위치·실크스크린을 Registry에서 확인할 수 없어 사용자가 박스를 선택해야 합니다." if status == "NEEDS_ATTRIBUTE_CONFIRMATION" else
@@ -137,7 +232,9 @@ def bind_target_observations(
         row = dict(raw)
         reference_id = str(row.get("target_reference") or "")
         target = by_reference.get(reference_id)
-        if target and target.get("resolution_status") in {"RESOLVED_UNIQUE", "RESOLVED_USER_CONFIRMED"}:
+        if target and target.get("resolution_status") in {
+            "RESOLVED_UNIQUE", "RESOLVED_USER_CONFIRMED", "RESOLVED_POSITIONAL",
+        }:
             row["component_id"] = target.get("component_id")
             row["board_component_id"] = target.get("board_component_id")
             row["target_resolution_status"] = target.get("resolution_status")
@@ -148,7 +245,9 @@ def bind_target_observations(
         if not isinstance(raw, dict):
             continue
         target = by_reference.get(str(raw.get("target_reference") or ""))
-        if not target or target.get("resolution_status") not in {"RESOLVED_UNIQUE", "RESOLVED_USER_CONFIRMED"}:
+        if not target or target.get("resolution_status") not in {
+            "RESOLVED_UNIQUE", "RESOLVED_USER_CONFIRMED", "RESOLVED_POSITIONAL",
+        }:
             continue
         candidate_rows = target.get("candidate_components", [])
         expected_size = target.get("group_size")

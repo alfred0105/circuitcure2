@@ -314,6 +314,8 @@ def review_components_with_qwen(
                            "marking_candidates": row.get("marking_candidates", []),
                            "marking_ocr": row.get("marking_ocr"),
                            "possible_part_number": row.get("possible_part_number"),
+                           "display_box_number": row.get("display_box_number"),
+                           "board_box_context": row.get("board_box_context", []),
                            "user_component_knowledge": row.get("user_component_knowledge", [])})
     candidate_diagnostics: list[dict[str, Any]] = []
     try:
@@ -327,11 +329,14 @@ def review_components_with_qwen(
                                           "status": "deferred", "reason": "per_batch_group_crop_limit"})
         images, (width, height), image_manifest, group_manifest = _review_images(
             image_bytes, identified, group_candidates=group_candidates,
-            max_crop_count=0 if full_board_classification else (len(identified) if classification_only else 10),
+            max_crop_count=(len(identified) if classification_only else 10),
             component_crop_padding_ratio=.75 if classification_only else .25,
             include_full_image=(full_board_classification or
                                 not classification_only and include_board_context),
-            include_full_resolution_tiles=not full_board_classification)
+            # For a selected-box request, the overview plus its explicit crop
+            # gives location and package detail without flooding Qwen with
+            # redundant whole-board tiles.
+            include_full_resolution_tiles=not full_board_classification and not classification_only)
     except Exception as exc:
         raise AIReviewStageError("candidate_search", str(exc)) from exc
     payload = {
@@ -347,8 +352,35 @@ def review_components_with_qwen(
     }
     if classification_only:
         payload = ({
-            "boxes": [{"id": row["detection_id"], "yolo": row["class_name"]}
+            "boxes": [{"id": row["detection_id"],
+                       "screen_box_number": row.get("display_box_number"),
+                       "yolo": row["class_name"],
+                       "bbox_norm_999": [
+                           max(0, min(999, round(float(value) / (width if index % 2 == 0 else height) * 999)))
+                           for index, value in enumerate(row["bbox_xyxy"])
+                       ]}
                       for row in identified],
+            "other_visible_boxes": [{
+                "screen_box_number": box["screen_box_number"],
+                "yolo_class": box["class_name"],
+                "bbox_norm_999": [
+                    max(0, min(999, round(float(value) / (width if index % 2 == 0 else height) * 999)))
+                    for index, value in enumerate(box["bbox_xyxy"])
+                ],
+                "approximate_region": (
+                    ("top" if (float(box["bbox_xyxy"][1]) + float(box["bbox_xyxy"][3])) / (2 * height) < 1 / 3
+                     else "bottom" if (float(box["bbox_xyxy"][1]) + float(box["bbox_xyxy"][3])) / (2 * height) >= 2 / 3
+                     else "middle")
+                    + "-" +
+                    ("left" if (float(box["bbox_xyxy"][0]) + float(box["bbox_xyxy"][2])) / (2 * width) < 1 / 3
+                     else "right" if (float(box["bbox_xyxy"][0]) + float(box["bbox_xyxy"][2])) / (2 * width) >= 2 / 3
+                     else "center")
+                ),
+            } for box in (identified[0].get("board_box_context", []) if identified else [])
+              if isinstance(box, dict) and len(box.get("bbox_xyxy", [])) == 4],
+            "image_sources": image_manifest,
+            "coordinate_origin": "(0,0) is the top-left of the original PCB photo; x increases right and y increases down.",
+            "note": "The full-board image provides position context. The orange box and its numbered crop identify the selected detection; screen_box_number matches the application's visible box label. Use other_visible_boxes only to compare spatial positions, never as electrical connectivity evidence.",
         } if full_board_classification else {
             "selected_detections": [{"detection_id": row["detection_id"],
                                      "detector_class": row["class_name"],
@@ -369,7 +401,11 @@ def review_components_with_qwen(
         response_schema["properties"]["class_reviews"]["minItems"] = 0
         response_schema["properties"]["class_reviews"]["maxItems"] = len(identified)
     user_prompt = (
-        "Classify the numbered boxes in the full-board image. Return exactly one compact row per box using this shape: "
+        "Classify the selected numbered box(es). Use the full-board image only for position and surrounding context; "
+        "inspect the attached orange-marked crop(s) for the actual component body. screen_box_number matches the "
+        "application label and bbox_norm_999 anchors each detection on the full image. Use other_visible_boxes and "
+        "their coordinates to distinguish nearby parts and relative placement (for example, which item in a row), "
+        "but do not infer electrical connections or identify a component from position alone. Return exactly one compact row per supplied id using this shape: "
         "{\"class_reviews\":[{\"detection_id\":\"1\",\"object_status\":\"COMPONENT\",\"proposed_class\":\"ic\"}]}. "
         "Use only supplied IDs. Do not copy the input object or add fields.\n" + json.dumps(payload, ensure_ascii=False)
         if full_board_classification else

@@ -138,6 +138,15 @@ def test_initial_yolo_detection_queues_all_active_boxes_for_qwen_9b(monkeypatch)
     assert queued and len(queued[0]["rows"]) == 2
     assert all(row["상태"] != "제외" for row in queued[0]["rows"])
 
+    queued.clear()
+    validation_api = SimpleNamespace(session_state={}, spinner=lambda *_args, **_kwargs: nullcontext())
+    detector_result, detector_error = panel.ensure_component_detection(
+        validation_api, image_bytes=b"same-pcb", project_id="validation-project", photo_id="photo",
+        queue_ai_review=False,
+    )
+    assert detector_error is None and detector_result is not None
+    assert queued == []
+
 
 def test_silkscreen_reference_is_attached_as_class_hint_not_applied_as_fact():
     rows = associate_ocr_with_components(

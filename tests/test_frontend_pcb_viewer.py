@@ -239,7 +239,7 @@ def test_yolo_and_qwen_share_one_fixed_height_progress_slot():
 
     source = (Path(__file__).parents[1] / "src/circuitcare/dashboard/views/unified_workspace.py").read_text()
     assert "workflow_status_slot = st.empty()" in source
-    assert 'st.container(height=54, border=False, key="cc_workflow_progress")' in source
+    assert 'st.container(height=44, border=False, key="cc_workflow_progress")' in source
     assert "qwen_progress_slot = workflow_status_slot" in source
     assert "with qwen_progress_slot.container():" in source
     assert "workflow_status_slot.empty()" in source
@@ -257,7 +257,7 @@ def test_workbench_hides_internal_status_lines_and_keeps_ai_loading_on_one_line(
     assert "Registry {board_registry.get" not in workspace
     assert 'st.caption(_diagnosis_status_label(st, project, analysis_snapshot=live_analysis_snapshot))' not in workspace
     assert "display:flex;align-items:center;gap:9px" in progress
-    assert "height=44" in progress
+    assert "height=38" in progress
     assert "OCR/Qwen 검수 진행</strong></div>" in viewer_html
 
 
@@ -514,23 +514,19 @@ def test_initial_yolo_status_uses_dedicated_slot_and_finishes_explicitly(monkeyp
     assert failed_status.updates[-1]["state"] == "error"
 
 
-def test_unvalidated_qwen_cleanup_never_auto_excludes_and_protects_user_confirmed_rows():
-    assert qwen_cleanup_disposition({"decision": "suggest", "proposed_class": "not_component"}) == (
-        "REVIEW_REQUIRED", "실제 데이터로 검증된 자동 정리 기준이 없어 사용자 확인 필요")
-    assert qwen_cleanup_disposition({"decision": "same_component"}, geometry_valid=False)[0] == "REVIEW_REQUIRED"
-    assert qwen_cleanup_disposition({"decision": "different_components"})[0] == "KEEP"
-    assert qwen_cleanup_disposition({"decision": "same_component"}, protected=True)[0] == "USER_CONFIRMED"
-    validated = {"validated": True, "policy_version": "measured-v1",
-                 "independent_dataset_fingerprint": "sha256:fixture", "evaluation_mode": "REAL_LABELED_PCB",
-                 "metrics": {"sample_count": 1000, "duplicate_precision_lower_bound": .999,
-                             "normal_component_exclusion_rate_upper_bound": 0,
-                             "group_or_connector_false_exclusion_rate_upper_bound": 0}}
-    assert qwen_cleanup_disposition({"decision": "suggest", "proposed_class": "resistor"},
-                                    validation=validated)[0] == "REVIEW_REQUIRED"
-    assert qwen_cleanup_disposition({"decision": "same_component"}, geometry_valid=True,
-                                    validation=validated)[0] == "REVIEW_REQUIRED"
-    assert qwen_cleanup_disposition({"decision": "same_component", "evidence": "same package body"},
-                                    geometry_valid=True, validation=validated)[0] == "AUTO_EXCLUDED"
+def test_explicit_qwen_not_component_is_a_reversible_exclusion_not_user_confirmation():
+    row = {"component_id": "c1", "소자 종류": "unknown", "상태": "검수 필요"}
+    assert not _apply_qwen_proposal_to_row(row, {"proposed_class": "not_component"})
+    assert _apply_qwen_proposal_to_row(row, {
+        "detection_id": "c1", "proposed_class": "not_component", "object_status": "NOT_COMPONENT",
+    })
+    assert row["상태"] == "검수 필요"
+    assert row.get("user_confirmed_class") is None
+    state = {}
+    record_box_exclusion(state, scope="photo", row=row, reason="qwen_not_component")
+    assert row["상태"] == "제외"
+    assert restore_review_row(row) is None
+    assert row["상태"] == "검수 필요"
 
 
 def test_qwen_class_suggestion_applies_automatically_without_confirming_and_keeps_fingerprint_stable():
@@ -558,10 +554,12 @@ def test_qwen_false_positive_requires_explicit_object_status_and_user_rows_are_p
     assert not _apply_qwen_proposal_to_row(confirmed, {
         "detection_id": "c2", "proposed_class": "capacitor", "object_status": "COMPONENT",
     })
-    edited = {"component_id": "c3", "소자 종류": "ic", "상태": "검수 필요", "user_edited": True}
-    assert not _apply_qwen_proposal_to_row(edited, {
+    manually_drawn = {"component_id": "c3", "소자 종류": "unknown", "상태": "검수 필요", "user_edited": True}
+    assert _apply_qwen_proposal_to_row(manually_drawn, {
         "detection_id": "c3", "proposed_class": "resistor", "object_status": "COMPONENT",
     })
+    assert manually_drawn["소자 종류"] == "resistor"
+    assert manually_drawn["qwen_component_type_status"] == "AI_PROPOSED_UNVERIFIED"
 
 
 def test_board_registry_prioritizes_selected_photo_and_reuses_processed_snapshots(monkeypatch):

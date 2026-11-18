@@ -8,17 +8,15 @@ import json
 import logging
 from copy import deepcopy
 from dataclasses import replace
-from pathlib import Path
 from typing import Any
 
 from circuitcare.frontend.component_overlay_models import ComponentOverlayViewModel, display_identity_status
 from circuitcare.frontend.models import ProjectContext
 from circuitcare.vision.component_recognition_panel import (
-    APP_DIR, CLASS_OPTIONS, LAST_EXCLUDED_KEY, STATUS_OPTIONS, ensure_review_row_for_component,
+    CLASS_OPTIONS, LAST_EXCLUDED_KEY, STATUS_OPTIONS, ensure_review_row_for_component,
     invalidate_component_review_state, record_box_exclusion, restore_review_row,
     review_keys, undo_last_box_exclusion, update_review_row,
 )
-from circuitcare.vision.weight_paths import resolve_pcb_weights_root
 from circuitcare.component_taxonomy import COMPONENT_CLASSES
 from circuitcare.frontend.workbench_state import (
     ACTIVE_PHOTO_KEY, SELECTION_KEY, update_component_selection, update_selection,
@@ -73,83 +71,6 @@ def _render_component_knowledge_form(st: Any, component: ComponentOverlayViewMod
                 st.success("사용자 확인 정보가 로컬에 저장됐습니다. 동일 각인이 보이면 이후 Qwen 검수에 참고로 전달됩니다.")
             except ValueError as exc:
                 st.warning(str(exc))
-
-
-def render_retraining_workspace(st: Any, project: ProjectContext) -> None:
-    """Separate, opt-in workspace; reviewed samples are collected silently in the review flow."""
-    from circuitcare.vision.review_learning import (
-        MIN_UNIQUE_IMAGES, flush_review_samples, refresh_training_jobs, start_retraining, training_summary,
-        save_user_component_type, user_component_types,
-    )
-
-    save_errors = flush_review_samples()
-    refresh_training_jobs()
-    summary = training_summary()
-    st.markdown("### 검수 데이터로 별도 재학습")
-    st.caption("사용자가 확정한 박스만 로컬에 자동 축적됩니다. 동일한 픽셀 이미지의 재업로드는 표본 수를 늘리지 않습니다."
-               " 재학습 결과는 별도 후보 가중치로 저장되며 현재 탐지 모델을 자동 교체하지 않습니다.")
-    st.metric("서로 다른 검수 사진", f"{summary['unique_images']} / {MIN_UNIQUE_IMAGES}")
-    st.caption(f"저장된 사용자 확정 박스 · {summary['box_count']}개")
-    st.markdown("#### 사용자 소자 종류")
-    st.caption("기본 YOLO 18종은 그대로 유지합니다. 새 종류는 별도 레이블로 모으고, 진단에는 선택한 상위 종류를 사용합니다. 추가 레이블은 다음 후보 재학습 데이터에 포함됩니다.")
-    with st.form(f"cc_add_user_component_type_{project.project_id}"):
-        new_type_name = st.text_input("새 소자 종류 이름", placeholder="예: 전압 감시기")
-        new_type_parent = st.selectbox("진단에 사용할 상위 종류", COMPONENT_CLASSES)
-        new_type_description = st.text_input("구분 설명 (선택)", placeholder="외관이나 각인으로 구별하는 기준")
-        add_type = st.form_submit_button("소자 종류 추가")
-    if add_type:
-        try:
-            saved_type = save_user_component_type(display_name=new_type_name,
-                                                  parent_class=new_type_parent,
-                                                  description=new_type_description)
-            st.success(f"{saved_type['display_name']} 종류를 추가했습니다. 다음 박스 검수에서 선택할 수 있습니다.")
-        except ValueError as exc:
-            st.warning(str(exc))
-    custom_types = user_component_types()
-    if custom_types:
-        st.dataframe([{"소자 종류": row["display_name"], "진단 상위 종류": row["parent_class"],
-                        "학습 레이블": row["type_id"], "설명": row["description"]}
-                       for row in custom_types], hide_index=True, use_container_width=True)
-    for error in save_errors:
-        st.warning(f"백그라운드 표본 저장 실패 · {error}")
-    weight_root = resolve_pcb_weights_root(APP_DIR)
-    checkpoint = weight_root / "external" / "pcb-yolov8s-detection" / "best.pt"
-    same_training = summary.get("already_trained")
-    active_training = summary.get("active_job")
-    if not checkpoint.is_file():
-        st.warning(f"재학습용 초기 가중치가 로컬에 없습니다 · {checkpoint}")
-    can_start = (summary["unique_images"] >= MIN_UNIQUE_IMAGES and checkpoint.is_file()
-                 and same_training is None and active_training is None)
-    if st.button("별도 재학습 시작", key=f"cc_review_retraining_start_{project.project_id}",
-                 type="primary", disabled=not can_start):
-        try:
-            result = start_retraining(checkpoint=checkpoint, epochs=50)
-            if result.get("status") == "RUNNING":
-                st.success(f"재학습을 별도 작업으로 시작했습니다 · 작업 {result['job_id']}")
-            elif result.get("status") == "ALREADY_TRAINED":
-                st.info("현재와 같은 검수 표본 묶음으로 이미 학습했습니다. 새 고유 이미지나 수정된 검수 박스가 모인 뒤 다시 시작하세요.")
-        except (OSError, ValueError, RuntimeError) as exc:
-            st.error(f"재학습을 시작하지 못했습니다 · {exc}")
-    if same_training:
-        st.info("현재 표본 묶음은 이미 학습했습니다. 같은 사진을 다시 저장해도 재학습하지 않습니다.")
-    if active_training:
-        st.info(f"재학습 진행 중 · 작업 {active_training['job_id']}")
-        if st.button("재학습 상태 새로고침", key=f"cc_review_retraining_refresh_{project.project_id}"):
-            st.rerun()
-    last_job = summary.get("last_job")
-    if last_job:
-        st.caption(f"최근 작업 · {last_job['status']} · {last_job['job_id']}")
-        if last_job.get("status") == "SUCCEEDED":
-            metadata = Path(last_job["output_dir"]) / "candidate.json"
-            if metadata.is_file():
-                candidate = json.loads(metadata.read_text()).get("candidate_weights")
-                st.code(str(candidate), language=None)
-        elif last_job.get("status") == "FAILED":
-            st.error(f"학습 실패 · {last_job.get('error') or '로그 확인 필요'}")
-            log_path = Path(last_job["log_path"])
-            if log_path.is_file():
-                with st.expander("학습 오류 자세히 보기"):
-                    st.code(log_path.read_text(errors="replace")[-6000:], language=None)
 
 
 def board_suspects(state: Any, project: ProjectContext) -> list[dict[str, Any]]:
@@ -207,7 +128,14 @@ def confirm_qwen_component_type(row: dict[str, Any], *, base_class: str, subtype
 
 def dismiss_board_suspect(state: Any, project: ProjectContext, board_component_id: str) -> None:
     owner = f"{project.project_id}|{project.board_id or ''}"
-    state.setdefault(USER_SUSPECTS_KEY, {}).setdefault(owner, {}).pop(str(board_component_id), None)
+    rows = state.setdefault(USER_SUSPECTS_KEY, {}).setdefault(owner, {})
+    existing = rows.get(str(board_component_id))
+    if isinstance(existing, dict) and existing.get("user_reported_fault_description"):
+        existing["is_user_suspected"] = False
+        existing["suspected_fault_mode"] = None
+        rows[str(board_component_id)] = existing
+    else:
+        rows.pop(str(board_component_id), None)
     dismissed_store = state.setdefault(USER_SUSPECTS_DISMISSED_KEY, {})
     dismissed_store[owner] = set(dismissed_store.get(owner, set())) | {str(board_component_id)}
     state[USER_SUSPECTS_DISMISSED_KEY] = dismissed_store
@@ -219,7 +147,60 @@ def add_board_suspect(state: Any, project: ProjectContext, board_component_id: s
     dismissed_store = state.setdefault(USER_SUSPECTS_DISMISSED_KEY, {})
     dismissed_store[owner] = set(dismissed_store.get(owner, set())) - {str(board_component_id)}
     state[USER_SUSPECTS_DISMISSED_KEY] = dismissed_store
-    state.setdefault(USER_SUSPECTS_KEY, {}).setdefault(owner, {})[str(board_component_id)] = suspect
+    rows = state.setdefault(USER_SUSPECTS_KEY, {}).setdefault(owner, {})
+    existing = rows.get(str(board_component_id), {})
+    rows[str(board_component_id)] = {**existing, **suspect, "is_user_suspected": True}
+
+
+def render_selected_component_fault_note(
+    st: Any, project: ProjectContext, component: ComponentOverlayViewModel,
+    board_component_id: str, *, key_suffix: str,
+) -> None:
+    """Save a user-reported symptom on the selected component for diagnosis context."""
+    owner = f"{project.project_id}|{project.board_id or ''}"
+    rows = st.session_state.setdefault(USER_SUSPECTS_KEY, {}).setdefault(owner, {})
+    existing = rows.get(board_component_id, {})
+    widget_key = f"cc_component_fault_note_{project.project_id}_{board_component_id}"
+    if widget_key not in st.session_state:
+        st.session_state[widget_key] = str(existing.get("user_reported_fault_description") or "")
+    with st.form(f"cc_component_fault_note_form_{key_suffix}"):
+        st.text_area("이 소자에서 관찰한 고장 내용", key=widget_key, height=72,
+                     placeholder="예: 전원을 켜도 상단 LED 네 개 중 이 박스의 LED만 켜지지 않음")
+        submitted = st.form_submit_button("소자 고장 내용 저장", use_container_width=True)
+    if not submitted:
+        return
+    description = str(st.session_state.get(widget_key) or "").strip()[:1000]
+    updated = dict(existing)
+    photo_id = (component.source_backend_photo_ids[0]
+                if len(component.source_backend_photo_ids) == 1 else existing.get("photo_id"))
+    photo_record = next((row for row in project.image_records if row.image_id == photo_id), None)
+    updated.update({
+        "component_id": component.component_id,
+        "board_component_id": board_component_id,
+        "component_type": component.component_type,
+        "reference_designator": (component.reference_designators[0]
+                                  if component.reference_designators else component.component_id),
+        "user_reported_fault_description": description,
+        "fault_description_source": "USER_REPORTED",
+        "evidence_status": "UNVERIFIED",
+        "selection_source": "USER",
+        "is_user_suspected": bool(existing.get("is_user_suspected", existing.get("suspected_fault_mode") is not None)),
+        "photo_id": photo_id,
+        "photo_sha256": getattr(photo_record, "content_sha256", existing.get("photo_sha256")),
+        "selection_version": (getattr(component, "source_observation_fingerprint", None)
+                              or existing.get("selection_version")),
+        "bbox_xyxy": list(component.bbox_xyxy),
+    })
+    if description:
+        rows[board_component_id] = updated
+    elif updated.get("is_user_suspected"):
+        updated.pop("user_reported_fault_description", None)
+        rows[board_component_id] = updated
+    else:
+        rows.pop(board_component_id, None)
+    st.session_state[USER_SUSPECTS_KEY][owner] = rows
+    st.success("선택 소자의 사용자 관찰 내용이 진단 입력에 저장됐습니다. 고장 확정 근거가 아닌 사용자 보고로 전달됩니다.")
+    st.rerun()
 
 
 def render_inspection_panel(
@@ -236,7 +217,7 @@ def render_inspection_panel(
     compact: bool = False,
     on_focus_component: Any = None,
 ) -> None:
-    from circuitcare.vision.review_learning import user_component_types
+    from circuitcare.vision.review_learning import save_user_component_type, user_component_types
 
     custom_type_rows = user_component_types()
     custom_types = {str(row["type_id"]): row for row in custom_type_rows}
@@ -260,6 +241,23 @@ def render_inspection_panel(
             f"탐지·검수 대상 {len(visible_components)}개 · 확인 {confirmed_components}개 · "
             f"미확인 {len(visible_components) - confirmed_components}개"
         )
+        if not preview:
+            with st.popover("소자 종류 추가", help="사용자 정의 소자 종류를 저장하면 박스 분류 목록에 나타납니다."):
+                with st.form(f"cc_add_user_component_type_inline_{project.project_id}"):
+                    new_type_name = st.text_input("새 소자 종류 이름", placeholder="예: 전압 감시기")
+                    new_type_parent = st.selectbox("진단 상위 종류", COMPONENT_CLASSES,
+                                                   format_func=lambda value: COMPONENT_LABELS.get(value, value))
+                    new_type_description = st.text_input("구분 설명 (선택)")
+                    add_type = st.form_submit_button("추가")
+                if add_type:
+                    try:
+                        saved_type = save_user_component_type(
+                            display_name=new_type_name, parent_class=new_type_parent,
+                            description=new_type_description,
+                        )
+                        st.success(f"{saved_type['display_name']}을 저장했습니다. 소자 종류 목록에 추가됩니다.")
+                    except ValueError as exc:
+                        st.warning(str(exc))
         if suspects:
             with st.popover(f"내가 의심한 소자 · {len(suspects)}개", use_container_width=True):
                 registry_rows = board_registry.get("components", []) if isinstance(board_registry, dict) else []
@@ -576,9 +574,11 @@ def render_inspection_panel(
                         st.rerun()
                 suspect_owner = f"{project.project_id}|{project.board_id or ''}"
                 suspects = st.session_state.setdefault(USER_SUSPECTS_KEY, {}).setdefault(suspect_owner, {})
-                if st.button("의심 해제" if board_component_id in suspects else "의심 소자로 지정",
+                active_suspect = (board_component_id in suspects
+                                  and suspects[board_component_id].get("is_user_suspected", True))
+                if st.button("의심 해제" if active_suspect else "의심 소자로 지정",
                              key=f"cc_compact_suspect_toggle_{project.project_id}_{board_component_id}"):
-                    if board_component_id in suspects:
+                    if active_suspect:
                         dismiss_board_suspect(st.session_state, project, board_component_id)
                     else:
                         source_photo = (selected_component.source_backend_photo_ids[0]
@@ -817,7 +817,8 @@ def render_inspection_panel(
                 inventory_item["verified_group_id"] = verified_group_id.strip() if group_confirmed and verified_group_id.strip() else None
                 inventory_item["group_confirmation_status"] = "USER_CONFIRMED" if inventory_item["verified_group_id"] else "UNKNOWN"
             board_component_id = str(selected_component.board_component_id or selected_component.component_id)
-            active_suspect = board_component_id in suspects
+            active_suspect = (board_component_id in suspects
+                              and suspects[board_component_id].get("is_user_suspected", True))
             if st.button("의심 소자 해제" if active_suspect else "의심 소자로 지정",
                          key=f"cc_v4_toggle_suspect_{hash(suspect_owner)}_{board_component_id}"):
                 if active_suspect:

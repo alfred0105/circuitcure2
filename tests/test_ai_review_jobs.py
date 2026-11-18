@@ -247,7 +247,7 @@ def test_worker_failure_returns_original_batch_error(monkeypatch):
     assert result['error'] == 'Ollama request timed out'
 
 
-def test_initial_review_runs_class_then_duplicate_checks_and_unloads_qwen(monkeypatch):
+def test_initial_review_runs_selected_classification_without_duplicate_pass(monkeypatch):
     from circuitcare.vision import component_recognition_panel as panel
 
     calls = []
@@ -261,20 +261,9 @@ def test_initial_review_runs_class_then_duplicate_checks_and_unloads_qwen(monkey
         }
         return "complete"
 
-    def duplicates(api, **kwargs):
-        calls.append("duplicates")
-        review = api.session_state["cc_component_qwen_review_scope"]
-        review["duplicate_reviews"] = [{"detection_ids": ["a", "b"], "decision": "uncertain"}]
-        return {"total": 1, "reviewed": 1, "pending": 0, "deferred": 0, "failed": 0}
-
-    class Client:
-        def unload_model(self, model):
-            calls.append(f"unload:{model}")
-            return True
-
     monkeypatch.setattr(panel, "ensure_ai_component_review", classify)
-    monkeypatch.setattr(panel, "continue_duplicate_pair_review", duplicates)
-    monkeypatch.setattr(panel, "_ollama_review_client", lambda: Client())
+    monkeypatch.setattr(ai_review_jobs, "_unload_review_model",
+                        lambda state, scope, progress: calls.append("unload") or True)
     result = ai_review_jobs._run({
         "state": {"rows": [
             {"component_id": "a", "소자 종류": "resistor", "상태": "검수 필요",
@@ -286,6 +275,6 @@ def test_initial_review_runs_class_then_duplicate_checks_and_unloads_qwen(monkey
                  {"component_id": "b", "x1": 3, "y1": 3, "x2": 22, "y2": 22}],
         "records_key": "rows", "fingerprint": "fp", "selected_component_ids": ["a", "b"],
     })
-    assert calls == ["class", "duplicates", "unload:qwen3.5:9b"]
+    assert calls == ["class", "unload"]
     assert result["status"] == "COMPLETE"
-    assert result["state"]["cc_component_qwen_review_scope"]["duplicate_reviews"][0]["detection_ids"] == ["a", "b"]
+    assert "duplicate_reviews" not in result["state"]["cc_component_qwen_review_scope"]

@@ -7,7 +7,7 @@ from circuitcare.benchmark.pcb_validation import (
 )
 from circuitcare.frontend.board_component_registry import (
     build_board_component_registry, current_source_observation_fingerprint,
-    resolve_measurement_board_component,
+    resolve_measurement_board_component, source_component_key,
 )
 from circuitcare.frontend.measurement_models import create_measurement_record
 from circuitcare.dashboard.views.measurement_panel import _measurement_verification_gaps
@@ -130,6 +130,108 @@ def test_harness_uses_production_diagnose_and_separates_truth():
         validate_case(leaked)
 
 
+def test_sequential_measurements_support_two_faults_without_dropping_the_other_component():
+    """Synthetic workflow regression: each reading must affect only its matched hypothesis."""
+    photo_id = "fixture-front"
+    photo_sha = "synthetic-photo-sha"
+    snapshot = {
+        "version": "synthetic-map-v1", "image_fingerprint": photo_sha,
+        "review_version": "synthetic-review-v1", "registry_components": [
+            {"component_id": "R1", "component_type": "resistor", "bbox_xyxy": [10, 10, 30, 30],
+             "identification_status": "USER_CONFIRMED", "presence_status": "CONFIRMED",
+             "component_type_status": "USER_CONFIRMED"},
+            {"component_id": "LED1", "component_type": "led", "bbox_xyxy": [50, 10, 70, 30],
+             "identification_status": "USER_CONFIRMED", "presence_status": "CONFIRMED",
+             "component_type_status": "USER_CONFIRMED"},
+        ],
+    }
+    registry = build_board_component_registry(
+        {}, project_id="synthetic", board_id="multi-fault-board", photo_snapshots={photo_id: snapshot})
+    fingerprints = {
+        local_id: current_source_observation_fingerprint(registry, photo_id=photo_id, component_id=local_id)
+        for local_id in ("R1", "LED1")
+    }
+
+    def synthetic_reading(local_id, fault_id, test_id, measurement_type, target, value, low, high):
+        return {
+            "measurement_id": f"synthetic-{local_id}", "project_id": "synthetic", "board_id": "multi-fault-board",
+            "component_id": local_id, "source_component_id": local_id, "source_photo_id": photo_id,
+            "source_photo_fingerprint": photo_sha,
+            "source_observation_fingerprint": fingerprints[local_id], "component_map_version": "synthetic-map-v1",
+            "component_identity_status": "USER_CONFIRMED", "fault_hypothesis": fault_id,
+            "test_id": test_id, "measurement_target": target, "measurement_location": target,
+            "operating_conditions": "POWER_OFF_CONFIRMED", "reference_conditions": "POWER_OFF_CONFIRMED",
+            "measurement_conditions": {"power_state": "POWER_OFF_CONFIRMED",
+                "stored_energy_status": "SAFE_CONFIRMED", "component_isolation_status": "ISOLATED_CONFIRMED",
+                "measurement_location_verified": True, "reference_source_verified": True},
+            "location_verified": True, "source": "user_measurement", "verification_status": "USER_REPORTED",
+            "uncertainty": 0.01, "uncertainty_source": "SYNTHETIC_FIXTURE_ONLY",
+            "reference_min": low, "reference_max": high, "reference_source": "SYNTHETIC_FIXTURE_ONLY",
+            "reference_source_id": "SYNTHETIC_FIXTURE_ONLY", "reference_verification_status": "DATASHEET_VERIFIED",
+            "measurement_type": measurement_type, "value": value,
+        }
+
+    case = {
+        "case_id": "synthetic-two-faults", "board_id": "multi-fault-board", "case_kind": "SYNTHETIC",
+        "photo_paths": [], "inference_input": {
+            "project_id": "synthetic", "photo_id": photo_id, "photo_snapshots": {photo_id: snapshot},
+            "symptoms": ["LOCALIZED_HEATING", "LED_NOT_LIT", "OTHER_FUNCTIONS_WORKING"],
+            "symptom_text": "기판은 동작하지만 LED 하나가 켜지지 않고 저항 근처가 뜨겁습니다.",
+            "observations": [], "measurements": [], "skip_question_value_simulation": True,
+        },
+        # Deliberately not supplied to inference. The test asserts only that the two explicit
+        # synthetic readings remain scoped to their own component and fault hypothesis.
+        "reference": {"adjudication_status": "UNKNOWN", "evidence_sources": []},
+    }
+    resistor_reading = synthetic_reading(
+        "R1", "RESISTOR_FAILURE", "isolated_resistance", "resistance", "저항 양단", 10.0, 1.0, 2.0)
+    led_reading = synthetic_reading(
+        "LED1", "LED_FAILURE", "isolated_forward_drop", "voltage", "LED 양단 애노드 캐소드", 9.0, 1.5, 2.5)
+
+    def run_with(readings):
+        payload = {**case, "inference_input": {**case["inference_input"], "measurements": readings}}
+        return run_case(payload, execution_mode="SYNTHETIC")
+
+    initial = run_with([])
+    after_resistor = run_with([resistor_reading])
+    after_led = run_with([resistor_reading, led_reading])
+    resistor_board_id = registry["source_to_board_id"][source_component_key(photo_id, "R1")]
+    led_board_id = registry["source_to_board_id"][source_component_key(photo_id, "LED1")]
+
+    def status(result, board_component_id, fault_id):
+        candidate = next(row for row in result["all_component_candidates"]
+                         if row["component_id"] == board_component_id and row["fault_hypothesis"] == fault_id)
+        return candidate["visual_status"]
+
+    assert status(initial, resistor_board_id, "RESISTOR_FAILURE") == "SUSPECTED"
+    assert status(initial, led_board_id, "LED_FAILURE") == "SUSPECTED"
+    assert status(after_resistor, resistor_board_id, "RESISTOR_FAILURE") == "FAULT_SUPPORTED"
+    assert status(after_resistor, led_board_id, "LED_FAILURE") == "SUSPECTED"
+    assert status(after_led, resistor_board_id, "RESISTOR_FAILURE") == "FAULT_SUPPORTED"
+    assert status(after_led, led_board_id, "LED_FAILURE") == "FAULT_SUPPORTED"
+    assert len(after_resistor["measurement_evidence"]) == 1
+    assert len(after_led["measurement_evidence"]) == 2
+    assert {row["component_id"] for row in after_led["measurement_evidence"]} == {resistor_board_id, led_board_id}
+
+
+def test_harness_can_skip_only_expensive_question_value_simulation(monkeypatch):
+    import circuitcare.benchmark.pcb_validation as validation
+
+    calls = []
+    original = validation.diagnose
+
+    def track_diagnose(*args, **kwargs):
+        calls.append(kwargs.get("_simulate_questions"))
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(validation, "diagnose", track_diagnose)
+    case = _case()
+    case["inference_input"]["skip_question_value_simulation"] = True
+    run = run_case(case)
+    assert run["status"].startswith(("CANDIDATES", "ABSTAIN"))
+    assert calls == [False]
+
+
 def test_mock_model_stages_are_separate_and_llm_failure_keeps_rule_diagnosis():
     case = _case()
     run = run_case(case, detector=lambda _inputs: {"detections": [], "status": "MOCK"},
@@ -231,12 +333,38 @@ def test_topk_cutoff_includes_all_equal_score_ties_without_duplicate_ids():
     case = _case()
     case["reference"] = {"adjudication_status": "CONFIRMED", "fault_type_ids": ["F2"],
                          "evidence_sources": ["repair_record"]}
-    run = {"execution_mode": "MOCK", "hypotheses": [
+    run = {"case_id": case["case_id"], "execution_mode": "MOCK", "hypotheses": [
         {"fault_id": "F1", "score": 1}, {"fault_id": "F2", "score": 1},
         {"fault_id": "F2", "score": 1}], "top_candidates": [], "detections": []}
     score = score_run(case, run)
     assert score["fault_type_top1_hit"] is True
+    assert score["fault_type_top1_unique_hit"] is None
+    assert score["fault_type_top1_tie_size"] == 2
     assert score["fault_type_top3_hit"] is True
+    metrics = evaluate_runs([case], [run])
+    assert metrics["fault_type_top1"]["value"] == 1.0  # tie-inclusive Hit@1
+    assert metrics["fault_type_top1_unique"]["status"] == "NOT_EVALUATED"
+    assert metrics["fault_type_top1_tie_rate"]["value"] == 1.0
+
+
+def test_component_top1_does_not_claim_a_unique_hit_when_all_same_type_candidates_tie():
+    case = _case()
+    case["reference"] = {"adjudication_status": "CONFIRMED",
+        "fault_type_ids": ["LED_FAILURE"], "faulty_board_component_ids": ["bc-led-3"],
+        "evidence_sources": ["simulated fault injection"]}
+    run = {"case_id": case["case_id"], "execution_mode": "SYNTHETIC",
+        "hypotheses": [{"fault_id": "LED_FAILURE", "score": 2}],
+        "all_component_candidates": [
+            {"component_id": f"bc-led-{i}", "fault_hypothesis": "LED_FAILURE", "score": 2}
+            for i in range(1, 5)], "top_candidates": [], "detections": []}
+    score = score_run(case, run)
+    assert score["component_top1_hit"] is True  # tie-inclusive Hit@1 only says it remains in the tied set
+    assert score["component_top1_unique_hit"] is None
+    assert score["component_top1_tie_size"] == 4
+    report = evaluate_runs([case], [run])
+    assert report["component_top1_unique"]["status"] == "NOT_EVALUATED"
+    assert report["component_top1_tie_rate"] == {
+        "status": "EVALUATED", "value": 1.0, "n": 1, "mean_top1_tie_size": 4.0}
 
 
 def test_non_component_fault_does_not_score_component_location():

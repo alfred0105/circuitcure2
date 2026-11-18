@@ -16,6 +16,54 @@ def analyze_evidence_gaps(
     modes = knowledge.get("fault_modes", {}).get("fault_modes", {})
     tests = knowledge.get("test_catalog", {}).get("tests", {})
     confirmed = {str(value) for value in confirmed_types}
+    # Index the large candidate and evidence lists once. A busy board can have
+    # hundreds of detections and several hypotheses; filtering the full lists
+    # for every hypothesis made this stage quadratic on noisy detector output.
+    candidates_by_fault: dict[str, list[dict[str, Any]]] = {}
+    for row in component_candidates:
+        if not isinstance(row, dict):
+            continue
+        candidate_fault = str(row.get("fault_hypothesis") or row.get("fault_id") or "")
+        candidates_by_fault.setdefault(candidate_fault, []).append(row)
+
+    ledger_by_component: dict[str, list[tuple[int, dict[str, Any]]]] = {}
+    ledger_without_component: list[tuple[int, dict[str, Any]]] = []
+    for index, item in enumerate(evidence_ledger):
+        if not isinstance(item, dict):
+            continue
+        component_id = str(item.get("component_id") or "")
+        if component_id:
+            ledger_by_component.setdefault(component_id, []).append((index, item))
+        else:
+            ledger_without_component.append((index, item))
+
+    completed_tests_by_fault: dict[str, set[str]] = {}
+    completed_tests_by_fault_component: dict[tuple[str, str], set[str]] = {}
+    reference_components_by_fault: dict[str, set[str]] = {}
+    for row in measurement_evidence:
+        if not isinstance(row, dict):
+            continue
+        fault = str(row.get("fault_hypothesis") or "")
+        component_id = str(row.get("board_component_id") or row.get("component_id") or "")
+        if (row.get("test_id") and row.get("used_for_ranking")
+                and row.get("fault_hypothesis")):
+            test_id = str(row["test_id"])
+            completed_tests_by_fault.setdefault(fault, set()).add(test_id)
+            completed_tests_by_fault_component.setdefault((fault, component_id), set()).add(test_id)
+        if (row.get("used_for_ranking") is True
+                and row.get("reference_verification_status") in {"DATASHEET_VERIFIED", "BOARD_SPEC_VERIFIED"}
+                and row.get("reference_min") is not None and row.get("reference_max") is not None
+                and str(row.get("reference_source") or "").strip()
+                and str(row.get("reference_source_id") or "").strip()):
+            reference_components_by_fault.setdefault(fault, set()).add(component_id)
+
+    available_roles = {str(row.get("role")) for row in functional_blocks if isinstance(row, dict)}
+    available_roles.update(str(role) for row in (component_roles or []) if isinstance(row, dict)
+                           for role in row.get("candidate_blocks", []))
+    verified_roles = {str(row.get("role")) for row in functional_blocks
+                      if isinstance(row, dict) and row.get("verification_status") == "VERIFIED"}
+    verified_roles.update(str(role) for row in (component_roles or []) if isinstance(row, dict)
+                          for role in row.get("confirmed_functional_roles", []))
     output = []
     for hypothesis in hypotheses:
         fault_id = str(hypothesis.get("fault_id") or "")
@@ -23,18 +71,28 @@ def analyze_evidence_gaps(
         scoped_block_id = str(hypothesis.get("functional_block_id") or "")
         mode = modes.get(fault_id, {})
         related_ids = [str(value) for value in hypothesis.get("related_component_ids", []) if value]
-        related_candidates = [row for row in component_candidates
-                              if str(row.get("fault_hypothesis") or row.get("fault_id") or "") == fault_id
-                              and (not scoped_block_id or
-                                   str(row.get("board_component_id") or row.get("component_id") or "") in related_ids)]
+        fault_candidates = candidates_by_fault.get(fault_id, [])
+        related_candidates = [row for row in fault_candidates
+                              if not scoped_block_id or
+                              str(row.get("board_component_id") or row.get("component_id") or "") in related_ids]
         related_ids = list(dict.fromkeys([*related_ids, *[
             str(row.get("board_component_id") or row.get("component_id") or "")
             for row in related_candidates if row.get("board_component_id") or row.get("component_id")
         ]]))
-        relevant_ledger = [item for item in evidence_ledger
-                           if (not item.get("component_id") or item.get("component_id") in related_ids)
-                           and (not scoped_block_id or item.get("scope") != "functional_block"
-                                or str(item.get("subject_id") or "") == scoped_block_id)]
+        relevant_ledger_indexed = list(ledger_without_component)
+        for component_id in related_ids:
+            relevant_ledger_indexed.extend(ledger_by_component.get(component_id, []))
+        if scoped_block_id:
+            relevant_ledger_indexed = [entry for entry in relevant_ledger_indexed
+                                       if entry[1].get("scope") != "functional_block"
+                                       or str(entry[1].get("subject_id") or "") == scoped_block_id]
+        relevant_ledger_indexed.sort(key=lambda entry: entry[0])
+        relevant_ledger = [item for _index, item in relevant_ledger_indexed]
+        relevant_ledger_by_component: dict[str, list[tuple[int, dict[str, Any]]]] = {}
+        for index, item in relevant_ledger_indexed:
+            component_id = str(item.get("component_id") or "")
+            if component_id:
+                relevant_ledger_by_component.setdefault(component_id, []).append((index, item))
         missing = []
         required_types = {str(value) for value in mode.get("required_component_types", [])}
         missing_types = sorted(required_types - confirmed)
@@ -43,13 +101,6 @@ def analyze_evidence_gaps(
                             "description": "확인된 소자 종류가 부족합니다: " + ", ".join(missing_types),
                             "verification_methods": ["PCB 소자 검수"]})
         required_roles = {str(value) for value in mode.get("functional_roles", [])}
-        available_roles = {str(row.get("role")) for row in functional_blocks if isinstance(row, dict)}
-        available_roles.update(str(role) for row in (component_roles or []) if isinstance(row, dict)
-                               for role in row.get("candidate_blocks", []))
-        verified_roles = {str(row.get("role")) for row in functional_blocks
-                          if isinstance(row, dict) and row.get("verification_status") == "VERIFIED"}
-        verified_roles.update(str(role) for row in (component_roles or []) if isinstance(row, dict)
-                              for role in row.get("confirmed_functional_roles", []))
         if required_roles and not (required_roles & verified_roles):
             inferred_match = required_roles & available_roles
             missing.append({"kind": "functional_role", "status": "INCONCLUSIVE",
@@ -58,11 +109,9 @@ def analyze_evidence_gaps(
                                            + ", ".join(sorted(required_roles)),
                             "verification_methods": ["각인·실크스크린·부품 정보 확인"]})
         required_tests = {str(value) for value in mode.get("required_measurement_tests", [])}
-        completed_tests = {str(row.get("test_id")) for row in measurement_evidence
-                           if row.get("test_id") and row.get("used_for_ranking")
-                           and row.get("fault_hypothesis") == fault_id
-                           and (not related_ids or str(row.get("board_component_id") or row.get("component_id") or "")
-                                in related_ids)}
+        completed_tests = (set(completed_tests_by_fault.get(fault_id, set())) if not related_ids else
+                           set().union(*(completed_tests_by_fault_component.get((fault_id, component_id), set())
+                                         for component_id in related_ids)))
         for test_id in sorted(required_tests - completed_tests):
             test = tests.get(test_id, {})
             missing.append({"kind": "measurement", "status": "UNKNOWN",
@@ -73,17 +122,9 @@ def analyze_evidence_gaps(
         needs_power_spec = bool(required_roles & {"power", "protection"}) or any(
             str(test_id).casefold() in {"voltage", "power", "supply", "rail"}
             for test_id in required_tests)
-        reference_basis_present = any(
-            row.get("fault_hypothesis") == fault_id
-            and row.get("used_for_ranking") is True
-            and row.get("reference_verification_status") in {"DATASHEET_VERIFIED", "BOARD_SPEC_VERIFIED"}
-            and row.get("reference_min") is not None and row.get("reference_max") is not None
-            and str(row.get("reference_source") or "").strip()
-            and str(row.get("reference_source_id") or "").strip()
-            for row in measurement_evidence
-            if isinstance(row, dict)
-            and (not related_ids or str(row.get("board_component_id") or row.get("component_id") or "") in related_ids)
-        )
+        reference_components = reference_components_by_fault.get(fault_id, set())
+        reference_basis_present = (bool(reference_components) if not related_ids else
+                                   bool(reference_components.intersection(related_ids)))
         if needs_power_spec and not reference_basis_present:
             missing.append({"kind": "power_specification", "status": "UNKNOWN",
                             "description": "보드 전원 규격·정상 기준 출처가 확인되지 않았습니다.",
@@ -113,8 +154,10 @@ def analyze_evidence_gaps(
                            and (not required_roles or row.get("role") in required_roles)]
         for block in matching_blocks:
             block_ids = {str(value) for value in block.get("component_ids", []) if value}
-            block_ledger = [item for item in relevant_ledger
-                            if item.get("component_id") in block_ids]
+            block_ledger_indexed = [entry for component_id in block_ids
+                                    for entry in relevant_ledger_by_component.get(component_id, [])]
+            block_ledger_indexed.sort(key=lambda entry: entry[0])
+            block_ledger = [item for _index, item in block_ledger_indexed]
             scoped_gaps.append({"scope_id": str(block.get("block_id") or ""),
                                 "level": "functional_block", "fault_id": fault_id,
                                 "hypothesis_id": hypothesis_id,
@@ -141,7 +184,8 @@ def analyze_evidence_gaps(
             if not component_id:
                 continue
             candidate_gaps = []
-            component_ledger = [item for item in relevant_ledger if item.get("component_id") == component_id]
+            component_ledger = [item for _index, item in
+                                relevant_ledger_by_component.get(component_id, [])]
             identity_verified = any(item.get("kind") == "component_identity" and
                                     item.get("status") == "VERIFIED" for item in component_ledger)
             if not identity_verified:

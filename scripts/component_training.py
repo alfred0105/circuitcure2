@@ -247,7 +247,6 @@ def _new_experiment(data: Path, profile: str, resume: Path | None = None, epochs
 
 
 def smoke(data: Path | None):
-    import torch
     from ultralytics import YOLO
     report = probe_mps()
     device = select_device(report)
@@ -255,14 +254,27 @@ def smoke(data: Path | None):
         from PIL import Image, ImageDraw
         data = DATA_ROOT / "raw" / "smoke" / "data.yaml"
         base = data.parent
+        # Keep the validation image visibly distinct from both training images.
+        # This is only a pipeline smoke fixture (not an accuracy dataset), but
+        # identical train/val pixels can otherwise make validation look
+        # artificially representative.
+        scenes = {
+            "board_a": ((80, 100, 180, 150), (260, 260, 300, 300), (30, 50, 35)),
+            "board_b": ((105, 125, 205, 175), (285, 285, 325, 325), (34, 54, 38)),
+            "board_c": ((130, 150, 230, 200), (230, 300, 270, 340), (38, 58, 42)),
+        }
         for split, files in {"train": ("board_a", "board_b"), "val": ("board_c",)}.items():
             (base / "images" / split).mkdir(parents=True, exist_ok=True)
             (base / "labels" / split).mkdir(parents=True, exist_ok=True)
             for name in files:
-                im = Image.new("RGB", (512, 512), (30, 50, 35)); d = ImageDraw.Draw(im)
-                d.rectangle((80, 100, 180, 150), fill=(180, 110, 50)); d.rectangle((260, 260, 300, 300), fill=(60, 60, 60))
+                resistor, capacitor, background = scenes[name]
+                im = Image.new("RGB", (512, 512), background); d = ImageDraw.Draw(im)
+                d.rectangle(resistor, fill=(180, 110, 50)); d.rectangle(capacitor, fill=(60, 60, 60))
                 im.save(base / "images" / split / f"{name}.jpg")
-                (base / "labels" / split / f"{name}.txt").write_text("0 0.253906 0.244141 0.195312 0.097656\n1 0.546875 0.546875 0.078125 0.078125\n")
+                labels = []
+                for class_id, (x1, y1, x2, y2) in enumerate((resistor, capacitor)):
+                    labels.append(f"{class_id} {(x1 + x2) / 1024:.6f} {(y1 + y2) / 1024:.6f} {(x2 - x1) / 512:.6f} {(y2 - y1) / 512:.6f}")
+                (base / "labels" / split / f"{name}.txt").write_text("\n".join(labels) + "\n")
         data.write_text("path: " + str(base.resolve()) + "\ntrain: images/train\nval: images/val\nnames:\n  0: resistor\n  1: capacitor\n")
         print(f"Using generated synthetic pipeline fixture only: {data}")
     model = YOLO("yolov8n.pt")

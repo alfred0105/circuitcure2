@@ -54,9 +54,10 @@ def main():
                           check=False).returncode != 0:
             raise SystemExit('CIRCUITCARE_MLX_PYTHON must provide mlx_vlm.')
         os.environ['CIRCUITCARE_MLX_PYTHON'] = str(mlx_interpreter)
+    port = str(int(os.environ.get('CIRCUITCARE_STREAMLIT_PORT', '8765')))
     os.execv(str(app_interpreter), [str(app_interpreter), '-m', 'streamlit', 'run',
         str(root / 'src/circuitcare/ui.py'), '--server.address', '127.0.0.1',
-        '--server.port', '8765', '--server.headless', 'true'])
+        '--server.port', port, '--server.headless', 'true'])
 
 
 if __name__ == '__main__':

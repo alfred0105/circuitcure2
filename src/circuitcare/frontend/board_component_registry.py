@@ -596,9 +596,23 @@ def build_board_component_registry(
         "side": snapshot.get("side", "unknown"),
         "capture_type": snapshot.get("capture_type", "unknown"),
     } for photo_id, snapshot in sorted(photo_snapshots.items())]
+    # This version tracks the board's analysis inputs without OCR/Qwen proposal
+    # metadata. A new/replaced photo or changed detection run invalidates board
+    # diagnosis, while finishing an AI suggestion alone does not.
+    analysis_photo_inputs = [{
+        "photo_id": row["photo_id"],
+        "image_fingerprint": row.get("image_fingerprint"),
+        "detection_status": row.get("detection_status"),
+    } for row in photo_manifest]
+    analysis_version = hashlib.sha256(json.dumps(
+        {"project_id": str(project_id), "board_id": str(board_id or ""),
+         "photos": analysis_photo_inputs}, ensure_ascii=False, sort_keys=True,
+        separators=(",", ":"),
+    ).encode()).hexdigest()
     payload = {"project_id": str(project_id), "board_id": str(board_id or ""),
                "photos": photo_manifest, "components": components, "source_to_board_id": source_to_board,
                "confirmed_links": [list(link) for link in sorted(set(all_links))],
+               "analysis_version": analysis_version,
                "inactive_links": sorted(inactive_links, key=lambda item: (item["source_keys"], item["reason"]))}
     version_payload = json.dumps(payload, ensure_ascii=False, sort_keys=True,
                                  separators=(",", ":"), default=str).encode()

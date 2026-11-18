@@ -7,12 +7,10 @@ from circuitcare.dashboard.views import unified_workspace as workspace
 from circuitcare.dashboard.views import symptom_diagnosis_panel as symptoms
 from circuitcare.dashboard.views import inspection_panel as inspection
 from circuitcare.frontend.models import ProjectContext
-from circuitcare.frontend.component_overlay_models import ComponentOverlayViewModel
 from circuitcare.frontend.workbench_state import (
     ACTIVE_PHOTO_KEY, SELECTION_KEY, WORKFLOW_REVIEW, WORKFLOW_QUESTIONS, WORKFLOW_INSPECTION, WORKFLOW_COMPLETE,
     get_workflow_state, transition_workflow, enter_workbench,
 )
-from circuitcare.dashboard.views.symptom_diagnosis_panel import candidate_focus_widget_key
 from circuitcare.dashboard.views.symptom_diagnosis_panel import (
     _queue_measurement_change_rerun, _consume_measurement_change_rerun,
     _ensure_question_plan, _question_plan_fingerprint, _save_follow_up_answer,
@@ -95,6 +93,12 @@ class _StreamlitStub:
     def expander(self, *_args, **_kwargs):
         return _Context()
 
+    def popover(self, *_args, **_kwargs):
+        return _Context()
+
+    def form(self, *_args, **_kwargs):
+        return _Context()
+
     def radio(self, label, options, *, key=None, **_kwargs):
         self.radio_calls.append((label, tuple(options), key))
         return self.session_state.get(key, options[0])
@@ -104,18 +108,6 @@ class _StreamlitStub:
 
     def __getattr__(self, _name):
         return lambda *_args, **_kwargs: None
-
-
-def test_analysis_workspace_only_renders_selected_panel_instead_of_hidden_tabs(monkeypatch):
-    project = ProjectContext(project_id="project-1", board_id="board-1")
-    state = {}
-    enter_workbench(state, project)
-    st = _StreamlitStub(state=state)
-    calls = []
-    monkeypatch.setattr(workspace, "render_symptom_diagnosis_panel", lambda *_args, **_kwargs: calls.append("symptom"))
-    workspace._render_fault_analysis_workspace(st, project, preview=False, mode="증상")
-
-    assert calls == ["symptom"]
 
 
 def test_workflow_state_is_board_scoped_and_only_accepts_explicit_valid_transitions():
@@ -342,23 +334,6 @@ def test_inspection_targets_use_real_registry_ids_order_evidence_and_never_inven
     assert workspace._inspection_targets(excluded_only, [], []) == []
 
 
-def test_cause_candidate_selection_opens_same_pcb_viewer_and_updates_shared_selection():
-    project = ProjectContext(project_id="project-2", board_id="board-2")
-    state = {"circuitcare_v4_current_components": (SimpleNamespace(component_id="U3"),)}
-    enter_workbench(state, project)
-    button_key = candidate_focus_widget_key("analysis_dashboard", "project-2", "board-2", "U3", "")
-    st = _StreamlitStub(state=state, clicked={button_key})
-    result = {"component_candidates": [{
-        "component_id": "U3", "component_type": "ic", "fault_title": "전원 입력 이상",
-        "candidate_rank": 1, "supporting_evidence": ["출력이 없음"],
-        "opposing_evidence": [],
-    }]}
-
-    workspace._render_cause_dashboard(st, project, result)
-
-    assert state[SELECTION_KEY].selected_component == "U3"
-
-
 def test_board_candidate_focus_changes_to_its_source_photo_and_photo_local_box():
     project = ProjectContext("project-board", "board-board")
     state = {}
@@ -376,27 +351,25 @@ def test_board_candidate_focus_changes_to_its_source_photo_and_photo_local_box()
     assert state[SELECTION_KEY].selected_component == "det-17"
 
 
-def test_measurement_target_changes_shared_selection_only_when_callback_runs():
+def test_explicit_component_focus_updates_shared_board_selection():
     project = ProjectContext("project-measure", "board-measure")
     state = {}
     enter_workbench(state, project)
     registry = {"components": [{
         "board_component_id": "bc-2",
-        "presence_status": "UNCONFIRMED",
+        "presence_status": "CONFIRMED",
         "source_components": [{"photo_id": "back-photo", "component_id": "R8",
                                "coordinate_frame": "SOURCE_PHOTO_PIXEL", "bbox_xyxy": [1, 2, 8, 9],
-                               "component_type": "resistor", "review_status": "검수 필요"}],
+                               "component_type": "resistor", "review_status": "사용자 확인"}],
     }]}
     st = _StreamlitStub(state=state)
-    target_key = "measurement-target"
-    state[target_key] = "bc-2"
 
-    workspace._handle_measurement_target_change(state, project, registry, target_key)
+    assert workspace._focus_board_registry_component(st, project, registry, "bc-2")
 
-    assert state[workspace.MEASUREMENT_TARGET_BOARD_COMPONENT_KEY] == "bc-2"
-    assert workspace.BOARD_COMPONENT_SELECTION_KEY not in state
+    assert state[workspace.BOARD_COMPONENT_SELECTION_KEY] == "bc-2"
     assert "circuitcare_v2_photo_choice" not in state
-    assert state[SELECTION_KEY].selected_component is None
+    assert state[SELECTION_KEY].active_photo_id == "back-photo"
+    assert state[SELECTION_KEY].selected_component == "R8"
 
 
 def test_fixed_viewer_shell_starts_at_component_review_with_one_current_stage(monkeypatch):
@@ -751,72 +724,6 @@ def test_dismissed_board_suspect_is_not_restored_by_legacy_scope_migration():
     assert "BC-R1" in state[inspection.USER_SUSPECTS_DISMISSED_KEY][owner]
 
 
-def test_integrated_workspace_uses_candidate_rows_and_guides_measurement(monkeypatch):
-    project = ProjectContext("integrated-p", "integrated-b")
-    component = SimpleNamespace(component_id="R1", board_component_id="BC-R1", component_type="resistor")
-    result = {"candidate_fusion": {"candidates": [
-        {"board_component_id": "BC-R1", "component_id": "R1", "fault_id": "RESISTOR_OPEN"},
-    ]}}
-    snapshot = {"result": result, "record": {"status": "CURRENT"}}
-    monkeypatch.setattr(workspace, "render_symptom_diagnosis_panel", lambda *_a, **_k: None)
-    monkeypatch.setattr(workspace, "current_analysis_snapshot", lambda *_a, **_k: snapshot)
-    measured = []
-    monkeypatch.setattr(workspace, "render_measurement_panel",
-                        lambda _st, _project, **kwargs: measured.append(kwargs["selected_component"]))
-
-    workspace._render_fault_analysis_workspace(
-        _StreamlitStub(state={"circuitcare_v4_current_components": (component,)}), project,
-        preview=False, mode="통합", analysis_snapshot=snapshot,
-        photo_snapshot={"components": (component,)}, board_components=(component,),
-    )
-
-    # A board-level diagnosis DTO has no photo-local geometry and must not be
-    # passed directly into a form that expects a viewer/measurement model.
-    assert measured == [None]
-
-
-def test_integrated_measurement_never_falls_back_to_unrelated_viewer_selection(monkeypatch):
-    project = ProjectContext("integrated-target-p", "integrated-target-b")
-
-    def component(local_id, board_id, kind):
-        return ComponentOverlayViewModel(
-            project_id=project.project_id, board_id=project.board_id, board_side="TOP",
-            component_id=local_id, board_component_id=board_id, component_type=kind,
-            display_label=local_id, canonical_frame_id="photo-1",
-            coordinate_frame="SOURCE_PHOTO_PIXEL", bbox_xyxy=(1, 2, 8, 9), polygon_xy=(),
-            source_backend_photo_ids=("photo-1",), observation_ids=(), detection_confidence=.9,
-            identification_status="USER_CONFIRMED", identity_match_status="PHOTO_LOCAL",
-            ocr_marking=None, possible_part_number=None, evidence=(), overlay_status="CANDIDATE",
-        )
-
-    candidate = component("R1", "BC-R1", "resistor")
-    unrelated_selection = component("C2", "BC-C2", "capacitor")
-    result = {"candidate_fusion": {"candidates": [
-        {"board_component_id": "BC-R1", "component_id": "R1", "fault_id": "RESISTOR_OPEN"},
-    ]}}
-    snapshot = {"result": result, "record": {"status": "CURRENT"}}
-    monkeypatch.setattr(workspace, "render_symptom_diagnosis_panel", lambda *_a, **_k: None)
-    monkeypatch.setattr(workspace, "current_analysis_snapshot", lambda *_a, **_k: snapshot)
-    measured = []
-    monkeypatch.setattr(workspace, "render_measurement_panel",
-                        lambda _st, _project, **kwargs: measured.append(kwargs["selected_component"]))
-    state = {
-        "circuitcare_v4_current_components": (candidate, unrelated_selection),
-        SELECTION_KEY: SimpleNamespace(selected_component="C2"),
-        workspace.BOARD_COMPONENT_SELECTION_KEY: "BC-C2",
-    }
-    workspace._render_fault_analysis_workspace(
-        _StreamlitStub(state=state), project, preview=False, mode="통합", analysis_snapshot=snapshot,
-        photo_snapshot={"components": (candidate, unrelated_selection)},
-        board_components=(candidate, unrelated_selection),
-    )
-
-    assert measured == [candidate]
-    assert state[SELECTION_KEY].selected_component == "C2"
-    assert state[workspace.BOARD_COMPONENT_SELECTION_KEY] == "BC-C2"
-    assert state[workspace.MEASUREMENT_TARGET_BOARD_COMPONENT_KEY] == "BC-R1"
-
-
 def test_excluded_registry_component_cannot_be_focused_as_measurement_or_viewer_target():
     project = ProjectContext("excluded-focus-p", "excluded-focus-b")
     registry = {"components": [{
@@ -828,10 +735,9 @@ def test_excluded_registry_component_cannot_be_focused_as_measurement_or_viewer_
     enter_workbench(state, project)
     st = _StreamlitStub(state=state)
     assert workspace._focus_board_registry_component(st, project, registry, "bc-x") is False
-    state["target"] = "bc-x"
-    workspace._handle_measurement_target_change(state, project, registry, "target")
-    assert workspace.MEASUREMENT_TARGET_BOARD_COMPONENT_KEY not in state
     assert workspace.BOARD_COMPONENT_SELECTION_KEY not in state
+    from circuitcare.frontend.board_component_registry import measurement_view_model_for_board_component
+    assert measurement_view_model_for_board_component(registry, board_component_id="bc-x") is None
 
 
 def test_measurement_change_queues_exactly_one_reanalysis_for_current_fingerprint():
@@ -935,6 +841,7 @@ def test_real_streamlit_app_test_renders_workbench_without_runtime_errors():
 
     assert not app.exception
     assert len(app.radio) == 0  # first workflow stage is component review
+    assert not any(item.label == "증상 설명" for item in app.text_area)
     assert not any(item.label == "작업 패널" for item in app.radio)
     assert not any(item.label == "후보 표시 전략" for item in app.selectbox)
     assert "진단 미실행" in " ".join(item.value for item in app.caption)
@@ -979,6 +886,7 @@ def test_apptest_review_next_button_transitions_only_right_panel_to_questions(mo
 
     assert not app.exception
     assert any("질문 단계 AppTest 확인" in item.value for item in app.markdown)
+    assert any("고장 입력" in item.value for item in app.markdown)
     workflow_store = app.session_state[WORKFLOW_STATES_KEY]
     assert workflow_store[f"{project.project_id}|{project.board_id}"]["stage"] == WORKFLOW_QUESTIONS
 
@@ -987,7 +895,7 @@ def test_apptest_questions_next_uses_current_result_and_real_registry_targets(mo
     app_testing = pytest.importorskip("streamlit.testing.v1")
     from circuitcare.frontend.state import INTAKE_IMAGES_KEY, INTAKE_PROJECT_KEY
     from circuitcare.frontend.workbench_state import (
-        SCREEN_KEY, WORKFLOW_STATES_KEY, transition_workflow,
+        BOARD_COMPONENT_SELECTION_KEY, SCREEN_KEY, WORKFLOW_STATES_KEY, transition_workflow,
     )
 
     project = ProjectContext("workflow-inspection-apptest", "workflow-inspection-board")
@@ -1079,9 +987,18 @@ def test_apptest_questions_next_uses_current_result_and_real_registry_targets(mo
                  if row.get("presence_status") != "EXCLUDED"}
     assert workflow_state["inspection_targets"]
     assert {row["board_component_id"] for row in workflow_state["inspection_targets"]} <= valid_ids
-    assert any(button.label == "이 소자 측정" for button in app.button)
-    next(button for button in app.button if button.label == "이 소자 측정").click().run()
+    assert not any(button.label == "이 소자 측정" for button in app.button)
+    assert any("PCB Viewer에서 고장 의심 소자 박스를 클릭" in item.value for item in app.info)
+    selected_target = workflow_state["inspection_targets"][0]["board_component_id"]
+    app.session_state[BOARD_COMPONENT_SELECTION_KEY] = "unrelated-board-component"
+    app.run()
     assert not app.exception
+    assert not any("측정 입력" in item.value for item in app.markdown)
+    app.session_state[BOARD_COMPONENT_SELECTION_KEY] = selected_target
+    app.run()
+    assert not app.exception
+    assert any("측정 입력" in item.value for item in app.markdown)
+    assert not any("순위" in item.value for item in app.markdown)
     analysis_button = next(button for button in app.button if button.label == "측정 결과 분석")
     assert analysis_button.disabled  # a previous-cycle measurement cannot trigger reassessment
     next(button for button in app.button if button.label == "Mock: 새로운 측정 저장").click().run()
@@ -1114,7 +1031,12 @@ def test_apptest_empty_inspection_queue_returns_to_review_without_losing_history
     monkeypatch.setattr(workspace, "_render_component_inspector", lambda *_args, **_kwargs: None)
     monkeypatch.setattr(workspace, "_diagnosis_status_label", lambda *_args, **_kwargs: "판정 보류")
     monkeypatch.setattr(workspace, "current_analysis_snapshot", lambda *_args, **_kwargs: {
-        "result": None, "record": {"status": "NOT_RUN"}, "input_fingerprint": "empty-fp",
+        # Exercise the *empty current inspection queue* branch. A NOT_RUN
+        # snapshot correctly asks the user to refresh diagnosis first and
+        # returns before rendering the no-target recovery action.
+        "result": {"hypotheses": [], "component_candidates": [],
+                   "all_component_candidates": [], "symptom_codes": ["NO_POWER"]},
+        "record": {"status": AnalysisStatus.CURRENT.value}, "input_fingerprint": "empty-fp",
     })
     monkeypatch.setattr(workspace, "render_symptom_diagnosis_panel", lambda *_args, **_kwargs: None)
     monkeypatch.setattr(workspace, "get_measurements", lambda *_args, **_kwargs: [])
@@ -1165,7 +1087,12 @@ def test_apptest_current_reassessment_can_finish_to_report_stage(monkeypatch):
     monkeypatch.setattr(workspace, "render_symptom_diagnosis_panel", lambda *_args, **_kwargs: None)
     monkeypatch.setattr(workspace, "get_measurements", lambda *_args, **_kwargs: [])
     monkeypatch.setattr(workspace, "current_analysis_snapshot", lambda *_args, **_kwargs: {
-        "result": {"hypotheses": [], "component_candidates": []},
+        # Reporting without any structured symptom must remain gated. This
+        # fixture models a current, completed reassessment with an explicit
+        # symptom and no further test recommendation.
+        "result": {"hypotheses": [], "component_candidates": [],
+                   "all_component_candidates": [], "symptom_codes": ["LED_NOT_LIT"],
+                   "active_inspection_plan": {"candidates": []}},
         "record": {"status": AnalysisStatus.CURRENT.value},
         "input_fingerprint": "finish-current-fingerprint",
     })

@@ -58,15 +58,53 @@ def get_current_state(
     if fingerprints is not None:
         expected = fingerprints.to_dict() if isinstance(fingerprints, AnalysisFingerprints) else dict(fingerprints)
         current = record.get("fingerprints")
+        # A full/fragment rerun can briefly compute an intermediate snapshot
+        # after a valid result was committed, archive that result as STALE,
+        # then return to the exact committed inputs on the next render. If the
+        # complete content fingerprint and scope match an archived result,
+        # restore it; this is safe because the hash covers the diagnosis,
+        # measurement, and rules versions. Explicit invalidations use a
+        # different reason and are never restored by this path.
+        if (record.get("status") == AnalysisStatus.STALE.value
+                and record.get("reason") == "분석 입력 또는 규칙이 변경되었습니다."
+                and record.get("scope") == scope.to_dict()):
+            history = record.get("history")
+            matching = next((item for item in reversed(history if isinstance(history, list) else [])
+                             if isinstance(item, dict)
+                             and item.get("scope") == scope.to_dict()
+                             and isinstance(item.get("fingerprints"), dict)
+                             and item["fingerprints"].get("final_sha256") == expected.get("final_sha256")
+                             and isinstance(item.get("results"), dict)
+                             and item["results"]), None)
+            if matching is not None:
+                record.update({"status": AnalysisStatus.CURRENT.value,
+                               "fingerprints": expected,
+                               "results": deepcopy(matching["results"]),
+                               "reason": None, "run_id": None,
+                               "restored_from_transient_fingerprint_mismatch": True,
+                               "updated_at": _now()})
+                _store(state)[scope.key] = record
+                return deepcopy(record)
         if current and current.get("final_sha256") != expected.get("final_sha256"):
             status = record.get("status")
+            if status == AnalysisStatus.RUNNING.value:
+                # Rendering may briefly observe an intermediate UI snapshot
+                # while a diagnosis is running (for example, during a widget
+                # or fragment rerun). Do not revoke the run token here. The
+                # commit path recomputes and compares the live fingerprint
+                # before saving, so a real input change still rejects the
+                # result while a transient read cannot strand the workflow in
+                # STALE and prevent it from advancing.
+                record["updated_at"] = _now()
+                _store(state)[scope.key] = record
+                return deepcopy(record)
             has_result = bool(record.get("results"))
             # The first UI render may refine registry/symptom inputs after a
             # fingerprint was captured. That is not a stale diagnosis if this
             # scope has never produced a result; it must remain NOT_RUN.
             if has_result:
                 _archive_results(record, reason="analysis fingerprint changed")
-            if status == AnalysisStatus.RUNNING.value or has_result or status == AnalysisStatus.CURRENT.value:
+            if has_result or status == AnalysisStatus.CURRENT.value:
                 record["status"] = AnalysisStatus.STALE.value
                 record["generation"] = int(record.get("generation", 0)) + 1
                 record["run_id"] = None
@@ -128,6 +166,7 @@ def begin_analysis(
         _archive_results(record, reason="analysis inputs changed before rerun")
     record["generation"] = int(record.get("generation", 0)) + 1
     run_id = str(uuid4())
+    record.pop("restored_from_transient_fingerprint_mismatch", None)
     record.update({"status": AnalysisStatus.RUNNING.value, "run_id": run_id,
                    "run_result_kind": result_kind, "fingerprints": expected,
                    "reason": None, "updated_at": _now()})

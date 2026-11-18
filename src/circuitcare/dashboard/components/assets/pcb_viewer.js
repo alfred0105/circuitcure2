@@ -245,7 +245,6 @@ export default function(component) {
         if (item.overlay_status === "EXCLUDED") classes.push("cc-excluded");
         if (item.overlay_source === "qwen_suggestion") classes.push("cc-ai-suggested");
         if (item.overlay_source === "yolo_second_pass") classes.push("cc-second-pass");
-        if (item.overlay_source === "manual") classes.push("cc-manual-box");
         const blockRoleClasses = { power:"cc-block-power", control:"cc-block-control",
           control_timing:"cc-block-control", control_input:"cc-block-input", input:"cc-block-input",
           output:"cc-block-output", driver:"cc-block-driver", protection:"cc-block-protection",

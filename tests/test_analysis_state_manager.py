@@ -203,7 +203,9 @@ def test_board_analysis_scope_survives_photo_switch_and_stales_on_registry_chang
         photo_snapshots=snapshots,
     )
     components = diagnosis_components(registry)
-    inventory = {"__board_registry__": {"registry_version": registry["version"]}}
+    inventory = {"__board_registry__": {
+        "registry_version": registry["version"],
+        "analysis_version": registry["analysis_version"]}}
     aliases = measurement_component_aliases(registry)
     st = type("FakeStreamlit", (), {"session_state": state})()
     scope_id = "board:registry:v1"
@@ -235,12 +237,59 @@ def test_board_analysis_scope_survives_photo_switch_and_stales_on_registry_chang
     )
     stale = current_analysis_snapshot(
         st, project, components=diagnosis_components(next_registry),
-        component_inventory={"__board_registry__": {"registry_version": next_registry["version"]}},
+        component_inventory={"__board_registry__": {
+            "registry_version": next_registry["version"],
+            "analysis_version": next_registry["analysis_version"]}},
         analysis_target_id=scope_id,
         component_id_aliases=measurement_component_aliases(next_registry),
     )
     assert stale["result"] is None
     assert stale["record"]["status"] == AnalysisStatus.STALE
+
+
+def test_board_analysis_fingerprint_ignores_review_metadata_only_changes():
+    project = ProjectContext("p-review-only", "b-review-only", image_records=(ImageRecord("front"),))
+    component = SimpleNamespace(
+        component_id="R1", component_type="resistor", bbox_xyxy=(1, 2, 5, 7),
+        coordinate_frame="SOURCE_PHOTO_PIXEL", identification_status="USER_CONFIRMED",
+        presence_status="CONFIRMED", component_type_status="USER_CONFIRMED",
+        ocr_marking=None, possible_part_number=None, component_info=None,
+        confirmed_functional_roles=(), evidence=(), overlay_source="yolo", ocr_candidates=(),
+    )
+    snapshots = {"front": {"image_fingerprint": "same-image", "review_version": "review-1",
+                           "components": (component,)}}
+    state = {"circuitcare_v2_active_photo_id": "front", "circuitcare_v2_photo_choice": "front"}
+    registry = build_board_component_registry(
+        state, project_id=project.project_id, board_id=project.board_id, photo_snapshots=snapshots,
+    )
+    inventory = {"__board_registry__": {"registry_version": registry["version"],
+                                         "analysis_version": registry["analysis_version"]}}
+    st = type("FakeStreamlit", (), {"session_state": state})()
+    first = current_analysis_snapshot(st, project, components=diagnosis_components(registry),
+                                      component_inventory=inventory,
+                                      analysis_target_id="board:registry:v1",
+                                      component_id_aliases=measurement_component_aliases(registry))
+    run_id = begin_analysis(state, scope=first["scope"], fingerprints=first["fingerprints"])
+    assert commit_analysis_result(state, scope=first["scope"], run_id=run_id,
+                                  fingerprints=first["fingerprints"],
+                                  current_fingerprints=first["fingerprints"],
+                                  current_scope=first["scope"], result={"status": "CURRENT"})
+
+    snapshots["front"]["review_version"] = "review-2"
+    refreshed_registry = build_board_component_registry(
+        state, project_id=project.project_id, board_id=project.board_id, photo_snapshots=snapshots,
+    )
+    assert refreshed_registry["version"] != registry["version"]
+    assert refreshed_registry["analysis_version"] == registry["analysis_version"]
+    refreshed = current_analysis_snapshot(
+        st, project, components=diagnosis_components(refreshed_registry),
+        component_inventory={"__board_registry__": {
+            "registry_version": refreshed_registry["version"],
+            "analysis_version": refreshed_registry["analysis_version"]}},
+        analysis_target_id="board:registry:v1",
+        component_id_aliases=measurement_component_aliases(refreshed_registry),
+    )
+    assert refreshed["result"] == {"status": "CURRENT"}
 
 
 def test_board_analysis_projects_verified_measurements_and_drops_replaced_photo_links():

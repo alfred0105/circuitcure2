@@ -18,8 +18,8 @@ class FakeClient:
         self.content = content
         self.calls = []
 
-    def chat_json(self, model, messages, *, output_schema):
-        self.calls.append((model, messages, output_schema))
+    def chat_json(self, model, messages, *, output_schema, think=True):
+        self.calls.append((model, messages, output_schema, think))
         return {"content": self.content, "model": model}
 
 
@@ -74,6 +74,7 @@ def test_qwen_candidate_schema_and_result_are_allowlisted_and_unverified():
     knowledge = load_knowledge()
     fault_id = next(key for key, row in knowledge["fault_modes"]["fault_modes"].items()
                     if "capacitor" in row.get("candidate_component_types", []))
+    matching_symptom = next(iter(knowledge["fault_modes"]["fault_modes"][fault_id]["supported_symptoms"]))
     response = {"proposals": [{"component_id": "c1", "suspected_fault_id": fault_id,
         "functional_block": "UNKNOWN", "reason": "검토 후보", "supporting_evidence_ids": ["NO_POWER"],
         "opposing_evidence_ids": [], "missing_information": [], "recommended_next_action": "전원 차단 후 육안 확인",
@@ -81,19 +82,22 @@ def test_qwen_candidate_schema_and_result_are_allowlisted_and_unverified():
     client = FakeClient(response)
     context = {"focus_components": [{"component_id": "c1", "type": "capacitor", "review_status": "CONFIRMED",
                                      "functional_roles": []}], "observations": {"NO_POWER": True}}
-    result = suggest_pcb_fault_candidates(client, "qwen", pcb_context=context, diagnosis={}, knowledge=knowledge)
+    result = suggest_pcb_fault_candidates(client, "qwen", pcb_context=context,
+                                          diagnosis={"symptom_codes": [matching_symptom]}, knowledge=knowledge)
     assert result["proposals"][0]["component_id"] == "c1"
     assert result["proposals"][0]["evidence_status"] == "UNVERIFIED"
     assert result["proposals"][0]["rank_status"] == "NOT_MERGED"
     item_schema = client.calls[0][2]["properties"]["proposals"]["items"]["properties"]
     assert item_schema["component_id"]["enum"] == ["c1"]
     assert "FAULT_SUPPORTED" not in item_schema["uncertainty_status"]["enum"]
+    assert client.calls[0][3] is False
 
 
 def test_qwen_block_proposals_and_evidence_ledger_ids_are_allowlisted():
     knowledge = load_knowledge()
     fault_id = next(key for key, row in knowledge["fault_modes"]["fault_modes"].items()
                     if "capacitor" in row.get("candidate_component_types", []))
+    matching_symptom = next(iter(knowledge["fault_modes"]["fault_modes"][fault_id]["supported_symptoms"]))
     response = {"proposals": [{"component_id": "bc-c1", "suspected_fault_id": fault_id,
         "functional_block": "power", "functional_block_id": "block-abc123", "reason": "가설",
         "supporting_evidence_ids": ["ev-verified-1"], "opposing_evidence_ids": [],
@@ -106,7 +110,7 @@ def test_qwen_block_proposals_and_evidence_ledger_ids_are_allowlisted():
         "role": "power", "component_ids": ["bc-c1"], "connectivity_status": "NOT_INFERRED"}],
         "evidence_ledger": [{"evidence_id": "ev-verified-1", "status": "VERIFIED"}]}
     result = suggest_pcb_fault_candidates(client, "qwen", pcb_context=context,
-                                          diagnosis={}, knowledge=knowledge)
+                                          diagnosis={"symptom_codes": [matching_symptom]}, knowledge=knowledge)
     assert result["proposals"][0]["functional_block_id"] == "block-abc123"
     assert result["proposals"][0]["supporting_evidence_ids"] == ["ev-verified-1"]
     schema = client.calls[0][2]["properties"]["proposals"]["items"]["properties"]
@@ -181,8 +185,9 @@ def test_qwen_rejects_wrong_fault_component_pair_and_unconfirmed_component():
     # A correctly typed but unreviewed detector row is an inspection task, not evidence.
     context["focus_components"] = [{"component_id": "c1", "type": "resistor",
                                     "review_status": "UNCONFIRMED", "functional_roles": []}]
+    matching_symptom = next(iter(knowledge["fault_modes"]["fault_modes"][resistor_fault]["supported_symptoms"]))
     accepted = suggest_pcb_fault_candidates(FakeClient(response), "qwen", pcb_context=context,
-                                            diagnosis={}, knowledge=knowledge)
+                                            diagnosis={"symptom_codes": [matching_symptom]}, knowledge=knowledge)
     assert len(accepted["proposals"]) == 1
     assert accepted["proposals"][0]["verification_status"] == "NEEDS_COMPONENT_REVIEW"
 
@@ -191,6 +196,7 @@ def test_qwen_can_propose_unreviewed_detection_as_review_task_only():
     knowledge = load_knowledge()
     capacitor_fault = next(key for key, row in knowledge["fault_modes"]["fault_modes"].items()
                            if "capacitor" in row.get("candidate_component_types", []))
+    matching_symptom = next(iter(knowledge["fault_modes"]["fault_modes"][capacitor_fault]["supported_symptoms"]))
     response = {"proposals": [{"component_id": "board-c1", "suspected_fault_id": capacitor_fault,
         "functional_block": "UNKNOWN", "reason": "육안 재검수 필요", "supporting_evidence_ids": [],
         "opposing_evidence_ids": [], "missing_information": ["소자 종류 확인"],
@@ -199,7 +205,7 @@ def test_qwen_can_propose_unreviewed_detection_as_review_task_only():
         "candidate_component_types": ["capacitor"], "review_status": "DETECTED_UNVERIFIED",
         "component_type_status": "UNCONFIRMED"}], "observations": {}}
     result = suggest_pcb_fault_candidates(FakeClient(response), "qwen", pcb_context=context,
-                                          diagnosis={}, knowledge=knowledge)
+                                          diagnosis={"symptom_codes": [matching_symptom]}, knowledge=knowledge)
     assert len(result["proposals"]) == 1
     assert result["proposals"][0]["verification_status"] == "NEEDS_COMPONENT_REVIEW"
     assert result["proposals"][0]["evidence_status"] == "UNVERIFIED"
@@ -322,6 +328,7 @@ def test_qwen_invalid_ids_fault_types_and_null_shapes_are_rejected_without_crash
     knowledge = load_knowledge()
     capacitor_fault = next(key for key, row in knowledge["fault_modes"]["fault_modes"].items()
                            if "capacitor" in row.get("candidate_component_types", []))
+    matching_symptom = next(iter(knowledge["fault_modes"]["fault_modes"][capacitor_fault]["supported_symptoms"]))
     valid_context = {"focus_components": [{"component_id": "c1", "type": "capacitor",
                       "review_status": "USER_CONFIRMED"}], "observations": {}}
     for payload in [
@@ -334,7 +341,7 @@ def test_qwen_invalid_ids_fault_types_and_null_shapes_are_rejected_without_crash
         "invalid-json-fallback-value",
     ]:
         result = suggest_pcb_fault_candidates(FakeClient(payload), "qwen", pcb_context=valid_context,
-                                              diagnosis={}, knowledge=knowledge)
+                                                  diagnosis={"symptom_codes": [matching_symptom]}, knowledge=knowledge)
         if isinstance(payload, dict) and isinstance(payload.get("proposals"), list):
             assert len(result["proposals"]) == (1 if payload["proposals"][-1] == _candidate_response("c1", capacitor_fault) else 0)
         else:
@@ -346,6 +353,7 @@ def test_qwen_rejects_excluded_stale_and_registry_invalid_rows_but_accepts_revie
     knowledge = load_knowledge()
     capacitor_fault = next(key for key, row in knowledge["fault_modes"]["fault_modes"].items()
                            if "capacitor" in row.get("candidate_component_types", []))
+    matching_symptom = next(iter(knowledge["fault_modes"]["fault_modes"][capacitor_fault]["supported_symptoms"]))
     response = {"proposals": [_candidate_response("excluded", capacitor_fault),
                                _candidate_response("stale", capacitor_fault),
                                _candidate_response("tentative", capacitor_fault)]}
@@ -356,7 +364,7 @@ def test_qwen_rejects_excluded_stale_and_registry_invalid_rows_but_accepts_revie
         {"component_id": "tentative", "type": "unknown", "candidate_component_types": ["capacitor"],
          "review_status": "DETECTED_UNVERIFIED"}], "observations": {}}
     result = suggest_pcb_fault_candidates(FakeClient(response), "qwen", pcb_context=context,
-                                          diagnosis={}, knowledge=knowledge)
+                                          diagnosis={"symptom_codes": [matching_symptom]}, knowledge=knowledge)
     assert [row["component_id"] for row in result["proposals"]] == ["tentative"]
     assert result["proposals"][0]["verification_status"] == "NEEDS_COMPONENT_REVIEW"
     assert result["rejected_proposal_count"] == 2

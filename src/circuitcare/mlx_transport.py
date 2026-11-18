@@ -28,7 +28,8 @@ def request_mlx(transport, method, path, payload=None):
                   for image in original['images']]]
         messages.append(message)
     options = payload.get('options', {})
-    body = {'model': model, 'messages': messages, 'stream': False, 'enable_thinking': False,
+    body = {'model': model, 'messages': messages, 'stream': False,
+            'enable_thinking': payload.get('think') is True,
             'max_tokens': options.get('num_predict', 2048), 'temperature': options.get('temperature', .1)}
     schema = payload.get('format')
     if isinstance(schema, dict):

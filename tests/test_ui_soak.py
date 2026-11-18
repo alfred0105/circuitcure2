@@ -41,15 +41,13 @@ def test_photo_upload_enters_current_pcb_workbench():
 
 
 @pytest.mark.stress
-def test_twenty_photo_project_transitions_keep_app_live():
+def test_twenty_photo_projects_start_in_current_workbench_without_legacy_views():
     pytest.importorskip("streamlit")
     from streamlit.testing.v1 import AppTest
 
     root = Path(__file__).resolve().parents[1]
-    app = AppTest.from_file(str(root / "src/circuitcare/ui.py"), default_timeout=30).run()
     for index in range(20):
-        if INTAKE_PROJECT_KEY in app.session_state:
-            next(widget for widget in app.button if widget.label == "새 프로젝트").click().run()
+        app = AppTest.from_file(str(root / "src/circuitcare/ui.py"), default_timeout=30).run()
         photo = _photo((index * 9 % 255, 60, 120))
         app.file_uploader[0].set_value((f"board-{index}.png", photo, "image/png")).run()
         next(widget for widget in app.button if widget.label == "분석 시작").click().run()
