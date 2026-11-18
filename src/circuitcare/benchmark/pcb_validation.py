@@ -342,8 +342,13 @@ def run_case(case: dict[str, Any], *, detector: Callable[[dict[str, Any]], dict[
                     "error": registry["_stage_error"], "stage_trace": stages,
                     "duration_ms": round((time.perf_counter() - started) * 1000, 3), "metrics": "NOT_EVALUATED",
                     "runtime_metadata": _runtime_metadata(case, inputs, execution_mode, stages=stages)}
-        components = [item.__dict__ for item in diagnosis_components(registry)]
-        confirmed = [row.component_id for row in diagnosis_components(registry) if row.presence_status == "CONFIRMED"]
+        registry_diagnosis_components = diagnosis_components(registry)
+        components = [item.__dict__ for item in registry_diagnosis_components]
+        confirmed = [row.component_id for row in registry_diagnosis_components
+                     if row.presence_status == "CONFIRMED"]
+        active_registry_component_count = len(registry_diagnosis_components)
+        excluded_registry_component_count = sum(
+            row.get("presence_status") == "EXCLUDED" for row in registry.get("components", []))
         original_measurements = inputs.get("measurements", [])
         _history_measurements, current_measurements = stage("measurement_registry_projection",
             lambda: project_measurements_to_registry(original_measurements, registry),
@@ -355,6 +360,8 @@ def run_case(case: dict[str, Any], *, detector: Callable[[dict[str, Any]], dict[
         confirmed = [str(item.get("component_id")) for item in components
                      if item.get("presence_status") == "CONFIRMED" or item.get("identification_status") == "USER_CONFIRMED"]
         current_measurements = inputs.get("measurements", [])
+        active_registry_component_count = len(components)
+        excluded_registry_component_count = 0
     diagnosis_inputs = {key: inputs.get(key) for key in (
         "symptoms", "symptom_text", "observations", "inventory_complete",
         "current_context", "silkscreen_labels")}
@@ -467,6 +474,8 @@ def run_case(case: dict[str, Any], *, detector: Callable[[dict[str, Any]], dict[
         "qwen_review": qwen_results,
         "review_errors": [row.get("review_error") for _photo, row in review_results if row.get("review_error")],
         "registry_component_count": len(registry.get("components", [])),
+        "registry_active_component_count": active_registry_component_count,
+        "registry_excluded_component_count": excluded_registry_component_count,
         "status": result.get("status"), "top_candidates": result.get("component_candidates", [])[:3],
         "all_component_candidates": result.get("all_component_candidates", result.get("component_candidates", [])),
         "hypotheses": result.get("hypotheses", [])[:3],
@@ -584,7 +593,10 @@ def production_qwen_reviewer(inference_input: dict[str, Any], detection: dict[st
     from contextlib import nullcontext
     import io
     from PIL import Image
-    from circuitcare.vision.component_recognition_panel import _run_ai_review_workflow, review_aux_keys, review_keys
+    from circuitcare.vision.component_recognition_panel import (
+        _run_ai_review_workflow, apply_qwen_suggestions_to_review_rows,
+        review_aux_keys, review_keys,
+    )
     from circuitcare.vision.ocr_backend import run_local_ocr
     from circuitcare.vision.box_reconciliation import associate_ocr_with_components
 
@@ -628,7 +640,11 @@ def production_qwen_reviewer(inference_input: dict[str, Any], detection: dict[st
             rows=state.get(records_key, []), records_key=records_key,
             ocr_key=ocr_key, qwen_key=qwen_key, selected_component_ids=selected_ids)
     review = state.get(qwen_key) if isinstance(state.get(qwen_key), dict) else {}
-    return {"components": state.get(records_key, []), "qwen_review": state.get(qwen_key),
+    rows = state.get(records_key, [])
+    if review:
+        apply_qwen_suggestions_to_review_rows(state, scope=scope, rows=rows, qwen_review=review)
+        state[records_key] = rows
+    return {"components": rows, "qwen_review": review,
             "ocr_result": state.get(ocr_key), "status": "PRODUCTION_OCR_QWEN",
             "qwen_call_count": int(review.get("performance", {}).get("class_review_requests", 0) or 0)}
 
@@ -640,12 +656,14 @@ def _canonical_components(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             continue
         label = row.get("component_type", row.get("class_name", row.get("소자 종류", "unknown")))
         status = row.get("identification_status", row.get("상태"))
+        excluded = status in {"제외", "EXCLUDED"} or row.get("presence_status") == "EXCLUDED"
         confirmed = status in {"USER_CONFIRMED", "확인"} or row.get("presence_status") == "CONFIRMED"
         box = row.get("bbox_xyxy") or [row.get(key) for key in ("x1", "y1", "x2", "y2")]
         result.append({**row, "component_id": str(row.get("component_id") or ""),
             "component_type": normalize_component_class(str(label)),
-            "bbox_xyxy": box, "identification_status": "USER_CONFIRMED" if confirmed else "UNCONFIRMED",
-            "presence_status": "CONFIRMED" if confirmed else "UNCONFIRMED",
+            "bbox_xyxy": box,
+            "identification_status": "EXCLUDED" if excluded else "USER_CONFIRMED" if confirmed else "UNCONFIRMED",
+            "presence_status": "EXCLUDED" if excluded else "CONFIRMED" if confirmed else "UNCONFIRMED",
             "component_type_status": "USER_CONFIRMED" if confirmed else "UNCONFIRMED"})
     return result
 

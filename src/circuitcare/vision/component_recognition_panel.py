@@ -451,6 +451,28 @@ def _apply_qwen_proposal_to_row(row: dict, proposal: dict) -> bool:
     return True
 
 
+def apply_qwen_suggestions_to_review_rows(state: Any, *, scope: str, rows: list[dict],
+                                         qwen_review: dict) -> bool:
+    """Apply the same reversible, unconfirmed Qwen suggestions in UI and validation runs."""
+    selected_ids = {str(value) for value in qwen_review.get("selected_component_ids", [])}
+    by_id = {str(row.get("component_id")): row for row in rows if row.get("component_id")}
+    changed = False
+    for proposal in qwen_review.get("class_reviews", []):
+        if not isinstance(proposal, dict):
+            continue
+        component_id = str(proposal.get("detection_id") or "")
+        target = by_id.get(component_id)
+        if target is None or component_id not in selected_ids:
+            continue
+        if _apply_qwen_proposal_to_row(target, proposal):
+            proposed_class = normalize_qwen_class(proposal.get("proposed_class"))
+            if proposed_class in {"not_component", "unknown"}:
+                record_box_exclusion(state, scope=scope, row=target,
+                    reason=f"qwen_{proposed_class}", review=proposal)
+            changed = True
+    return changed
+
+
 @st.cache_resource(show_spinner=False)
 def _app_server() -> Any:
     if not APP_DIR.is_dir():
@@ -1113,23 +1135,10 @@ def render_component_recognition_panel(st_api: Any, *, image_bytes: bytes, proje
                 invalidate_qwen_review(st_api.session_state, scope)
                 qwen_review = None
         if isinstance(qwen_review, dict):
-            selected_ids = set(map(str, qwen_review.get("selected_component_ids", [])))
-            # Apply valid AI output as soon as the job is committed.  The row
-            # remains unconfirmed; explicit NOT_COMPONENT suggestions become
-            # reversible exclusions through the shared review-history path.
-            changed = False
-            by_id = {str(row.get("component_id")): row for row in rows}
-            for proposal in qwen_review.get("class_reviews", []):
-                target = by_id.get(str(proposal.get("detection_id")))
-                if target is None or str(proposal.get("detection_id")) not in selected_ids:
-                    continue
-                if _apply_qwen_proposal_to_row(target, proposal):
-                    qwen_class = normalize_qwen_class(proposal.get("proposed_class"))
-                    if qwen_class in {"not_component", "unknown"}:
-                        record_box_exclusion(st_api.session_state, scope=scope, row=target,
-                                             reason=("qwen_unknown" if qwen_class == "unknown"
-                                                     else "qwen_not_component"), review=proposal)
-                    changed = True
+            # The benchmark Harness calls the same merger so diagnosis consumes
+            # the identical AI-suggested rows without treating them as user-confirmed.
+            changed = apply_qwen_suggestions_to_review_rows(
+                st_api.session_state, scope=scope, rows=rows, qwen_review=qwen_review)
             if changed:
                 st_api.session_state[records_key] = rows
                 invalidate_review_state()

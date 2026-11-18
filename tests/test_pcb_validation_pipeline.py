@@ -6,7 +6,7 @@ from circuitcare.benchmark.pcb_validation import (
     evaluate_runs, run_case, score_run, validate_case,
 )
 from circuitcare.frontend.board_component_registry import (
-    build_board_component_registry, current_source_observation_fingerprint,
+    build_board_component_registry, current_source_observation_fingerprint, diagnosis_components,
     resolve_measurement_board_component, source_component_key,
 )
 from circuitcare.frontend.measurement_models import create_measurement_record
@@ -267,6 +267,62 @@ def test_production_detector_does_not_queue_duplicate_background_qwen_review(tmp
     assert observed["queue_ai_review"] is False
     assert detection["model_provenance"] == {"locator": {"fine_tuned": False}}
     assert detection["detections"] == [{"component_id": "box-1", "상태": "검수 필요"}]
+
+
+def test_production_qwen_suggestions_feed_registry_rows_without_user_confirmation(tmp_path, monkeypatch):
+    from io import BytesIO
+    from PIL import Image
+    import circuitcare.vision.component_recognition_panel as review_panel
+    import circuitcare.vision.ocr_backend as ocr_backend
+    import circuitcare.vision.box_reconciliation as reconciliation
+    from circuitcare.benchmark.pcb_validation import production_qwen_reviewer
+
+    buffer = BytesIO()
+    Image.new("RGB", (24, 18), "white").save(buffer, format="PNG")
+    image_bytes = buffer.getvalue()
+    scope = review_panel.review_scope(image_bytes, "validation", "board")
+    _result_key, rows_key, _error_key = review_panel.review_keys(scope)
+    ocr_key, qwen_key = review_panel.review_aux_keys(scope)
+    row = {"component_id": "box-1", "detector_class": "unknown", "소자 종류": "unknown",
+           "상태": "검수 필요", "x1": 1, "y1": 1, "x2": 12, "y2": 12}
+    state = {rows_key: [row]}
+
+    monkeypatch.setattr(ocr_backend, "run_local_ocr", lambda _image: {"records": []})
+    monkeypatch.setattr(reconciliation, "associate_ocr_with_components", lambda *_args: [{}])
+
+    def fake_review(api, **_kwargs):
+        api.session_state[qwen_key] = {
+            "selected_component_ids": ["box-1"], "verification_status": "AI_SUGGESTIONS_ONLY",
+            "performance": {"class_review_requests": 1},
+            "class_reviews": [{"detection_id": "box-1", "object_status": "COMPONENT",
+                "proposed_class": "connector", "decision": "suggest", "response_status": "RECEIVED",
+                "confidence": 0.8, "evidence": "connector housing"}],
+        }
+
+    monkeypatch.setattr(review_panel, "_run_ai_review_workflow", fake_review)
+    result = production_qwen_reviewer({"photo_id": "board"}, {
+        "review_scope": scope, "_app_state": state, "_image_bytes": image_bytes,
+    })
+
+    assert result["components"][0]["소자 종류"] == "connector"
+    assert result["components"][0]["detector_class"] == "unknown"
+    assert result["components"][0]["qwen_component_type_status"] == "AI_PROPOSED_UNVERIFIED"
+    assert result["components"][0]["상태"] == "검수 필요"
+    assert result["qwen_call_count"] == 1
+
+
+def test_registry_projection_keeps_explicitly_excluded_boxes_out_of_diagnosis():
+    from circuitcare.benchmark.pcb_validation import _canonical_components
+
+    rows = _canonical_components([{"component_id": "false-box", "소자 종류": "unknown",
+                                   "상태": "제외", "x1": 1, "y1": 1, "x2": 12, "y2": 12}])
+    registry = build_board_component_registry({}, project_id="p", board_id="b", photo_snapshots={
+        "photo": {"version": "v1", "image_fingerprint": "sha", "review_version": "r1",
+                  "registry_components": rows},
+    })
+
+    assert rows[0]["presence_status"] == "EXCLUDED"
+    assert diagnosis_components(registry) == ()
 
 
 def test_block_recall_at_three_uses_only_adjudicated_block_ids_and_reports_fraction():
